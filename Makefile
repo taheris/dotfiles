@@ -1,6 +1,6 @@
 SHELL := /usr/bin/env bash
 
-STOW_HOME := tmux
+STOW_HOME := tmux keybindings
 STOW_CONFIG := alacritty karabiner
 
 .PHONY: help stow unstow deps dump
