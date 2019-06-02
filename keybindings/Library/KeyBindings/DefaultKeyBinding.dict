@@ -1,0 +1,138 @@
+{
+    /* Ctrl shortcuts */
+    "^l"        = "centerSelectionInVisibleArea:";  /* C-l          Recenter */
+    "^/"        = "undo:";                          /* C-/          Undo */
+    "^_"        = "undo:";                          /* C-_          Undo */
+    "^ "        = "setMark:";                       /* C-Spc        Set mark */
+    "^\@"       = "setMark:";                       /* C-@          Set mark */
+    "^w"        = "deleteToMark:";                  /* C-w          Delete to mark */
+    "^v"        = "pageDown:";                      /* C-v          PageDown */
+    "^y" = (yankAndSelect:);
+    // delete line/paragraph
+    "^u" = (moveToBeginningOfParagraphAndModifySelection:, delete:);
+
+    /* Meta shortcuts */
+    "~f"        = "moveWordForward:";               /* M-f          Move forward word */
+    "~b"        = "moveWordBackward:";              /* M-b          Move backward word */
+    "~<"        = "moveToBeginningOfDocument:";     /* M-<          Move to beginning of document */
+    "~>"        = "moveToEndOfDocument:";           /* M->          Move to end of document */
+    "~v"        = "pageUp:";                        /* M-v          Page Up */
+    "~/"        = "complete:";                      /* M-/          Complete */
+    "~d"        = "deleteWordForward:";             /* M-d          Delete word forward */
+    "~^h"       = "deleteWordBackward:";            /* M-C-h        Delete word backward */
+    "~h"        = "deleteWordBackward:";            /* M-h          Delete word backward */
+    "~\U007F"   = "deleteWordBackward:";            /* M-Bksp       Delete word backward */
+    "~t"        = "transposeWords:";                /* M-t          Transpose words */
+    "~\@"       = ( "setMark:",                     /* M-@          Mark word */
+                    "moveWordForward:",
+                    "swapWithMark");
+    // jump to bookmark
+    "~\@" = (swapWithMark:,centerSelectionInVisibleArea:);
+    // blank line after current
+    "~o" = (moveToEndOfParagraph:, insertNewline:);
+    // blank line before current
+    "~O" = (moveToBeginningOfParagraph:, moveLeft:, insertNewline:);
+    // repeat character before cursor
+    "~r" = (moveLeftAndModifySelection:, copy:, moveRight:, paste:);
+    // select word
+    "~w" = (selectWord:);
+    // select word backward and modify selection
+    "~W" = (moveWordBackwardAndModifySelection:);
+    // select entire line/paragraph
+    //"~S" = (moveToBeginningOfParagraph:, moveToEndOfParagraphAndModifySelection:, moveRightAndModifySelection:);
+    // select from beginning of paragrah to last character
+    //"~s" = (moveToBeginningOfParagraph:, moveToEndOfParagraphAndModifySelection:);
+    // select paragraph excluding leading/trailing whitespace
+    "^~S" = (moveToEndOfParagraph:, insertText:, " ", selectWord:, moveBackward:, moveToBeginningOfParagraphAndModifySelection:, moveWordForwardAndModifySelection:, moveWordBackwardAndModifySelection:);
+    // copy paragraph
+    "~y" = (setMark:, moveToBeginningOfParagraph:, moveToEndOfParagraphAndModifySelection:, copy:, swapWithMark:);
+    // cut paragraph
+    "~x" = (moveToBeginningOfParagraph:, moveToEndOfParagraphAndModifySelection:, cut:);
+    // paste paragraph below
+    "~p" = (moveToEndOfParagraph:,moveRight:,insertNewline:,moveLeft:, paste:);
+    // paste paragraph above
+    "~P" = (moveToBeginningOfParagraph:, moveLeft:, paste:);
+    // cut to beginning of paragraph
+    "~q" = (moveToBeginningOfParagraphAndModifySelection:, cut:);
+    // cut to end of paragraph
+    "~k" = (moveToEndOfParagraphAndModifySelection:, cut:);
+
+    /* C-x shortcuts */
+    "^x" = {
+        "u"     = "undo:";                          /* C-x u        Undo */
+        "k"     = "performClose:";                  /* C-x k        Close */
+        "^f"    = "openDocument:";                  /* C-x C-f      Open (find file) */
+        "^x"    = "swapWithMark:";                  /* C-x C-x      Swap with mark */
+        "^m"    = "selectToMark:";                  /* C-x C-m      Select to mark*/
+        "^s"    = "saveDocument:";                  /* C-x C-s      Save */
+        "^w"    = "saveDocumentAs:";                /* C-x C-w      Save as */
+    };
+
+    /* C-m shortcuts */
+    "^m" = {
+        // Vim
+        "v" = {
+            // paste after
+            "p" = (moveToEndOfParagraph:,moveRight:,insertNewline:,moveLeft:, yank:);
+            // paste before
+            "P" = (moveToBeginningOfParagraph:, moveLeft:, yank:);
+            // yank
+            "y" = (yank:);
+            // Move to first non-whitespace character of line
+            "^" = (moveToBeginningOfParagraph:, insertText:, " ", moveLeft:, selectWord:, moveRight:, setMark:, moveToBeginningOfParagraph:, deleteForward:, swapWithMark:, moveLeft:);
+
+            "d" = { // Delete
+                // 'dd' delete line/paragraph
+                "d" = (setMark:, selectParagraph:, delete:, delete:, swapWithMark:);
+                // 'd$' delete from cursor to end of graf
+                "$" = (moveToEndOfParagraphAndModifySelection:, delete:);
+                // 'd0' delete to beginning of paragraph
+                "0" = (moveToBeginningOfParagraphAndModifySelection:, delete:);
+                // 'd^' delete to beginning of paragraph
+                "^" = (moveToBeginningOfParagraphAndModifySelection:, delete:);
+            };
+        };
+
+        // Word
+        "w" = {
+            // Capitalize
+            "c" = ( "capitalizeWord:", "moveForward:", "moveForward:");
+            // Uppercase
+            "u" = ( "uppercaseWord:", "moveForward:", "moveForward:");
+            // Lowercase
+            "l" = ( "lowercaseWord:", "moveForward:", "moveForward:");
+        };
+
+        // Comment
+        "c" = {
+            // comment with "//"
+            "/" = (moveToBeginningOfParagraph:, insertText:, "// ", moveToEndOfParagraph:, moveForward:);
+            // comment with "#"
+            "#" = (moveToBeginningOfParagraph:, insertText:, "# ", moveToEndOfParagraph:, moveForward:);
+            // HTML commenting
+            "!" = (setMark:, swapWithMark:, delete:, insertText:, "<!-- ", yank:, insertText:, " -->", swapWithMark:, moveRight:, moveRight:, moveRight:, moveRight:, moveRight:);
+            // Css Commenting
+            "*" = (setMark:, swapWithMark:, delete:, insertText:, "/* ", yank:, insertText:, " */", swapWithMark:, moveRight:, moveRight:, moveRight:);
+        };
+
+        // Insert text
+        "i" = {
+            // http://
+            "h" = (insertText:, "http://");
+            // https://
+            "s" = (insertText:, "https://");
+            // alias ll
+            "l" = (insertText:, "alias ll='ls -halF --color'");
+        };
+    };
+
+    /* Ctrl-Cmd shortcuts */
+    // move line up
+    "^@k" = (selectParagraph:, setMark:, deleteToMark:, moveLeft:, moveToBeginningOfParagraph:, yank:, moveLeft:, selectToMark:, moveLeft:);
+    // move line down
+    "^@j" = (selectParagraph:, setMark:, deleteToMark:, moveToEndOfParagraph:, moveRight:, setMark:, yank:, moveLeft:, selectToMark:);
+    // indent line
+    "^@l" = (setMark:, moveToBeginningOfParagraph:, insertText:, "\t", swapWithMark:, moveRight:);
+    // outdent line (one tab or char)
+    "^@h" = (setMark:, moveToBeginningOfParagraph:, moveWordRight:, moveWordLeft:, deleteBackward:, swapWithMark:, moveLeft:);
+}
