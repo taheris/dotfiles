@@ -1,6 +1,6 @@
 SHELL := /usr/bin/env bash
 
-STOW_CONFIG ?= alacritty
+STOW_CONFIG ?= alacritty karabiner
 
 .PHONY: help stow unstow deps dump
 .DEFAULT_GOAL := help
