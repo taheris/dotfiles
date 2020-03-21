@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 
 STOW_HOME := tmux keybindings
-STOW_CONFIG := alacritty karabiner
+STOW_CONFIG := alacritty doom karabiner
 
 .PHONY: help stow unstow brew deps
 .DEFAULT_GOAL := help
