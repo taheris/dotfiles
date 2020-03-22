@@ -51,3 +51,14 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+
+
+;; mine
+(setq doom-localleader-key ",")
+
+; rust
+(setq lsp-rust-server 'rust-analyzer
+      rustic-lsp-server 'rust-analyzer)
+
+; lsp
+(setq lsp-file-watch-threshold nil)
