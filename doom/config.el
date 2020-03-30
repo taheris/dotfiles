@@ -32,7 +32,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -53,12 +53,38 @@
 ;; they are implemented.
 
 
-;; mine
-(setq doom-localleader-key ",")
+; global settings
+(setq confirm-kill-emacs nil
+      doom-localleader-key ","
+      make-pointer-invisible t
+      mouse-drag-copy-region t)
 
-; rust
-(setq lsp-rust-server 'rust-analyzer
-      rustic-lsp-server 'rust-analyzer)
+; key-bindings
+(map! :leader
+      "d" #'deer
+      "/" #'+ivy/project-search)
+
+; company
+(after! company
+  (setq company-selection-wrap-around t
+        company-box-doc-enable nil)
+  (define-key! company-active-map
+               "TAB" #'company-complete-selection
+               [tab] #'company-complete-selection))
 
 ; lsp
-(setq lsp-file-watch-threshold nil)
+(after! lsp
+  (setq lsp-enable-file-watchers nil)
+  (set-formatter! 'lsp-formatter #'lsp-format-buffer
+                  :modes '(lsp-mode)))
+
+(after! lsp-ui
+  (setq lsp-ui-doc-enable nil
+        lsp-signature-render-documentation nil))
+
+; rust
+(after! rustic
+  (setq rustic-lsp-server 'rust-analyzer
+        rustic-format-trigger 'on-save)
+  (add-hook! rustic-mode (lsp-rust-analyzer-inlay-hints-mode t)))
+
