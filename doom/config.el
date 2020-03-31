@@ -59,11 +59,6 @@
       make-pointer-invisible t
       mouse-drag-copy-region t)
 
-; key-bindings
-(map! :leader
-      "d" #'deer
-      "/" #'+ivy/project-search)
-
 ; company
 (after! company
   (setq company-selection-wrap-around t
@@ -88,3 +83,18 @@
         rustic-format-trigger 'on-save)
   (add-hook! rustic-mode (lsp-rust-analyzer-inlay-hints-mode t)))
 
+; golden-ratio
+(use-package! golden-ratio
+  :after-call pre-command-hook
+  :config
+    (setq golden-ratio-auto-scale t)
+    (golden-ratio-mode 1)
+    (add-hook 'doom-switch-window-hook #'golden-ratio))
+
+; key-bindings
+(map! :leader
+      :desc "Project ripgrep" "/" #'+ivy/project-search
+      :desc "Deer" "d" #'deer
+
+      (:prefix ("t" . "toggle")
+        :desc "Golden ratio" "g" #'golden-ratio-mode))
