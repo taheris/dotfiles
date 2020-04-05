@@ -59,6 +59,14 @@
       make-pointer-invisible t
       mouse-drag-copy-region t)
 
+; key-bindings
+(map! :leader
+      :desc "Project search" "/" #'+ivy/project-search
+      :desc "Deer"           "d" #'deer
+
+      (:prefix ("t" . "toggle")
+        :desc "Golden ratio" "g" #'golden-ratio-mode))
+
 ; company
 (after! company
   (setq company-selection-wrap-around t
@@ -69,7 +77,9 @@
 
 ; lsp
 (after! lsp
-  (setq lsp-enable-file-watchers nil)
+  (setq lsp-enable-file-watchers nil
+        +lsp-defer-shutdown 60)
+
   (set-formatter! 'lsp-formatter #'lsp-format-buffer
                   :modes '(lsp-mode)))
 
@@ -80,8 +90,28 @@
 ; rust
 (after! rustic
   (setq rustic-lsp-server 'rust-analyzer
-        rustic-format-trigger 'on-save)
-  (add-hook! rustic-mode (lsp-rust-analyzer-inlay-hints-mode t)))
+        rustic-format-trigger 'on-save
+        rustic-test-arguments "--all-features"
+        lsp-rust-analyzer-cargo-watch-command "clippy"
+        lsp-rust-analyzer-cargo-all-targets t)
+
+  (map! :localleader
+        :map rustic-mode-map
+
+        :desc "Execute code action" "a" #'lsp-execute-code-action
+        :desc "Toggle inlay hints"  "h" #'lsp-rust-analyzer-inlay-hints-mode
+        :desc "Expand macro"        "x" #'lsp-rust-analyzer-expand-macro
+
+        (:prefix ("t" . "cargo test")
+          :desc "run tests"    "t" #'rustic-cargo-test
+          :desc "all features" "a" #'rustic-cargo-test-rerun
+          :desc "test current" "c" #'rustic-cargo-current-test)
+
+        (:prefix ("g" . "goto")
+          :desc "Definition"      "d" #'lsp-find-definition
+          :desc "Implementation"  "i" #'lsp-find-implementation
+          :desc "Reference"       "r" #'lsp-find-references
+          :desc "Type definition" "t" #'lsp-find-type-definition)))
 
 ; golden-ratio
 (use-package! golden-ratio
@@ -90,11 +120,3 @@
     (setq golden-ratio-auto-scale t)
     (golden-ratio-mode 1)
     (add-hook 'doom-switch-window-hook #'golden-ratio))
-
-; key-bindings
-(map! :leader
-      :desc "Project ripgrep" "/" #'+ivy/project-search
-      :desc "Deer" "d" #'deer
-
-      (:prefix ("t" . "toggle")
-        :desc "Golden ratio" "g" #'golden-ratio-mode))
