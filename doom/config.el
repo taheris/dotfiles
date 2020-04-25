@@ -69,11 +69,14 @@
 
 ; company
 (after! company
-  (setq company-selection-wrap-around t
-        company-box-doc-enable nil)
+  (setq company-box-doc-enable nil
+        company-selection-wrap-around t)
+
   (define-key! company-active-map
-               "TAB" #'company-complete-selection
-               [tab] #'company-complete-selection))
+               "TAB"    #'company-complete-selection
+               [tab]    #'company-complete-selection
+               "RET"    nil
+               [return] nil))
 
 ; lsp
 (after! lsp
@@ -92,14 +95,14 @@
   (setq rustic-lsp-server 'rust-analyzer
         rustic-format-trigger 'on-save
         rustic-test-arguments "--all-features"
-        lsp-rust-analyzer-cargo-watch-command "clippy"
-        lsp-rust-analyzer-cargo-all-targets t)
+        lsp-rust-analyzer-cargo-watch-command "clippy")
 
   (map! :localleader
         :map rustic-mode-map
 
         :desc "Execute code action" "a" #'lsp-execute-code-action
         :desc "Toggle inlay hints"  "h" #'lsp-rust-analyzer-inlay-hints-mode
+        :desc "Join lines"          "j" #'lsp-rust-analyzer-join-lines
         :desc "Expand macro"        "x" #'lsp-rust-analyzer-expand-macro
 
         (:prefix ("t" . "cargo test")
