@@ -69,13 +69,14 @@
         +ranger)
        electric          ; smarter, keyword-based electric-indent
        ibuffer         ; interactive buffer management
+       undo              ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 
        :term
-       ;;eshell            ; a consistent, cross-platform shell (WIP)
-       ;;shell             ; a terminal REPL for Emacs
-       ;;term              ; terminals in Emacs
-       ;;vterm             ; another terminals in Emacs
+       ;;eshell            ; the elisp shell that works everywhere
+       ;;shell             ; simple shell REPL for Emacs
+       ;;term              ; basic terminal emulator for Emacs
+       vterm             ; the best terminal emulation in Emacs
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -84,7 +85,8 @@
 
        :tools
        ;;ansible
-       debugger          ; FIXME stepping through code, to help you add bugs
+       (debugger          ; FIXME stepping through code, to help you add bugs
+        +lsp)
        ;;direnv
        (docker
         +lsp)
@@ -96,7 +98,8 @@
        (lsp
         +peek)
        macos             ; MacOS-specific commands
-       magit             ; a git porcelain for Emacs
+       (magit             ; a git porcelain for Emacs
+        +forge)
        make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
@@ -125,8 +128,7 @@
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp           ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
-       ;;(go                ; the hipster dialect
-       ;; +lsp)
+       ;;(go +lsp)         ; the hipster dialect
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
@@ -145,9 +147,12 @@
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
+        ;+brain
         +dragndrop       ; drag & drop files/images into org buffers
+        ;+gnuplot
         ;;+hugo            ; use Emacs for hugo blogging
         ;;+jupyter        ; ipython/jupyter support for babel
+        ;+noter
         +pandoc          ; export-with-pandoc support
         ;;+pomodoro        ; be fruitful with the tomato technique
         +present)         ; using org-mode for presentations
