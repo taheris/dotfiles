@@ -50,4 +50,21 @@
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
 
-(package! golden-ratio)
+; my packages
+
+;(package! ejira
+;  :recipe (:host github :repo "nyyManni/ejira")
+;  :pin "89f7c66")
+
+(package! flatbuffers-mode
+  :recipe (:host github :repo "Asalle/flatbuffers-mode")
+  :pin "be4b65f")
+
+(package! protobuf-mode
+  :recipe (:host github :repo "protocolbuffers/protobuf"
+           :files ("protobuf-mode.el" "editors/*.el"))
+  :pin "39d730d")
+
+(package! golden-ratio :pin "007911d")
+
+;(package! org-jira :pin "5123c29")
