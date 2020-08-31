@@ -56,15 +56,19 @@
 ;  :recipe (:host github :repo "nyyManni/ejira")
 ;  :pin "89f7c66")
 
+;(package! eaf
+;  :recipe (:host github :repo "manateelazycat/emacs-application-framework"
+;           :files ("app" "core" "*.el" "*.py"))
+;  :pin "8880c74")
+
 (package! flatbuffers-mode
   :recipe (:host github :repo "Asalle/flatbuffers-mode")
   :pin "be4b65f")
+
+(package! golden-ratio
+  :pin "007911d")
 
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
   :pin "39d730d")
-
-(package! golden-ratio :pin "007911d")
-
-;(package! org-jira :pin "5123c29")

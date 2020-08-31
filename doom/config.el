@@ -21,8 +21,8 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq doom-font (font-spec :family "Monaco" :size 15 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "sans" :size 16))
+(setq doom-font (font-spec :family "Monaco" :size 16 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Monaco" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -57,7 +57,8 @@
 
 
 ; global settings
-(setq confirm-kill-emacs nil
+(setq comp-deferred-compilation t
+      confirm-kill-emacs nil
       doom-localleader-key ","
       js-indent-level 4
       make-pointer-invisible t
@@ -66,7 +67,14 @@
 ; key-bindings
 (map! :leader
       :desc "Project search" "/" #'+ivy/project-search
-      :desc "Deer"           "d" #'deer
+
+      (:prefix ("d" . "debug")
+        :desc "Set breakpoint"  "b" #'edebug-defun
+        :desc "Undo breakpoint" "u" #'eval-defun)
+
+      (:prefix ("f" . "file")
+        :desc "Open deer"     "d" #'deer
+        :desc "Find function" "F" #'find-function)
 
       (:prefix ("t" . "toggle")
         :desc "Golden ratio" "g" #'golden-ratio-mode))
@@ -127,7 +135,7 @@
 (use-package! golden-ratio
   :after-call pre-command-hook
   :config
-    (setq ;golden-ratio-auto-scale t
+    (setq golden-ratio-auto-scale t
           golden-ratio-exclude-buffer-names '("*Org Select*")
           golden-ratio-exclude-modes '(calendar-mode
                                        ediff-mode
