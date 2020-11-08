@@ -63,7 +63,7 @@
 
 (package! flatbuffers-mode
   :recipe (:host github :repo "Asalle/flatbuffers-mode")
-  :pin "be4b65f")
+  :pin "c0e9dc2")
 
 (package! golden-ratio
   :pin "007911d")
