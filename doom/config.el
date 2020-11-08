@@ -68,6 +68,13 @@
 (map! :leader
       :desc "Project search" "/" #'+ivy/project-search
 
+      (:prefix ("TAB" . "workspace")
+        :desc "Switch to"    "SPC" #'+workspace/switch-to
+        :desc "Switch left"  "h"   #'+workspace/switch-left
+        :desc "Switch right" "l"   #'+workspace/switch-right
+        :desc "Swap left"    "H"   #'+workspace/swap-left
+        :desc "Swap right"   "L"   #'+workspace/swap-right)
+
       (:prefix ("d" . "debug")
         :desc "Set breakpoint"  "b" #'edebug-defun
         :desc "Undo breakpoint" "u" #'eval-defun)
