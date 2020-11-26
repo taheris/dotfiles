@@ -62,7 +62,8 @@
       doom-localleader-key ","
       js-indent-level 4
       make-pointer-invisible t
-      mouse-drag-copy-region t)
+      mouse-drag-copy-region t
+      vterm-always-compile-module t)
 
 ; key-bindings
 (map! :leader
