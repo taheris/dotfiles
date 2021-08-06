@@ -21,8 +21,8 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq doom-font (font-spec :family "Monaco" :size 16 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Monaco" :size 16))
+(setq doom-font (font-spec :family "Monaco" :size 15 :weight 'semi-light)
+      doom-variable-pitch-font (font-spec :family "Monaco" :size 15))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -67,7 +67,7 @@
 
 ; key-bindings
 (map! :leader
-      :desc "Project search" "/" #'+ivy/project-search
+      :desc "Search project" "/" #'+default/search-project
 
       (:prefix ("TAB" . "workspace")
         :desc "Switch to"    "SPC" #'+workspace/switch-to
@@ -89,6 +89,9 @@
 
 ;(map! :localleader
 ;      :desc "Ace window" "w" #'ace-window)
+
+; hooks
+(add-hook 'markdown-mode-hook 'auto-fill-mode)
 
 ; company
 (after! company
@@ -140,19 +143,19 @@
           :desc "Type definition" "t" #'lsp-find-type-definition)))
 
 ; golden-ratio
-(use-package! golden-ratio
-  :after-call pre-command-hook
-  :config
-    (setq golden-ratio-auto-scale t
-          golden-ratio-exclude-buffer-names '("*Org Select*")
-          golden-ratio-exclude-modes '(calendar-mode
-                                       ediff-mode
-                                       fundamental-mode
-                                       magit-popup-mode
-                                       messages-buffer-mode))
-
-    (golden-ratio-mode 1)
-    (add-hook 'doom-switch-window-hook #'golden-ratio))
+;(use-package! golden-ratio
+;  :after-call pre-command-hook
+;  :config
+;    (setq golden-ratio-auto-scale t
+;          golden-ratio-exclude-buffer-names '("*Org Select*")
+;          golden-ratio-exclude-modes '(calendar-mode
+;                                       ediff-mode
+;                                       fundamental-mode
+;                                       magit-popup-mode
+;                                       messages-buffer-mode))
+;
+;    (golden-ratio-mode 1)
+;    (add-hook 'doom-switch-window-hook #'golden-ratio))
 
 ; jira
 ;(use-package! org-jira
