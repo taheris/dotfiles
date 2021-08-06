@@ -24,7 +24,8 @@
         +childframe)
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ivy               ; a search engine for love and life
+       ;;ivy               ; a search engine for love and life
+       vertico           ; the search engine of the future
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -171,7 +172,7 @@
         +pomodoro        ; be fruitful with the tomato technique
         +present         ; using org-mode for presentations
         +pretty
-        +roam)
+        +roam2)
        ;;perl              ; write code no one else can comprehend
        (php)               ; perl's insecure younger brother
         ;+lsp)
