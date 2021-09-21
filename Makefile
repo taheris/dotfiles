@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 
-STOW_HOME := tmux keybindings
-STOW_CONFIG := alacritty doom karabiner
+STOW_HOME := git keybindings tmux vim zsh
+STOW_CONFIG := alacritty karabiner
 
 .PHONY: help stow unstow brew deps
 .DEFAULT_GOAL := help
@@ -10,8 +10,8 @@ help: ## Print this message and exit.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%10s\033[0m : %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 stow: cmd-stow ## Symlink dotfiles
-	@for dir in $(STOW_CONFIG); do mkdir -p ~/.config/$$dir; done
 	@for dir in $(STOW_HOME);   do stow $$dir --target=$(HOME); done
+	@for dir in $(STOW_CONFIG); do mkdir -p ~/.config/$$dir; done
 	@for dir in $(STOW_CONFIG); do stow $$dir --target=$(HOME)/.config/$$dir; done
 
 unstow: cmd-stow ## Remove symlinks
