@@ -293,6 +293,7 @@ alias gra='git rebase --abort'
 alias grc='git rebase --continue'
 alias gri='git rebase --interactive'
 alias grs='git rebase --skip'
+alias grso='git rebase --signoff'
 
 # git remote
 alias gre='git remote'
