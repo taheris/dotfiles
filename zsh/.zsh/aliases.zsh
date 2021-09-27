@@ -1,28 +1,14 @@
-# get platform
-platform='unknown'
-unamestr=$(uname)
-if [[ $unamestr == 'Linux' ]]; then
-  platform='linux'
-elif [[ $unamestr == 'Darwin' ]]; then
-  platform='darwin'
-fi
-
-# alias editing
-TRAPHUP() {
-  source $HOME/.zsh/aliases.zsh
-}
-
-alias ae='vim $HOME/.zsh/aliases.zsh'      #alias edit
-alias ar='source $HOME/.zsh/aliases.zsh'   #alias reload
-alias gar="killall -HUP -u \"$USER\" zsh"  #global alias reload
-
-# dotfile editing
+# dotfiles
+alias ae='vim $HOME/.zsh/aliases.zsh'
+alias ar='source $HOME/.zsh/aliases.zsh'
 alias dfs='cd $HOME/src/github.com/taheris/dotfiles'
-alias ve='vim ~/.vimrc'
+alias ste='vim ~/.config/starship/config.toml'
+alias vre='vim ~/.vimrc'
 alias zee='vim ~/.zshenv'
-alias zer='source ~/.zshrc'
+alias zer='source ~/.zshenv'
 alias zre='vim ~/.zshrc'
 alias zrr='source ~/.zshrc'
+alias zr='exec zsh'
 
 # cd
 alias cdb='cd -'
@@ -31,12 +17,11 @@ alias -g ....='cd ../../..'
 alias -g .....='cd ../../../..'
 
 # ls
-if [[ $platform == 'linux' ]]; then
+if [[ $(uname) == 'Linux' ]]; then
   alias ls='ls --color=auto'
-elif [[ $platform == 'darwin' ]]; then
+elif [[ $(uname) == 'Darwin' ]]; then
   alias ls='ls -Gh'
 fi
-
 alias l='ls -1A'         # Lists in one column, hidden files.
 alias ll='ls -lh'        # Lists human readable sizes.
 alias la='ll -A'         # Lists hidden files.

@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 
 STOW_HOME := git keybindings tmux vim zsh
-STOW_CONFIG := alacritty karabiner
+STOW_CONFIG := alacritty karabiner starship
 
 .PHONY: help stow unstow brew deps
 .DEFAULT_GOAL := help

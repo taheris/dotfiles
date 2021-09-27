@@ -16,6 +16,7 @@ path=(
   /usr/local/sbin
   /usr/local/opt/{emacs-plus@28,gettext,llvm,mysql-client,openssl@1.1,sqlite}/bin
   ~/{.cargo,.cabal,.krew}/bin
+  ~/bin
   $path
 )
 
