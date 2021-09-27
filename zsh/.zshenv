@@ -10,6 +10,7 @@ export DOCKER_SCAN_SUGGEST=false
 export GOPATH=~
 export LC_ALL=en_US.UTF-8
 export MANPATH=$MANPATH:/usr/local/opt/gnu-tar/libexec/gnuman
+export STARSHIP_CONFIG=~/.config/starship/config.toml
 
 # openssl
 export OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1
