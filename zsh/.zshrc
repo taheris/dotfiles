@@ -29,9 +29,9 @@ fpath=(
 )
 
 # completions
-zstyle :compinstall filename '/Users/shaun/.zshrc'
-autoload -Uz compinit
-compinit
+#zstyle :compinstall filename '/Users/shaun/.zshrc'
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+autoload -Uz compinit && compinit
 
 # set up kubernetes
 source <(kubectl completion zsh)
