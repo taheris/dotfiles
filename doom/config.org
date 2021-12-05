@@ -1,0 +1,2765 @@
+#+title: Doom Emacs Config
+#+author: taheris
+#+property: header-args:emacs-lisp :tangle yes :comments link
+#+property: header-args:elisp :exports code
+#+property: header-args :tangle no :results silent :eval no-export
+#+startup: fold
+
+* Emacs config
+
+** Personal Info
+
+*** Name and email
+
+#+begin_src emacs-lisp
+(setq user-full-name "taheris"
+      user-mail-address "git@taheris.net")
+#+end_src
+
+*** GPG
+
+#+begin_src emacs-lisp
+(setq auth-sources '("~/.authinfo.gpg")
+      auth-source-cache-expiry nil) ; default is 7200 (2h)
+#+end_src
+
+** Global defaults
+
+#+begin_src emacs-lisp
+(setq-default delete-by-moving-to-trash t
+              window-combination-resize t
+              x-stretch-cursor t)
+
+(setq auto-save-default t
+      comp-deferred-compilation t
+      confirm-kill-emacs nil
+      doom-localleader-key ","
+      evil-want-fine-undo t
+      js-indent-level 4
+      make-pointer-invisible t
+      mouse-drag-copy-region t
+      scroll-margin 2
+      truncate-string-ellipsis "…"
+      undo-limit 10485760
+      vterm-always-compile-module t)
+#+end_src
+
+** Customisations
+
+Use a separate file for customisations rather than =init.el=.
+
+#+begin_src emacs-lisp
+(setq-default custom-file (expand-file-name ".custom.el" doom-private-dir))
+(when (file-exists-p custom-file)
+  (load custom-file))
+#+end_src
+
+** Window splits
+
+#+begin_src emacs-lisp
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+#+end_src
+
+** Frame title
+
+An example of an unedited title would be =config.org ● dotfiles=, while an
+edited buffer would look like =config.org ◉ dotfiles=.
+
+#+begin_src emacs-lisp
+(setq frame-title-format
+      '(""
+        (:eval
+         (if (s-contains-p org-roam-directory (or buffer-file-name ""))
+             (replace-regexp-in-string
+              ".*/[0-9]*-?" "☰ "
+              (subst-char-in-string ?_ ?  buffer-file-name))
+           "%b"))
+        (:eval
+         (let ((project-name (projectile-project-name)))
+           (unless (string= "-" project-name)
+             (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
+#+end_src
+
+** Workspace
+
+#+begin_src emacs-lisp
+(map! :leader
+      (:prefix ("TAB" . "workspace")
+        :desc "Switch to"    "SPC" #'+workspace/switch-to
+        :desc "Switch left"  "h"   #'+workspace/switch-left
+        :desc "Switch right" "l"   #'+workspace/switch-right
+        :desc "Swap left"    "H"   #'+workspace/swap-left
+        :desc "Swap right"   "L"   #'+workspace/swap-right))
+#+end_src
+
+** Debugger
+
+#+begin_src emacs-lisp
+(map! :leader
+      (:prefix ("d" . "debug")
+        :desc "Set breakpoint"  "b" #'edebug-defun
+        :desc "Undo breakpoint" "u" #'eval-defun))
+#+end_src
+
+* Doom config
+
+** Modules
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle no
+:END:
+
+Define the =init.el= file structure.
+
+#+name: init.el
+#+attr_html: :collapsed t
+#+begin_src emacs-lisp :tangle "init.el" :noweb no-export :comments no
+;;; init.el -*- lexical-binding: t; -*-
+
+(doom! :input
+       <<doom-input>>
+
+       :completion
+       <<doom-completion>>
+
+       :ui
+       <<doom-ui>>
+
+       :editor
+       <<doom-editor>>
+
+       :emacs
+       <<doom-emacs>>
+
+       :term
+       <<doom-term>>
+
+       :checkers
+       <<doom-checkers>>
+
+       :tools
+       <<doom-tools>>
+
+       :os
+       <<doom-os>>
+
+       :lang
+       <<doom-lang>>
+
+       :email
+       <<doom-email>>
+
+       :app
+       <<doom-app>>
+
+       :config
+       <<doom-config>>
+       )
+#+end_src
+
+*** Input
+
+#+name: doom-input
+#+begin_src emacs-lisp
+;;chinese
+;;japanese
+;;layout                     ; auie,ctsrnm is the superior home row
+#+end_src
+
+*** Completion
+
+#+name: doom-completion
+#+begin_src emacs-lisp
+(company                     ; the ultimate code completion backend
+ +childframe)                ; ... when your children are better than you
+;;helm                       ; the *other* search engine for love and life
+;;ido                        ; the other *other* search engine...
+;; (ivy                      ; a search engine for love and life
+;;  +icons                   ; ... icons are nice
+;;  +prescient)              ; ... I know what I want(ed)
+(vertico +icons)             ; the search engine of the future
+#+end_src
+
+*** UI
+
+#+name: doom-ui
+#+begin_src emacs-lisp
+;;deft                       ; notational velocity for Emacs
+doom                         ; what makes DOOM look the way it does
+;;doom-dashboard             ; a nifty splash screen for Emacs
+;;doom-quit                  ; DOOM quit-message prompts when you quit Emacs
+(emoji +unicode)             ; 🙂
+;;fill-column                ; a `fill-column' indicator
+hl-todo                      ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+;;hydra                      ; quick documentation for related commands
+;;indent-guides              ; highlighted indent columns, notoriously slow
+(ligatures +extra)           ; ligatures and symbols to make your code pretty again
+;;minimap                    ; show a map of the code on the side
+modeline                     ; snazzy, Atom-inspired modeline, plus API
+nav-flash                    ; blink the current line after jumping
+;;neotree                    ; a project drawer, like NERDTree for vim
+ophints                      ; highlight the region an operation acts on
+(popup                       ; tame sudden yet inevitable temporary windows
+ ;+all                        ; catch all popups that start with an asterix
+ +defaults)                  ; default popup rules
+;;(tabs                      ; an tab bar for Emacs
+;;  +centaur-tabs)           ; ... with prettier tabs
+treemacs                     ; a project drawer, like neotree but cooler
+;;unicode                    ; extended unicode support for various languages
+vc-gutter                    ; vcs diff in the fringe
+vi-tilde-fringe              ; fringe tildes to mark beyond EOB
+(window-select +numbers)     ; visually switch windows
+workspaces                   ; tab emulation, persistence & separate workspaces
+zen                          ; distraction-free coding or writing
+#+end_src
+
+*** Editor
+
+#+name: doom-editor
+#+begin_src emacs-lisp
+(evil +everywhere)           ; come to the dark side, we have cookies
+file-templates               ; auto-snippets for empty files
+fold                         ; (nigh) universal code folding
+(format +onsave)             ; automated prettiness
+;;god                        ; run Emacs commands without modifier keys
+;;lispy                      ; vim for lisp, for people who don't like vim
+multiple-cursors             ; editing in many places at once
+;;objed                      ; text object editing for the innocent
+;;parinfer                   ; turn lisp into python, sort of
+rotate-text                  ; cycle region at point between text candidates
+snippets                     ; my elves. They type so I don't have to
+word-wrap                    ; soft wrapping with language-aware indent
+#+end_src
+
+*** Emacs
+
+#+name: doom-emacs
+#+begin_src emacs-lisp
+(dired +icons)               ; making dired pretty [functional]
+electric                     ; smarter, keyword-based electric-indent
+(ibuffer +icons)             ; interactive buffer management
+(undo +tree)                 ; persistent, smarter undo for your inevitable mistakes
+vc                           ; version-control and Emacs, sitting in a tree
+#+end_src
+
+*** Term
+
+#+begin_src emacs-lisp
+;;eshell                     ; the elisp shell that works everywhere
+;;shell                      ; simple shell REPL for Emacs
+;;term                       ; basic terminal emulator for Emacs
+vterm                        ; the best terminal emulation in Emacs
+#+end_src
+
+*** Checkers
+
+#+name: doom-checkers
+#+begin_src emacs-lisp
+syntax                       ; tasing you for every semicolon you forget
+(spell +aspell)              ; tasing you for misspelling mispelling
+grammar                      ; tasing grammar mistake every you make
+#+end_src
+
+*** Tools
+
+#+name: doom-tools
+#+begin_src emacs-lisp
+;;ansible                    ; a crucible for infrastructure as code
+;;biblio                     ; Writes a PhD for you (citation needed)
+(debugger +lsp)              ; FIXME stepping through code, to help you add bugs
+;;direnv                     ; be direct about your environment
+docker                       ; port everything to containers
+;;editorconfig               ; let someone else argue about tabs vs spaces
+;;ein                        ; tame Jupyter notebooks with emacs
+(eval +overlay)              ; run code, run (also, repls)
+;;gist                       ; interacting with github gists
+(lookup                      ; helps you navigate your code and documentation
+ +dictionary                 ; dictionary/thesaurus is nice
+ +docsets)                   ; ...or in Dash docsets locally
+(lsp +peek)                  ; Language Server Protocol
+(magit                       ; a git porcelain for Emacs
+ +forge)                     ; interface with git forges
+make                         ; run make tasks from Emacs
+;;pass                       ; password manager for nerds
+pdf                          ; pdf enhancements
+;;prodigy                    ; FIXME managing external services & code builders
+rgb                          ; creating color strings
+;;taskrunner                 ; taskrunner for all your projects
+;;terraform                  ; infrastructure as code
+;;tmux                       ; an API for interacting with tmux
+upload                       ; map local to remote projects via ssh/ftp
+#+end_src
+
+*** OS
+
+#+name: doom-os
+#+begin_src emacs-lisp
+(:if IS-MAC macos)           ; improve compatibility with macOS
+(tty +osc)                   ; improve the terminal Emacs experience
+#+end_src
+
+*** Lang
+
+#+name: doom-lang
+#+begin_src emacs-lisp
+;;agda                       ; types of types of types of types...
+;;beancount                  ; mind the GAAP
+;;cc                         ; C/C++/Obj-C madness
+;;clojure                    ; java with a lisp
+;;common-lisp                ; if you've seen one lisp, you've seen them all
+;;coq                        ; proofs-as-programs
+;;crystal                    ; ruby at the speed of c
+;;csharp                     ; unity, .NET, and mono shenanigans
+data                         ; config/data formats
+;;(dart +flutter)            ; paint ui and not much else
+;;dhall                      ; JSON with FP sprinkles
+;;elixir                     ; erlang done right
+;;elm                        ; care for a cup of TEA?
+emacs-lisp                   ; drown in parentheses
+;;erlang                     ; an elegant language for a more civilized age
+ess                          ; emacs speaks statistics
+;;factor                     ; for when scripts are stacked against you
+;;faust                      ; dsp, but you get to keep your soul
+;;fsharp                     ; ML stands for Microsoft's Language
+;;fstar                      ; (dependent) types and (monadic) effects and Z3
+;;gdscript                   ; the language you waited for
+;;(go +lsp)                  ; the hipster dialect
+;;(haskell +lsp)             ; a language that's lazier than I am
+;;hy                         ; readability of scheme w/ speed of python
+;;idris                      ; a language you can depend on
+json                         ; At least it ain't XML
+;;(java +meghanada)          ; the poster child for carpal tunnel syndrome
+(javascript +lsp)            ; all(hope(abandon(ye(who(enter(here))))))
+(julia +lsp)                 ; Python, R, and MATLAB in a blender
+;;kotlin                     ; a better, slicker Java(Script)
+(latex                       ; writing papers in Emacs has never been so fun
+ +latexmk                    ; what else would you use?
+ +cdlatex                    ; quick maths symbols
+ +fold)                      ; fold the clutter away nicities
+;;lean                       ; proof that mathematicians need help
+;;ledger                     ; an accounting system in Emacs
+lua                          ; one-based indices? one-based indices
+markdown                     ; writing docs for people to ignore
+;;nim                        ; python + lisp at the speed of c
+;;nix                        ; I hereby declare "nix geht mehr!"
+;;ocaml                      ; an objective camel
+(org                         ; organize your plain life in plain text
+ +pretty                     ; yessss my pretties! (nice unicode symbols)
+ +dragndrop                  ; drag & drop files/images into org buffers
+ ;;+hugo                     ; use Emacs for hugo blogging
+ +noter                      ; enhanced PDF notetaking
+ +jupyter                    ; ipython/jupyter support for babel
+ +pandoc                     ; export-with-pandoc support
+ +gnuplot                    ; who doesn't like pretty pictures
+ ;;+pomodoro                 ; be fruitful with the tomato technique
+ +present                    ; using org-mode for presentations
+ +roam2)                     ; wander around notes
+php                          ; perl's insecure younger brother
+;;plantuml                   ; diagrams for confusing people more
+;;purescript                 ; javascript, but functional
+(python +lsp +pyright)       ; beautiful is better than ugly
+;;qt                         ; the 'cutest' gui framework ever
+;;racket                     ; a DSL for DSLs
+;;raku                       ; the artist formerly known as perl6
+;;rest                       ; Emacs as a REST client
+;;rst                        ; ReST in peace
+;;(ruby +rails)              ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+(rust +lsp)                  ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+;;scala                      ; java, but good
+(scheme +guile)              ; a fully conniving family of lisps
+sh                           ; she sells {ba,z,fi}sh shells on the C xor
+;;sml                        ; no, the /other/ ML
+;;solidity                   ; do you need a blockchain? No.
+;;swift                      ; who asked for emoji variables?
+;;terra                      ; Earth and Moon in alignment for performance.
+web                          ; the tubes
+yaml                         ; JSON, but readable
+;;zig                        ; C, but simpler
+#+end_src
+
+*** Email
+
+#+name: doom-email
+#+begin_src emacs-lisp
+;;(mu4e +org +gmail)
+;;notmuch
+;;(wanderlust +gmail)
+#+end_src
+
+*** App
+
+#+name: doom-app
+#+begin_src emacs-lisp
+;;calendar                   ; A dated approach to timetabling
+;;emms                       ; Multimedia in Emacs is music to my ears
+everywhere                   ; *leave* Emacs!? You must be joking.
+irc                          ; how neckbeards socialize
+(rss +org)                   ; emacs as an RSS reader
+;;twitter                    ; twitter client https://twitter.com/vnought
+#+end_src
+
+*** Config
+
+#+name: doom-config
+#+begin_src emacs-lisp
+literate
+(default +bindings +smartparens)
+#+end_src
+
+** Visual settings
+
+*** Font face
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "Monaco" :size 15)
+      doom-big-font (font-spec :family "Monaco" :size 24)
+      doom-variable-pitch-font (font-spec :family "Libre Baskerville")
+      doom-serif-font (font-spec :family "Libre Baskerville")
+      doom-unicode-font (font-spec :family "JuliaMono"))
+#+end_src
+
+*** Modeline
+
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-material)
+(remove-hook 'window-setup-hook #'doom-init-theme-h)
+(add-hook 'after-init-hook #'doom-init-theme-h 'append)
+(delq! t custom-theme-load-path)
+#+end_src
+
+Hide =LF UTF-8=.
+
+#+begin_src emacs-lisp
+(defun doom-modeline-conditional-buffer-encoding ()
+  "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (and (memq (plist-get (coding-system-plist buffer-file-coding-system) :category)
+                                 '(coding-category-undecided coding-category-utf-8))
+                           (not (memq (coding-system-eol-type buffer-file-coding-system) '(1 2))))
+                t)))
+
+(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
+#+end_src
+
+*** Miscellaneous
+
+Use relative line numbers.
+
+#+begin_src emacs-lisp
+(setq display-line-numbers-type 'relative)
+#+end_src
+
+Default buffer names.
+
+#+begin_src emacs-lisp
+(setq doom-fallback-buffer-name "► Doom"
+      +doom-dashboard-name "► Doom")
+#+end_src
+
+** Allow babel execution in CLI actions
+
+Don't ask for confirmation when evaluation babel config, and silence
+~org-babel-execute-src-block~ output.
+
+#+begin_src emacs-lisp :tangle cli.el :comments no
+;;; cli.el -*- lexical-binding: t; -*-
+(setq org-confirm-babel-evaluate nil)
+
+(defun doom-shut-up-a (orig-fn &rest args)
+  (quiet! (apply orig-fn args)))
+
+(advice-add 'org-babel-execute-src-block :around #'doom-shut-up-a)
+#+end_src
+
+** Asynchronous config tangling
+
+Doom adds an =org-mode= hook ~+literate-enable-recompile-h~. This is a nice idea,
+but it's too blocking for my taste. Since I trust my tangling to be fairly
+straightforward, I'll just redefine it to a simpler, async, function.
+
+#+begin_src emacs-lisp
+(defadvice! +literate-tangle-async-h ()
+ "A very simplified version of `+literate-tangle-h', but async."
+ :override #'+literate-tangle-h
+ (let ((default-directory doom-private-dir))
+  (async-shell-command
+   (format "emacs --batch --eval \"(progn \
+   (require 'org) (setq org-confirm-babel-evaluate nil) \
+    (org-babel-tangle-file \\\"%s\\\"))\""
+    +literate-config-file))))
+#+end_src
+
+* Packages
+
+** Usage instructions
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle no
+:END:
+
+This is where you install packages, by declaring them with the ~package!~ macro in
+=packages.el=, then running ~doom refresh~ on the command line.
+
+This file shouldn't be byte compiled.
+
+#+begin_src emacs-lisp :tangle "packages.el" :comments no
+;; -*- no-byte-compile: t; -*-
+#+end_src
+
+You'll then need to restart Emacs for your changes to take effect! Or at least,
+run =M-x doom/reload=.
+
+*Warning*: Don't disable core packages listed in =~/.emacs.d/core/packages.el=.
+Doom requires these, and disabling them may have terrible side effects.
+
+*** Packages in MELPA/ELPA/emacsmirror
+
+To install ~some-package~ from MELPA, ELPA or emacsmirror:
+
+#+begin_src emacs-lisp
+(package! some-package)
+#+end_src
+
+*** Packages from git repositories
+
+To install a package directly from a particular repo, you'll need to specify
+a ~:recipe~. You'll find documentation on what ~:recipe~ accepts [[https://github.com/raxod502/straight.el#the-recipe-format][here]]:
+
+#+begin_src emacs-lisp
+(package! another-package
+  :recipe (:host github :repo "username/repo"))
+#+end_src
+
+If the package you are trying to install does not contain a ~PACKAGENAME.el~
+file, or is located in a subdirectory of the repo, you'll need to specify
+~:files~ in the ~:recipe~:
+
+#+begin_src emacs-lisp
+(package! this-package
+  :recipe (:host github :repo "username/repo"
+           :files ("some-file.el" "src/lisp/*.el")))
+#+end_src
+
+*** Disabling built-in packages
+
+If you'd like to disable a package included with Doom, for whatever reason,
+you can do so here with the ~:disable~ property:
+
+#+begin_src emacs-lisp
+(package! builtin-package :disable t)
+#+end_src
+
+You can override the recipe of a built in package without having to specify
+all the properties for ~:recipe~. These will inherit the rest of its recipe
+from Doom or MELPA/ELPA/Emacsmirror:
+
+#+begin_src emacs-lisp
+(package! builtin-package :recipe (:nonrecursive t))
+(package! builtin-package-2 :recipe (:repo "myfork/package"))
+#+end_src
+
+Specify a ~:branch~ to install a package from a particular branch or tag.
+This is required for some packages whose default branch isn't 'master' (which
+our package manager can't deal with; see [[https://github.com/raxod502/straight.el/issues/279][raxod502/straight.el#279]])
+
+#+begin_src emacs-lisp
+(package! builtin-package :recipe (:branch "develop"))
+#+end_src
+
+** Which key
+
+Reduce the delay time before popup, and trim =evil-= from popup names.
+
+#+begin_src emacs-lisp
+(setq which-key-idle-delay 0.4
+      which-key-allow-multiple-replacements t)
+
+(after! which-key
+  (pushnew!
+   which-key-replacement-alist
+   '(("" . "\\`+?evil[-:/]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+   ))
+#+end_src
+
+** Abbrev
+
+Use a single abbrev table for multiple modes.
+
+#+begin_src emacs-lisp :tangle no
+(add-hook 'doom-first-buffer-hook
+          (defun +abbrev-file-name ()
+            (setq-default abbrev-mode t)
+            (setq abbrev-file-name (expand-file-name "abbrev.el" doom-private-dir))))
+#+end_src
+
+** Evil
+
+Change some settings from the vim defaults.
+
+#+begin_src emacs-lisp
+(after! evil
+  (setq evil-ex-substitute-global t     ; I like my s/../.. to by global by default
+        evil-move-cursor-back nil       ; Don't move the block cursor when toggling insert mode
+        evil-kill-on-visual-paste nil)) ; Don't put overwritten text in the kill ring
+#+end_src
+
+Remove unused ~evil-escape-mode~ package which watches insert-mode keystrokes.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! evil-escape :disable t)
+#+end_src
+
+** Company
+
+#+begin_src emacs-lisp
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2
+        company-show-numbers t
+        company-box-doc-enable nil
+        company-selection-wrap-around t)
+
+  (define-key! company-active-map
+               "TAB"    #'company-complete-selection
+               [tab]    #'company-complete-selection
+               "RET"    nil
+               [return] nil)
+
+  (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+
+(setq-default history-length 1000
+              prescient-history-length 1000)
+#+end_src
+
+Add ~Ispell~ to ~text~, ~markdown~, and ~GFM~ modes.
+
+#+begin_src emacs-lisp
+(set-company-backend!
+  '(text-mode
+    markdown-mode
+    gfm-mode)
+  '(:seperate
+    company-ispell
+    company-files
+    company-yasnippet))
+#+end_src
+
+** Projectile
+
+Ignore some ~projectile~ paths.
+
+#+begin_src emacs-lisp
+(setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
+
+(defun projectile-ignored-project-function (filepath)
+  "Return t if FILEPATH is within any of `projectile-ignored-projects'"
+  (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
+#+end_src
+
+** Ispell
+
+Set personal dict file.
+
+#+begin_src emacs-lisp
+(setq ispell-personal-dictionary (expand-file-name ".ispell_personal" doom-private-dir))
+#+end_src
+
+** String inflection
+
+Change the case pattern for a symbol.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! string-inflection :pin "c4a519be102cb99dd86be3ee8c387f008d097635")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! string-inflection
+  :commands (string-inflection-all-cycle
+             string-inflection-toggle
+             string-inflection-camelcase
+             string-inflection-lower-camelcase
+             string-inflection-kebab-case
+             string-inflection-underscore
+             string-inflection-capital-underscore
+             string-inflection-upcase)
+
+  :init
+  (map! :leader :prefix ("c~" . "naming convention")
+        :desc "cycle" "~" #'string-inflection-all-cycle
+        :desc "toggle" "t" #'string-inflection-toggle
+        :desc "CamelCase" "c" #'string-inflection-camelcase
+        :desc "downCase" "d" #'string-inflection-lower-camelcase
+        :desc "kebab-case" "k" #'string-inflection-kebab-case
+        :desc "under_score" "_" #'string-inflection-underscore
+        :desc "Upper_Score" "u" #'string-inflection-capital-underscore
+        :desc "UP_CASE" "U" #'string-inflection-upcase)
+
+  (after! evil
+    (evil-define-operator evil-operator-string-inflection (beg end _type)
+      "Define a new evil operator that cycles symbol casing."
+      :move-point nil
+      (interactive "<R>")
+      (string-inflection-all-cycle)
+      (setq evil-repeat-info '([?g ?~])))
+    
+    (define-key evil-normal-state-map (kbd "g~") 'evil-operator-string-inflection)))
+#+end_src
+
+** Smart parentheses
+
+#+begin_src emacs-lisp
+(sp-local-pair
+ '(org-mode)
+ "<<" ">>"
+ :actions '(insert))
+#+end_src
+
+** Info colors
+
+This makes manual pages nicer to look at by adding variable pitch fontification
+and colouring 🙂.
+
+#+attr_html: :class invertible :style width:80% :alt Example info-colours page.
+[[https://tecosaur.com/lfs/emacs-config/screenshots/info-colours.png]]
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! info-colors :pin "47ee73cc19b1049eef32c9f3e264ea7ef2aaf8a5")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! info-colors
+  :commands (info-colors-fontify-node))
+
+(add-hook 'Info-selection-hook 'info-colors-fontify-node)
+#+end_src
+
+** Emojify
+
+Use twitter's emoji set instead of ~emoji-one~.
+
+#+begin_src emacs-lisp
+(setq emojify-emoji-set "twemoji-v2")
+#+end_src
+
+Disable for certain symbols.
+
+#+begin_src emacs-lisp
+(defvar emojify-disabled-emojis
+  '(;; Org
+    "◼" "☑" "☸" "⚙" "⏩" "⏪" "⬆" "⬇" "❓"
+    ;; Terminal powerline
+    "✔"
+    ;; Box drawing
+    "▶" "◀")
+  "Characters that should never be affected by `emojify-mode'.")
+
+(defadvice! emojify-delete-from-data ()
+  "Ensure `emojify-disabled-emojis' don't appear in `emojify-emojis'."
+  :after #'emojify-set-emoji-data
+  (dolist (emoji emojify-disabled-emojis)
+    (remhash emoji emojify-emojis)))
+#+end_src
+
+Define a minor mode for automatically converting emojis to unicode.
+
+#+begin_src emacs-lisp
+(defun emojify--replace-text-with-emoji (orig-fn emoji text buffer start end &optional target)
+  "Modify `emojify--propertize-text-for-emoji' to replace ascii/github emoticons with unicode emojis, on the fly."
+  (if (or (not emoticon-to-emoji) (= 1 (length text)))
+      (funcall orig-fn emoji text buffer start end target)
+    (delete-region start end)
+    (insert (ht-get emoji "unicode"))))
+
+(define-minor-mode emoticon-to-emoji
+  "Write ascii/github emojis, and have them converted to unicode live."
+  :global nil
+  :init-value nil
+  (if emoticon-to-emoji
+      (progn
+        (setq-local emojify-emoji-styles '(ascii github unicode))
+        (advice-add 'emojify--propertize-text-for-emoji :around #'emojify--replace-text-with-emoji)
+        (unless emojify-mode
+          (emojify-turn-on-emojify-mode)))
+    (setq-local emojify-emoji-styles (default-value 'emojify-emoji-styles))
+    (advice-remove 'emojify--propertize-text-for-emoji #'emojify--replace-text-with-emoji)))
+#+end_src
+
+And add it to some modes.
+
+#+begin_src emacs-lisp
+(add-hook! '(org-msg-edit-mode) (emoticon-to-emoji 1))
+#+end_src
+
+** Page break lines
+
+Display the =^L= page break character as horizontal rules.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! page-break-lines
+  :recipe (:host github
+           :repo "purcell/page-break-lines"))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! page-break-lines
+  :commands page-break-lines-mode
+  :init
+  (autoload 'turn-on-page-break-lines-mode "page-break-lines")
+  :config
+  (setq page-break-lines-max-width fill-column)
+  (map! :prefix "g"
+        :desc "Prev page break" :nv "[" #'backward-page
+        :desc "Next page break" :nv "]" #'forward-page))
+#+end_src
+
+** Writeroom
+
+Reduce zoom size.
+
+#+begin_src emacs-lisp
+(setq +zen-text-scale 0.8)
+#+end_src
+
+* Applications
+
+** Ebooks
+
+Add =calibredb= to use calibre through Emacs.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! calibredb :pin "cb93563d0ec9e0c653210bc574f9546d1e7db437")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! calibredb
+  :commands calibredb
+  :config
+  (setq calibredb-root-dir "~/Documents/books/calibre"
+        calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
+  
+  (map! :map calibredb-show-mode-map
+        :ne "?" #'calibredb-entry-dispatch
+        :ne "o" #'calibredb-find-file
+        :ne "O" #'calibredb-find-file-other-frame
+        :ne "V" #'calibredb-open-file-with-default-tool
+        :ne "s" #'calibredb-set-metadata-dispatch
+        :ne "e" #'calibredb-export-dispatch
+        :ne "q" #'calibredb-entry-quit
+        :ne "." #'calibredb-open-dired
+        :ne [tab] #'calibredb-toggle-view-at-point
+        :ne "M-t" #'calibredb-set-metadata--tags
+        :ne "M-a" #'calibredb-set-metadata--author_sort
+        :ne "M-A" #'calibredb-set-metadata--authors
+        :ne "M-T" #'calibredb-set-metadata--title
+        :ne "M-c" #'calibredb-set-metadata--comments)
+  
+  (map! :map calibredb-search-mode-map
+        :ne [mouse-3] #'calibredb-search-mouse
+        :ne "RET" #'calibredb-find-file
+        :ne "?" #'calibredb-dispatch
+        :ne "a" #'calibredb-add
+        :ne "A" #'calibredb-add-dir
+        :ne "c" #'calibredb-clone
+        :ne "d" #'calibredb-remove
+        :ne "D" #'calibredb-remove-marked-items
+        :ne "j" #'calibredb-next-entry
+        :ne "k" #'calibredb-previous-entry
+        :ne "l" #'calibredb-virtual-library-list
+        :ne "L" #'calibredb-library-list
+        :ne "n" #'calibredb-virtual-library-next
+        :ne "N" #'calibredb-library-next
+        :ne "p" #'calibredb-virtual-library-previous
+        :ne "P" #'calibredb-library-previous
+        :ne "s" #'calibredb-set-metadata-dispatch
+        :ne "S" #'calibredb-switch-library
+        :ne "o" #'calibredb-find-file
+        :ne "O" #'calibredb-find-file-other-frame
+        :ne "v" #'calibredb-view
+        :ne "V" #'calibredb-open-file-with-default-tool
+        :ne "." #'calibredb-open-dired
+        :ne "b" #'calibredb-catalog-bib-dispatch
+        :ne "e" #'calibredb-export-dispatch
+        :ne "r" #'calibredb-search-refresh-and-clear-filter
+        :ne "R" #'calibredb-search-clear-filter
+        :ne "q" #'calibredb-search-quit
+        :ne "m" #'calibredb-mark-and-forward
+        :ne "f" #'calibredb-toggle-favorite-at-point
+        :ne "x" #'calibredb-toggle-archive-at-point
+        :ne "h" #'calibredb-toggle-highlight-at-point
+        :ne "u" #'calibredb-unmark-and-forward
+        :ne "i" #'calibredb-edit-annotation
+        :ne "DEL" #'calibredb-unmark-and-backward
+        :ne [backtab] #'calibredb-toggle-view
+        :ne [tab] #'calibredb-toggle-view-at-point
+        :ne "M-n" #'calibredb-show-next-entry
+        :ne "M-p" #'calibredb-show-previous-entry
+        :ne "/" #'calibredb-search-live-filter
+        :ne "M-t" #'calibredb-set-metadata--tags
+        :ne "M-a" #'calibredb-set-metadata--author_sort
+        :ne "M-A" #'calibredb-set-metadata--authors
+        :ne "M-T" #'calibredb-set-metadata--title
+        :ne "M-c" #'calibredb-set-metadata--comments))
+#+end_src
+
+Add =nov= to read the ebooks.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! nov :pin "b3c7cc28e95fe25ce7b443e5f49e2e45360944a3")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! nov
+  :mode ("\\.epub\\'" . nov-mode)
+  :config
+  (map! :map nov-mode-map
+        :n "RET" #'nov-scroll-up)
+
+  (defun doom-modeline-segment--nov-info ()
+    (concat
+     " "
+     (propertize
+      (cdr (assoc 'creator nov-metadata))
+      'face 'doom-modeline-project-parent-dir)
+     " "
+     (cdr (assoc 'title nov-metadata))
+     " "
+     (propertize
+      (format "%d/%d"
+              (1+ nov-documents-index)
+              (length nov-documents))
+      'face 'doom-modeline-info)))
+
+  (advice-add 'nov-render-title :override #'ignore)
+
+  (defun +nov-mode-setup ()
+    (face-remap-add-relative 'variable-pitch
+                             :family "Libre Baskerville"
+                             :height 1.4
+                             :width 'semi-expanded)
+    (face-remap-add-relative 'default :height 1.3)
+    (setq-local line-spacing 0.2
+                next-screen-context-lines 4
+                shr-use-colors nil)
+    (require 'visual-fill-column nil t)
+    (setq-local visual-fill-column-center-text t
+                visual-fill-column-width 80
+                nov-text-width 80)
+    (visual-fill-column-mode 1)
+    (hl-line-mode -1)
+
+    (add-to-list '+lookup-definition-functions #'+lookup/dictionary-definition)
+
+    (setq-local mode-line-format
+                `((:eval
+                   (doom-modeline-segment--workspace-name))
+                  (:eval
+                   (doom-modeline-segment--window-number))
+                  (:eval
+                   (doom-modeline-segment--nov-info))
+                  ,(propertize
+                    " %P "
+                    'face 'doom-modeline-buffer-minor-mode)
+                  ,(propertize
+                    " "
+                    'face (if (doom-modeline--active) 'mode-line 'mode-line-inactive)
+                    'display `((space
+                                :align-to
+                                (- (+ right right-fringe right-margin)
+                                   ,(* (let ((width (doom-modeline--font-width)))
+                                         (or (and (= width 1) 1)
+                                             (/ width (frame-char-width) 1.0)))
+                                       (string-width
+                                        (format-mode-line (cons "" '(:eval (doom-modeline-segment--major-mode))))))))))
+                  (:eval (doom-modeline-segment--major-mode)))))
+
+  (add-hook 'nov-mode-hook #'+nov-mode-setup))
+#+end_src
+
+** Calculator
+
+Emacs includes the venerable =calc=, which is a pretty impressive RPN (Reverse
+Polish Notation) calculator. However, we can do a bit to improve the experience.
+
+*** Defaults
+
+Any sane person prefers radians and exact values.
+
+#+begin_src emacs-lisp
+(setq calc-angle-mode 'rad  ; radians are rad
+      calc-symbolic-mode t) ; keeps expressions like \sqrt{2} irrational for as long as possible
+#+end_src
+
+*** CalcTeX
+
+Everybody knows that mathematical expressions look best with LaTeX, so =calc='s
+ability to create LaTeX representations of its expressions provides a lovely
+opportunity which is taken advantage of in the CalcTeX package.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! calctex
+  :recipe (:host github
+           :repo "johnbcoughlin/calctex"
+           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
+  :pin "784cf911bc96aac0f47d529e8cee96ebd7cc31c9")
+#+end_src
+
+#+attr_html: :class invertible :alt Demonstration of calc, prettified by calctex.
+[[https://tecosaur.com/lfs/emacs-config/screenshots/calc-with-calctex.png]]
+
+We'd like to use CalcTeX too, so let's set that up, and fix some glaring
+inadequacies --- why on earth would you commit a hard-coded path to an executable
+that /only works on your local machine/, consequently breaking the package for
+everyone else!?
+
+#+begin_src emacs-lisp
+(use-package! calctex
+  :commands calctex-mode
+  :init
+  (add-hook 'calc-mode-hook #'calctex-mode)
+  :config
+  (setq calctex-additional-latex-packages "
+\\usepackage[usenames]{xcolor}
+\\usepackage{soul}
+\\usepackage{adjustbox}
+\\usepackage{amsmath}
+\\usepackage{amssymb}
+\\usepackage{siunitx}
+\\usepackage{cancel}
+\\usepackage{mathtools}
+\\usepackage{mathalpha}
+\\usepackage{xparse}
+\\usepackage{arevmath}"
+        calctex-additional-latex-macros
+        (concat calctex-additional-latex-macros
+                "\n\\let\\evalto\\Rightarrow"))
+  (defadvice! no-messaging-a (orig-fn &rest args)
+    :around #'calctex-default-dispatching-render-process
+    (let ((inhibit-message t) message-log-max)
+      (apply orig-fn args)))
+  ;; Fix hardcoded dvichop path (whyyyyyyy)
+  (let ((vendor-folder (concat (file-truename doom-local-dir)
+                               "straight/"
+                               (format "build-%s" emacs-version)
+                               "/calctex/vendor/")))
+    (setq calctex-dvichop-sty (concat vendor-folder "texd/dvichop")
+          calctex-dvichop-bin (concat vendor-folder "texd/dvichop")))
+  (unless (file-exists-p calctex-dvichop-bin)
+    (message "CalcTeX: Building dvichop binary")
+    (let ((default-directory (file-name-directory calctex-dvichop-bin)))
+      (call-process "make" nil nil nil))))
+#+end_src
+
+* Language configuration
+
+** Plain text
+
+Display ANSI colour codes.
+
+#+begin_src emacs-lisp :tangle (if (>= emacs-major-version 28) "yes" "no")
+(after! text-mode
+  (add-hook! 'text-mode-hook
+             ;; Apply ANSI color codes
+             (with-silent-modifications
+               (ansi-color-apply-on-region (point-min) (point-max) t))))
+#+end_src
+
+** Org
+:PROPERTIES:
+:CUSTOM_ID: org
+:header-args:emacs-lisp: :tangle no :noweb-ref org-conf
+:END:
+
+Lazy load the Org config.
+
+#+begin_src emacs-lisp :noweb no-export :tangle yes :noweb-ref nil
+(after! org
+  <<org-conf>>
+)
+#+end_src
+
+*** Packages
+
+**** Tables
+
+Redraw tables with box-drawing characters.
+
+#+begin_src emacs-lisp
+(package! org-pretty-table
+  :recipe (:host github
+           :repo "Fuco1/org-pretty-table")
+  :pin "87772a9469d91770f87bfa788580fca69b9e697a")
+
+(use-package! org-pretty-table
+  :commands (org-pretty-table-mode global-org-pretty-table-mode))
+#+end_src
+
+**** Emphasis markers
+
+While ~org-hide-emphasis-markers~ is very nice, it can sometimes make edits which
+occur at the border a bit more fiddley. We can improve this situation without
+sacrificing visual amenities with the =org-appear= package.
+
+#+begin_src emacs-lisp
+(package! org-appear
+  :recipe (:host github
+           :repo "awth13/org-appear")
+  :pin "148aa124901ae598f69320e3dcada6325cdc2cf0")
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! org-appear
+  :hook (org-mode . org-appear-mode)
+  :config
+  (setq org-appear-autoemphasis t
+        org-appear-autosubmarkers t
+        org-appear-autolinks nil)
+  ;; for proper first-time setup, `org-appear--set-elements'
+  ;; needs to be run after other hooks have acted.
+  (run-at-time nil nil #'org-appear--set-elements))
+#+end_src
+
+**** Heading structure
+
+Add a package for viewing and managing the heading structure.
+
+#+begin_src emacs-lisp
+(package! org-ol-tree
+  :recipe (:host github
+           :repo "Townk/org-ol-tree")
+  :pin "207c748aa5fea8626be619e8c55bdb1c16118c25")
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! org-ol-tree
+  :commands org-ol-tree)
+
+(map! :after org
+      :map org-mode-map
+      :localleader
+      :desc "Outline" "O" #'org-ol-tree)
+#+end_src
+
+**** Transclusion
+
+Include content from one file into another by reference.
+
+#+begin_src emacs-lisp
+(package! org-transclusion
+  :recipe (:host github
+           :repo "nobiot/org-transclusion")
+  :pin "8cbbade1e3237200c2140741f39ff60176e703e7")
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package! org-transclusion
+  :commands org-transclusion-mode
+  :init
+  (map! :after org
+        :map org-mode-map
+        :localleader
+        :desc "Transclusion mode" "~" #'org-transclusion-mode))
+#+end_src
+
+**** Heading graph
+
+View Org buffers as a clickable, graphical mind-map.
+
+#+begin_src emacs-lisp
+(package! org-graph-view
+  :recipe (:host github
+           :repo "alphapapa/org-graph-view")
+  :pin "13314338d70d2c19511efccc491bed3ca0758170")
+#+end_src
+
+**** Pandoc import
+
+Save yourself from non-org formats, thanks to pandoc.
+
+#+begin_src emacs-lisp
+(package! org-pandoc-import
+  :recipe (:host github
+           :repo "tecosaur/org-pandoc-import"
+           :files ("*.el" "filters" "preprocessors"))
+  :pin "8e923d264a20720ba48400b3dd92e7c20c72f416")
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+;(use-package! org-pandoc-import
+;  :after org)
+#+end_src
+
+**** Super agenda
+
+#+begin_src emacs-lisp :noweb-ref none :tangle packages.el
+(package! org-super-agenda :pin "a5557ea4f51571ee9def3cd9a1ab1c38f1a27af7")
+#+end_src
+
+#+begin_src emacs-lisp :noweb-ref none :tangle yes
+(use-package! org-super-agenda
+  :commands org-super-agenda-mode)
+#+end_src
+
+#+begin_src emacs-lisp
+(after! org-agenda
+  (org-super-agenda-mode))
+
+(setq org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-block-separator nil
+      org-agenda-tags-column 100
+      org-agenda-compact-blocks t)
+
+(setq org-agenda-custom-commands
+      '(("o" "Overview"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-super-agenda-groups
+                       '((:name "Today"
+                          :time-grid t
+                          :date today
+                          :todo "TODAY"
+                          :scheduled today
+                          :order 1)))))
+          (alltodo "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '((:name "Next to do"
+                           :todo "NEXT"
+                           :order 1)
+                          (:name "Important"
+                           :tag "Important"
+                           :priority "A"
+                           :order 6)
+                          (:name "Due Today"
+                           :deadline today
+                           :order 2)
+                          (:name "Due Soon"
+                           :deadline future
+                           :order 8)
+                          (:name "Overdue"
+                           :deadline past
+                           :face error
+                           :order 7)
+                          (:name "Issues"
+                           :tag "Issue"
+                           :order 12)
+                          (:name "Emacs"
+                           :tag "Emacs"
+                           :order 13)
+                          (:name "Projects"
+                           :tag "Project"
+                           :order 14)
+                          (:name "Research"
+                           :tag "Research"
+                           :order 15)
+                          (:name "To read"
+                           :tag "Read"
+                           :order 30)
+                          (:name "Waiting"
+                           :todo "WAITING"
+                           :order 20)
+                          (:name "Trivial"
+                           :priority<= "E"
+                           :tag ("Trivial" "Unimportant")
+                           :todo ("SOMEDAY" )
+                           :order 90)
+                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
+#+end_src
+
+**** Capture templates
+
+#+begin_src emacs-lisp :noweb-ref none :tangle packages.el
+(package! doct
+  :recipe (:host github
+           :repo "progfolio/doct")
+  :pin "67fc46c8a68989b932bce879fbaa62c6a2456a1f")
+#+end_src
+
+#+begin_src emacs-lisp :noweb-ref none :tangle yes
+(use-package! doct
+  :commands doct)
+#+end_src
+
+#+begin_src emacs-lisp :noweb no-export
+(after! org-capture
+  <<prettify-capture>>
+
+  (defun +doct-icon-declaration-to-icon (declaration)
+    "Convert :icon declaration to icon"
+    (let ((name (pop declaration))
+          (set  (intern (concat "all-the-icons-" (plist-get declaration :set))))
+          (face (intern (concat "all-the-icons-" (plist-get declaration :color))))
+          (v-adjust (or (plist-get declaration :v-adjust) 0.01)))
+      (apply set `(,name :face ,face :v-adjust ,v-adjust))))
+
+  (defun +doct-iconify-capture-templates (groups)
+    "Add declaration's :icon to each template group in GROUPS."
+    (let ((templates (doct-flatten-lists-in groups)))
+      (setq doct-templates (mapcar (lambda (template)
+                                     (when-let* ((props (nthcdr (if (= (length template) 4) 2 5) template))
+                                                 (spec (plist-get (plist-get props :doct) :icon)))
+                                       (setf (nth 1 template) (concat (+doct-icon-declaration-to-icon spec)
+                                                                      "\t"
+                                                                      (nth 1 template))))
+                                     template)
+                                   templates))))
+
+  (setq doct-after-conversion-functions '(+doct-iconify-capture-templates))
+
+  (defvar +org-capture-random "~/src/github.com/taheris/notes/random.org")
+
+  (defun set-org-capture-templates ()
+    (setq org-capture-templates
+          (doct `(("Personal todo" :keys "t"
+                   :icon ("checklist" :set "octicon" :color "green")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* TODO %?"
+                              "%i %a")
+                   )
+                  ("Personal note" :keys "n"
+                   :icon ("sticky-note-o" :set "faicon" :color "green")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* %?"
+                              "%i %a"))
+                  ("Email" :keys "e"
+                   :icon ("envelope" :set "faicon" :color "blue")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Inbox"
+                   :type entry
+                   :template ("* TODO %^{type|reply to|contact} %\\3 %? :email:"
+                              "Send an email %^{urgancy|soon|ASAP|anon|at some point|eventually} to %^{recipiant}"
+                              "about %^{topic}"
+                              "%U %i %a"))
+                  ("Interesting" :keys "i"
+                   :icon ("eye" :set "faicon" :color "lcyan")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Interesting"
+                   :type entry
+                   :template ("* [ ] %{desc}%? :%{i-type}:"
+                              "%i %a")
+                   :children (("Webpage" :keys "w"
+                               :icon ("globe" :set "faicon" :color "green")
+                               :desc "%(org-cliplink-capture) "
+                               :i-type "read:web"
+                               )
+                              ("Article" :keys "a"
+                               :icon ("file-text" :set "octicon" :color "yellow")
+                               :desc ""
+                               :i-type "read:article"
+                               )
+                              ("\tRandom" :keys "r"
+                               :icon ("spoon" :set "faicon" :color "dorange")
+                               :file +org-capture-random
+                               :headline "Unsorted"
+                               :desc ""
+                               :i-type "random"
+                               )
+                              ("Information" :keys "i"
+                               :icon ("info-circle" :set "faicon" :color "blue")
+                               :desc ""
+                               :i-type "read:info"
+                               )
+                              ("Idea" :keys "I"
+                               :icon ("bubble_chart" :set "material" :color "silver")
+                               :desc ""
+                               :i-type "idea"
+                               )))
+                  ("Tasks" :keys "k"
+                   :icon ("inbox" :set "octicon" :color "yellow")
+                   :file +org-capture-todo-file
+                   :prepend t
+                   :headline "Tasks"
+                   :type entry
+                   :template ("* TODO %? %^G%{extra}"
+                              "%i %a")
+                   :children (("General Task" :keys "k"
+                               :icon ("inbox" :set "octicon" :color "yellow")
+                               :extra ""
+                               )
+                              ("Task with deadline" :keys "d"
+                               :icon ("timer" :set "material" :color "orange" :v-adjust -0.1)
+                               :extra "\nDEADLINE: %^{Deadline:}t"
+                               )
+                              ("Scheduled Task" :keys "s"
+                               :icon ("calendar" :set "octicon" :color "orange")
+                               :extra "\nSCHEDULED: %^{Start time:}t"
+                               )
+                              ))
+                  ("Project" :keys "p"
+                   :icon ("repo" :set "octicon" :color "silver")
+                   :prepend t
+                   :type entry
+                   :headline "Inbox"
+                   :template ("* %{time-or-todo} %?"
+                              "%i"
+                              "%a")
+                   :file ""
+                   :custom (:time-or-todo "")
+                   :children (("Project-local todo" :keys "t"
+                               :icon ("checklist" :set "octicon" :color "green")
+                               :time-or-todo "TODO"
+                               :file +org-capture-project-todo-file)
+                              ("Project-local note" :keys "n"
+                               :icon ("sticky-note" :set "faicon" :color "yellow")
+                               :time-or-todo "%U"
+                               :file +org-capture-project-notes-file)
+                              ("Project-local changelog" :keys "c"
+                               :icon ("list" :set "faicon" :color "blue")
+                               :time-or-todo "%U"
+                               :heading "Unreleased"
+                               :file +org-capture-project-changelog-file))
+                   )
+                  ("\tCentralised project templates"
+                   :keys "o"
+                   :type entry
+                   :prepend t
+                   :template ("* %{time-or-todo} %?"
+                              "%i"
+                              "%a")
+                   :children (("Project todo"
+                               :keys "t"
+                               :prepend nil
+                               :time-or-todo "TODO"
+                               :heading "Tasks"
+                               :file +org-capture-central-project-todo-file)
+                              ("Project note"
+                               :keys "n"
+                               :time-or-todo "%U"
+                               :heading "Notes"
+                               :file +org-capture-central-project-notes-file)
+                              ("Project changelog"
+                               :keys "c"
+                               :time-or-todo "%U"
+                               :heading "Unreleased"
+                               :file +org-capture-central-project-changelog-file))
+                   )))))
+
+  (set-org-capture-templates)
+  (unless (display-graphic-p)
+    (add-hook 'server-after-make-frame-hook
+              (defun org-capture-reinitialise-hook ()
+                (when (display-graphic-p)
+                  (set-org-capture-templates)
+                  (remove-hook 'server-after-make-frame-hook
+                               #'org-capture-reinitialise-hook))))))
+#+end_src
+
+Improve how the capture dialogue looks.
+
+#+name: prettify-capture
+#+begin_src emacs-lisp :noweb-ref none
+(defun org-capture-select-template-prettier (&optional keys)
+  "Select a capture template, in a prettier way than default
+Lisp programs can force the template by setting KEYS to a string."
+  (let ((org-capture-templates
+         (or (org-contextualize-keys
+              (org-capture-upgrade-templates org-capture-templates)
+              org-capture-templates-contexts)
+             '(("t" "Task" entry (file+headline "" "Tasks")
+                "* TODO %?\n  %u\n  %a")))))
+    (if keys
+        (or (assoc keys org-capture-templates)
+            (error "No capture template referred to by \"%s\" keys" keys))
+      (org-mks org-capture-templates
+               "Select a capture template\n━━━━━━━━━━━━━━━━━━━━━━━━━"
+               "Template key: "
+               `(("q" ,(concat (all-the-icons-octicon "stop" :face 'all-the-icons-red :v-adjust 0.01) "\tAbort")))))))
+
+(advice-add 'org-capture-select-template :override #'org-capture-select-template-prettier)
+
+(defun org-mks-pretty (table title &optional prompt specials)
+  "Select a member of an alist with multiple keys. Prettified.
+
+TABLE is the alist which should contain entries where the car is a string.
+There should be two types of entries.
+
+1. prefix descriptions like (\"a\" \"Description\")
+   This indicates that `a' is a prefix key for multi-letter selection, and
+   that there are entries following with keys like \"ab\", \"ax\"…
+
+2. Select-able members must have more than two elements, with the first
+   being the string of keys that lead to selecting it, and the second a
+   short description string of the item.
+
+The command will then make a temporary buffer listing all entries
+that can be selected with a single key, and all the single key
+prefixes.  When you press the key for a single-letter entry, it is selected.
+When you press a prefix key, the commands (and maybe further prefixes)
+under this key will be shown and offered for selection.
+
+TITLE will be placed over the selection in the temporary buffer,
+PROMPT will be used when prompting for a key.  SPECIALS is an
+alist with (\"key\" \"description\") entries.  When one of these
+is selected, only the bare key is returned."
+  (save-window-excursion
+    (let ((inhibit-quit t)
+          (buffer (org-switch-to-buffer-other-window "*Org Select*"))
+          (prompt (or prompt "Select: "))
+          case-fold-search
+          current)
+      (unwind-protect
+          (catch 'exit
+            (while t
+              (setq-local evil-normal-state-cursor (list nil))
+              (erase-buffer)
+              (insert title "\n\n")
+              (let ((des-keys nil)
+                    (allowed-keys '("\C-g"))
+                    (tab-alternatives '("\s" "\t" "\r"))
+                    (cursor-type nil))
+                ;; Populate allowed keys and descriptions keys
+                ;; available with CURRENT selector.
+                (let ((re (format "\\`%s\\(.\\)\\'"
+                                  (if current (regexp-quote current) "")))
+                      (prefix (if current (concat current " ") "")))
+                  (dolist (entry table)
+                    (pcase entry
+                      ;; Description.
+                      (`(,(and key (pred (string-match re))) ,desc)
+                       (let ((k (match-string 1 key)))
+                         (push k des-keys)
+                         ;; Keys ending in tab, space or RET are equivalent.
+                         (if (member k tab-alternatives)
+                             (push "\t" allowed-keys)
+                           (push k allowed-keys))
+                         (insert (propertize prefix 'face 'font-lock-comment-face) (propertize k 'face 'bold) (propertize "›" 'face 'font-lock-comment-face) "  " desc "…" "\n")))
+                      ;; Usable entry.
+                      (`(,(and key (pred (string-match re))) ,desc . ,_)
+                       (let ((k (match-string 1 key)))
+                         (insert (propertize prefix 'face 'font-lock-comment-face) (propertize k 'face 'bold) "   " desc "\n")
+                         (push k allowed-keys)))
+                      (_ nil))))
+                ;; Insert special entries, if any.
+                (when specials
+                  (insert "─────────────────────────\n")
+                  (pcase-dolist (`(,key ,description) specials)
+                    (insert (format "%s   %s\n" (propertize key 'face '(bold all-the-icons-red)) description))
+                    (push key allowed-keys)))
+                ;; Display UI and let user select an entry or
+                ;; a sub-level prefix.
+                (goto-char (point-min))
+                (unless (pos-visible-in-window-p (point-max))
+                  (org-fit-window-to-buffer))
+                (let ((pressed (org--mks-read-key allowed-keys
+                                                  prompt
+                                                  (not (pos-visible-in-window-p (1- (point-max)))))))
+                  (setq current (concat current pressed))
+                  (cond
+                   ((equal pressed "\C-g") (user-error "Abort"))
+                   ;; Selection is a prefix: open a new menu.
+                   ((member pressed des-keys))
+                   ;; Selection matches an association: return it.
+                   ((let ((entry (assoc current table)))
+                      (and entry (throw 'exit entry))))
+                   ;; Selection matches a special entry: return the
+                   ;; selection prefix.
+                   ((assoc current specials) (throw 'exit current))
+                   (t (error "No entry available")))))))
+        (when buffer (kill-buffer buffer))))))
+
+(advice-add 'org-mks :override #'org-mks-pretty)
+#+end_src
+
+*** Settings
+
+**** Override some settings
+
+#+begin_src emacs-lisp
+(setq org-directory "~/src/github.com/taheris/notes"
+      epa-file-encrypt-to '("git@taheris.net")
+      org-use-property-inheritance t              ; it's convenient to have properties inherited
+      org-log-done 'time                          ; having the time a item is done sounds convenient
+      org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
+      org-export-in-background t                  ; run export processes in external emacs process
+      org-catch-invisible-edits 'smart            ; try not to accidently do weird stuff in invisible regions
+      org-export-with-sub-superscripts '{})       ; don't treat lone _ / ^ as sub/superscripts, require _{} / ^{}
+#+end_src
+
+Make the ~:comments~ header-argument a default.
+
+#+begin_src emacs-lisp
+(setq org-babel-default-header-args
+      '((:session . "none")
+        (:results . "replace")
+        (:exports . "code")
+        (:cache . "no")
+        (:noweb . "no")
+        (:hlines . "no")
+        (:tangle . "no")
+        (:comments . "link")))
+#+end_src
+
+Add ~flycheck~ spell checking.
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook 'turn-on-flyspell)
+#+end_src
+
+By default, ~visual-line-mode~ is turned =on=, and ~auto-fill-mode~ =off= by a hook.
+However this messes with tables in Org-mode, and other plaintext files (e.g.
+markdown, \LaTeX) so I'll turn it off for this, and manually enable it for more
+specific modes as desired.
+
+#+begin_src emacs-lisp
+(remove-hook 'text-mode-hook #'visual-line-mode)
+(add-hook 'text-mode-hook #'auto-fill-mode)
+#+end_src
+
+**** Buffer creation
+
+Use ~=SPC b o=~ to open a new Org buffer.
+
+#+begin_src emacs-lisp :tangle yes :noweb-ref none
+(evil-define-command evil-buffer-org-new (count file)
+  "Creates a new Org buffer replacing the current window, optionally
+   editing a certain FILE"
+  :repeat nil
+  (interactive "P<f>")
+  (if file
+      (evil-edit file)
+    (let ((buffer (generate-new-buffer "*new org*")))
+      (set-window-buffer nil buffer)
+      (with-current-buffer buffer
+        (org-mode)))))
+
+(map! :leader
+      (:prefix "b"
+       :desc "New empty Org buffer" "o" #'evil-buffer-org-new))
+#+end_src
+
+**** List bullet sequence
+
+Have list bullets change with depth.
+
+#+begin_src emacs-lisp
+(setq org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a.")))
+#+end_src
+
+**** Zero-width space
+
+Easily type a zero-width space.
+
+#+begin_src emacs-lisp
+(map! :map org-mode-map
+      :nie "M-SPC M-SPC" (cmd! (insert "\u200B")))
+#+end_src
+
+**** View exported file
+
+View output files with =:localleader v=.
+
+#+begin_src emacs-lisp
+(map! :map org-mode-map
+      :localleader
+      :desc "View exported file" "v" #'org-view-output-file)
+
+(defun org-view-output-file (&optional org-file-path)
+  "Visit buffer open on the first output file (if any) found, using `org-view-output-file-extensions'"
+  (interactive)
+  (let* ((org-file-path (or org-file-path (buffer-file-name) ""))
+         (dir (file-name-directory org-file-path))
+         (basename (file-name-base org-file-path))
+         (output-file nil))
+    (dolist (ext org-view-output-file-extensions)
+      (unless output-file
+        (when (file-exists-p
+               (concat dir basename "." ext))
+          (setq output-file (concat dir basename "." ext)))))
+    (if output-file
+        (if (member (file-name-extension output-file) org-view-external-file-extensions)
+            (browse-url-xdg-open output-file)
+          (pop-to-buffer (or (find-buffer-visiting output-file)
+                             (find-file-noselect output-file))))
+      (message "No exported file found"))))
+
+(defvar org-view-output-file-extensions '("pdf" "md" "rst" "txt" "tex" "html")
+  "Search for output files with these extensions, in order, viewing the first that matches")
+(defvar org-view-external-file-extensions '("html")
+  "File formats that should be opened externally.")
+#+end_src
+
+**** Roam
+
+***** Basic settings
+
+Set the roam directory.
+
+#+begin_src emacs-lisp :noweb-ref none :tangle yes
+(setq org-roam-directory "~/Documents/roam/")
+#+end_src
+
+Or disable entirely if the directory doesn't exist.
+
+#+begin_src emacs-lisp :noweb-ref none :tangle (if (file-exists-p "~/Documents/roam/") "no" "packages.el")
+(package! org-roam :disable t)
+#+end_src
+
+***** Modeline file name
+
+Use a similar layout to [[*Frame title][Frame title]].
+
+#+begin_src emacs-lisp
+(defadvice! doom-modeline--buffer-file-name-roam-aware-a (orig-fun)
+  :around #'doom-modeline-buffer-file-name ; takes no args
+  (if (s-contains-p org-roam-directory (or buffer-file-name ""))
+      (replace-regexp-in-string
+       "\\(?:^\\|.*/\\)\\([0-9]\\{4\\}\\)\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)[0-9]*-"
+       "🢔(\\1-\\2-\\3) "
+       (subst-char-in-string ?_ ?  buffer-file-name))
+    (funcall orig-fun)))
+#+end_src
+
+***** Graph view
+
+Add some packages to make Org-roam even better.
+
+#+begin_src emacs-lisp :noweb-ref none :tangle packages.el
+(package! org-roam-ui
+  :recipe (:host github
+           :repo "org-roam/org-roam-ui"
+           :files ("*.el" "out"))
+  :pin "c745d07018a46b1a20b9f571d999ecf7a092c2e1")
+
+; dependency of `org-roam-ui'
+(package! websocket :pin "fda4455333309545c0787a79d73c19ddbeb57980")
+#+end_src
+
+#+begin_src emacs-lisp :noweb-ref none :tangle yes
+(use-package! websocket
+  :after org-roam)
+
+(use-package! org-roam-ui
+  :after org-roam
+  :commands org-roam-ui-open
+  :hook (org-roam . org-roam-ui-mode)
+  :config
+  (require 'org-roam) ; in case autoloaded
+  (defun org-roam-ui-open ()
+    "Ensure the server is active, then open the roam graph."
+    (interactive)
+    (unless org-roam-ui-mode (org-roam-ui-mode 1))
+    (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port))))
+#+end_src
+
+**** Heading IDs
+
+Thanks to alphapapa's [[https://github.com/alphapapa/unpackaged.el#export-to-html-with-useful-anchors][unpackaged.el]].
+
+By default, Org generated heading IDs like =#org80fc2a5= which ... works, but has
+two issues
++ It's completely uninformative, I have no idea what's being referenced
++ If I export the same file, everything will change.
+
+Now, while without hardcoded values it's impossible to set references in
+stone, it would be nice for there to be a decent chance of staying the same.
+
+Both of these issues can be addressed by generating IDs like
+=#language-configuration=, which is what I'll do here.
+
+It's worth noting that alphapapa's use of ~url-hexify-string~ seemed to cause me
+some issues. Replacing that in ~a53899~ resolved this for me. To go one step
+further, I create a function for producing nice short links, like an inferior
+version of ~reftex-label~.
+
+#+begin_src emacs-lisp
+(defvar org-reference-contraction-max-words 3
+  "Maximum number of words in a reference reference.")
+(defvar org-reference-contraction-max-length 35
+  "Maximum length of resulting reference reference, including joining characters.")
+(defvar org-reference-contraction-stripped-words
+  '("the" "on" "in" "off" "a" "for" "by" "of" "and" "is" "to")
+  "Superfluous words to be removed from a reference.")
+(defvar org-reference-contraction-joining-char "-"
+  "Character used to join words in the reference reference.")
+
+(defun org-reference-contraction-truncate-words (words)
+  "Using `org-reference-contraction-max-length' as the total character 'budget' for the WORDS
+and truncate individual words to conform to this budget.
+
+To arrive at a budget that accounts for words undershooting their requisite average length,
+the number of characters in the budget freed by short words is distributed among the words
+exceeding the average length.  This adjusts the per-word budget to be the maximum feasable for
+this particular situation, rather than the universal maximum average.
+
+This budget-adjusted per-word maximum length is given by the mathematical expression below:
+
+max length = \\floor{ \\frac{total length - chars for seperators - \\sum_{word \\leq average length} length(word) }{num(words) > average length} }"
+  ;; trucate each word to a max word length determined by
+  ;;
+  (let* ((total-length-budget (- org-reference-contraction-max-length  ; how many non-separator chars we can use
+                                 (1- (length words))))
+         (word-length-budget (/ total-length-budget                      ; max length of each word to keep within budget
+                                org-reference-contraction-max-words))
+         (num-overlong (-count (lambda (word)                            ; how many words exceed that budget
+                                 (> (length word) word-length-budget))
+                               words))
+         (total-short-length (-sum (mapcar (lambda (word)                ; total length of words under that budget
+                                             (if (<= (length word) word-length-budget)
+                                                 (length word) 0))
+                                           words)))
+         (max-length (/ (- total-length-budget total-short-length)       ; max(max-length) that we can have to fit within the budget
+                        num-overlong)))
+    (mapcar (lambda (word)
+              (if (<= (length word) max-length)
+                  word
+                (substring word 0 max-length)))
+            words)))
+
+(defun org-reference-contraction (reference-string)
+  "Give a contracted form of REFERENCE-STRING that is only contains alphanumeric characters.
+Strips 'joining' words present in `org-reference-contraction-stripped-words',
+and then limits the result to the first `org-reference-contraction-max-words' words.
+If the total length is > `org-reference-contraction-max-length' then individual words are
+truncated to fit within the limit using `org-reference-contraction-truncate-words'."
+  (let ((reference-words
+         (-filter (lambda (word)
+                    (not (member word org-reference-contraction-stripped-words)))
+                  (split-string
+                   (->> reference-string
+                        downcase
+                        (replace-regexp-in-string "\\[\\[[^]]+\\]\\[\\([^]]+\\)\\]\\]" "\\1") ; get description from org-link
+                        (replace-regexp-in-string "[-/ ]+" " ") ; replace seperator-type chars with space
+                        puny-encode-string
+                        (replace-regexp-in-string "^xn--\\(.*?\\) ?-?\\([a-z0-9]+\\)$" "\\2 \\1") ; rearrange punycode
+                        (replace-regexp-in-string "[^A-Za-z0-9 ]" "") ; strip chars which need %-encoding in a uri
+                        ) " +"))))
+    (when (> (length reference-words)
+             org-reference-contraction-max-words)
+      (setq reference-words
+            (cl-subseq reference-words 0 org-reference-contraction-max-words)))
+
+    (when (> (apply #'+ (1- (length reference-words))
+                    (mapcar #'length reference-words))
+             org-reference-contraction-max-length)
+      (setq reference-words (org-reference-contraction-truncate-words reference-words)))
+
+    (string-join reference-words org-reference-contraction-joining-char)))
+#+end_src
+
+Now here's alphapapa's subtly tweaked mode.
+
+#+begin_src emacs-lisp
+(define-minor-mode unpackaged/org-export-html-with-useful-ids-mode
+  "Attempt to export Org as HTML with useful link IDs.
+Instead of random IDs like \"#orga1b2c3\", use heading titles,
+made unique when necessary."
+  :global t
+  (if unpackaged/org-export-html-with-useful-ids-mode
+      (advice-add #'org-export-get-reference :override #'unpackaged/org-export-get-reference)
+    (advice-remove #'org-export-get-reference #'unpackaged/org-export-get-reference)))
+(unpackaged/org-export-html-with-useful-ids-mode 1) ; ensure enabled, and advice run
+
+(defun unpackaged/org-export-get-reference (datum info)
+  "Like `org-export-get-reference', except uses heading titles instead of random numbers."
+  (let ((cache (plist-get info :internal-references)))
+    (or (car (rassq datum cache))
+        (let* ((crossrefs (plist-get info :crossrefs))
+               (cells (org-export-search-cells datum))
+               ;; Preserve any pre-existing association between
+               ;; a search cell and a reference, i.e., when some
+               ;; previously published document referenced a location
+               ;; within current file (see
+               ;; `org-publish-resolve-external-link').
+               ;;
+               ;; However, there is no guarantee that search cells are
+               ;; unique, e.g., there might be duplicate custom ID or
+               ;; two headings with the same title in the file.
+               ;;
+               ;; As a consequence, before re-using any reference to
+               ;; an element or object, we check that it doesn't refer
+               ;; to a previous element or object.
+               (new (or (cl-some
+                         (lambda (cell)
+                           (let ((stored (cdr (assoc cell crossrefs))))
+                             (when stored
+                               (let ((old (org-export-format-reference stored)))
+                                 (and (not (assoc old cache)) stored)))))
+                         cells)
+                        (when (org-element-property :raw-value datum)
+                          ;; Heading with a title
+                          (unpackaged/org-export-new-named-reference datum cache))
+                        (when (member (car datum) '(src-block table example fixed-width property-drawer))
+                          ;; Nameable elements
+                          (unpackaged/org-export-new-named-reference datum cache))
+                        ;; NOTE: This probably breaks some Org Export
+                        ;; feature, but if it does what I need, fine.
+                        (org-export-format-reference
+                         (org-export-new-reference cache))))
+               (reference-string new))
+          ;; Cache contains both data already associated to
+          ;; a reference and in-use internal references, so as to make
+          ;; unique references.
+          (dolist (cell cells) (push (cons cell new) cache))
+          ;; Retain a direct association between reference string and
+          ;; DATUM since (1) not every object or element can be given
+          ;; a search cell (2) it permits quick lookup.
+          (push (cons reference-string datum) cache)
+          (plist-put info :internal-references cache)
+          reference-string))))
+
+(defun unpackaged/org-export-new-named-reference (datum cache)
+  "Return new reference for DATUM that is unique in CACHE."
+  (cl-macrolet ((inc-suffixf (place)
+                             `(progn
+                                (string-match (rx bos
+                                                  (minimal-match (group (1+ anything)))
+                                                  (optional "--" (group (1+ digit)))
+                                                  eos)
+                                              ,place)
+                                ;; HACK: `s1' instead of a gensym.
+                                (-let* (((s1 suffix) (list (match-string 1 ,place)
+                                                           (match-string 2 ,place)))
+                                        (suffix (if suffix
+                                                    (string-to-number suffix)
+                                                  0)))
+                                  (setf ,place (format "%s--%s" s1 (cl-incf suffix)))))))
+    (let* ((headline-p (eq (car datum) 'headline))
+           (title (if headline-p
+                      (org-element-property :raw-value datum)
+                    (or (org-element-property :name datum)
+                        (concat (org-element-property :raw-value
+                                                      (org-element-property :parent
+                                                                            (org-element-property :parent datum)))))))
+           ;; get ascii-only form of title without needing percent-encoding
+           (ref (concat (org-reference-contraction (substring-no-properties title))
+                        (unless (or headline-p (org-element-property :name datum))
+                          (concat ","
+                                  (pcase (car datum)
+                                    ('src-block "code")
+                                    ('example "example")
+                                    ('fixed-width "mono")
+                                    ('property-drawer "properties")
+                                    (_ (symbol-name (car datum))))
+                                  "--1"))))
+           (parent (when headline-p (org-element-property :parent datum))))
+      (while (--any (equal ref (car it))
+                    cache)
+        ;; Title not unique: make it so.
+        (if parent
+            ;; Append ancestor title.
+            (setf title (concat (org-element-property :raw-value parent)
+                                "--" title)
+                  ;; get ascii-only form of title without needing percent-encoding
+                  ref (org-reference-contraction (substring-no-properties title))
+                  parent (when headline-p (org-element-property :parent parent)))
+          ;; No more ancestors: add and increment a number.
+          (inc-suffixf ref)))
+      ref)))
+
+(add-hook 'org-load-hook #'unpackaged/org-export-html-with-useful-ids-mode)
+#+end_src
+
+We also need to redefine ~(org-export-format-reference)~ as it now may be passed
+a string as well as a number.
+
+#+begin_src emacs-lisp
+(defadvice! org-export-format-reference-a (reference)
+  "Format REFERENCE into a string.
+
+REFERENCE is a either a number or a string representing a reference,
+as returned by `org-export-new-reference'."
+  :override #'org-export-format-reference
+  (if (stringp reference) reference (format "org%07x" reference)))
+#+end_src
+
+**** Nicer ~org-return~
+
+Once again, from [[https://github.com/alphapapa/unpackaged.el#org-return-dwim][unpackaged.el]]
+
+#+begin_src emacs-lisp
+(defun unpackaged/org-element-descendant-of (type element)
+  "Return non-nil if ELEMENT is a descendant of TYPE.
+TYPE should be an element type, like `item' or `paragraph'.
+ELEMENT should be a list like that returned by `org-element-context'."
+  ;; MAYBE: Use `org-element-lineage'.
+  (when-let* ((parent (org-element-property :parent element)))
+    (or (eq type (car parent))
+        (unpackaged/org-element-descendant-of type parent))))
+
+;;;###autoload
+(defun unpackaged/org-return-dwim (&optional default)
+  "A helpful replacement for `org-return-indent'.  With prefix, call `org-return-indent'.
+
+On headings, move point to position after entry content.  In
+lists, insert a new item or end the list, with checkbox if
+appropriate.  In tables, insert a new row or end the table."
+  ;; Inspired by John Kitchin: http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-in-org-mode/
+  (interactive "P")
+  (if default
+      (org-return t)
+    (cond
+     ;; Act depending on context around point.
+
+     ;; NOTE: I prefer RET to not follow links, but by uncommenting this block, links will be
+     ;; followed.
+
+     ;; ((eq 'link (car (org-element-context)))
+     ;;  ;; Link: Open it.
+     ;;  (org-open-at-point-global))
+
+     ((org-at-heading-p)
+      ;; Heading: Move to position after entry content.
+      ;; NOTE: This is probably the most interesting feature of this function.
+      (let ((heading-start (org-entry-beginning-position)))
+        (goto-char (org-entry-end-position))
+        (cond ((and (org-at-heading-p)
+                    (= heading-start (org-entry-beginning-position)))
+               ;; Entry ends on its heading; add newline after
+               (end-of-line)
+               (insert "\n\n"))
+              (t
+               ;; Entry ends after its heading; back up
+               (forward-line -1)
+               (end-of-line)
+               (when (org-at-heading-p)
+                 ;; At the same heading
+                 (forward-line)
+                 (insert "\n")
+                 (forward-line -1))
+               ;; FIXME: looking-back is supposed to be called with more arguments.
+               (while (not (looking-back (rx (repeat 3 (seq (optional blank) "\n")))))
+                 (insert "\n"))
+               (forward-line -1)))))
+
+     ((org-at-item-checkbox-p)
+      ;; Checkbox: Insert new item with checkbox.
+      (org-insert-todo-heading nil))
+
+     ((org-in-item-p)
+      ;; Plain list.  Yes, this gets a little complicated...
+      (let ((context (org-element-context)))
+        (if (or (eq 'plain-list (car context))  ; First item in list
+                (and (eq 'item (car context))
+                     (not (eq (org-element-property :contents-begin context)
+                              (org-element-property :contents-end context))))
+                (unpackaged/org-element-descendant-of 'item context))  ; Element in list item, e.g. a link
+            ;; Non-empty item: Add new item.
+            (org-insert-item)
+          ;; Empty item: Close the list.
+          ;; TODO: Do this with org functions rather than operating on the text. Can't seem to find the right function.
+          (delete-region (line-beginning-position) (line-end-position))
+          (insert "\n"))))
+
+     ((when (fboundp 'org-inlinetask-in-task-p)
+        (org-inlinetask-in-task-p))
+      ;; Inline task: Don't insert a new heading.
+      (org-return t))
+
+     ((org-at-table-p)
+      (cond ((save-excursion
+               (beginning-of-line)
+               ;; See `org-table-next-field'.
+               (cl-loop with end = (line-end-position)
+                        for cell = (org-element-table-cell-parser)
+                        always (equal (org-element-property :contents-begin cell)
+                                      (org-element-property :contents-end cell))
+                        while (re-search-forward "|" end t)))
+             ;; Empty row: end the table.
+             (delete-region (line-beginning-position) (line-end-position))
+             (org-return t))
+            (t
+             ;; Non-empty row: call `org-return-indent'.
+             (org-return t))))
+     (t
+      ;; All other cases: call `org-return-indent'.
+      (org-return t)))))
+
+(map!
+ :after evil-org
+ :map evil-org-mode-map
+ :i [return] #'unpackaged/org-return-dwim)
+#+end_src
+
+**** Snippet Helpers
+
+I often want to set =src-block= headers, and it's a pain to
++ type them out
++ remember what the accepted values are
++ oh, and specifying the same language again and again
+
+We can solve this in three steps
++ having one-letter snippets, conditioned on ~(point)~ being within a src header
++ creating a nice prompt showing accepted values and the current default
++ pre-filling the =src-block= language with the last language used
+
+For header args, the keys I'll use are
++ =r= for =:results=
++ =e= for =:exports=
++ =v= for =:eval=
++ =s= for =:session=
++ =d= for =:dir=
+
+#+begin_src emacs-lisp
+(defun +yas/org-src-header-p ()
+  "Determine whether `point' is within a src-block header or header-args."
+  (pcase (org-element-type (org-element-context))
+    ('src-block (< (point) ; before code part of the src-block
+                   (save-excursion (goto-char (org-element-property :begin (org-element-context)))
+                                   (forward-line 1)
+                                   (point))))
+    ('inline-src-block (< (point) ; before code part of the inline-src-block
+                          (save-excursion (goto-char (org-element-property :begin (org-element-context)))
+                                          (search-forward "]{")
+                                          (point))))
+    ('keyword (string-match-p "^header-args" (org-element-property :value (org-element-context))))))
+#+end_src
+
+Now let's write a function we can reference in yasnippets to produce a nice
+interactive way to specify header args.
+
+#+begin_src emacs-lisp
+(defun +yas/org-prompt-header-arg (arg question values)
+  "Prompt the user to set ARG header property to one of VALUES with QUESTION.
+The default value is identified and indicated. If either default is selected,
+or no selection is made: nil is returned."
+  (let* ((src-block-p (not (looking-back "^#\\+property:[ \t]+header-args:.*" (line-beginning-position))))
+         (default
+           (or
+            (cdr (assoc arg
+                        (if src-block-p
+                            (nth 2 (org-babel-get-src-block-info t))
+                          (org-babel-merge-params
+                           org-babel-default-header-args
+                           (let ((lang-headers
+                                  (intern (concat "org-babel-default-header-args:"
+                                                  (+yas/org-src-lang)))))
+                             (when (boundp lang-headers) (eval lang-headers t)))))))
+            ""))
+         default-value)
+    (setq values (mapcar
+                  (lambda (value)
+                    (if (string-match-p (regexp-quote value) default)
+                        (setq default-value
+                              (concat value " "
+                                      (propertize "(default)" 'face 'font-lock-doc-face)))
+                      value))
+                  values))
+    (let ((selection (consult--read question values :default default-value)))
+      (unless (or (string-match-p "(default)$" selection)
+                  (string= "" selection))
+        selection))))
+#+end_src
+
+Finally, we fetch the language information for new source blocks.
+
+Since we're getting this info, we might as well go a step further and also
+provide the ability to determine the most popular language in the buffer that
+doesn't have any =header-args= set for it (with =#+properties=).
+
+#+begin_src emacs-lisp
+(defun +yas/org-src-lang ()
+  "Try to find the current language of the src/header at `point'.
+Return nil otherwise."
+  (let ((context (org-element-context)))
+    (pcase (org-element-type context)
+      ('src-block (org-element-property :language context))
+      ('inline-src-block (org-element-property :language context))
+      ('keyword (when (string-match "^header-args:\\([^ ]+\\)" (org-element-property :value context))
+                  (match-string 1 (org-element-property :value context)))))))
+
+(defun +yas/org-last-src-lang ()
+  "Return the language of the last src-block, if it exists."
+  (save-excursion
+    (beginning-of-line)
+    (when (re-search-backward "^[ \t]*#\\+begin_src" nil t)
+      (org-element-property :language (org-element-context)))))
+
+(defun +yas/org-most-common-no-property-lang ()
+  "Find the lang with the most source blocks that has no global header-args, else nil."
+  (let (src-langs header-langs)
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "^[ \t]*#\\+begin_src" nil t)
+        (push (+yas/org-src-lang) src-langs))
+      (goto-char (point-min))
+      (while (re-search-forward "^[ \t]*#\\+property: +header-args" nil t)
+        (push (+yas/org-src-lang) header-langs)))
+
+    (setq src-langs
+          (mapcar #'car
+                  ;; sort alist by frequency (desc.)
+                  (sort
+                   ;; generate alist with form (value . frequency)
+                   (cl-loop for (n . m) in (seq-group-by #'identity src-langs)
+                            collect (cons n (length m)))
+                   (lambda (a b) (> (cdr a) (cdr b))))))
+
+    (car (cl-set-difference src-langs header-langs :test #'string=))))
+#+end_src
+
+**** Use lowercase keywords
+
+Everyone used to use ~#+CAPITAL~ keywords. Then people realised that ~#+lowercase~
+is actually both marginally easier and visually nicer, so now the capital
+version is just used in the manual.
+#+begin_quote
+Org is standardized on lower case. Uppercase is used in the manual as a poor
+man's bold, and supported for historical reasons. --- [[https://orgmode.org/list/87tuuw3n15.fsf@nicolasgoaziou.fr][Nicolas Goaziou on the Org ML]]
+#+end_quote
+
+To avoid sometimes having to choose between the hassle out of updating old
+documents and using mixed syntax, I'll whip up a basic transcode-y function.
+It likely misses some edge cases, but should mostly work.
+
+#+begin_src emacs-lisp
+(defun org-syntax-convert-keyword-case-to-lower ()
+  "Convert all #+KEYWORDS to #+keywords."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((count 0)
+          (case-fold-search nil))
+      (while (re-search-forward "^[ \t]*#\\+[A-Z_]+" nil t)
+        (unless (s-matches-p "RESULTS" (match-string 0))
+          (replace-match (downcase (match-string 0)) t)
+          (setq count (1+ count))))
+      (message "Replaced %d occurances" count))))
+#+end_src
+
+**** Fix problematic hooks
+
+When one of the ~org-mode-hook~ functions error, it halts the hook execution.
+This is problematic, and there are two hooks in particular which cause issues.
+Let's make their failure less eventful.
+
+#+begin_src emacs-lisp
+(defadvice! shut-up-org-problematic-hooks (orig-fn &rest args)
+  :around #'org-fancy-priorities-mode
+  :around #'org-superstar-mode
+  (ignore-errors (apply orig-fn args)))
+#+end_src
+
+*** Visuals
+
+Here I try to do two things: improve the styling of the various documents, via
+font changes etc, and also propagate colours from the current theme.
+
+[[xkcd:1882]]
+
+**** Font Display
+
+Mixed pitch is great. As is ~+org-pretty-mode~, let's use them.
+#+begin_src emacs-lisp
+;(add-hook 'org-mode-hook #'+org-pretty-mode)
+#+end_src
+
+Let's make headings a bit bigger
+
+#+begin_src emacs-lisp
+(custom-set-faces!
+  '(outline-1 :weight extra-bold :height 1.25)
+  '(outline-2 :weight bold :height 1.15)
+  '(outline-3 :weight bold :height 1.12)
+  '(outline-4 :weight semi-bold :height 1.09)
+  '(outline-5 :weight semi-bold :height 1.06)
+  '(outline-6 :weight semi-bold :height 1.03)
+  '(outline-8 :weight semi-bold)
+  '(outline-9 :weight semi-bold))
+#+end_src
+
+And the same with the title.
+
+#+begin_src emacs-lisp
+(custom-set-faces!
+  '(org-document-title :height 1.2))
+#+end_src
+
+It seems reasonable to have deadlines in the error face when they're passed.
+
+#+begin_src emacs-lisp
+(setq org-agenda-deadline-faces
+      '((1.001 . error)
+        (1.0 . org-warning)
+        (0.5 . org-upcoming-deadline)
+        (0.0 . org-upcoming-distant-deadline)))
+#+end_src
+
+We can then have quote blocks stand out a bit more by making them /italic/.
+
+#+begin_src emacs-lisp
+(setq org-fontify-quote-and-verse-blocks t)
+#+end_src
+
+Org files can be rather nice to look at, particularly with some of the
+customisations here. This comes at a cost however, expensive font-lock.
+Feeling like you're typing through molasses in large files is no fun, but there
+is a way I can defer font-locking when typing to make the experience more
+responsive.
+
+#+begin_src emacs-lisp
+(defun locally-defer-font-lock ()
+  "Set jit-lock defer and stealth, when buffer is over a certain size."
+  (when (> (buffer-size) 50000)
+    (setq-local jit-lock-defer-time 0.05
+                jit-lock-stealth-time 1)))
+
+(add-hook 'org-mode-hook #'locally-defer-font-lock)
+#+end_src
+Apparently this causes issues with some people, but I haven't noticed anything
+problematic beyond the expected slight delay in some fontification, so until I
+do I'll use the above.
+
+**** Fontifying inline src blocks
+
+Org does lovely things with =#+begin_src= blocks, like using font-lock for
+language's major-mode behind the scenes and pulling out the lovely colourful
+results. By contrast, inline =src_= blocks are somewhat neglected.
+
+I am not the first person to feel this way, thankfully others have [[https://stackoverflow.com/questions/20309842/how-to-syntax-highlight-for-org-mode-inline-source-code-src-lang/28059832][taken to
+stackexchange]] to voice their desire for inline src fontification. I was going to
+steal their work, but unfortunately they didn't perform /true/ source code
+fontification, but simply applied the =org-code= face to the content.
+
+We can do better than that, and we shall! Using ~org-src-font-lock-fontify-block~
+we can apply language-appropriate syntax highlighting. Then, continuing on to
+={{{results(...)}}}= , it can have the =org-block= face applied to match, and then
+the value-surrounding constructs hidden by mimicking the behaviour of
+~prettify-symbols-mode~.
+
+#+begin_warning
+This currently only highlights a single inline src block per line.
+I have no idea why it stops, but I'd rather it didn't.
+If you have any idea what's going on or how to fix this /please/ get in touch.
+#+end_warning
+
+#+begin_src emacs-lisp
+(defvar org-prettify-inline-results t
+  "Whether to use (ab)use prettify-symbols-mode on {{{results(...)}}}.
+Either t or a cons cell of strings which are used as substitutions
+for the start and end of inline results, respectively.")
+
+(defvar org-fontify-inline-src-blocks-max-length 200
+  "Maximum content length of an inline src block that will be fontified.")
+
+(defun org-fontify-inline-src-blocks (limit)
+  "Try to apply `org-fontify-inline-src-blocks-1'."
+  (condition-case nil
+      (org-fontify-inline-src-blocks-1 limit)
+    (error (message "Org mode fontification error in %S at %d"
+                    (current-buffer)
+                    (line-number-at-pos)))))
+
+(defun org-fontify-inline-src-blocks-1 (limit)
+  "Fontify inline src_LANG blocks, from `point' up to LIMIT."
+  (let ((case-fold-search t)
+        (initial-point (point)))
+    (while (re-search-forward "\\_<src_\\([^ \t\n[{]+\\)[{[]?" limit t) ; stolen from `org-element-inline-src-block-parser'
+      (let ((beg (match-beginning 0))
+            pt
+            (lang-beg (match-beginning 1))
+            (lang-end (match-end 1)))
+        (remove-text-properties beg lang-end '(face nil))
+        (font-lock-append-text-property lang-beg lang-end 'face 'org-meta-line)
+        (font-lock-append-text-property beg lang-beg 'face 'shadow)
+        (font-lock-append-text-property beg lang-end 'face 'org-block)
+        (setq pt (goto-char lang-end))
+        ;; `org-element--parse-paired-brackets' doesn't take a limit, so to
+        ;; prevent it searching the entire rest of the buffer we temporarily
+        ;; narrow the active region.
+        (save-restriction
+          (narrow-to-region beg (min (point-max) limit (+ lang-end org-fontify-inline-src-blocks-max-length)))
+          (when (ignore-errors (org-element--parse-paired-brackets ?\[))
+            (remove-text-properties pt (point) '(face nil))
+            (font-lock-append-text-property pt (point) 'face 'org-block)
+            (setq pt (point)))
+          (when (ignore-errors (org-element--parse-paired-brackets ?\{))
+            (remove-text-properties pt (point) '(face nil))
+            (font-lock-append-text-property pt (1+ pt) 'face '(org-block shadow))
+            (unless (= (1+ pt) (1- (point)))
+              (if org-src-fontify-natively
+                  (org-src-font-lock-fontify-block (buffer-substring-no-properties lang-beg lang-end) (1+ pt) (1- (point)))
+                (font-lock-append-text-property (1+ pt) (1- (point)) 'face 'org-block)))
+            (font-lock-append-text-property (1- (point)) (point) 'face '(org-block shadow))
+            (setq pt (point))))
+        (when (and org-prettify-inline-results (re-search-forward "\\= {{{results(" limit t))
+          (font-lock-append-text-property pt (1+ pt) 'face 'org-block)
+          (goto-char pt))))
+    (when org-prettify-inline-results
+      (goto-char initial-point)
+      (org-fontify-inline-src-results limit))))
+
+(defun org-fontify-inline-src-results (limit)
+  (while (re-search-forward "{{{results(\\(.+?\\))}}}" limit t)
+    (remove-list-of-text-properties (match-beginning 0) (point)
+                                    '(composition
+                                      prettify-symbols-start
+                                      prettify-symbols-end))
+    (font-lock-append-text-property (match-beginning 0) (match-end 0) 'face 'org-block)
+    (let ((start (match-beginning 0)) (end (match-beginning 1)))
+      (with-silent-modifications
+        (compose-region start end (if (eq org-prettify-inline-results t) "⟨" (car org-prettify-inline-results)))
+        (add-text-properties start end `(prettify-symbols-start ,start prettify-symbols-end ,end))))
+    (let ((start (match-end 1)) (end (point)))
+      (with-silent-modifications
+        (compose-region start end (if (eq org-prettify-inline-results t) "⟩" (cdr org-prettify-inline-results)))
+        (add-text-properties start end `(prettify-symbols-start ,start prettify-symbols-end ,end))))))
+
+(defun org-fontify-inline-src-blocks-enable ()
+  "Add inline src fontification to font-lock in Org.
+Must be run as part of `org-font-lock-set-keywords-hook'."
+  (setq org-font-lock-extra-keywords
+        (append org-font-lock-extra-keywords '((org-fontify-inline-src-blocks)))))
+
+(add-hook 'org-font-lock-set-keywords-hook #'org-fontify-inline-src-blocks-enable)
+#+end_src
+
+Doom theme's extra fontification is more problematic than helpful.
+#+begin_src emacs-lisp
+(setq doom-themes-org-fontify-special-tags nil)
+#+end_src
+
+**** Symbols
+
+It's also nice to change the character used for collapsed items (by default ~…~),
+I think ~▾~ is better for indicating 'collapsed section'.
+and add an extra ~org-bullet~ to the default list of four.
+I've also added some fun alternatives, just commented out.
+
+#+begin_src emacs-lisp
+(after! org-superstar
+  (setq org-superstar-headline-bullets-list '("◉" "○" "✸" "✿" "✤" "✜" "◆" "▶")
+        org-superstar-prettify-item-bullets t ))
+
+(setq org-ellipsis " ▾ "
+      org-hide-leading-stars t
+      org-priority-highest ?A
+      org-priority-lowest ?E
+      org-priority-faces
+      '((?A . 'all-the-icons-red)
+        (?B . 'all-the-icons-orange)
+        (?C . 'all-the-icons-yellow)
+        (?D . 'all-the-icons-green)
+        (?E . 'all-the-icons-blue)))
+#+end_src
+
+It's also nice to make use of the Unicode characters for check boxes, and other commands.
+
+#+begin_src emacs-lisp
+(appendq! +ligatures-extra-symbols
+          `(:checkbox      "☐"
+            :pending       "◼"
+            :checkedbox    "☑"
+            :list_property "∷"
+            :em_dash       "—"
+            :ellipses      "…"
+            :arrow_right   "→"
+            :arrow_left    "←"
+            :title         "𝙏"
+            :subtitle      "𝙩"
+            :author        "𝘼"
+            :date          "𝘿"
+            :property      "☸"
+            :options       "⌥"
+            :startup       "⏻"
+            :macro         "𝓜"
+            :html_head     "🅷"
+            :html          "🅗"
+            :latex_class   "🄻"
+            :latex_header  "🅻"
+            :beamer_header "🅑"
+            :latex         "🅛"
+            :attr_latex    "🄛"
+            :attr_html     "🄗"
+            :attr_org      "⒪"
+            :begin_quote   "❝"
+            :end_quote     "❞"
+            :caption       "☰"
+            :header        "›"
+            :results       "🠶"
+            :begin_export  "⏩"
+            :end_export    "⏪"
+            :properties    "⚙"
+            :end           "∎"
+            :priority_a   ,(propertize "⚑" 'face 'all-the-icons-red)
+            :priority_b   ,(propertize "⬆" 'face 'all-the-icons-orange)
+            :priority_c   ,(propertize "■" 'face 'all-the-icons-yellow)
+            :priority_d   ,(propertize "⬇" 'face 'all-the-icons-green)
+            :priority_e   ,(propertize "❓" 'face 'all-the-icons-blue)))
+
+(set-ligatures! 'org-mode
+  :merge t
+  :checkbox      "[ ]"
+  :pending       "[-]"
+  :checkedbox    "[X]"
+  :list_property "::"
+  :em_dash       "---"
+  :ellipsis      "..."
+  :arrow_right   "->"
+  :arrow_left    "<-"
+  :title         "#+title:"
+  :subtitle      "#+subtitle:"
+  :author        "#+author:"
+  :date          "#+date:"
+  :property      "#+property:"
+  :options       "#+options:"
+  :startup       "#+startup:"
+  :macro         "#+macro:"
+  :html_head     "#+html_head:"
+  :html          "#+html:"
+  :latex_class   "#+latex_class:"
+  :latex_header  "#+latex_header:"
+  :beamer_header "#+beamer_header:"
+  :latex         "#+latex:"
+  :attr_latex    "#+attr_latex:"
+  :attr_html     "#+attr_html:"
+  :attr_org      "#+attr_org:"
+  :begin_quote   "#+begin_quote"
+  :end_quote     "#+end_quote"
+  :caption       "#+caption:"
+  :header        "#+header:"
+  :begin_export  "#+begin_export"
+  :end_export    "#+end_export"
+  :results       "#+RESULTS:"
+  :property      ":PROPERTIES:"
+  :end           ":END:"
+  :priority_a    "[#A]"
+  :priority_b    "[#B]"
+  :priority_c    "[#C]"
+  :priority_d    "[#D]"
+  :priority_e    "[#E]")
+
+(plist-put +ligatures-extra-symbols :name "⁍")
+#+end_src
+
+~org-superstar-mode~ is great. While we're at it we may as well make tags prettier as well 🙂
+#+begin_src emacs-lisp :tangle packages.el
+;; (package! org-pretty-tags :pin "5c7521651b35ae9a7d3add4a66ae8cc176ae1c76")
+#+end_src
+
+#+begin_src emacs-lisp
+;; (use-package org-pretty-tags
+;; :config
+;;  (setq org-pretty-tags-surrogate-strings
+;;        `(("uni"        . ,(all-the-icons-faicon   "graduation-cap" :face 'all-the-icons-purple  :v-adjust 0.01))
+;;          ("ucc"        . ,(all-the-icons-material "computer"       :face 'all-the-icons-silver  :v-adjust 0.01))
+;;          ("assignment" . ,(all-the-icons-material "library_books"  :face 'all-the-icons-orange  :v-adjust 0.01))
+;;          ("test"       . ,(all-the-icons-material "timer"          :face 'all-the-icons-red     :v-adjust 0.01))
+;;          ("lecture"    . ,(all-the-icons-fileicon "keynote"        :face 'all-the-icons-orange  :v-adjust 0.01))
+;;          ("email"      . ,(all-the-icons-faicon   "envelope"       :face 'all-the-icons-blue    :v-adjust 0.01))
+;;          ("read"       . ,(all-the-icons-octicon  "book"           :face 'all-the-icons-lblue   :v-adjust 0.01))
+;;          ("article"    . ,(all-the-icons-octicon  "file-text"      :face 'all-the-icons-yellow  :v-adjust 0.01))
+;;          ("web"        . ,(all-the-icons-faicon   "globe"          :face 'all-the-icons-green   :v-adjust 0.01))
+;;          ("info"       . ,(all-the-icons-faicon   "info-circle"    :face 'all-the-icons-blue    :v-adjust 0.01))
+;;          ("issue"      . ,(all-the-icons-faicon   "bug"            :face 'all-the-icons-red     :v-adjust 0.01))
+;;          ("someday"    . ,(all-the-icons-faicon   "calendar-o"     :face 'all-the-icons-cyan    :v-adjust 0.01))
+;;          ("idea"       . ,(all-the-icons-octicon  "light-bulb"     :face 'all-the-icons-yellow  :v-adjust 0.01))
+;;          ("emacs"      . ,(all-the-icons-fileicon "emacs"          :face 'all-the-icons-lpurple :v-adjust 0.01))))
+;;  (org-pretty-tags-global-mode))
+#+end_src
+
+*** Exporting
+
+**** General settings
+
+By default Org only exports the first three levels of headings as ... headings.
+This is rather unfortunate as my documents frequently stray far beyond three
+levels of depth. The two main formats I care about exporting to are LaTeX and
+HTML. When using an =article= class, LaTeX headlines go from =\section=,
+=\subsection=, =\subsubsection=, and =\paragraph= to =\subgraph= --- /five/ levels.
+HTML5 has six levels of headings (=<h1>= to =<h6>=), but first level Org headings
+get exported as =<h2>= elements --- leaving /five/ usable levels.
+
+As such, it would seem to make sense to recognise the first /five/ levels of Org
+headings when exporting.
+
+#+begin_src emacs-lisp
+(setq org-export-headline-levels 5) ; I like nesting
+#+end_src
+
+I'm also going to make use of an item in =ox-extra= so that I can add an =:ignore:=
+tag to headings for the content to be kept, but the heading itself ignored
+(unlike =:noexport:= which ignored both heading and content). This is useful when
+I want to use headings to provide a structure for writing that doesn't appear in
+the final documents.
+#+begin_src emacs-lisp
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+#+end_src
+
+Since I (roughly) track Org ~HEAD~, it makes sense to include the git version in
+the creator string.
+#+begin_src emacs-lisp
+(setq org-export-creator-string
+      (format "Emacs %s (Org mode %s %s)" emacs-version (org-release) (org-git-version)))
+#+end_src
+
+**** ASCII
+
+#+begin_src emacs-lisp
+(setq org-ascii-charset 'utf-8)
+#+end_src
+
+**** Markdown Export
+
+***** GFM
+
+Because of the /[[https://github.com/commonmark/commonmark-spec/wiki/markdown-flavors][lovely variety in markdown implementations]]/ there isn't actually
+such a thing a standard table spec ... or standard anything really. Because
+~org-md~ is a goody-two-shoes, it just uses HTML for all these non-standardised
+elements (a lot of them). So ~ox-gfm~ is handy for exporting markdown with all the
+features that GitHub has.
+
+#+begin_src emacs-lisp :noweb-ref none :tangle packages.el
+(package! ox-gfm :pin "99f93011b069e02b37c9660b8fcb45dab086a07f")
+#+end_src
+
+#+begin_src emacs-lisp :noweb-ref none :tangle yes
+(use-package! ox-gfm
+  :after ox)
+#+end_src
+
+***** Character substitutions
+
+When I want to paste exported markdown somewhere (for example when using [[Emacs Everywhere][Emacs
+Everywhere]]), it can be preferable to have unicode characters for =---= etc. instead
+of =&#x2014;=.
+
+To accomplish this, we just need to locally rebind the alist which provides
+these substitution.
+
+#+begin_src emacs-lisp
+(defadvice! org-md-plain-text-unicode-a (orig-fn text info)
+  "Locally rebind `org-html-special-string-regexps'"
+  :around #'org-md-plain-text
+  (let ((org-html-special-string-regexps
+         '(("\\\\-" . "-")
+           ("---\\([^-]\\|$\\)" . "—\\1")
+           ("--\\([^-]\\|$\\)" . "–\\1")
+           ("\\.\\.\\." . "…")
+           ("->" . "→")
+           ("<-" . "←"))))
+    (funcall orig-fn text (plist-put info :with-smart-quotes nil))))
+#+end_src
+
+In the future, I may want to check =info= to only have this active when =ox-gfm= is
+being used.
+
+** PDF
+
+=pdf-tools= is nice, but a =mupdf=-based solution is nicer.
+
+#+begin_src emacs-lisp :tangle no
+(package! paper :recipe (:host github :repo "ymarco/paper-mode"
+                         :files ("*.el" ".so")
+                         :pre-build ("make")))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+;; (use-package paper
+;;   ;; :mode ("\\.pdf\\'"  . paper-mode)
+;;   ;; :mode ("\\.epub\\'"  . paper-mode)
+;;   :config
+;;   (require 'evil-collection-paper)
+;;   (evil-collection-paper-setup))
+#+end_src
+
+** Markdown
+
+Since markdown is often seen as rendered HTML, let's try to somewhat mirror the
+style or markdown renderers.
+
+Most markdown renders seem to make the first three headings levels larger than
+normal text, the first two much so. Then the fourth level tends to be the same
+as body text, while the fifth and sixth are (increasingly) smaller, with the
+sixth greyed out. Since the sixth level is so small, I'll turn up the boldness a
+notch.
+
+#+begin_src emacs-lisp
+(custom-set-faces!
+  '(markdown-header-face-1 :height 1.25 :weight extra-bold :inherit markdown-header-face)
+  '(markdown-header-face-2 :height 1.15 :weight bold       :inherit markdown-header-face)
+  '(markdown-header-face-3 :height 1.08 :weight bold       :inherit markdown-header-face)
+  '(markdown-header-face-4 :height 1.00 :weight bold       :inherit markdown-header-face)
+  '(markdown-header-face-5 :height 0.90 :weight bold       :inherit markdown-header-face)
+  '(markdown-header-face-6 :height 0.75 :weight extra-bold :inherit markdown-header-face))
+#+end_src
+
+** LSP
+#+begin_src emacs-lisp
+(after! lsp
+  (setq lsp-enable-file-watchers nil
+        +lsp-defer-shutdown 60)
+
+  (set-formatter! 'lsp-formatter #'lsp-format-buffer
+                  :modes '(lsp-mode)))
+
+(after! lsp-ui
+  (setq lsp-ui-doc-enable nil
+        lsp-signature-render-documentation nil))
+#+end_src
+
+** Rust
+
+#+begin_src emacs-lisp
+(after! rustic
+  (setq rustic-lsp-server 'rust-analyzer
+        rustic-format-trigger 'on-save
+        rustic-test-arguments "--all-features"
+        lsp-rust-analyzer-cargo-watch-command "clippy")
+
+  (map! :localleader
+        :map rustic-mode-map
+
+        :desc "Execute code action" "a" #'lsp-execute-code-action
+        :desc "Toggle inlay hints"  "h" #'lsp-rust-analyzer-inlay-hints-mode
+        :desc "Join lines"          "j" #'lsp-rust-analyzer-join-lines
+        :desc "Expand macro"        "x" #'lsp-rust-analyzer-expand-macro
+
+        :desc "Cargo Format"        "f" #'rustic-cargo-fmt
+        :desc "Cargo Check"         "k" #'rustic-cargo-check
+
+        (:prefix ("t" . "cargo test")
+          :desc "run tests"    "t" #'rustic-cargo-test
+          :desc "all features" "a" #'rustic-cargo-test-rerun
+          :desc "test current" "c" #'rustic-cargo-current-test)
+
+        (:prefix ("g" . "goto")
+          :desc "Definition"      "d" #'lsp-find-definition
+          :desc "Implementation"  "i" #'lsp-find-implementation
+          :desc "Reference"       "r" #'lsp-find-references
+          :desc "Type definition" "t" #'lsp-find-type-definition)))
+#+end_src
+
+** Protobuf
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! protobuf-mode
+  :recipe (:host github :repo "protocolbuffers/protobuf"
+           :files ("protobuf-mode.el" "editors/*.el"))
+  :pin "13d559beb6967033a467a7517c35d8ad970f8afb")
+#+end_src
+
+#+begin_src emacs-lisp
+(after! protobuf-mode
+  (defun flycheck-protobuf-buf-project-root (&optional _checker)
+    "Return the nearest directory holding the buf.yaml configuration."
+    (and buffer-file-name
+        (locate-dominating-file buffer-file-name "buf.yaml")))
+
+  (flycheck-define-checker protobuf-buf
+    "A protobuf syntax checker: `https://github.com/bufbuild/buf'"
+    :command ("buf" "lint" "--path" source-original)
+    :error-patterns
+    ((warning line-start (file-name) ":" line ":" column ":" (message) line-end))
+    :modes protobuf-mode
+    :enabled flycheck-protobuf-buf-project-root
+    :working-directory flycheck-protobuf-buf-project-root
+    :predicate flycheck-buffer-saved-p)
+
+  (add-to-list 'flycheck-checkers 'protobuf-buf))
+#+end_src
+
+** Flatbuffers
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! flatbuffers-mode
+  :recipe (:host github :repo "Asalle/flatbuffers-mode" :files ("*.el"))
+  :pin "8e7783db45a64c9456130fd0c108ac12d45a7789")
+#+end_src
