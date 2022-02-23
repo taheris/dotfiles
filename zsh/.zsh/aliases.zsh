@@ -224,13 +224,12 @@ alias ggw='git grep --word-regexp'
 
 # git log
 _git_log_medium_format='%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B'
-_git_log_oneline_format='%C(green)%h%C(reset) %s%C(red)%d%C(reset)'
-alias glg='git log --topo-order --pretty=format:"${_git_log_medium_format}"'
+_git_log_oneline_format='%C(blue)%cd %C(yellow)%h%C(red)%d %C(white)%s'
+alias glg='git log --topo-order --date=short --pretty=format:"${_git_log_oneline_format}"'
 alias glgss='git log --topo-order --pretty=format:"${_git_log_medium_format}" --show-signature'
 alias glgst='git log --topo-order --stat --pretty=format:"${_git_log_medium_format}"'
 alias glgd='git log --topo-order --stat --patch --full-diff --pretty=format:"${_git_log_medium_format}"'
-alias glgo='git log --topo-order --pretty=format:"${_git_log_oneline_format}"'
-alias glgg='git log --topo-order --graph --pretty=format:"${_git_log_oneline_format}"'
+alias glgg='git log --topo-order --graph --date=short --pretty=format:"${_git_log_oneline_format}"'
 alias glgs='git shortlog --summary --numbered'
 
 # git merge
