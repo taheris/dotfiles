@@ -2,9 +2,16 @@
 
 set -euo pipefail
 
-emacs --batch --eval "(progn \
-  (require 'org) \
-  (setq org-confirm-babel-evaluate nil) \
-  (org-babel-tangle-file \"~/.config/doom/config.org\"))"
+readonly PWD=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
-mv *.el ~/.config/doom
+elisp() {
+cat <<EOF
+(progn
+  (require 'org)
+  (setq org-confirm-babel-evaluate nil)
+  (org-babel-tangle-file "~/.config/doom/config.org"))
+EOF
+}
+
+emacs --batch --eval "$(elisp)"
+mv -i "${PWD}/*.el" ~/.config/doom

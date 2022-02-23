@@ -114,6 +114,7 @@ alias less='less -r'
 # misc
 alias sudo='sudo '
 alias llh='ll -H'
+alias o='open'
 alias tf='tail -f'
 alias cl='clear'
 alias cls='clear;ls'
