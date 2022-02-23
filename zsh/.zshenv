@@ -12,6 +12,10 @@ export LC_ALL=en_US.UTF-8
 export MANPATH=$MANPATH:/usr/local/opt/gnu-tar/libexec/gnuman
 export STARSHIP_CONFIG=~/.config/starship/config.toml
 
+# homebrew
+export HOMEBREW_NO_ANALYTICS=true
+export HOMEBREW_NO_ENV_HINTS=true
+
 # openssl
 export OPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1
 export OPENSSL_INCLUDE_DIR=/usr/local/opt/openssl@1.1/include
