@@ -33,11 +33,11 @@ set -g window-status-format "#[$_POWERLINE_WINDOW_COLOR]$_POWERLINE_LEFT_HARD_DI
 
 set -ga terminal-overrides ",xterm-256color:Tc"
 
-set -g @tpm_plugins '\
-  tmux-plugins/tpm \
-  tmux-plugins/tmux-sensible \
-  tmux-plugins/tmux-resurrect \
-  tmux-plugins/tmux-copycat \
-  tmux-plugins/tmux-open \
-  '
-run '~/.tmux/plugins/tpm/tpm'
+#set -g @tpm_plugins '\
+#  tmux-plugins/tpm \
+#  tmux-plugins/tmux-sensible \
+#  tmux-plugins/tmux-resurrect \
+#  tmux-plugins/tmux-copycat \
+#  tmux-plugins/tmux-open \
+#  '
+#run '~/.tmux/plugins/tpm/tpm'

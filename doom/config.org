@@ -828,6 +828,60 @@ Reduce zoom size.
 
 * Applications
 
+** Emacs Application Framework
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! eaf
+  :recipe (:host github :repo "emacs-eaf/emacs-application-framework"
+           :files ("app" "core" "*.el" "*.py"))
+  :pin "1eebb4ce5e06834286ed756e92d56f8ab0da316b")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! eaf
+  :defer t
+  :load-path "~/.config/doom/eaf"
+  :config
+  (setq eaf-browser-dark-mode nil
+        eaf-browser-default-search-engine "duckduckgo"
+        eaf-browse-blank-page-url "https://duckduckgo.com"
+        eaf-browser-enable-adblocker t
+        eaf-browser-remember-history nil
+        eaf-enable-debug nil
+        eaf-fullscreen-p nil
+        eaf-kill-process-after-last-buffer-closed t
+        eaf-markdown-dark-mode nil
+        eaf-pdf-dark-mode "ignore"
+        eaf-start-python-process-when-require t
+        eaf-terminal-dark-mode nil
+        eaf-webengine-default-zoom 1.1
+        eaf-webengine-font-size 14
+        eaf-webengine-fixed-font-size 14
+        eaf-webengine-scroll-step 200)
+
+  (require 'eaf-all-the-icons)
+  (require 'eaf-browser)
+  (require 'eaf-evil)
+  (require 'eaf-markdown-previewer)
+  (require 'eaf-pdf-viewer)
+
+  (define-key key-translation-map (kbd "SPC")
+    (lambda (prompt)
+      (if (derived-mode-p 'eaf-mode)
+        (pcase eaf--buffer-app-name
+            ("browser" (if (eaf-call-sync "execute_function" eaf--buffer-id "is_focus")
+                           (kbd "SPC")
+                         (kbd eaf-evil-leader-key)))
+            ("pdf-viewer" (kbd eaf-evil-leader-key))
+            ("image-viewer" (kbd eaf-evil-leader-key))
+            ("mindmap" (kbd eaf-evil-leader-key))
+            ("markdown-previewer" (kbd eaf-evil-leader-key))
+            ("music-player" (kbd eaf-evil-leader-key))
+            ("video-player" (kbd eaf-evil-leader-key))
+            (_  (kbd "SPC")))
+        (kbd "SPC")))))
+#+end_src
+
 ** Ebooks
 
 Add =calibredb= to use calibre through Emacs.
@@ -2629,14 +2683,7 @@ being used.
 
 ** Markdown
 
-Since markdown is often seen as rendered HTML, let's try to somewhat mirror the
-style or markdown renderers.
-
-Most markdown renders seem to make the first three headings levels larger than
-normal text, the first two much so. Then the fourth level tends to be the same
-as body text, while the fifth and sixth are (increasingly) smaller, with the
-sixth greyed out. Since the sixth level is so small, I'll turn up the boldness a
-notch.
+Try to mimic style of markdown renderers.
 
 #+begin_src emacs-lisp
 (custom-set-faces!
@@ -2648,7 +2695,14 @@ notch.
   '(markdown-header-face-6 :height 0.75 :weight extra-bold :inherit markdown-header-face))
 #+end_src
 
+Make format errors popup small and quitable.
+
+#+begin_src emacs-lisp
+(set-popup-rule! "*format-all-errors*" :ttl 0 :quit t)
+#+end_src
+
 ** LSP
+
 #+begin_src emacs-lisp
 (after! lsp
   (setq lsp-enable-file-watchers nil
@@ -2669,7 +2723,11 @@ notch.
   (setq rustic-lsp-server 'rust-analyzer
         rustic-format-trigger 'on-save
         rustic-test-arguments "--all-features"
-        lsp-rust-analyzer-cargo-watch-command "clippy")
+        lsp-rust-all-features t
+        lsp-rust-analyzer-cargo-watch-command "clippy"
+        lsp-rust-analyzer-cargo-watch-args ["--all-features", " --", "-D", "warnings"]
+        lsp-rust-analyzer-import-granularity "module"
+        lsp-rust-clippy-preference "on")
 
   (map! :localleader
         :map rustic-mode-map

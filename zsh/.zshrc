@@ -14,7 +14,7 @@ setopt autocd extendedglob nomatch notify
 # set path
 path=(
   /usr/local/sbin
-  /usr/local/opt/{emacs-plus@28,gettext,llvm,mysql-client,openssl@1.1,sqlite}/bin
+  /usr/local/opt/{emacs-plus@28,fzf,gettext,llvm,mysql-client,openssl@1.1,sqlite}/bin
   ~/{.cargo,.cabal,.krew}/bin
   ~/bin
   $path
@@ -29,23 +29,15 @@ fpath=(
 )
 
 # completions
-#zstyle :compinstall filename '/Users/shaun/.zshrc'
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 autoload -Uz compinit && compinit
 
 # set up kubernetes
 source <(kubectl completion zsh)
 
-# set up zaw
-source ~/src/github.com/zsh-users/zaw/zaw.zsh
-bindkey '^R' zaw-history
-bindkey -M filterselect '^J' down-line-or-history
-bindkey -M filterselect '^K' up-line-or-history
-bindkey -M filterselect '^E' accept-search
-zstyle ':filter-select:highlight' matched fg=green
-zstyle ':filter-select' max-lines 8
-zstyle ':filter-select' case-insensitive yes
-zstyle ':filter-select' extended-search yes
+# set up fzf
+[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
+source "/usr/local/opt/fzf/shell/key-bindings.zsh"
 
 # set up starship
 eval "$(starship init zsh)"
