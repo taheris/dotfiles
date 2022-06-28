@@ -25,10 +25,12 @@ export OPENSSL_LIB_DIR=/usr/local/opt/openssl@1.1/lib
 export CARGO_HOME=~/.cargo
 export RUSTC_WRAPPER=sccache
 
-# jvm
-export JAVA_HOME=/Library/Java/Home
-export SBT_OPTS="-XX:MaxHeapSize=8G"
+# java
+export JAVA_HOME=/usr/local/opt/openjdk
 
 # gtags
 export GTAGSCONF=/usr/local/share/gtags/gtags.conf
 export GTAGSLABEL=pygments
+
+# fzf
+export FZF_DEFAULT_OPTS='--height 40% --reverse'

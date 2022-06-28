@@ -41,9 +41,9 @@ alias ln="ln -i"
 
 # global expansions
 alias -g H=' --help'
-alias -g F=' --force'
 alias -g V=' --version'
 alias -g C='| gsed -z "$ s/\n$//" | pbcopy '
+alias -g F='| fzf'
 alias -g G='| grep'
 alias -g EG='| egrep'
 alias -g FG='| fgrep'
@@ -549,12 +549,15 @@ alias cup='cargo update'
 alias cupp='cargo update --package'
 alias cs='cargo search'
 alias cin='cargo install'
+alias cinf='cargo install --force'
 alias cinp='cargo install --path'
 alias cinpd='cargo install --path .'
 alias cun='cargo uninstall'
 alias cx='cargo expand'
 alias cxb='cargo expand --bin'
 alias cxl='cargo expand --lib'
+alias cod='cargo outdated'
+alias codr='cargo outdated --root-deps-only'
 
 # cargo +nightly
 alias cnb='cargo +nightly build'
@@ -601,6 +604,8 @@ alias ruspc='rustup set profile complete'
 
 # ripgrep
 alias rg='rg --sort-files --follow --no-messages --max-columns 180'
+alias rgf='rg --files'
+alias rgfh='rg --files --hidden'
 alias rgh='rg --hidden'
 alias rgi='rg --no-ignore'
 alias rgb='rg-boundary'
