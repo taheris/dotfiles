@@ -285,7 +285,7 @@ pdf                          ; pdf enhancements
 ;;prodigy                    ; FIXME managing external services & code builders
 rgb                          ; creating color strings
 ;;taskrunner                 ; taskrunner for all your projects
-;;terraform                  ; infrastructure as code
+terraform                  ; infrastructure as code
 ;;tmux                       ; an API for interacting with tmux
 upload                       ; map local to remote projects via ssh/ftp
 #+end_src
@@ -304,7 +304,7 @@ upload                       ; map local to remote projects via ssh/ftp
 #+begin_src emacs-lisp
 ;;agda                       ; types of types of types of types...
 ;;beancount                  ; mind the GAAP
-;;cc                         ; C/C++/Obj-C madness
+;;(cc +lsp)                  ; C > C++ == 1
 ;;clojure                    ; java with a lisp
 ;;common-lisp                ; if you've seen one lisp, you've seen them all
 ;;coq                        ; proofs-as-programs
@@ -317,18 +317,20 @@ data                         ; config/data formats
 ;;elm                        ; care for a cup of TEA?
 emacs-lisp                   ; drown in parentheses
 ;;erlang                     ; an elegant language for a more civilized age
-ess                          ; emacs speaks statistics
+;;ess                        ; emacs speaks statistics
 ;;factor                     ; for when scripts are stacked against you
 ;;faust                      ; dsp, but you get to keep your soul
+;;fortran                    ; in FORTRAN, GOD is REAL (unless declared INTEGER)
 ;;fsharp                     ; ML stands for Microsoft's Language
 ;;fstar                      ; (dependent) types and (monadic) effects and Z3
 ;;gdscript                   ; the language you waited for
 (go +lsp)                    ; the hipster dialect
+;;(graphql +lsp)             ; Give queries a REST
 ;;(haskell +lsp)             ; a language that's lazier than I am
 ;;hy                         ; readability of scheme w/ speed of python
 ;;idris                      ; a language you can depend on
 json                         ; At least it ain't XML
-;;(java +meghanada)          ; the poster child for carpal tunnel syndrome
+;;(java +lsp)                ; the poster child for carpal tunnel syndrome
 (javascript +lsp)            ; all(hope(abandon(ye(who(enter(here))))))
 (julia +lsp)                 ; Python, R, and MATLAB in a blender
 ;;kotlin                     ; a better, slicker Java(Script)
@@ -1111,11 +1113,11 @@ Display ANSI colour codes.
 
 Lazy load the Org config.
 
-#+begin_src emacs-lisp :noweb no-export :tangle yes :noweb-ref nil
-(after! org
-  <<org-conf>>
-)
-#+end_src
+##+begin_src emacs-lisp :noweb no-export :tangle yes :noweb-ref nil
+#(after! org
+#  <<org-conf>>
+#)
+##+end_src
 
 *** Packages
 
@@ -1123,12 +1125,14 @@ Lazy load the Org config.
 
 Redraw tables with box-drawing characters.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle packages.el
 (package! org-pretty-table
   :recipe (:host github
            :repo "Fuco1/org-pretty-table")
   :pin "87772a9469d91770f87bfa788580fca69b9e697a")
+#+end_src
 
+#+begin_src emacs-lisp :tangle yes
 (use-package! org-pretty-table
   :commands (org-pretty-table-mode global-org-pretty-table-mode))
 #+end_src
@@ -1139,7 +1143,7 @@ While ~org-hide-emphasis-markers~ is very nice, it can sometimes make edits whic
 occur at the border a bit more fiddley. We can improve this situation without
 sacrificing visual amenities with the =org-appear= package.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle packages.el
 (package! org-appear
   :recipe (:host github
            :repo "awth13/org-appear")
@@ -1162,7 +1166,7 @@ sacrificing visual amenities with the =org-appear= package.
 
 Add a package for viewing and managing the heading structure.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle packages.el
 (package! org-ol-tree
   :recipe (:host github
            :repo "Townk/org-ol-tree")
@@ -1183,7 +1187,7 @@ Add a package for viewing and managing the heading structure.
 
 Include content from one file into another by reference.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle packages.el
 (package! org-transclusion
   :recipe (:host github
            :repo "nobiot/org-transclusion")
@@ -1204,7 +1208,7 @@ Include content from one file into another by reference.
 
 View Org buffers as a clickable, graphical mind-map.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle packages.el
 (package! org-graph-view
   :recipe (:host github
            :repo "alphapapa/org-graph-view")
@@ -1215,7 +1219,7 @@ View Org buffers as a clickable, graphical mind-map.
 
 Save yourself from non-org formats, thanks to pandoc.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle packages.el
 (package! org-pandoc-import
   :recipe (:host github
            :repo "tecosaur/org-pandoc-import"
@@ -2728,6 +2732,9 @@ Make format errors popup small and quitable.
         lsp-rust-analyzer-cargo-watch-args ["--all-features", " --", "-D", "warnings"]
         lsp-rust-analyzer-import-granularity "module"
         lsp-rust-clippy-preference "on")
+
+  (setf +popup--display-buffer-alist
+        (assoc-delete-all "^\\*rustic-compilation" +popup--display-buffer-alist))
 
   (map! :localleader
         :map rustic-mode-map
