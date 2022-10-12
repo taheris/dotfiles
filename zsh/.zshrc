@@ -14,7 +14,7 @@ setopt autocd extendedglob nomatch notify
 # set path
 path=(
   /usr/local/sbin
-  /usr/local/opt/{emacs-plus@28,fzf,gettext,llvm,mysql-client,openssl@1.1,sqlite}/bin
+  /usr/local/opt/{emacs-mac,fzf,gettext,llvm,mysql-client,openssl@1.1,sqlite}/bin
   ~/{.cargo,.cabal,.krew}/bin
   ~/bin
   $path
