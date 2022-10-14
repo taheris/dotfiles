@@ -398,7 +398,7 @@ nix                          ; I hereby declare "nix geht mehr!"
  +tree-sitter)
 ;;sml                        ; no, the /other/ ML
 ;;solidity                   ; do you need a blockchain? No.
-;;swift                      ; who asked for emoji variables?
+swift                      ; who asked for emoji variables?
 ;;terra                      ; Earth and Moon in alignment for performance.
 (web                         ; the tubes
  +lsp
@@ -2195,7 +2195,7 @@ Add =calibredb= to use calibre through Emacs.
   :config
   (setq calibredb-root-dir "~/Documents/books/calibre"
         calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir)
-        sql-sqlite-program (if IS-WINDOWS "sqlite3.exe" "sqlite"))
+        sql-sqlite-program (if IS-WINDOWS "sqlite3.exe" "sqlite3"))
 
   (map! :map calibredb-show-mode-map
         :ne "?" #'calibredb-entry-dispatch
