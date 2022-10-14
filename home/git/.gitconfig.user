@@ -1,6 +1,6 @@
 [user]
   name=Shaun Taheri
-  email=git@taheris.net
+  email=gpg@taheris.net
   signingkey = 1C2BE6B85F923891
 [commit]
   gpgsign = true
