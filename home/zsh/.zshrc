@@ -1,7 +1,7 @@
 # Executes commands at the start of an interactive session.
 
 # source custom files
-for config_file ($HOME/.zsh/*.zsh) source $config_file
+for config_file (${HOME}/.zsh/*.zsh) source ${config_file}
 
 # set keybindings
 set -o emacs
@@ -13,17 +13,17 @@ setopt autocd extendedglob nomatch notify
 
 # set path
 path=(
-  /usr/local/sbin
-  /usr/local/opt/{emacs-mac,fzf,gettext,llvm,mysql-client,openssl@1.1,sqlite}/bin
-  ~/{.cargo,.cabal,.krew}/bin
+  /opt/homebrew/{bin,sbin}
+  /opt/homebrew/opt/{emacs-mac,fzf,gettext,llvm,openssl@1.1,sqlite}/bin
+  ~/{.cargo,.cabal}/bin
   ~/bin
   $path
 )
 
 # zsh completions
 fpath=(
-  /usr/local/share/zsh-completions
-  /usr/local/share/zsh/site-functions
+  /opt/homebrew/share/zsh-completions
+  /opt/homebrew/share/zsh/site-functions
   ~/.rustup/toolchains/stable-x86_64-apple-darwin/share/zsh/site-functions
   $fpath
 )
@@ -36,8 +36,8 @@ autoload -Uz compinit && compinit
 source <(kubectl completion zsh)
 
 # set up fzf
-[[ $- == *i* ]] && source "/usr/local/opt/fzf/shell/completion.zsh" 2> /dev/null
-source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+[[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
+source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 
 # set up starship
 eval "$(starship init zsh)"

@@ -1003,10 +1003,10 @@ Add =nov= to read the ebooks.
   (defun +nov-mode-setup ()
     (setq-local line-spacing 0.4
                 mode-line-format nil
-                nov-text-width nil
+                nov-text-width 110
                 shr-use-colors nil
                 visual-fill-column-center-text t
-                visual-fill-column-width 80)
+                visual-fill-column-width 120)
 
     (face-remap-add-relative 'variable-pitch :height 1.4)
     (visual-fill-column-mode 1)
