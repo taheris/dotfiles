@@ -8,6 +8,7 @@ fi
 # misc
 export DOCKER_SCAN_SUGGEST=false
 export GOPATH=~
+export LESSHISTFILE=-
 export LC_ALL=en_US.UTF-8
 export MANPATH=${MANPATH}:/opt/homebrew/opt/gnu-tar/libexec/gnuman
 export STARSHIP_CONFIG=~/.config/starship/config.toml

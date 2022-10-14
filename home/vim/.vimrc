@@ -11,6 +11,7 @@ set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set hidden                      "Buffers can exist in the background
+set viminfo=                    "Disable the viminfo file
 
 "turn on syntax highlighting
 syntax on
