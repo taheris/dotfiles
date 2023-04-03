@@ -4,8 +4,9 @@
   signingkey = 1C2BE6B85F923891
 [commit]
   gpgsign = true
-[gpg]
-  program = gpg2
+[core]
+  autocrlf = false
+  editor = vim
 [merge]
   tool = vim
 [mergetool "vim"]

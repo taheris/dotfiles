@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-readonly PWD=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-
 elisp() {
 cat <<EOF
 (progn
@@ -14,4 +12,3 @@ EOF
 }
 
 emacs --batch --eval "$(elisp)"
-mv -i "${PWD}/*.el" ~/.config/doom
