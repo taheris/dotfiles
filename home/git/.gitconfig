@@ -1,5 +1,3 @@
-# set your user tokens as environment variables, such as ~/.secrets
-# See the README for examples.
 [color]
   ui = true
 [color "branch"]
@@ -12,38 +10,27 @@
   old = red
   new = green
 [alias]
-  # add
+  # misc
   a = add                           # add
-  chunkyadd = add --patch           # stage commits chunk by chunk
-
-  # via http://philjackson.github.io/2013/04/07/handy-git-tips-to-stop-you-getting-fired.html
-  snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-  snapshots = !git stash list --grep snapshot
-
-  #via http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
-  recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
-
-  # branch
   b = branch -v                     # branch (verbose)
-
-  # commit
-  c = commit -m                     # commit with message
-  ca = commit -am                   # commit all with message
-  ci = commit                       # commit
-  amend = commit --amend            # ammend your last commit
-  ammend = commit --amend           # ammend your last commit
+  s = status                        # status
+  t = tag -n                        # show tags with <n> lines of each tag message
 
   # checkout
   co = checkout                     # checkout
-  nb = checkout -b                  # create and switch to a new branch (mnemonic: "git new branch branchname...")
-
-  # cherry-pick
-  cp = cherry-pick -x               # grab a change from a branch
+  nb = checkout -b                  # create and switch to a new branch
+  cp = cherry-pick                  # grab a change from a branch
+ 
+  # commit
+  c = commit                        # commit
+  ca = commit -am                   # commit all with message
+  cm = commit -m                    # commit with message
+  amend = commit --amend            # ammend your last commit
 
   # diff
   d = diff                          # diff unstaged changes
   dc = diff --cached                # diff staged changes
-  last = diff HEAD^                 # diff last committed change
+  dh = diff HEAD^                   # diff last committed change
 
   # log
   l = log --graph --date=short
@@ -52,18 +39,14 @@
   simple = log --pretty=format:\" * %s\"
   shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
 
-  # pull
-  pl = pull                         # pull
-
-  # push
-  ps = push                         # push
-
   # rebase
   rc = rebase --continue            # continue rebase
   rs = rebase --skip                # skip rebase
 
   # remote
   r = remote -v                     # show remotes (verbose)
+  pl = pull                         # pull
+  ps = push                         # push
 
   # reset
   unstage = reset HEAD              # remove files from index (tracking)
@@ -76,19 +59,6 @@
   sl = stash list                   # list stashes
   sa = stash apply                  # apply stash (restore changes)
   sd = stash drop                   # drop stashes (destory changes)
-
-  # status
-  s = status                        # status
-  st = status                       # status
-  stat = status                     # status
-
-  # tag
-  t = tag -n                        # show tags with <n> lines of each tag message
-
-  # svn helpers
-  svnr = svn rebase
-  svnd = svn dcommit
-  svnl = svn log --oneline --show-commit
 [format]
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 [mergetool]
@@ -108,29 +78,16 @@
   # 'git push' will push the current branch to its tracking branch
   # the usual default is to push all branches
   default = upstream
-[core]
-  autocrlf = false
-  editor = vim
-  excludesfile = ~/.yadr/git/gitignore
 [advice]
   statusHints = false
 [diff]
   # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
   # instead of a/b/c/d as prefixes for patches
   mnemonicprefix = true
-	algorithm = patience
+  algorithm = patience
 [rerere]
   # Remember my merges
-  # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
   enabled = true
-[magithub]
-  online = false
-[magithub "status"]
-  includeStatusHeader = false
-  includePullRequestsSection = false
-  includeIssuesSection = false
-[include]
-  path = .gitconfig.user
 [pull]
   rebase = true
 [filter "lfs"]
@@ -138,7 +95,8 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
-[credential]
-	helper = osxkeychain
 [init]
-	defaultBranch = main
+  defaultBranch = main
+[include]
+  path = .gitconfig.user
+  path = .gitconfig.windows

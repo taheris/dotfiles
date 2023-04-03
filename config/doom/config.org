@@ -12,8 +12,8 @@
 *** Name and email
 
 #+begin_src emacs-lisp
-(setq user-full-name "taheris"
-      user-mail-address "git@taheris.net")
+(setq user-full-name "Shaun Taheri"
+      user-mail-address "gpg@taheris.net")
 #+end_src
 
 *** GPG
@@ -31,11 +31,9 @@
               x-stretch-cursor t)
 
 (setq auto-save-default t
-      comp-deferred-compilation t
       confirm-kill-emacs nil
       doom-localleader-key ","
       evil-want-fine-undo t
-      js-indent-level 4
       make-pointer-invisible t
       mouse-drag-copy-region t
       scroll-margin 2
@@ -44,12 +42,24 @@
       vterm-always-compile-module t)
 #+end_src
 
+** Encoding
+
+Always use =utf-8= encoding.
+
+#+begin_src emacs-lisp
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+(set-keyboard-coding-system 'utf-8-unix)
+(set-terminal-coding-system 'utf-8-unix)
+#+end_src
+
 ** Customisations
 
 Use a separate file for customisations rather than =init.el=.
 
 #+begin_src emacs-lisp
 (setq-default custom-file (expand-file-name ".custom.el" doom-private-dir))
+
 (when (file-exists-p custom-file)
   (load custom-file))
 #+end_src
@@ -64,42 +74,19 @@ Use a separate file for customisations rather than =init.el=.
 ** Frame title
 
 An example of an unedited title would be =config.org ● dotfiles=, while an
-edited buffer would look like =config.org ◉ dotfiles=.
+edited buffer would be =config.org ◉ dotfiles=.
 
 #+begin_src emacs-lisp
 (setq frame-title-format
       '(""
         (:eval
          (if (s-contains-p org-roam-directory (or buffer-file-name ""))
-             (replace-regexp-in-string
-              ".*/[0-9]*-?" "☰ "
-              (subst-char-in-string ?_ ?  buffer-file-name))
+             (replace-regexp-in-string ".*/[0-9]*-?" "☰ " (subst-char-in-string ?_ ?  buffer-file-name))
            "%b"))
         (:eval
          (let ((project-name (projectile-project-name)))
            (unless (string= "-" project-name)
              (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
-#+end_src
-
-** Workspace
-
-#+begin_src emacs-lisp
-(map! :leader
-      (:prefix ("TAB" . "workspace")
-        :desc "Switch to"    "SPC" #'+workspace/switch-to
-        :desc "Switch left"  "h"   #'+workspace/switch-left
-        :desc "Switch right" "l"   #'+workspace/switch-right
-        :desc "Swap left"    "H"   #'+workspace/swap-left
-        :desc "Swap right"   "L"   #'+workspace/swap-right))
-#+end_src
-
-** Debugger
-
-#+begin_src emacs-lisp
-(map! :leader
-      (:prefix ("d" . "debug")
-        :desc "Set breakpoint"  "b" #'edebug-defun
-        :desc "Undo breakpoint" "u" #'eval-defun))
 #+end_src
 
 * Doom config
@@ -109,10 +96,11 @@ edited buffer would look like =config.org ◉ dotfiles=.
 :header-args:emacs-lisp: :tangle no
 :END:
 
+*** Layout
+
 Define the =init.el= file structure.
 
 #+name: init.el
-#+attr_html: :collapsed t
 #+begin_src emacs-lisp :tangle "init.el" :noweb no-export :comments no
 ;;; init.el -*- lexical-binding: t; -*-
 
@@ -257,6 +245,7 @@ vterm                        ; the best terminal emulation in Emacs
 #+begin_src emacs-lisp
 syntax                       ; tasing you for every semicolon you forget
 (spell +aspell)              ; tasing you for misspelling mispelling
+;(spell +enchant)             ; tasing you for misspelling mispelling
 grammar                      ; tasing grammar mistake every you make
 #+end_src
 
@@ -410,45 +399,39 @@ literate
 
 ** Visual settings
 
-*** Font face
+*** Theme
 
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "Monaco" :size 15)
-      doom-big-font (font-spec :family "Monaco" :size 24)
+(setq doom-theme 'doom-material)
+
+(remove-hook 'window-setup-hook #'doom-init-theme-h)
+(add-hook 'after-init-hook #'doom-init-theme-h 'append)
+
+(delq! t custom-theme-load-path)
+#+end_src
+
+*** Fonts
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "MonoLisa ss01 ss03 ss06 zero" :size 32 :weight 'medium)
+      doom-big-font (font-spec :family "MonoLisa ss01 ss03 ss06 zero" :size 48 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Libre Baskerville")
       doom-serif-font (font-spec :family "Libre Baskerville")
       doom-unicode-font (font-spec :family "JuliaMono"))
 #+end_src
 
+Set modes for extra font ligatures.
+
+#+begin_src emacs-lisp
+(setq +ligatures-extras-in-modes '(org-mode))
+#+end_src
+
 *** Modeline
 
-#+begin_src emacs-lisp
-(setq doom-theme 'doom-material)
-(remove-hook 'window-setup-hook #'doom-init-theme-h)
-(add-hook 'after-init-hook #'doom-init-theme-h 'append)
-(delq! t custom-theme-load-path)
-#+end_src
-
-Hide =LF UTF-8=.
+Only show file encoding if it's not =UTF-8= or with =LF= endings.
 
 #+begin_src emacs-lisp
-(defun doom-modeline-conditional-buffer-encoding ()
-  "We expect the encoding to be LF UTF-8, so only show the modeline when this is not the case"
-  (setq-local doom-modeline-buffer-encoding
-              (unless (and (memq (plist-get (coding-system-plist buffer-file-coding-system) :category)
-                                 '(coding-category-undecided coding-category-utf-8))
-                           (not (memq (coding-system-eol-type buffer-file-coding-system) '(1 2))))
-                t)))
-
-(add-hook 'after-change-major-mode-hook #'doom-modeline-conditional-buffer-encoding)
-#+end_src
-
-*** Miscellaneous
-
-Use relative line numbers.
-
-#+begin_src emacs-lisp
-(setq display-line-numbers-type 'relative)
+(setq doom-modeline-default-eol-type 0)
 #+end_src
 
 Default buffer names.
@@ -458,119 +441,55 @@ Default buffer names.
       +doom-dashboard-name "► Doom")
 #+end_src
 
-Set modes for extra font ligatures.
+*** Line Numbers
 
 #+begin_src emacs-lisp
-(setq +ligatures-extras-in-modes '(org-mode))
+(setq display-line-numbers-type 'relative)
 #+end_src
 
-** Allow babel execution in CLI actions
+** Workspace
 
-Don't ask for confirmation when evaluation babel config, and silence
-~org-babel-execute-src-block~ output.
-
-#+begin_src emacs-lisp :tangle cli.el :comments no
-;;; cli.el -*- lexical-binding: t; -*-
-(setq org-confirm-babel-evaluate nil)
-
-(defun doom-shut-up-a (orig-fn &rest args)
-  (quiet! (apply orig-fn args)))
-
-(advice-add 'org-babel-execute-src-block :around #'doom-shut-up-a)
-#+end_src
-
-** Asynchronous config tangling
-
-Doom adds an =org-mode= hook ~+literate-enable-recompile-h~. This is a nice idea,
-but it's too blocking for my taste. Since I trust my tangling to be fairly
-straightforward, I'll just redefine it to a simpler, async, function.
+Easier movement between workspaces.
 
 #+begin_src emacs-lisp
-(defadvice! +literate-tangle-async-h ()
- "A very simplified version of `+literate-tangle-h', but async."
- :override #'+literate-tangle-h
- (let ((default-directory doom-private-dir))
-  (async-shell-command
-   (format "emacs --batch --eval \"(progn \
-   (require 'org) (setq org-confirm-babel-evaluate nil) \
-    (org-babel-tangle-file \\\"%s\\\"))\""
-    +literate-config-file))))
+(map! :leader
+      (:prefix ("TAB" . "workspace")
+        :desc "Switch to"    "SPC" #'+workspace/switch-to
+        :desc "Switch left"  "h"   #'+workspace/switch-left
+        :desc "Switch right" "l"   #'+workspace/switch-right
+        :desc "Swap left"    "H"   #'+workspace/swap-left
+        :desc "Swap right"   "L"   #'+workspace/swap-right))
+#+end_src
+
+** Popup
+
+Define some global popup rules.
+
+#+begin_src emacs-lisp
+(set-popup-rules!
+ '(("\\*doom:scratch\\*" :side right :size 0.33 :quit nil :modeline t :select t)
+   ("\\*helpful-*" :side right :size 0.33 :quit nil :modeline t)
+   ("\\*lsp-help\\*" :side right :size 0.33 :quit nil :modeline t)
+   ("\\*flycheck errors\\*" :side right :size 0.33 :quit nil :modeline t)))
+#+end_src
+
+** Debugger
+
+#+begin_src emacs-lisp
+(map! :leader
+      (:prefix ("d" . "debug")
+        :desc "Set breakpoint"  "b" #'edebug-defun
+        :desc "Undo breakpoint" "u" #'eval-defun))
 #+end_src
 
 * Packages
 
-** Usage instructions
-:PROPERTIES:
-:header-args:emacs-lisp: :tangle no
-:END:
+** Setup
 
-This is where you install packages, by declaring them with the ~package!~ macro in
-=packages.el=, then running ~doom refresh~ on the command line.
-
-This file shouldn't be byte compiled.
+The =packages.el= file shouldn't be byte compiled.
 
 #+begin_src emacs-lisp :tangle "packages.el" :comments no
 ;; -*- no-byte-compile: t; -*-
-#+end_src
-
-You'll then need to restart Emacs for your changes to take effect! Or at least,
-run =M-x doom/reload=.
-
-*Warning*: Don't disable core packages listed in =~/.emacs.d/core/packages.el=.
-Doom requires these, and disabling them may have terrible side effects.
-
-*** Packages in MELPA/ELPA/emacsmirror
-
-To install ~some-package~ from MELPA, ELPA or emacsmirror:
-
-#+begin_src emacs-lisp
-(package! some-package)
-#+end_src
-
-*** Packages from git repositories
-
-To install a package directly from a particular repo, you'll need to specify
-a ~:recipe~. You'll find documentation on what ~:recipe~ accepts [[https://github.com/raxod502/straight.el#the-recipe-format][here]]:
-
-#+begin_src emacs-lisp
-(package! another-package
-  :recipe (:host github :repo "username/repo"))
-#+end_src
-
-If the package you are trying to install does not contain a ~PACKAGENAME.el~
-file, or is located in a subdirectory of the repo, you'll need to specify
-~:files~ in the ~:recipe~:
-
-#+begin_src emacs-lisp
-(package! this-package
-  :recipe (:host github :repo "username/repo"
-           :files ("some-file.el" "src/lisp/*.el")))
-#+end_src
-
-*** Disabling built-in packages
-
-If you'd like to disable a package included with Doom, for whatever reason,
-you can do so here with the ~:disable~ property:
-
-#+begin_src emacs-lisp
-(package! builtin-package :disable t)
-#+end_src
-
-You can override the recipe of a built in package without having to specify
-all the properties for ~:recipe~. These will inherit the rest of its recipe
-from Doom or MELPA/ELPA/Emacsmirror:
-
-#+begin_src emacs-lisp
-(package! builtin-package :recipe (:nonrecursive t))
-(package! builtin-package-2 :recipe (:repo "myfork/package"))
-#+end_src
-
-Specify a ~:branch~ to install a package from a particular branch or tag.
-This is required for some packages whose default branch isn't 'master' (which
-our package manager can't deal with; see [[https://github.com/raxod502/straight.el/issues/279][raxod502/straight.el#279]])
-
-#+begin_src emacs-lisp
-(package! builtin-package :recipe (:branch "develop"))
 #+end_src
 
 ** Which key
@@ -582,11 +501,9 @@ Reduce the delay time before popup, and trim =evil-= from popup names.
       which-key-allow-multiple-replacements t)
 
 (after! which-key
-  (pushnew!
-   which-key-replacement-alist
-   '(("" . "\\`+?evil[-:/]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
-   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
-   ))
+  (pushnew! which-key-replacement-alist
+            '(("" . "\\`+?evil[-:/]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+            '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))))
 #+end_src
 
 ** Abbrev
@@ -666,10 +583,12 @@ Ignore some ~projectile~ paths.
 
 ** Ispell
 
-Set personal dict file.
+Set program and dictionaries.
 
 #+begin_src emacs-lisp
-(setq ispell-personal-dictionary (expand-file-name ".ispell_personal" doom-private-dir))
+(setq ispell-program-name (if IS-WINDOWS "aspell.exe" "aspell")
+      ispell-dictionary "en"
+      ispell-personal-dictionary (expand-file-name ".ispell_personal" doom-private-dir))
 #+end_src
 
 ** String inflection
@@ -846,7 +765,7 @@ Reduce zoom size.
   :config
   (setq eaf-browser-dark-mode nil
         eaf-browser-default-search-engine "duckduckgo"
-        eaf-browse-blank-page-url "https://duckduckgo.com"
+        eaf-browser-blank-page-url "https://start.duckduckgo.com"
         eaf-browser-enable-adblocker t
         eaf-browser-remember-history nil
         eaf-enable-debug nil
@@ -856,7 +775,7 @@ Reduce zoom size.
         eaf-pdf-dark-mode "ignore"
         eaf-start-python-process-when-require t
         eaf-terminal-dark-mode nil
-        eaf-webengine-default-zoom 1.1
+        eaf-webengine-default-zoom 2.0
         eaf-webengine-font-size 14
         eaf-webengine-fixed-font-size 14
         eaf-webengine-scroll-step 200)
@@ -1019,12 +938,7 @@ Add =nov= to read the ebooks.
 
 ** Calculator
 
-Emacs includes the venerable =calc=, which is a pretty impressive RPN (Reverse
-Polish Notation) calculator. However, we can do a bit to improve the experience.
-
-*** Defaults
-
-Any sane person prefers radians and exact values.
+Set =calc= defaults.
 
 #+begin_src emacs-lisp
 (setq calc-angle-mode 'rad  ; radians are rad
@@ -1033,9 +947,10 @@ Any sane person prefers radians and exact values.
 
 *** CalcTeX
 
-Everybody knows that mathematical expressions look best with LaTeX, so =calc='s
-ability to create LaTeX representations of its expressions provides a lovely
-opportunity which is taken advantage of in the CalcTeX package.
+Set up CalcTeX.
+
+#+attr_html: :class invertible :alt Demonstration of calc, prettified by calctex.
+[[https://tecosaur.com/lfs/emacs-config/screenshots/calc-with-calctex.png]]
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! calctex
@@ -1044,14 +959,6 @@ opportunity which is taken advantage of in the CalcTeX package.
            :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
   :pin "784cf911bc96aac0f47d529e8cee96ebd7cc31c9")
 #+end_src
-
-#+attr_html: :class invertible :alt Demonstration of calc, prettified by calctex.
-[[https://tecosaur.com/lfs/emacs-config/screenshots/calc-with-calctex.png]]
-
-We'd like to use CalcTeX too, so let's set that up, and fix some glaring
-inadequacies --- why on earth would you commit a hard-coded path to an executable
-that /only works on your local machine/, consequently breaking the package for
-everyone else!?
 
 #+begin_src emacs-lisp
 (use-package! calctex
@@ -1091,33 +998,11 @@ everyone else!?
       (call-process "make" nil nil nil))))
 #+end_src
 
-* Language configuration
-
-** Plain text
-
-Display ANSI colour codes.
-
-#+begin_src emacs-lisp :tangle (if (>= emacs-major-version 28) "yes" "no")
-(after! text-mode
-  (add-hook! 'text-mode-hook
-             ;; Apply ANSI color codes
-             (with-silent-modifications
-               (ansi-color-apply-on-region (point-min) (point-max) t))))
-#+end_src
-
 ** Org
 :PROPERTIES:
 :CUSTOM_ID: org
 :header-args:emacs-lisp: :tangle no :noweb-ref org-conf
 :END:
-
-Lazy load the Org config.
-
-##+begin_src emacs-lisp :noweb no-export :tangle yes :noweb-ref nil
-#(after! org
-#  <<org-conf>>
-#)
-##+end_src
 
 *** Packages
 
@@ -1202,17 +1087,6 @@ Include content from one file into another by reference.
         :map org-mode-map
         :localleader
         :desc "Transclusion mode" "~" #'org-transclusion-mode))
-#+end_src
-
-**** Heading graph
-
-View Org buffers as a clickable, graphical mind-map.
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! org-graph-view
-  :recipe (:host github
-           :repo "alphapapa/org-graph-view")
-  :pin "13314338d70d2c19511efccc491bed3ca0758170")
 #+end_src
 
 **** Pandoc import
@@ -1349,7 +1223,7 @@ Save yourself from non-org formats, thanks to pandoc.
 
   (setq doct-after-conversion-functions '(+doct-iconify-capture-templates))
 
-  (defvar +org-capture-random "~/src/github.com/taheris/notes/random.org")
+  (defvar +org-capture-random "~/Documents/org/random.org")
 
   (defun set-org-capture-templates ()
     (setq org-capture-templates
@@ -1616,8 +1490,8 @@ is selected, only the bare key is returned."
 **** Override some settings
 
 #+begin_src emacs-lisp
-(setq org-directory "~/src/github.com/taheris/notes"
-      epa-file-encrypt-to '("git@taheris.net")
+(setq org-directory "~/Documents/org"
+      epa-file-encrypt-to '("gpg@taheris.net")
       org-use-property-inheritance t              ; it's convenient to have properties inherited
       org-log-done 'time                          ; having the time a item is done sounds convenient
       org-list-allow-alphabetical t               ; have a. A. a) A) list bullets
@@ -1736,12 +1610,12 @@ View output files with =:localleader v=.
 Set the roam directory.
 
 #+begin_src emacs-lisp :noweb-ref none :tangle yes
-(setq org-roam-directory "~/Documents/roam/")
+(setq org-roam-directory "~/Documents/org/roam/")
 #+end_src
 
 Or disable entirely if the directory doesn't exist.
 
-#+begin_src emacs-lisp :noweb-ref none :tangle (if (file-exists-p "~/Documents/roam/") "no" "packages.el")
+#+begin_src emacs-lisp :noweb-ref none :tangle (if (file-exists-p "~/Documents/org/roam/") "no" "packages.el")
 (package! org-roam :disable t)
 #+end_src
 
@@ -2685,6 +2559,20 @@ these substitution.
 In the future, I may want to check =info= to only have this active when =ox-gfm= is
 being used.
 
+* Languages
+
+** Plain text
+
+Display ANSI colour codes.
+
+#+begin_src emacs-lisp :tangle (if (>= emacs-major-version 28) "yes" "no")
+(after! text-mode
+  (add-hook! 'text-mode-hook
+             ;; Apply ANSI color codes
+             (with-silent-modifications
+               (ansi-color-apply-on-region (point-min) (point-max) t))))
+#+end_src
+
 ** Markdown
 
 Try to mimic style of markdown renderers.
@@ -2733,9 +2621,10 @@ Make format errors popup small and quitable.
         lsp-rust-analyzer-import-granularity "module"
         lsp-rust-clippy-preference "on")
 
-  (setf +popup--display-buffer-alist
-        (assoc-delete-all "^\\*rustic-compilation" +popup--display-buffer-alist))
-
+  (set-popup-rules!
+   '(("\\*cargo-*" :side right :size 0.33 :quit nil :modeline t)
+     ("\\*rustic-*" :side right :size 0.33 :quit nil :modeline t)))
+  
   (map! :localleader
         :map rustic-mode-map
 
@@ -2792,6 +2681,6 @@ Make format errors popup small and quitable.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! flatbuffers-mode
-  :recipe (:host github :repo "Asalle/flatbuffers-mode" :files ("*.el"))
+  :recipe (:host github :repo "Asalle/flatbuffers-mode")
   :pin "8e7783db45a64c9456130fd0c108ac12d45a7789")
 #+end_src

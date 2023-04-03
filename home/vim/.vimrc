@@ -81,3 +81,6 @@ set smartcase       " ...unless we type a capital
 """ Security
 set modelines=0
 set nomodeline
+
+""" Windows
+let g:skip_loading_mswin=1
