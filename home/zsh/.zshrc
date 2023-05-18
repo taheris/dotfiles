@@ -16,6 +16,7 @@ path=(
   /opt/homebrew/{bin,sbin}
   /opt/homebrew/opt/{emacs-mac,fzf,gettext,llvm,openssl@1.1,sqlite}/bin
   ~/{.cargo,.cabal}/bin
+  ~/.dotnet/tools
   ~/bin
   $path
 )
