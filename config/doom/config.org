@@ -28,6 +28,7 @@
 
 #+begin_src emacs-lisp
 (setq-default delete-by-moving-to-trash t
+              history-length 1000
               window-combination-resize t
               x-stretch-cursor t)
 
@@ -39,8 +40,7 @@
       mouse-drag-copy-region t
       scroll-margin 2
       truncate-string-ellipsis "…"
-      undo-limit 10485760
-      vterm-always-compile-module t)
+      undo-limit 10485760)
 #+end_src
 
 ** Encoding
@@ -48,15 +48,17 @@
 Always use =utf-8= encoding.
 
 #+begin_src emacs-lisp
-(set-language-environment "UTF-8")
+(set-language-environment 'utf-8)
 (set-default-coding-systems 'utf-8)
-(set-keyboard-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
 #+end_src
 
 Fix unicode pasting on windows.
 
 #+begin_src emacs-lisp :tangle (if IS-WINDOWS "yes" "no")
+(set-clipboard-coding-system 'utf-16-le)
 (set-selection-coding-system 'utf-16-le)
 #+end_src
 
@@ -65,8 +67,7 @@ Fix unicode pasting on windows.
 Use a separate file for customisations rather than =init.el=.
 
 #+begin_src emacs-lisp
-(setq-default custom-file
-              (expand-file-name ".custom.el" doom-private-dir))
+(setq-default custom-file (expand-file-name ".custom.el" doom-private-dir))
 
 (when (file-exists-p custom-file)
   (load custom-file))
@@ -90,15 +91,6 @@ edited buffer would be =config.org ◉ dotfiles=.
              (format (if (buffer-modified-p)  " ◉ %s" "  ●  %s") project-name))))))
 #+end_src
 
-** Window splits
-
-Split windows to the right and below.
-
-#+begin_src emacs-lisp
-(setq evil-vsplit-window-right t
-      evil-split-window-below t)
-#+end_src
-
 ** Line wrapping
 
 Use ~auto-fill-mode~ instead of ~visual-line-mode~ for line wrapping with explicit
@@ -107,6 +99,14 @@ newline characters.
 #+begin_src emacs-lisp
 (remove-hook 'text-mode-hook #'visual-line-mode)
 (add-hook 'text-mode-hook #'auto-fill-mode)
+#+end_src
+
+** Terminal
+
+#+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
+(setq shell-file-name "/opt/homebrew/bin/zsh"
+      explicit-shell-file-name "/opt/homebrew/bin/zsh"
+      vterm-always-compile-module t)
 #+end_src
 
 * Doom config
@@ -169,6 +169,7 @@ Define the =init.el= file structure.
 
 #+name: doom-input
 #+begin_src emacs-lisp
+;;bidi                       ; (tfel ot) thgir etirw uoy gnipleh
 ;;chinese
 ;;japanese
 ;;layout                     ; auie,ctsrnm is the superior home row
@@ -180,6 +181,7 @@ Define the =init.el= file structure.
 #+begin_src emacs-lisp
 (company                     ; the ultimate code completion backend
  +childframe)                ; ... when your children are better than you
+ ;+tng)
 ;;helm                       ; the *other* search engine for love and life
 ;;ido                        ; the other *other* search engine...
 ;; (ivy                      ; a search engine for love and life
@@ -197,7 +199,6 @@ doom                         ; what makes DOOM look the way it does
 ;;doom-dashboard             ; a nifty splash screen for Emacs
 ;;doom-quit                  ; DOOM quit-message prompts when you quit Emacs
 (emoji +unicode)             ; 🙂
-;;fill-column                ; a `fill-column' indicator
 hl-todo                      ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
 ;;hydra                      ; quick documentation for related commands
 ;;indent-guides              ; highlighted indent columns, notoriously slow
@@ -214,7 +215,7 @@ ophints                      ; highlight the region an operation acts on
 ;;  +centaur-tabs)           ; ... with prettier tabs
 treemacs                     ; a project drawer, like neotree but cooler
 ;;unicode                    ; extended unicode support for various languages
-vc-gutter                    ; vcs diff in the fringe
+(vc-gutter +pretty)          ; vcs diff in the fringe
 vi-tilde-fringe              ; fringe tildes to mark beyond EOB
 (window-select +numbers)     ; visually switch windows
 workspaces                   ; tab emulation, persistence & separate workspaces
@@ -255,7 +256,7 @@ vc                           ; version-control and Emacs, sitting in a tree
 #+begin_src emacs-lisp
 eshell                     ; the elisp shell that works everywhere
 ;;shell                      ; simple shell REPL for Emacs
-;;term                       ; basic terminal emulator for Emacs
+term                       ; basic terminal emulator for Emacs
 vterm                        ; the best terminal emulation in Emacs
 #+end_src
 
@@ -337,7 +338,7 @@ emacs-lisp                   ; drown in parentheses
 (go                          ; the hipster dialect
  +lsp
  +tree-sitter)
-;;(graphql +lsp)             ; Give queries a REST
+(graphql +lsp)               ; Give queries a REST
 ;;(haskell +lsp)             ; a language that's lazier than I am
 ;;hy                         ; readability of scheme w/ speed of python
 ;;idris                      ; a language you can depend on
@@ -382,7 +383,9 @@ nix                          ; I hereby declare "nix geht mehr!"
  +pyright
  +tree-sitter)
 ;;qt                         ; the 'cutest' gui framework ever
-;;racket                     ; a DSL for DSLs
+(racket                     ; a DSL for DSLs
+ +lsp
+ +xp)
 ;;raku                       ; the artist formerly known as perl6
 ;;rest                       ; Emacs as a REST client
 ;;rst                        ; ReST in peace
@@ -398,7 +401,9 @@ nix                          ; I hereby declare "nix geht mehr!"
  +tree-sitter)
 ;;sml                        ; no, the /other/ ML
 ;;solidity                   ; do you need a blockchain? No.
-swift                      ; who asked for emoji variables?
+(swift                      ; who asked for emoji variables?
+ +lsp
+ +tree-sitter)
 ;;terra                      ; Earth and Moon in alignment for performance.
 (web                         ; the tubes
  +lsp
@@ -455,7 +460,7 @@ literate
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
 (setq doom-font (font-spec :family "Monaco" :size 15)
       doom-big-font (font-spec :family "Monaco" :size 24)
-      doom-variable-pitch-font (font-spec :family "Libre Baskerville")
+      doom-variable-pitch-font (font-spec :family "Libre Baskerville" :size 18)
       doom-serif-font (font-spec :family "Libre Baskerville")
       doom-unicode-font (font-spec :family "JuliaMono"))
 #+end_src
@@ -509,6 +514,26 @@ Easier movement between workspaces.
         :desc "Swap right"   "L"   #'+workspace/swap-right))
 #+end_src
 
+** Errors
+
+Define some keybindings for error handling.
+
+#+begin_src emacs-lisp
+(map! :leader
+      (:prefix ("e" . "error")
+        :desc "clear"            "c" #'flycheck-clear
+        :desc "display at point" "d" #'flycheck-display-error-at-point
+        :desc "explain at point" "e" #'flycheck-explain-error-at-point
+        :desc "list errors"      "l" #'flycheck-list-errors
+        :desc "next error"       "n" #'flycheck-next-error
+        :desc "previous error"   "p" #'flycheck-previous-error
+        :desc "select checker"   "s" #'flycheck-select-checker
+
+        (:prefix ("D" . "debug")
+         :desc "set breakpoint"  "b" #'edebug-defun
+         :desc "undo breakpoint" "u" #'eval-defun)))
+#+end_src
+
 ** Popup
 
 Define some global popup rules.
@@ -517,17 +542,7 @@ Define some global popup rules.
 (set-popup-rules!
  '(("\\*doom:scratch\\*" :side right :size 0.33 :quit nil :modeline t :select t)
    ("\\*helpful-*" :side right :size 0.33 :quit nil :modeline t)
-   ("\\*lsp-help\\*" :side right :size 0.33 :quit nil :modeline t)
-   ("\\*flycheck errors\\*" :side right :size 0.33 :quit nil :modeline t)))
-#+end_src
-
-** Debugger
-
-#+begin_src emacs-lisp
-(map! :leader
-      (:prefix ("d" . "debug")
-        :desc "Set breakpoint"  "b" #'edebug-defun
-        :desc "Undo breakpoint" "u" #'eval-defun))
+   ("\\*Flycheck errors\\*" :side right :size 0.33 :quit nil :modeline t)))
 #+end_src
 
 * Packages
@@ -563,8 +578,10 @@ Change some settings from the vim defaults.
 #+begin_src emacs-lisp
 (after! evil
   (setq evil-ex-substitute-global t
+        evil-kill-on-visual-paste nil
         evil-move-cursor-back nil
-        evil-kill-on-visual-paste nil))
+        evil-split-window-below t
+        evil-vsplit-window-right t))
 #+end_src
 
 Remove unused ~evil-escape-mode~ package which watches insert-mode keystrokes.
@@ -578,30 +595,24 @@ Remove unused ~evil-escape-mode~ package which watches insert-mode keystrokes.
 #+begin_src emacs-lisp
 (after! company
   (setq company-idle-delay 0.4
-        company-minimum-prefix-length 2
-        company-show-numbers t
         company-box-doc-enable nil
         company-selection-wrap-around t)
 
   (define-key! company-active-map
+               "RET"    nil
+               [return] nil
                "TAB"    #'company-complete-selection
                [tab]    #'company-complete-selection
-               "RET"    nil
-               [return] nil)
+               "C-/"    #'company-box-doc-manually)
 
   (add-hook 'evil-normal-state-entry-hook #'company-abort))
-
-(setq-default history-length 1000
-              prescient-history-length 1000)
 #+end_src
 
 Add ~Ispell~ to ~text~, ~markdown~, and ~GFM~ modes.
 
 #+begin_src emacs-lisp
 (set-company-backend!
-  '(text-mode
-    markdown-mode
-    gfm-mode)
+  '(text-mode markdown-mode gfm-mode)
   '(:seperate
     company-ispell
     company-files
@@ -620,14 +631,25 @@ Ignore some ~projectile~ paths.
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 #+end_src
 
-** Ispell
+** Spelling
 
-Set program and dictionaries.
+Set ~ispell~ program and dictionaries.
 
 #+begin_src emacs-lisp
 (setq ispell-program-name (if IS-WINDOWS "aspell.exe" "aspell")
       ispell-dictionary "en"
       ispell-personal-dictionary (expand-file-name ".ispell_personal" doom-private-dir))
+#+end_src
+
+FIXME: Remove ~spell-fu~ hook for LSP LTEX modes.
+
+#+begin_src emacs-lisp
+;(after! spell-fu
+;  (setq spell-fu-ignore-modes '(org-mode latex-mode LaTeX-mode markdown-mode))
+;
+;  (remove-hook!
+;    '(org-mode-hook latex-mode-hook LaTeX-mode-hook markdown-mode-hook)
+;    #'spell-fu-mode))
 #+end_src
 
 ** String inflection
@@ -651,14 +673,14 @@ Change the case pattern for a symbol.
 
   :init
   (map! :leader :prefix ("c~" . "naming convention")
-        :desc "cycle" "~" #'string-inflection-all-cycle
-        :desc "toggle" "t" #'string-inflection-toggle
-        :desc "CamelCase" "c" #'string-inflection-camelcase
-        :desc "downCase" "d" #'string-inflection-lower-camelcase
-        :desc "kebab-case" "k" #'string-inflection-kebab-case
+        :desc "cycle"       "~" #'string-inflection-all-cycle
+        :desc "toggle"      "t" #'string-inflection-toggle
+        :desc "CamelCase"   "c" #'string-inflection-camelcase
+        :desc "downCase"    "d" #'string-inflection-lower-camelcase
+        :desc "kebab-case"  "k" #'string-inflection-kebab-case
         :desc "under_score" "_" #'string-inflection-underscore
         :desc "Upper_Score" "u" #'string-inflection-capital-underscore
-        :desc "UP_CASE" "U" #'string-inflection-upcase)
+        :desc "UP_CASE"     "U" #'string-inflection-upcase)
 
   (after! evil
     (evil-define-operator evil-operator-string-inflection (beg end _type)
@@ -667,17 +689,77 @@ Change the case pattern for a symbol.
       (interactive "<R>")
       (string-inflection-all-cycle)
       (setq evil-repeat-info '([?g ?~])))
-    
+
     (define-key evil-normal-state-map (kbd "g~") 'evil-operator-string-inflection)))
 #+end_src
 
-** Smart parentheses
+** Smartparens
 
 #+begin_src emacs-lisp
-(sp-local-pair
- '(org-mode)
- "<<" ">>"
- :actions '(insert))
+(after! smartparens
+  (sp-with-modes '(org-mode)
+    (sp-local-pair "~" "~")
+    (sp-local-pair "=" "=")
+    (sp-local-pair "<<" ">>" :actions '(insert)))
+
+  (map! :map smartparens-mode-map
+        :nvie "s-a" #'sp-beginning-of-sexp
+        :nvie "s-e" #'sp-end-of-sexp
+        :nvie "s-h" #'sp-backward-up-sexp
+        :nvie "s-j" #'sp-next-sexp
+        :nvie "s-k" '(lambda () (interactive) (sp-next-sexp -1))
+        :nvie "s-l" #'sp-down-sexp
+        :nvie "s-f" #'sp-forward-sexp
+        :nvie "s-b" #'sp-backward-sexp
+        :nvie "s-d" #'sp-kill-sexp
+        :nvie "s-D" #'sp-backward-kill-sexp
+        :nvie "s-J" #'sp-join-sexp))
+#+end_src
+
+** Snap indent
+
+Automatic indentation on yank/paste.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! snap-indent :recipe (:host github :repo "jeffvalk/snap-indent")
+  :pin "1d08a9516240fd9776eed7dd39c619b6110d5a24")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! snap-indent
+  :hook (prog-mode . snap-indent-mode)
+  :config
+  (setq snap-indent-format 'untabify
+        snap-indent-commands '(yank yank-pop evil-yank evil-paste-before evil-paste-after))
+
+  (defun snap-indent-command-handler ()
+    "Indent region text on yank."
+    (when (memq this-command snap-indent-commands)
+      (snap-indent-indent (region-beginning) (region-end)))))
+#+end_src
+
+** IRC
+
+#+begin_src emacs-lisp
+(setq circe-default-user "sigma1"
+      circe-default-nick "sigma1"
+      circe-default-realname "sigma1")
+
+(defun my-fetch-password (&rest params)
+  (require 'auth-source)
+  (let ((match (car (apply #'auth-source-search params))))
+    (if match
+        (let ((secret (plist-get match :secret)))
+          (if (functionp secret)
+              (funcall secret)
+            secret))
+      (error "Password not found for %S" params))))
+
+(set-irc-server! "irc.libera.chat"
+  '(:tls t
+    :port 6697
+    :sasl-username "sigma1"
+    :sasl-password (lambda (server) (my-fetch-password :user "sigma1" :host "irc.libera.chat"))))
 #+end_src
 
 ** Info colors
@@ -697,7 +779,7 @@ Extra colors for Emacs's Info-mode
 
 ** Emojify
 
-Use twitter's emoji set instead of ~emoji-one~.
+Use Twitter's emoji set instead of ~emoji-one~.
 
 #+begin_src emacs-lisp
 (setq emojify-emoji-set "twemoji-v2")
@@ -728,8 +810,7 @@ Display the =^L= page break character as horizontal rules.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! page-break-lines
-  :recipe (:host github
-           :repo "purcell/page-break-lines"))
+  :recipe (:host github :repo "purcell/page-break-lines"))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -742,6 +823,15 @@ Display the =^L= page break character as horizontal rules.
   (map! :prefix "g"
         :desc "Prev page break" :nv "[" #'backward-page
         :desc "Next page break" :nv "]" #'forward-page))
+#+end_src
+
+** Writegood
+
+Turn off passive-voice checking.
+
+#+begin_src emacs-lisp
+(after! writegood-mode
+  (add-hook 'writegood-mode-hook #'writegood-passive-voice-turn-off))
 #+end_src
 
 ** Writeroom
@@ -966,19 +1056,25 @@ sacrificing visual amenities with the =org-appear= package.
       org-image-actual-width '(0.9))        ; Make the in-buffer display closer to the exported result..
 #+end_src
 
-I also like the src_elisp{:comments} header-argument, so let's make that a
-default.
+Add a newline when inserting new headings.
 
 #+begin_src emacs-lisp
-(setq org-babel-default-header-args
-      '((:session . "none")
-        (:results . "replace")
-        (:exports . "code")
-        (:cache . "no")
-        (:noweb . "no")
-        (:hlines . "no")
-        (:tangle . "no")
-        (:comments . "link")))
+(setq org-blank-before-new-entry
+      '((heading . t)
+        (plain-list-item . auto)))
+#+end_src
+
+**** Keybindings
+
+#+begin_src emacs-lisp
+(after! org
+  (map! :map org-mode-map
+        :ni "C-<return>" #'org-insert-heading
+        :ni "s-<return>" #'org-insert-subheading
+        :i  [return]     (cmd! (org-return electric-indent-mode)))
+
+  (map! :map evil-org-mode-map
+        :ni "C-<return>" #'evil-org-org-insert-heading-respect-content-below))
 #+end_src
 
 **** Extra functionality
@@ -1193,7 +1289,7 @@ The agenda is nice, but a souped up version is nicer.
 
 **** Capture
 
-Let's setup some org-capture templates, and make them visually nice to access.
+Setup some org-capture templates, and make them visually nice to access.
 
 #+attr_html: :class invertible :alt My org-capture dialouge.
 [[https://tecosaur.com/lfs/emacs-config/screenshots/org-capture.png]]
@@ -2181,9 +2277,11 @@ other settings.
     :priority_e    "[#E]"))
 #+end_src
 
-** Ebooks
+** eBooks
 
-Add =calibredb= to use calibre through Emacs.
+*** calibredb
+
+Read the calibre eBook library.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! calibredb :pin "0ea8ccc41bbf4c6d105d9d2eddffa25d040f0e8d")
@@ -2261,10 +2359,12 @@ Add =calibredb= to use calibre through Emacs.
         :ne "M-c" #'calibredb-set-metadata--comments))
 #+end_src
 
-Add =nov= to read the ebooks.
+*** nov
+
+Use =nov= to read eBooks.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! nov :pin "b3c7cc28e95fe25ce7b443e5f49e2e45360944a3")
+(package! nov :pin "12faf16fbbaf09aadec26dfbda5809d886248c02")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2301,14 +2401,15 @@ Add =nov= to read the ebooks.
   (defun +nov-mode-setup ()
     (setq-local line-spacing 0.4
                 mode-line-format nil
-                nov-text-width 110
+                nov-text-width 100
                 shr-use-colors nil
                 visual-fill-column-center-text t
-                visual-fill-column-width 120)
+                visual-fill-column-width 110)
 
-    (face-remap-add-relative 'variable-pitch :height 1.4)
+    (visual-line-mode 1)
     (visual-fill-column-mode 1)
-    (hl-line-mode -1)
+    (hl-line-mode 0)
+    (follow-mode 1)
 
     (add-to-list '+lookup-definition-functions #'+lookup/dictionary-definition)))
 
@@ -2369,6 +2470,79 @@ Add =nov= to read the ebooks.
         (kbd "SPC")))))
 #+end_src
 
+** LSP LTEX
+
+Config from https://github.com/doomemacs/doomemacs/pull/6683.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! lsp-ltex :pin "c2faddc1197a360548aee7927b6512365e8c0d3a")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! lsp-ltex
+  :commands (+lsp-ltex-toggle
+             +lsp-ltex-enable
+             +lsp-ltex-disable
+             +lsp-ltex-setup)
+
+  :hook ((org-mode latex-mode LaTeX-mode markdown-mode) . #'+lsp-ltex-setup)
+
+  :config
+  (add-to-list 'lsp-language-id-configuration '(doom-docs-org-mode . "org"))
+
+  :init
+  (setq lsp-ltex-language "en"
+        lsp-ltex-log-level "warning"
+        lsp-ltex-diagnostic-severity "warning"
+        lsp-ltex-user-rules-path (expand-file-name "lsp-ltex" doom-data-dir)
+        lsp-ltex-disabled-rules '(:en ["EN_QUOTES" "OXFORD_SPELLING_Z_NOT_S"]))
+
+  ;; When n-gram data sets are available, use them to detect errors with words
+  ;; that are often confused (like their and there).
+  (when (file-directory-p "/usr/share/ngrams")
+    (setq lsp-ltex-additional-rules-language-model "/usr/share/ngrams"))
+
+  (defvar +lsp-ltex-disabled-modes '(org-msg-edit-mode))
+
+  (defun +lsp-ltex-setup ()
+    "Load LTeX LSP server."
+    (interactive)
+    (require 'lsp-ltex)
+    (when (and (+lsp-ltex--enabled-p)
+               (not (memq major-mode +lsp-ltex-disabled-modes)))
+      (lsp-deferred)))
+
+  (defun +lsp-ltex--enabled-p ()
+    (not (memq 'ltex-ls lsp-disabled-clients)))
+
+  (defun +lsp-ltex-enable ()
+    "Enable LTeX LSP for the current buffer."
+    (interactive)
+    (unless (+lsp-ltex--enabled-p)
+      (setq-local lsp-disabled-clients (delq 'ltex-ls lsp-disabled-clients))
+      (message "Enabled ltex-ls"))
+    (+lsp-ltex-setup))
+
+  (defun +lsp-ltex-disable ()
+    "Disable LTeX LSP for the current buffer."
+    (interactive)
+    (when (+lsp-ltex--enabled-p)
+      (setq-local lsp-disabled-clients (cons 'ltex-ls lsp-disabled-clients))
+      (lsp-disconnect)
+      (message "Disabled ltex-ls")))
+
+  (defun +lsp-ltex-toggle ()
+    "Toggle LTeX LSP for the current buffer."
+    (interactive)
+    (if (+lsp-ltex--enabled-p)
+        (+lsp-ltex-disable)
+      (+lsp-ltex-enable)))
+
+  (map! :localleader
+        :map (text-mode-map latex-mode-map LaTeX-mode-map org-mode-map markdown-mode-map)
+        :desc "Toggle grammar check" "G" #'+lsp-ltex-toggle))
+#+end_src
+
 * Languages
 
 ** Plain text
@@ -2409,6 +2583,9 @@ Make format errors popup small and quitable.
   (setq lsp-enable-file-watchers nil
         +lsp-defer-shutdown 60)
 
+  (set-popup-rules!
+    '(("\\*lsp-help\\*" :side right :size 0.33 :quit nil :modeline t)))
+
   (set-formatter! 'lsp-formatter #'lsp-format-buffer
                   :modes '(lsp-mode)))
 
@@ -2442,6 +2619,7 @@ Make format errors popup small and quitable.
         :desc "Join lines"          "j" #'lsp-rust-analyzer-join-lines
         :desc "Expand macro"        "x" #'lsp-rust-analyzer-expand-macro
 
+        :desc "Cargo Clippy"        "c" #'rustic-cargo-clippy
         :desc "Cargo Format"        "f" #'rustic-cargo-fmt
         :desc "Cargo Check"         "k" #'rustic-cargo-check
 
@@ -2505,7 +2683,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist"))
-  :pin "e11847ab0c3b183a1e53fbc1ac587de82912b9cf")
+  :pin "b98c07007b48fcbf8a146b012b2317f09891a3fd")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2535,7 +2713,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "1f03655e2d4b9f759213294c14c1130f910c1c14")
+  :pin "a5be53d5e3733ed48023e4862b59ac12fa98be07")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2547,11 +2725,33 @@ Make format errors popup small and quitable.
         gptel-use-curl nil)
 
   (map! :leader
-        (:prefix ("e" . "ChatGPT")
+        (:prefix ("z" . "ChatGPT")
          :desc "gptel buffer"    "x" #'gptel
          :desc "gptel send"      "e" #'gptel-send
          :desc "gptel send menu" "s" #'gptel-send-menu))
 
   (map! :map gptel-mode-map
         "s-<return>" #'gptel-send))
+#+end_src
+
+** Move
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! move-mode
+  :recipe (:host github :repo "amnn/move-mode" :files ("*.el"))
+  :pin "c1046d806652386009d45d3e9b6c15509a5a5f19")
+#+end_src
+
+#+begin_src emacs-lisp
+(after! move-mode
+  (add-to-list 'auto-mode-alist '("\\.move" . move-mode))
+  (add-to-list 'lsp-language-id-configuration '(move-mode . "move"))
+
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection (lambda () "move-analyzer"))
+    :major-modes '(move-mode)
+    :priority 1
+    :library-folders-fn (lambda (_workspace) "~/.move/")
+    :server-id 'move-analyzer)))
 #+end_src
