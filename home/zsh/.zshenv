@@ -18,9 +18,9 @@ export HOMEBREW_NO_ANALYTICS=true
 export HOMEBREW_NO_ENV_HINTS=true
 
 # openssl
-export OPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl@1.1
-export OPENSSL_INCLUDE_DIR=/opt/homebrew/opt/openssl@1.1/include
-export OPENSSL_LIB_DIR=/opt/homebrew/opt/openssl@1.1/lib
+export OPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl@3.1
+export OPENSSL_INCLUDE_DIR=/opt/homebrew/opt/openssl@3.1/include
+export OPENSSL_LIB_DIR=/opt/homebrew/opt/openssl@3.1/lib
 
 # rust
 export CARGO_HOME=~/.cargo
