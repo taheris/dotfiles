@@ -22,6 +22,14 @@
 (setq auth-sources '("~/.authinfo.gpg")
       auth-source-cache-expiry nil
       epa-file-encrypt-to '("gpg@taheris.net"))
+
+(defun my-auth-source-get (&rest params)
+  (if-let ((secret (plist-get (car (apply #'auth-source-search params))
+                              :secret)))
+      (if (functionp secret)
+          (funcall secret)
+        secret)
+    (user-error "auth-search lookup failed for `%s`" params)))
 #+end_src
 
 ** Global settings
@@ -748,21 +756,11 @@ Automatic indentation on yank/paste.
       circe-default-nick "sigma1"
       circe-default-realname "sigma1")
 
-(defun my-fetch-password (&rest params)
-  (require 'auth-source)
-  (let ((match (car (apply #'auth-source-search params))))
-    (if match
-        (let ((secret (plist-get match :secret)))
-          (if (functionp secret)
-              (funcall secret)
-            secret))
-      (error "Password not found for %S" params))))
-
 (set-irc-server! "irc.libera.chat"
   '(:tls t
     :port 6697
     :sasl-username "sigma1"
-    :sasl-password (lambda (server) (my-fetch-password :user "sigma1" :host "irc.libera.chat"))))
+    :sasl-password (lambda (server) (my-auth-source-get :user "sigma1" :host "irc.libera.chat"))))
 #+end_src
 
 ** Info colors
@@ -1068,6 +1066,28 @@ sacrificing visual amenities with the =org-appear= package.
 
 #+begin_src emacs-lisp
 (setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc")
+#+end_src
+
+**** Org Shortcut
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-shortcut
+   :recipe (:host github :repo "markgdawson/org-clubhouse" :files ("*.el"))
+   :pin "49795b82bba844ee67efa532400f6a476917a690")
+#+end_src
+
+#+begin_src emacs-lisp
+(defun my-org-shortcut-get (user)
+  (ignore-errors
+    (my-auth-source-get :user user :host "shortcut.com")))
+
+(use-package! org-shortcut
+  :defer t
+  :after org
+  :config
+  (setq org-shortcut-auth-token (my-org-shortcut-get "auth-token")
+        org-shortcut-team-name (my-org-shortcut-get "team-name")
+        org-shortcut-username (my-org-shortcut-get "username")))
 #+end_src
 
 *** Behaviour
@@ -5273,7 +5293,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "a5be53d5e3733ed48023e4862b59ac12fa98be07")
+  :pin "30700cc88a03885d47cf4c6da22407f5eb39f7ac")
 #+end_src
 
 #+begin_src emacs-lisp

@@ -1,2 +1,5 @@
 [build]
 rustc-wrapper = "/opt/homebrew/bin/sccache"
+
+[target.aarch64-apple-darwin]
+rustflags = "-L /opt/homebrew/lib -L /opt/homebrew/opt/libpq/lib"
