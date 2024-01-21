@@ -1,0 +1,91 @@
+[window]
+option_as_alt = "Both"
+
+[scrolling]
+history = 10000
+
+[font]
+size = 15.0
+
+[font.normal]
+family = "Monaco"
+
+[font.bold]
+family = "Monaco"
+
+[font.bold_italic]
+family = "Monaco"
+
+[font.italic]
+family = "Monaco"
+
+[colors.primary]
+background = "#282a36"
+foreground = "#f8f8f2"
+
+[colors.cursor]
+cursor = "#f8f8f2"
+text = "#44475a"
+
+[colors.normal]
+black = "#282a36"
+blue = "#6272a4"
+cyan = "#8be9fd"
+green = "#50fa7b"
+magenta = "#ff79c6"
+red = "#ff5555"
+white = "#f8f8f2"
+yellow = "#f1fa8c"
+
+[colors.bright]
+black = "#44475a"
+blue = "#828fb7"
+cyan = "#bdf3fe"
+green = "#82fba0"
+magenta = "#ffacdc"
+red = "#ff8888"
+white = "#ffffff"
+yellow = "#f7fcbd"
+
+[colors.dim]
+black = "#14151b"
+blue = "#4d5b86"
+cyan = "#59dffc"
+green = "#1ef956"
+magenta = "#ff46b0"
+red = "#ff2222"
+white = "#e6e6d1"
+yellow = "#ebf85b"
+
+[[keyboard.bindings]]
+chars = "\u001Bb"
+key = "B"
+mods = "Alt"
+
+[selection]
+save_to_clipboard = true
+
+#[[keyboard.bindings]]
+#chars = "\u001Bd"
+#key = "D"
+#mods = "Alt"
+#
+#[[keyboard.bindings]]
+#chars = "\u001Bh"
+#key = "H"
+#mods = "Alt"
+#
+#[[keyboard.bindings]]
+#chars = "\u001Bf"
+#key = "F"
+#mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001BOB"
+key = "N"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001BOA"
+key = "P"
+mods = "Command"

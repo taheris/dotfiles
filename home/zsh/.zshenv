@@ -6,8 +6,10 @@ if [[ ( "${SHLVL}" -eq 1 && ! -o LOGIN ) && -s "${HOME}/.zprofile" ]]; then
 fi
 
 # misc
+export CLOUDSDK_PYTHON_SITEPACKAGES=1
 export DOCKER_SCAN_SUGGEST=false
 export GOPATH=~
+export GPG_TTY=$(tty)
 export LESSHISTFILE=-
 export LC_ALL=en_US.UTF-8
 export MANPATH=${MANPATH}:/opt/homebrew/opt/gnu-tar/libexec/gnuman
