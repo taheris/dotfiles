@@ -99,4 +99,4 @@
   defaultBranch = main
 [include]
   path = .gitconfig.user
-  path = .gitconfig.windows
+  path = .gitconfig.mac

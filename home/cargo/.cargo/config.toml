@@ -3,3 +3,6 @@ rustc-wrapper = "/opt/homebrew/bin/sccache"
 
 [target.aarch64-apple-darwin]
 rustflags = "-L /opt/homebrew/lib -L /opt/homebrew/opt/libpq/lib"
+
+[target.x86_64-unknown-linux-musl]
+linker = "x86_64-linux-musl-gcc"
