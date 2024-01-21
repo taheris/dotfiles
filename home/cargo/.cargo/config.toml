@@ -5,4 +5,5 @@ rustc-wrapper = "/opt/homebrew/bin/sccache"
 rustflags = "-L /opt/homebrew/lib -L /opt/homebrew/opt/libpq/lib"
 
 [target.x86_64-unknown-linux-musl]
+rustflags = "-L /opt/homebrew/lib -L /opt/homebrew/opt/libpq/lib -C target-feature=+crt-static"
 linker = "x86_64-linux-musl-gcc"

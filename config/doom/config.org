@@ -19,7 +19,7 @@
 *** GPG
 
 #+begin_src emacs-lisp
-(setq auth-sources '("~/.authinfo.gpg")
+(setq auth-sources '("~/.authinfo.gpg" "~/.authinfo")
       auth-source-cache-expiry nil
       epa-file-encrypt-to '("gpg@taheris.net"))
 
@@ -46,6 +46,7 @@
       evil-want-fine-undo t
       make-pointer-invisible t
       mouse-drag-copy-region t
+      mouse-highlight nil
       scroll-margin 2
       truncate-string-ellipsis "…"
       undo-limit 10485760)
@@ -192,9 +193,9 @@ Define the =init.el= file structure.
  ;+tng)
 ;;helm                       ; the *other* search engine for love and life
 ;;ido                        ; the other *other* search engine...
-;; (ivy                      ; a search engine for love and life
-;;  +icons                   ; ... icons are nice
-;;  +prescient)              ; ... I know what I want(ed)
+;;(ivy                       ; a search engine for love and life
+;; +icons                    ; ... icons are nice
+;; +prescient)               ; ... I know what I want(ed)
 (vertico +icons)             ; the search engine of the future
 #+end_src
 
@@ -262,7 +263,7 @@ vc                           ; version-control and Emacs, sitting in a tree
 *** Term
 
 #+begin_src emacs-lisp
-eshell                     ; the elisp shell that works everywhere
+;;eshell                     ; the elisp shell that works everywhere
 ;;shell                      ; simple shell REPL for Emacs
 term                       ; basic terminal emulator for Emacs
 vterm                        ; the best terminal emulation in Emacs
@@ -284,6 +285,7 @@ grammar                      ; tasing grammar mistake every you make
 #+begin_src emacs-lisp
 ;;ansible                    ; a crucible for infrastructure as code
 ;;biblio                     ; Writes a PhD for you (citation needed)
+;;collab                     ; buffers with friends
 (debugger +lsp)              ; FIXME stepping through code, to help you add bugs
 ;;direnv                     ; be direct about your environment
 docker                       ; port everything to containers
@@ -304,7 +306,7 @@ pdf                          ; pdf enhancements
 rgb                          ; creating color strings
 ;;taskrunner                 ; taskrunner for all your projects
 terraform                    ; infrastructure as code
-;;tmux                       ; an API for interacting with tmux
+tmux                         ; an API for interacting with tmux
 tree-sitter                  ; syntax and parsing, sitting in a tree...
 upload                       ; map local to remote projects via ssh/ftp
 #+end_src
@@ -410,9 +412,9 @@ markdown                     ; writing docs for people to ignore
  +tree-sitter)
 ;;sml                        ; no, the /other/ ML
 ;;solidity                   ; do you need a blockchain? No.
-(swift                       ; who asked for emoji variables?
- +lsp
- +tree-sitter)
+;(swift                      ; who asked for emoji variables?
+; +lsp
+; +tree-sitter)
 ;;terra                      ; Earth and Moon in alignment for performance.
 (web                         ; the tubes
  +lsp
@@ -1108,7 +1110,8 @@ sacrificing visual amenities with the =org-appear= package.
       org-catch-invisible-edits 'smart      ; Try not to accidently do weird stuff in invisible regions.
       org-export-with-sub-superscripts '{}  ; Don't treat lone _ / ^ as sub/superscripts, require _{} / ^{}.
       org-export-allow-bind-keywords t      ; Bind keywords can be handy
-      org-image-actual-width '(0.9))        ; Make the in-buffer display closer to the exported result..
+      org-image-actual-width nil
+      org-image-max-width nil)
 #+end_src
 
 Add a newline when inserting new headings.
@@ -2033,7 +2036,7 @@ other settings.
 Read the calibre eBook library.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! calibredb :pin "0ea8ccc41bbf4c6d105d9d2eddffa25d040f0e8d")
+(package! calibredb :pin "124c916f203511c64d03fac28d303dfb102a6ead")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2113,7 +2116,7 @@ Read the calibre eBook library.
 Use =nov= to read eBooks.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! nov :pin "12faf16fbbaf09aadec26dfbda5809d886248c02")
+(package! nov :pin "cc31ce0356226c3a2128119b08de6107e38fdd17")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2171,7 +2174,7 @@ Use =nov= to read eBooks.
 (package! eaf
   :recipe (:host github :repo "emacs-eaf/emacs-application-framework"
            :files ("app" "core" "*.el" "*.py"))
-  :pin "52cf35cfbb5fdd0cd1a2c04764a24a4941296650")
+  :pin "5f96a86221b162cb605d5bded95b7626d2adc343")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2390,7 +2393,7 @@ Make format errors popup small and quitable.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "200bdbc2725d260071f39b9264b5f3270658d379")
+  :pin "7f94235e552599141950d7a4a3eaf93bc87d1b22")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2467,13 +2470,14 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "30700cc88a03885d47cf4c6da22407f5eb39f7ac")
+  :pin "de6d8089cdf68732a3942ef729f774322120175e")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! gptel
   :config
-  (setq gptel-default-mode 'org-mode
+  (setq gptel-api-key (my-auth-source-get :user "apikey" :host "api.openai.com")
+        gptel-default-mode 'org-mode
         gptel-prompt-string "** "
         gptel-model "gpt-4"
         gptel-use-curl nil)

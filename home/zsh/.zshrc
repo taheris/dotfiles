@@ -9,12 +9,13 @@ set -o emacs
 # set terminal options
 bindkey -e
 bindkey "\eh" backward-kill-word
+bindkey "^[[3~" delete-char
 setopt autocd extendedglob nomatch notify
 
 # set path
 path=(
   /opt/homebrew/{bin,sbin}
-  /opt/homebrew/opt/{emacs-mac,fzf,gettext,llvm,openssl@1.1,sqlite}/bin
+  /opt/homebrew/opt/{emacs-mac,fzf,gettext,libpq,llvm,openssl@3,sqlite}/bin
   ~/{.cargo,.cabal}/bin
   ~/.dotnet/tools
   ~/bin
