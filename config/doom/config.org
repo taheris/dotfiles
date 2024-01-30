@@ -548,6 +548,20 @@ Define some keybindings for error handling.
          :desc "undo breakpoint"       "u" #'eval-defun)))
 #+end_src
 
+*** Formatting
+
+#+begin_src emacs-lisp
+(setq +format-on-save-disabled-modes
+      (cl-remove 'sql-mode +format-on-save-disabled-modes))
+
+(after! apheleia
+  (let ((entry (assoc 'pgformatter apheleia-formatters)))
+    (when entry
+      (setcdr entry (list "pg_format" "--keyword-case" "1"
+                          '(apheleia-formatters-indent "--tabs" "--spaces" 'tab-width)
+                          '(apheleia-formatters-fill-column "--wrap-limit"))))))
+#+end_src
+
 *** Popup
 
 Define some global popup rules.
@@ -2353,9 +2367,10 @@ Make format errors popup small and quitable.
   (setq rustic-lsp-server 'rust-analyzer
         rustic-format-trigger 'on-save
         rustic-test-arguments "--all-features"
+        rust-mode-treesitter-derive t
         lsp-rust-all-features t
         lsp-rust-analyzer-cargo-watch-command "clippy"
-        lsp-rust-analyzer-cargo-watch-args ["--all-features", " --", "-D", "warnings"]
+        lsp-rust-analyzer-cargo-watch-args ["--all-features", " --", "-D", "warnings", "-D", "rust-2018-idioms"]
         lsp-rust-analyzer-import-granularity "module"
         lsp-rust-clippy-preference "on")
 
@@ -2435,63 +2450,6 @@ Make format errors popup small and quitable.
   (add-hook 'ahk-mode-hook 'display-line-numbers-mode))
 #+end_src
 
-** Copilot
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist"))
-  :pin "b98c07007b48fcbf8a146b012b2317f09891a3fd")
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! copilot
-  :config
-  (map! :leader
-        (:prefix ("l" . "Copilot")
-         :desc "Copilot Complete" "l" #'copilot-complete
-         :desc "Copilot Clear"    "c" #'copilot-clear-overlay
-         :desc "Toggle Copilot"   "t" #'copilot-mode))
-
-  (map! :map prog-mode-map
-        "s-<return>" #'copilot-complete)
-
-  (map! :map copilot-completion-map
-        "<tab>" #'copilot-accept-completion
-        "C-e" #'copilot-accept-completion-by-line
-        "C-f" #'copilot-accept-completion-by-word
-        "C-g" #'copilot-clear-overlay
-        "<escape>" #'copilot-clear-overlay
-        "C-j" #'copilot-next-completion
-        "C-k" #'copilot-previous-completion))
-#+end_src
-
-** ChatGPT
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! gptel
-  :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "de6d8089cdf68732a3942ef729f774322120175e")
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! gptel
-  :config
-  (setq gptel-api-key (my-auth-source-get :user "apikey" :host "api.openai.com")
-        gptel-default-mode 'org-mode
-        gptel-prompt-string "** "
-        gptel-model "gpt-4"
-        gptel-use-curl nil)
-
-  (map! :leader
-        (:prefix ("z" . "ChatGPT")
-         :desc "gptel buffer"    "x" #'gptel
-         :desc "gptel send"      "e" #'gptel-send
-         :desc "gptel send menu" "s" #'gptel-send-menu))
-
-  (map! :map gptel-mode-map
-        "s-<return>" #'gptel-send))
-#+end_src
-
 ** Move
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -2536,4 +2494,39 @@ Make format errors popup small and quitable.
 (use-package! ob-d2
   :config
   (setq ob-d2-command "d2 --layout elk --sketch"))
+#+end_src
+
+** GPTel
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! gptel
+  :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
+  :pin "a61fda466171113684de5a6a154c2a8bf5a127c3")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! gptel
+  :config
+  (setq gptel-default-mode 'org-mode)
+  (setq-default gptel-model "mistral-large-2402"
+                gptel-backend (gptel-make-openai "mistral"
+                                :host "api.mistral.ai"
+                                :key #'gptel-api-key-from-auth-source
+                                :stream t
+                                :models '("mistral-large-2402", "mistral-medium-2312")))
+
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
+        (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
+
+  (map! :leader
+        (:prefix ("l" . "GPTel")
+         :desc "gptel buffer"    "b" #'gptel
+         :desc "gptel menu"      "m" #'gptel-menu
+         :desc "gptel set topic" "t" #'gptel-set-topic
+         :desc "gptel send"      "<return>" #'gptel-send))
+
+  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
+
+(after! gptel-transient
+  (transient-suffix-put 'gptel-menu (kbd "RET") :key "s-<return>"))
 #+end_src
