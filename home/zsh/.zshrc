@@ -43,3 +43,7 @@ source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 
 # set up starship
 eval "$(starship init zsh)"
+
+# set up carapace
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
