@@ -17,26 +17,13 @@
   autostash=true
 [stash]
   showPatch=true
+[diff]
+  tool = difftastic
+[difftool]
+  prompt = false
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
 [pager]
-  diff = delta
-  log = delta
-  reflog = delta
-  show = delta
-[interactive]
-  diffFilter = delta --color-only --features=interactive
-[delta]
-  features = decorations
-  syntax-theme = Dracula
-  plus-style = bold syntax auto
-  minus-style = bold syntax auto
-[delta "decorations"]
-  commit-decoration-style = bold yellow box ul
-  commit-style = raw
-  file-style = bold yellow ul
-  file-decoration-style = none
-  hunk-header-decoration-style = blue box
-  hunk-header-file-style = red
-  hunk-header-style = file line-number syntax
-  hunk-header-line-number-style = cyan
+  difftool = true
 [url "git@github.com:"]
   insteadOf = https://github.com/

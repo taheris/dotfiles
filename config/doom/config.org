@@ -188,9 +188,13 @@ Define the =init.el= file structure.
 
 #+name: doom-completion
 #+begin_src emacs-lisp
-(company                     ; the ultimate code completion backend
- +childframe)                ; ... when your children are better than you
+;(company                     ; the ultimate code completion backend
+; +childframe)                ; ... when your children are better than you
  ;+tng)
+(corfu                       ; complete with cap(f), cape and a flying feather!
+ ;+dabbrev
+ +icons
+ +orderless)
 ;;helm                       ; the *other* search engine for love and life
 ;;ido                        ; the other *other* search engine...
 ;;(ivy                       ; a search engine for love and life
@@ -616,35 +620,6 @@ Remove unused ~evil-escape-mode~ package which watches insert-mode keystrokes.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! evil-escape :disable t)
-#+end_src
-
-** Company
-
-#+begin_src emacs-lisp
-(after! company
-  (setq company-idle-delay 0.4
-        company-box-doc-enable nil
-        company-selection-wrap-around t)
-
-  (define-key! company-active-map
-               "RET"    nil
-               [return] nil
-               "TAB"    #'company-complete-selection
-               [tab]    #'company-complete-selection
-               "C-/"    #'company-box-doc-manually)
-
-  (add-hook 'evil-normal-state-entry-hook #'company-abort))
-#+end_src
-
-Add ~Ispell~ to ~text~, ~markdown~, and ~GFM~ modes.
-
-#+begin_src emacs-lisp
-(set-company-backend!
-  '(text-mode markdown-mode gfm-mode)
-  '(:seperate
-    company-ispell
-    company-files
-    company-yasnippet))
 #+end_src
 
 ** Projectile
@@ -2311,7 +2286,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 * Languages
 
-** Plain text
+** Text
 
 Display ANSI colour codes.
 
@@ -2365,6 +2340,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp
 (after! rustic
   (setq rustic-lsp-server 'rust-analyzer
+        rustic-clippy-arguments ["--all-features", " --", "-D", "warnings", "-D", "rust-2018-idioms"]
         rustic-format-trigger 'on-save
         rustic-test-arguments "--all-features"
         rust-mode-treesitter-derive t
