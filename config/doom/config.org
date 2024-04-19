@@ -473,13 +473,20 @@ literate
 *** Fonts
 
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
-(setq doom-font (font-spec :family "Monaco" :size 15)
+(setq doom-font (font-spec :family "Monaco" :size 16)
       doom-big-font (font-spec :family "Monaco" :size 24)
       doom-variable-pitch-font (font-spec :family "Libre Baskerville" :size 18)
       doom-serif-font (font-spec :family "Libre Baskerville")
       doom-unicode-font (font-spec :family "JuliaMono"))
 #+end_src
 
+#+begin_src emacs-lisp :tangle (if IS-LINUX "yes" "no")
+(setq doom-font (font-spec :family "MonacoB Nerd Font Mono" :size 16)
+      doom-big-font (font-spec :family "MonacoB Nerd Font Mono" :size 24)
+      doom-variable-pitch-font (font-spec :family "Libre Baskerville")
+      doom-serif-font (font-spec :family "Libre Baskerville")
+      doom-unicode-font (font-spec :family "JuliaMono"))
+#+end_src
 #+begin_src emacs-lisp :tangle (if IS-WINDOWS "yes" "no")
 (setq doom-font (font-spec :family "MonoLisa ss01 ss03 ss06 zero" :size 32 :weight 'medium)
       doom-big-font (font-spec :family "MonoLisa ss01 ss03 ss06 zero" :size 48 :weight 'medium)
@@ -2340,7 +2347,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp
 (after! rustic
   (setq rustic-lsp-server 'rust-analyzer
-        rustic-clippy-arguments ["--all-features", " --", "-D", "warnings", "-D", "rust-2018-idioms"]
+        rustic-default-clippy-arguments "--benches --tests --all-features -- -D warnings -D rust-2018-idioms"
         rustic-format-trigger 'on-save
         rustic-test-arguments "--all-features"
         rust-mode-treesitter-derive t
@@ -2477,19 +2484,20 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "a61fda466171113684de5a6a154c2a8bf5a127c3")
+  :pin "53a905dafc99fc1a3732655a2123657c145343a2")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! gptel
   :config
-  (setq gptel-default-mode 'org-mode)
-  (setq-default gptel-model "mistral-large-2402"
-                gptel-backend (gptel-make-openai "mistral"
-                                :host "api.mistral.ai"
-                                :key #'gptel-api-key-from-auth-source
-                                :stream t
-                                :models '("mistral-large-2402", "mistral-medium-2312")))
+  (setq gptel-default-mode 'org-mode
+        gptel-model "gpt-4-0125-preview")
+
+  (gptel-make-openai "mistral"
+    :host "api.mistral.ai"
+    :key #'gptel-api-key-from-auth-source
+    :stream t
+    :models '("mistral-large-2402", "mistral-medium-2312"))
 
   (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
         (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")

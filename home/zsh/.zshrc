@@ -14,8 +14,10 @@ setopt autocd extendedglob nomatch notify
 
 # set path
 path=(
-  /opt/homebrew/{bin,sbin}
-  /opt/homebrew/opt/{emacs-mac,fzf,gettext,libpq,llvm,openssl@3,sqlite}/bin
+  #/opt/homebrew/{bin,sbin}
+  #/opt/homebrew/opt/{emacs-mac,fzf,gettext,libpq,llvm,openssl@3,sqlite}/bin
+  /usr/lib/rustup/bin
+  ~/.config/emacs/bin
   ~/{.cargo,.cabal}/bin
   ~/.dotnet/tools
   ~/bin
@@ -24,9 +26,9 @@ path=(
 
 # zsh completions
 fpath=(
-  /opt/homebrew/share/zsh-completions
-  /opt/homebrew/share/zsh/site-functions
-  ~/.rustup/toolchains/stable-x86_64-apple-darwin/share/zsh/site-functions
+  #/opt/homebrew/share/zsh-completions
+  #/opt/homebrew/share/zsh/site-functions
+  ~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/zsh/site-functions
   $fpath
 )
 
@@ -34,16 +36,23 @@ fpath=(
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 autoload -Uz compinit && compinit
 
-# set up kubernetes
+# ssh-agent
+[[ ! -f "${XDG_RUNTIME_DIR}/ssh-agent.env" ]] && ssh-agent > "${XDG_RUNTIME_DIR}/ssh-agent.env"
+[[ ! -f "${SSH_AUTH_SOCK}" ]] && source "${XDG_RUNTIME_DIR}/ssh-agent.env" >/dev/null
+
+# kubernetes
 source <(kubectl completion zsh)
 
-# set up fzf
-[[ $- == *i* ]] && source "/opt/homebrew/opt/fzf/shell/completion.zsh" 2> /dev/null
-source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+# fzf
+eval "$(fzf --zsh)"
 
-# set up starship
+# starship
 eval "$(starship init zsh)"
 
-# set up carapace
+# carapace
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
+
+# direnv
+eval "$(direnv hook zsh)"
+source ~/.nix-profile/share/nix-direnv/direnvrc

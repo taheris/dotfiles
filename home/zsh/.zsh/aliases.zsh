@@ -64,6 +64,7 @@ alias -g LC='| tr "[:upper:]" "[:lower:]"'
 alias -g UC='| tr "[:lower:]" "[:upper:]"'
 alias -g OC='| openssl s_client -ign_eof -connect'
 alias -g XL=' -- . ":(exclude)*.lock"'
+alias -g ST=' --show-trace'
 
 # redirects
 alias -g N='>/dev/null'
@@ -481,7 +482,7 @@ alias dila='docker image ls --all'
 alias dib='docker image build --force-rm'
 alias dibt='docker image build --force-rm --tag'
 alias dii='docker image inspect'
-alias dihi='docker image history'
+alias dih='docker image history'
 alias diip='docker image import'
 alias dild='docker image load'
 alias dips='docker image push'
@@ -643,51 +644,6 @@ alias rgtoml='rg --type toml'
 alias rgtxt='rg --type txt'
 alias rgxml='rg --type xml'
 
-# jira
-alias jas='jira assign'
-alias jcr='jira create'
-alias jatc='jira attach create'
-alias jatg='jira attach get'
-alias jatl='jira attach list'
-alias jatrm='jira attach remove'
-alias jblk='jira block'
-alias jbr='jira browse'
-alias jco='jira comment'
-alias jed='jira edit'
-alias jea='jira epic add'
-alias jec='jira epic create'
-alias jel='jira epic list'
-alias jerm='jira epic remove'
-alias jln='jira issuelink'
-alias jlnt='jira issuelinktypes'
-alias jit='jira issuetypes'
-alias jla='jira labels add'
-alias jlrm='jira labels remove'
-alias jls='jira labels set'
-alias jl='jira list'
-alias jli='jira login'
-alias jlo='jira logout'
-alias jsub='jira subtask'
-alias juas='jira unassign'
-alias jv='jira view'
-alias jwa='jira watch'
-alias jwla='jira worklog add'
-alias jwll='jira worklog list'
-
-# jira state transitions
-alias jack='jira acknowledge'
-alias jbl='jira backlog'
-alias jcl='jira close'
-alias jd='jira done'
-alias jip='jira in-progress'
-alias jro='jira reopen'
-alias jres='jira resolve'
-alias jst='jira start'
-alias jsp='jira stop'
-alias jtd='jira todo'
-alias jt='jira transition'
-alias jtl='jira transitions'
-
 # kubernetes
 alias k='kubectl'
 alias ka='kubectl apply'
@@ -792,3 +748,54 @@ alias -g OY=' --output=yaml'
 
 # gpg
 alias gpgd='gpg2 --decrypt'
+
+# nix build
+alias nb='nix build'
+alias nbf='nix build --file'
+
+# nix channel
+alias nc='nix-channel'
+alias nca='nix-channel --add'
+alias ncl='nix-channel --list'
+alias ncrm='nix-channel --remove'
+alias ncup='nix-channel --update'
+
+# nix develop
+alias nd='nix develop'
+alias ndz='nix develop --command zsh'
+
+# nix hash
+alias nh='nix hash'
+alias nhc='nix hash convert'
+alias nhc16='nix hash convert --to nix16'
+alias nhc32='nix hash convert --to nix32'
+alias nhc64='nix hash convert --to nix64'
+alias nhf='nix hash file'
+alias nhp='nix hash path'
+
+# nix profile
+alias np='nix profile'
+alias npl='nix profile list'
+alias npin='nix profile install'
+alias nph='nix profile history'
+alias nprb='nix profile rollback'
+alias nprbt='nix profile rollback --to'
+alias nprm='nix profile remove'
+alias npup='nix profile upgrade'
+alias npupa='nix profile upgrade --all'
+alias npwh='nix profile wipe-history'
+
+# nix repl
+alias nrp='nix repl'
+alias nrpp='nix repl --expr "import <nixpkgs> {}"'
+
+# nix run
+alias nr='nix run'
+
+# nix store
+alias ns='nix store'
+alias nsgc='nix store gc'
+alias nsr='nix store repair'
+alias nsra='nix store repair --all'
+alias nsv='nix store verify'
+alias nsva='nix store verify --all'
