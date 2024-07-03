@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -11,6 +11,8 @@
     expect
     fzf
     kubectl
+    vivid
+    zsh-completions
   ];
 
   home.sessionVariables = {
@@ -24,10 +26,10 @@
 
   programs.zsh = {
     enable = true;
+    enableCompletion = true;
 
     autocd = true;
     defaultKeymap = "emacs";
-    enableCompletion = true;
     syntaxHighlighting.enable = true;
 
     initExtraFirst = ''
@@ -35,6 +37,8 @@
     '';
 
     initExtra = ''
+      export LS_COLORS=$(vivid generate tokyonight-night)
+
       # case-insensitive completion
       zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 

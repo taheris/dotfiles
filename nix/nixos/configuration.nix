@@ -64,6 +64,10 @@ in
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
+      trusted-users = [
+        "root"
+        "shaun"
+      ];
     };
   };
 
@@ -95,9 +99,44 @@ in
 
     flatpak.enable = true;
 
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+
+      environmentVariables = {
+        OLLAMA_FLASH_ATTENTION = "True";
+        CUDA_ERROR_LEVEL = "50";
+      };
+    };
+
+    postgresql = {
+      enable = true;
+      extraPlugins = [ pkgs.postgresqlPackages.pgvector ];
+
+      settings = {
+        log_connections = true;
+        log_disconnections = true;
+        log_statement = "all";
+        logging_collector = true;
+      };
+
+      authentication = ''
+        local  all  postgres  peer            map=eroot
+      '';
+
+      identMap = ''
+        eroot  root      postgres
+        eroot  postgres  postgres
+      '';
+    };
+
     pipewire = {
       enable = true;
       pulse.enable = true;
+    };
+
+    tailscale = {
+      enable = true;
     };
 
     xserver = {

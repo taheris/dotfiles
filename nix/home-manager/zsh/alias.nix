@@ -163,6 +163,8 @@ in
     jcf = "journalctl --follow";
     jcfa = "journalctl --follow --all";
     jcfan = "journalctl --follow --all --lines 100";
+    jcfu = "journalctl --follow --unit";
+    jcfun = "journalctl --follow --lines 100 --unit";
 
     # git
     g = "git";

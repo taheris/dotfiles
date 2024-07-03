@@ -30,6 +30,7 @@
       fd
       gnumake
       gnupg
+      gpustat
       iftop
       iotop
       jq

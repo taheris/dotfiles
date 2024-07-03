@@ -8,7 +8,7 @@ in
     github-clone() {
       local repo=$*
       local outdir="${home}/src/github.com/$repo"
-      local regex="^([\w\.-]+)/([\w\.-]+)$"
+      local regex="^([[:alnum:]_\.-]+)/([[:alnum:]_\.-]+)$"
       [[ $repo =~ $regex ]] || { echo "$repo not in valid format"; return 1; }
       command git clone "git@github.com:$repo.git" $outdir || return 1
       cd $outdir

@@ -307,7 +307,6 @@ make                         ; run make tasks from Emacs
 ;;pass                       ; password manager for nerds
 pdf                          ; pdf enhancements
 ;;prodigy                    ; FIXME managing external services & code builders
-rgb                          ; creating color strings
 ;;taskrunner                 ; taskrunner for all your projects
 terraform                    ; infrastructure as code
 tmux                         ; an API for interacting with tmux
@@ -377,7 +376,8 @@ emacs-lisp                   ; drown in parentheses
 markdown                     ; writing docs for people to ignore
 ;;nim                        ; python + lisp at the speed of c
 (nix                         ; I hereby declare "nix geht mehr!"
- +lsp)
+ +lsp
+ +treesitter)
 ;;ocaml                      ; an objective camel
 (org                         ; organize your plain life in plain text
  +dragndrop                  ; drag & drop files/images into org buffers
@@ -496,10 +496,11 @@ literate
       doom-unicode-font (font-spec :family "JuliaMono"))
 #+end_src
 
-Set modes for extra font ligatures.
+Set modes for font ligatures.
 
 #+begin_src emacs-lisp
-(setq +ligatures-extras-in-modes '(org-mode))
+(setq +ligatures-extras-in-modes '(org-mode)
+      +ligatures-prog-mode-list nil)
 #+end_src
 
 *** Modeline
@@ -2407,6 +2408,14 @@ Make format errors popup small and quitable.
           :desc "Type definition" "t" #'lsp-find-type-definition)))
 #+end_src
 
+** Nix
+
+#+begin_src emacs-lisp
+(after! nix-mode
+  (set-popup-rules!
+   '(("\\*documentation\\*" :side right :size 0.33 :quit nil :modeline t))))
+#+end_src
+
 ** Protobuf
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -2506,7 +2515,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "c0603cb973d160f3e450a0dec49dc5ae948f614c")
+  :pin "dcc4e3640ebaa0f94e24b3ad2099a01f7f3a517a")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2514,6 +2523,11 @@ Make format errors popup small and quitable.
   :config
   (setq gptel-default-mode 'org-mode
         gptel-model "gpt-4-turbo")
+
+  (gptel-make-ollama "Ollama"
+    :host "localhost:11434"
+    :stream t
+    :models '("llama3:70b" "llama3:70b-text"))
 
   (gptel-make-anthropic "Anthropic"
     :key #'gptel-api-key-from-auth-source
@@ -2566,5 +2580,5 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
 
 (after! gptel-transient
-  (transient-suffix-put 'gptel-menu (kbd "RET") :key "s-<return>"))
+  (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-c <return>"))
 #+end_src

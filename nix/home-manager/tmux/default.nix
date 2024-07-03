@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.tmux = {
@@ -45,9 +45,11 @@
       unbind b
       unbind p
       unbind r
+      unbind R
       bind b break-pane
       bind p paste-buffer
-      bind r source-file ~/.config/tmux/tmux.conf \; display "tmux config reloaded"
+      bind r move-window -r
+      bind R source-file ~/.config/tmux/tmux.conf \; display "tmux config reloaded"
 
       unbind -
       unbind =
