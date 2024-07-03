@@ -9,6 +9,7 @@
     ./gpg
     ./git
     ./keybinding
+    ./librewolf
     ./nix
     ./rust
     ./starship
@@ -45,9 +46,17 @@
     ];
   };
 
-  programs = {
-    home-manager.enable = true;
-    librewolf.enable = true;
+  programs.home-manager.enable = true;
+
+  xdg = {
+    enable = true;
+    mimeApps.enable = true;
+
+    portal = {
+      enable = true;
+      config.common.default = "kde";
+      extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+    };
   };
 
   systemd.user.startServices = "sd-switch";
