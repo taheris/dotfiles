@@ -694,7 +694,7 @@ FIXME: Remove ~spell-fu~ hook for LSP LTEX modes.
 Change the case pattern for a symbol.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! string-inflection :pin "c4a519be102cb99dd86be3ee8c387f008d097635")
+(package! string-inflection :pin "50ad54970b3cc79b6b83979bde9889ad9a9e1a9c")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -759,7 +759,7 @@ Automatic indentation on yank/paste.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! snap-indent :recipe (:host github :repo "jeffvalk/snap-indent")
-  :pin "1d08a9516240fd9776eed7dd39c619b6110d5a24")
+  :pin "0bac6b7eca59793cd0d810d85658b2a5dd05d5d9")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -892,7 +892,7 @@ Set up CalcTeX.
   :recipe (:host github
            :repo "johnbcoughlin/calctex"
            :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
-  :pin "784cf911bc96aac0f47d529e8cee96ebd7cc31c9")
+  :pin "67a2e76847a9ea9eff1f8e4eb37607f84b380ebb")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -949,7 +949,7 @@ Thanks go to ~tecosaur~ for his config at https://github.com/tecosaur/emacs-conf
 (package! org-contrib
   :recipe (:host nil :repo "https://git.sr.ht/~bzg/org-contrib"
            :files ("lisp/*.el"))
-  :pin "6422b265f1150204f024e33d54f2dcfd8323005c")
+  :pin "ccd4212866fb1be70d1f15a41264c45a281901ad")
 #+end_src
 
 **** Org Modern
@@ -958,7 +958,7 @@ Fontifying =org-mode= buffers to be as pretty as possible is of paramount import
 and Minad's lovely =org-modern= goes a long way in this regard.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-modern :pin "7d037569bc4a05f40262ea110c4cda05c69b5c52")
+(package! org-modern :pin "e5928353c8a833f3b2a7db579d2951b9ca2dd164")
 #+end_src
 
 ...with a touch of configuration...
@@ -1052,7 +1052,7 @@ sacrificing visual amenities with the =org-appear= package.
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! org-appear :recipe (:host github :repo "awth13/org-appear")
-  :pin "eb9f9db40aa529fe4b977235d86494b115281d17")
+  :pin "32ee50f8fdfa449bbc235617549c1bccb503cb09")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1070,7 +1070,7 @@ sacrificing visual amenities with the =org-appear= package.
 **** Org Projectile
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-projectile :pin "642b39c698db00bc535c1c2335f425fb9f4855a9")
+(package! org-projectile :pin "bf1c30b750020ab8dd634dd66b2c7b76c56286c5")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1092,28 +1092,6 @@ sacrificing visual amenities with the =org-appear= package.
 
 #+begin_src emacs-lisp
 (setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc")
-#+end_src
-
-**** Org Shortcut
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! org-shortcut
-   :recipe (:host github :repo "markgdawson/org-clubhouse" :files ("*.el"))
-   :pin "49795b82bba844ee67efa532400f6a476917a690")
-#+end_src
-
-#+begin_src emacs-lisp
-(defun my-org-shortcut-get (user)
-  (ignore-errors
-    (my-auth-source-get :user user :host "shortcut.com")))
-
-(use-package! org-shortcut
-  :defer t
-  :after org
-  :config
-  (setq org-shortcut-auth-token (my-org-shortcut-get "auth-token")
-        org-shortcut-team-name (my-org-shortcut-get "team-name")
-        org-shortcut-username (my-org-shortcut-get "username")))
 #+end_src
 
 *** Behaviour
@@ -1286,7 +1264,7 @@ functionality as in LaTeX. Let's try viewing possible output files with this.
 The agenda is nice, but a souped up version is nicer.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! org-super-agenda :pin "f4f528985397c833c870967884b013cf91a1da4a")
+(package! org-super-agenda :pin "05a710065af5ee4b3982f9619f864f7af12ca1d3")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2055,7 +2033,7 @@ other settings.
 Read the calibre eBook library.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! calibredb :pin "124c916f203511c64d03fac28d303dfb102a6ead")
+(package! calibredb :pin "bb9cfb5e5f9c2bb45386c1a9d1273a7832f8c28b")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2193,7 +2171,7 @@ Use =nov= to read eBooks.
 (package! eaf
   :recipe (:host github :repo "emacs-eaf/emacs-application-framework"
            :files ("app" "core" "*.el" "*.py"))
-  :pin "5f96a86221b162cb605d5bded95b7626d2adc343")
+  :pin "e16075c602d535b4d6fe1d59e7e05ecd468272da")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2246,7 +2224,7 @@ Use =nov= to read eBooks.
 Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! lsp-ltex :pin "c2faddc1197a360548aee7927b6512365e8c0d3a")
+(package! lsp-ltex :pin "49371b22e1e971d65680d2a02cb404a46e7710ef")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2422,7 +2400,7 @@ Make format errors popup small and quitable.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "7f94235e552599141950d7a4a3eaf93bc87d1b22")
+  :pin "63def39e881afa496502d9c410f4ea948e59490d")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2469,7 +2447,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! move-mode
   :recipe (:host github :repo "amnn/move-mode" :files ("*.el"))
-  :pin "c1046d806652386009d45d3e9b6c15509a5a5f19")
+  :pin "f974cc69f279c45026f7386e0194be74779334a8")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2491,7 +2469,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! d2-mode
   :recipe (:host github :repo "andorsk/d2-mode" :files ("*.el"))
-  :pin "cbe7b16141bd80fe4344f0403e61fd7ee4e0fd89")
+  :pin "69374e0249df20139f3f2d475de9eae2b201d019")
 
 (package! ob-d2
   :recipe (:host github :repo "xcapaldi/ob-d2" :files ("*.el"))
