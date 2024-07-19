@@ -499,7 +499,8 @@ literate
 Set modes for font ligatures.
 
 #+begin_src emacs-lisp
-(setq +ligatures-extras-in-modes '(org-mode)
+(setq +ligatures-in-modes '(org-mode)
+      +ligatures-extras-in-modes '(org-mode)
       +ligatures-prog-mode-list nil)
 #+end_src
 
