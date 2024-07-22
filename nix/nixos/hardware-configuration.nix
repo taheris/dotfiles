@@ -54,6 +54,9 @@
       #"amdgpu.reset_method=4"
       "nvidia-drm.fbdev=1"
       "nvidia-drm.modeset=1"
+      # disable power management for Intel I225-V
+      "pcie_port_pm=off"
+      "pcie_aspm.policy=performance"
       "video=DP-1:6016x3384@60"
     ];
     blacklistedKernelModules = [ ];
@@ -114,7 +117,7 @@
         amdgpuBusId = "PCI:108:0:0";
       };
 
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
     nvidia-container-toolkit.enable = true;
@@ -123,14 +126,6 @@
   networking.useDHCP = lib.mkDefault true;
   networking.interfaces.eno1.useDHCP = lib.mkDefault true;
   networking.interfaces.wlp9s0.useDHCP = lib.mkDefault true;
-
-  # Disable power management for Intel I225-V
-  #services.udev.extraRules = ''
-  #  SUBSYSTEM=="pci", ATTR{vendor}=="0x8086", ATTR{device}=="0x15f3", ATTR{power/control}="on", GOTO="pci_pm_end"
-  #  SUBSYSTEM=="pci", ATTR{power/control}="auto"
-  #  LABEL="pci_pm_end"
-  #  ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{power/control}="auto"
-  #'';
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
