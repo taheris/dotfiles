@@ -10,9 +10,12 @@
       cargo-fuzz
       cargo-outdated
       cargo-sweep
+      cargo-release
+      cargo-rr
       cargo-udeps
       cargo-update
       cargo-watch
+      rr
       rustup
       sccache
       wasm-pack

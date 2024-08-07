@@ -60,6 +60,7 @@ in
     packages = with pkgs; [
       ltex-ls
       marksman
+      emacsPackages.vterm
       yaml-language-server
     ];
 

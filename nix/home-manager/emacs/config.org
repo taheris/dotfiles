@@ -2506,7 +2506,7 @@ Make format errors popup small and quitable.
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
     :stream t
-    :models '("llama3:70b" "llama3:70b-text"))
+    :models '("llama3.1:70b-instruct-q4_K_M" "llama3.1:70b-text-q4_K_M"))
 
   (gptel-make-anthropic "Anthropic"
     :key #'gptel-api-key-from-auth-source
@@ -2560,4 +2560,75 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
 
 (after! gptel-transient
   (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-c <return>"))
+#+end_src
+
+** Ellama
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! ellama
+  :recipe (:host github :repo "s-kostyaev/ellama" :files ("*.el"))
+  :pin "8270e71c335b1656384e6c1b9d61c2a7ecc65bbb")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! ellama
+  :init
+  (defun my-generate-ellama-name (_provider _action _prompt)
+    (format "*ellama* %s" (ellama-get-current-time)))
+
+  :config
+  (setq ellama-naming-scheme #'my-generate-ellama-name
+        ellama-sessions-directory "~/Documents/org/ellama"
+        ellama-provider (make-llm-ollama
+          :chat-model "llama3.1:70b-instruct-q4_K_M"
+          :embedding-model "llama3.1:70b-instruct-q4_K_M"))
+
+  (map! :leader
+    (:prefix-map ("e" . "Ellama")
+      (:prefix ("c" . "code/commit")
+        :desc "Code complete"   "c" #'ellama-code-complete
+        :desc "Code add"        "a" #'ellama-code-add
+        :desc "Code edit"       "e" #'ellama-code-edit
+        :desc "Code improve"    "i" #'ellama-code-improve
+        :desc "Code review"     "r" #'ellama-code-review
+        :desc "Commit message"  "m" #'ellama-generate-commit-message)
+      (:prefix ("s" . "summarize/session")
+        :desc "Summarize"            "s" #'ellama-summarize
+        :desc "Summarize webpage"    "w" #'ellama-summarize-webpage
+        :desc "Summarize kill ring"  "k" #'ellama-summarize-killring
+        :desc "Session load"         "l" #'ellama-load-session
+        :desc "Session rename"       "r" #'ellama-session-rename
+        :desc "Session delete"       "d" #'ellama-session-remove
+        :desc "Session activate"     "a" #'ellama-session-switch)
+      (:prefix ("i" . "improve")
+        :desc "Improve wording"      "w" #'ellama-improve-wording
+        :desc "Improve grammar"      "g" #'ellama-improve-grammar
+        :desc "Improve conciseness"  "c" #'ellama-improve-conciseness)
+      (:prefix ("m" . "make")
+        :desc "Make list"    "l" #'ellama-make-list
+        :desc "Make table"   "t" #'ellama-make-table
+        :desc "Make format"  "f" #'ellama-make-format)
+      (:prefix ("a" . "ask")
+        :desc "Ask about"         "a" #'ellama-ask-about
+        :desc "Ask interactive"   "i" #'ellama-chat
+        :desc "Ask current line"  "l" #'ellama-ask-line
+        :desc "Ask selection"     "s" #'ellama-ask-selection)
+      (:prefix ("t" . "text")
+        :desc "Text translate"      "t" #'ellama-translate
+        :desc "Text complete"       "c" #'ellama-complete
+        :desc "Translate buffer"    "b" #'ellama-translate-buffer
+        :desc "Translation enable"  "e" #'ellama-chat-translation-enable
+        :desc "Translation disable" "d" #'ellama-chat-translation-disable)
+      (:prefix ("d" . "define")
+        :desc "Define word" "w" #'ellama-define-word)
+      (:prefix ("x" . "context")
+        :desc "Context add buffer"     "b" #'ellama-context-add-buffer
+        :desc "Context add file"       "f" #'ellama-context-add-file
+        :desc "Context add selection"  "s" #'ellama-context-add-selection
+        :desc "Context add info node"  "i" #'ellama-context-add-info-node)
+      (:prefix ("p" . "provider")
+        :desc "Provider select" "s" #'ellama-provider-select)))
+
+  (set-popup-rules!
+    '(("\\*ellama\\*" :side right :size 0.33 :quit nil :modeline t))))
 #+end_src

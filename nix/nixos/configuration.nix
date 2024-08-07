@@ -101,6 +101,7 @@ in
 
     ollama = {
       enable = true;
+      host = "0.0.0.0";
       acceleration = "cuda";
 
       environmentVariables = {
@@ -121,7 +122,7 @@ in
       };
 
       authentication = ''
-        local  all  postgres  peer            map=eroot
+        local  all  postgres  peer  map=eroot
       '';
 
       identMap = ''
