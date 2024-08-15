@@ -828,6 +828,7 @@ in
     nsh = "nix-shell";
     nshc = "nix-shell --command";
     nshcs = "nix-shell --command \${SHELL}";
+    nshcsp = "nix-shell --command \${SHELL} --packages";
     nshp = "nix-shell --packages";
 
     # nix store

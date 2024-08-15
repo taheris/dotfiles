@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  hostname,
   ...
 }:
 
@@ -14,6 +15,7 @@ let
     mapAttrs'
     isType
     ;
+
 in
 {
   imports = [ ./hardware-configuration.nix ];
@@ -24,10 +26,15 @@ in
   };
 
   environment = {
-    etc = mapAttrs' (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    }) config.nix.registry;
+    etc =
+      let
+        flakePaths = mapAttrs' flakePath config.nix.registry;
+        flakePath = name: value: {
+          name = "nix/path/${name}";
+          value.source = value.flake;
+        };
+      in
+      { machine-id.text = "${hostname}"; } // flakePaths;
 
     pathsToLink = [ "/share/zsh" ];
 
@@ -54,8 +61,8 @@ in
   time.timeZone = "Europe/Lisbon";
 
   networking = {
-    hostName = "nix";
     networkmanager.enable = true;
+    hostName = hostname;
   };
 
   nix = {
@@ -101,7 +108,7 @@ in
 
     ollama = {
       enable = true;
-      host = "0.0.0.0";
+      #host = "0.0.0.0";
       acceleration = "cuda";
 
       environmentVariables = {
@@ -135,6 +142,16 @@ in
       enable = true;
       pulse.enable = true;
     };
+
+    #searx = {
+    #  enable = true;
+    #  environmentFile = "/var/lib/secret/searx.env";
+
+    #  settings = {
+    #    server.port = 8080;
+    #    server.secret_key = "@SEARX_SECRET_KEY@";
+    #  };
+    #};
 
     tailscale = {
       enable = true;

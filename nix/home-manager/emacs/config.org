@@ -2392,7 +2392,8 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp
 (after! nix-mode
   (set-popup-rules!
-   '(("\\*documentation\\*" :side right :size 0.33 :quit nil :modeline t))))
+   '(("\\*compilation\\*" :side right :size 0.33 :quit nil :modeline t)
+     ("\\*documentation\\*" :side right :size 0.33 :quit nil :modeline t))))
 #+end_src
 
 ** Protobuf
@@ -2494,7 +2495,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "dcc4e3640ebaa0f94e24b3ad2099a01f7f3a517a")
+  :pin "87dfb2d1de3909e6471666d7009643d7c309a93b")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2506,7 +2507,9 @@ Make format errors popup small and quitable.
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
     :stream t
-    :models '("llama3.1:70b-instruct-q4_K_M" "llama3.1:70b-text-q4_K_M"))
+    :models '("hermes3:70b-llama3.1-q4_K_M"
+              "llama3.1:70b-instruct-q4_K_M"
+              "llama3.1:70b-text-q4_K_M"))
 
   (gptel-make-anthropic "Anthropic"
     :key #'gptel-api-key-from-auth-source
@@ -2580,8 +2583,8 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
   (setq ellama-naming-scheme #'my-generate-ellama-name
         ellama-sessions-directory "~/Documents/org/ellama"
         ellama-provider (make-llm-ollama
-          :chat-model "llama3.1:70b-instruct-q4_K_M"
-          :embedding-model "llama3.1:70b-instruct-q4_K_M"))
+          :chat-model "hermes3:70b-llama3.1-q4_K_M"
+          :embedding-model "hermes3:70b-llama3.1-q4_K_M"))
 
   (map! :leader
     (:prefix-map ("e" . "Ellama")
@@ -2631,4 +2634,27 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
 
   (set-popup-rules!
     '(("\\*ellama\\*" :side right :size 0.33 :quit nil :modeline t))))
+#+end_src
+
+** ELISA
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! elisa
+  :recipe (:host github :repo "s-kostyaev/elisa" :files ("*.el"))
+  :pin "85373924896c92b7c27d6737d247f0084df99d6a")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! elisa
+  :init
+  (setopt elisa-prompt-rewriting-enabled t
+          elisa-reranker-enabled t
+          elisa-chat-provider (make-llm-ollama
+            :chat-model "hermes3:70b-llama3.1-q4_K_M"
+            :embedding-model "hermes3:70b-llama3.1-q4_K_M")
+          elisa-embeddings-provider (make-llm-ollama
+            :embedding-model "hermes3:70b-llama3.1-q4_K_M"))
+
+  :config
+  (setopt elisa-web-search-function 'elisa-search-searxng))
 #+end_src

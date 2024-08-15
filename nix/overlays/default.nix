@@ -5,6 +5,7 @@
 
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
+    faiss = inputs.nixpkgs-stable.legacyPackages.${final.system}.faiss;
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });

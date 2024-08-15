@@ -18,7 +18,7 @@
     {
       name = "Librewolf";
       genericName = "Web Browser";
-      exec = "${bin} --name librewolf %U";
+      exec = "${script} --name librewolf %U";
       icon = "librewolf";
       terminal = false;
       categories = [
@@ -48,17 +48,17 @@
       actions = {
         new-window = {
           name = "New Window";
-          exec = "${bin} --new-window %U";
+          exec = "${script} --new-window %U";
         };
 
         new-private-window = {
           name = "New Private Window";
-          exec = "${bin} --private-window %U";
+          exec = "${script} --private-window %U";
         };
 
         profile-manager-window = {
           name = "Profile Manager";
-          exec = "${bin} --ProfileManager";
+          exec = "${script} --ProfileManager";
         };
       };
     };

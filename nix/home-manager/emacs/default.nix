@@ -57,12 +57,19 @@ in
       onChange = configChange;
     };
 
-    packages = with pkgs; [
-      ltex-ls
-      marksman
-      emacsPackages.vterm
-      yaml-language-server
-    ];
+    packages =
+      let
+        basePackages = with pkgs; [
+          d2
+          ltex-ls
+          marksman
+          sqlite
+          yaml-language-server
+        ];
+
+        emacsPackages = with pkgs.emacsPackages; [ vterm ];
+      in
+      basePackages ++ emacsPackages;
 
     sessionPath = [ "${emacs}/bin" ];
   };
