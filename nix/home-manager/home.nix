@@ -13,6 +13,7 @@
     ./nix
     ./rust
     ./starship
+    ./sql
     ./tmux
     ./vim
     ./zsh
@@ -38,7 +39,6 @@
       ltrace
       mtr
       pciutils
-      postgresql
       ripgrep
       tree
       unzip
