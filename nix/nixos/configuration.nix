@@ -108,7 +108,6 @@ in
 
     ollama = {
       enable = true;
-      #host = "0.0.0.0";
       acceleration = "cuda";
 
       environmentVariables = {
@@ -175,7 +174,12 @@ in
   };
 
   virtualisation = {
-    containers.enable = true;
+    containers = {
+      enable = true;
+      containersConf.settings = {
+        engine.compose_warning_logs = false;
+      };
+    };
 
     podman = {
       enable = true;
