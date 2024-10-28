@@ -8,7 +8,7 @@
     {
       enable = true;
       enableSshSupport = true;
-      pinentryPackage = pkgs.pinentry_qt5;
+      pinentryPackage = pkgs.pinentry-qt;
 
       defaultCacheTtl = timeout;
       defaultCacheTtlSsh = timeout;

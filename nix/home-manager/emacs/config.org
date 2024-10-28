@@ -502,6 +502,8 @@ Set modes for font ligatures.
 (setq +ligatures-in-modes '(org-mode)
       +ligatures-extras-in-modes '(org-mode)
       +ligatures-prog-mode-list nil)
+
+(set-font-ligatures! 'prog-mode nil)
 #+end_src
 
 *** Modeline
