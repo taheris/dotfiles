@@ -64,7 +64,13 @@ in
     packages =
       let
         basePackages = with pkgs; [
-          aspell
+          (aspellWithDicts (
+            dicts: with dicts; [
+              en
+              en-computers
+              en-science
+            ]
+          ))
           d2
           ltex-ls
           marksman
