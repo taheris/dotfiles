@@ -2,7 +2,7 @@
 
 let
   dotfiles = "~/src/github.com/taheris/dotfiles";
-  aliasFile = "${dotfiles}/nix/home-manager/zsh/alias.nix";
+  aliasFile = "${dotfiles}/home/zsh/alias.nix";
 
   gitLog = {
     medium = "%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B";
@@ -893,5 +893,12 @@ in
     hmrmg = "home-manager remove-generations";
     hms = "home-manager switch";
     hmun = "home-manager uninstall";
+
+    # darwin-rebuild
+    dr = "darwin-rebuild";
+    drlg = "darwin-rebuild --list-generations";
+    drs = "darwin-rebuild switch";
+    drsf = "darwin-rebuild switch --flake ~/src/github.com/taheris/dotfiles";
+    drsg = "darwin-rebuild --switch-generation";
   };
 }

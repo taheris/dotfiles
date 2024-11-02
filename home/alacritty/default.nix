@@ -1,7 +1,13 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  host,
+  ...
+}:
 
 let
   font = "MonacoB Nerd Font Mono";
+
 in
 {
   programs.alacritty = {
@@ -9,7 +15,7 @@ in
 
     settings = {
       font = {
-        size = 13;
+        size = host.fontSize;
         normal.family = "${font}";
         bold.family = "${font}";
         bold_italic.family = "${font}";

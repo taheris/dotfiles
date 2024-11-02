@@ -2,10 +2,14 @@
   config,
   lib,
   pkgs,
+  host,
   ...
 }:
 
 let
+  inherit (builtins) toPath;
+  inherit (lib) mkIf;
+
   package = pkgs.emacs29-pgtk;
 
   doom = "${config.xdg.configHome}/doom";
@@ -25,10 +29,10 @@ let
     (progn
       (require 'org)
       (setq org-confirm-babel-evaluate t
-            IS-LINUX t
-            IS-MAC nil
+            IS-LINUX ${if host ? isLinux then "t" else "nil"}
+            IS-MAC ${if host ? isDarwin then "t" else "nil"}
             IS-WINDOWS nil)
-      (org-babel-tangle-file \"${builtins.toPath ./config.org}\"))
+      (org-babel-tangle-file \"${toPath ./config.org}\"))
   '';
 in
 {
@@ -37,11 +41,11 @@ in
     inherit package;
   };
 
-  services.emacs = {
+  services.emacs = mkIf (host ? isLinux) ({
     enable = true;
     inherit package;
     client.enable = true;
-  };
+  });
 
   home = {
     activation.doomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -54,12 +58,13 @@ in
 
     file."${doom}/config.org" = {
       source = ./config.org;
-      onChange = configChange;
+      onChange = mkIf (host ? isLinux) configChange;
     };
 
     packages =
       let
         basePackages = with pkgs; [
+          aspell
           d2
           ltex-ls
           marksman

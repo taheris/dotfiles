@@ -1,6 +1,15 @@
-{ pkgs, ... }:
-
 {
+  lib,
+  pkgs,
+  host,
+  ...
+}:
+
+let
+  inherit (lib) mkIf;
+
+in
+mkIf (host ? isLinux) ({
   programs.librewolf.enable = true;
 
   xdg.desktopEntries.librewolf =
@@ -62,4 +71,4 @@
         };
       };
     };
-}
+})

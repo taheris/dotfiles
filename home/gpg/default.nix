@@ -1,6 +1,9 @@
-{ pkgs, ... }:
+{ lib, pkgs, host, ... }:
 
-{
+let
+  inherit (lib) mkIf;
+
+in {
   services.gpg-agent =
     let
       timeout = 7 * 24 * 60 * 60;
@@ -8,7 +11,7 @@
     {
       enable = true;
       enableSshSupport = true;
-      pinentryPackage = pkgs.pinentry-qt;
+      pinentryPackage = mkIf (host ? isLinux) pkgs.pinentry-qt;
 
       defaultCacheTtl = timeout;
       defaultCacheTtlSsh = timeout;

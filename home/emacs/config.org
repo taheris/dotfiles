@@ -113,8 +113,8 @@ newline characters.
 ** Terminal
 
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
-(setq shell-file-name "/opt/homebrew/bin/zsh"
-      explicit-shell-file-name "/opt/homebrew/bin/zsh"
+(setq shell-file-name "/run/current-system/sw/bin/zsh"
+      explicit-shell-file-name "/run/current-system/sw/bin/zsh"
       vterm-always-compile-module t)
 #+end_src
 
@@ -481,8 +481,8 @@ literate
 #+end_src
 
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
-(setq doom-font (font-spec :family "Monaco" :size 16)
-      doom-big-font (font-spec :family "Monaco" :size 24)
+(setq doom-font (font-spec :family "MonacoB Nerd Font Mono" :size 16)
+      doom-big-font (font-spec :family "MonacoB Nerd Font Mono" :size 22)
       doom-variable-pitch-font (font-spec :family "Libre Baskerville" :size 18)
       doom-serif-font (font-spec :family "Libre Baskerville")
       doom-unicode-font (font-spec :family "JuliaMono"))

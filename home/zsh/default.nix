@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -21,6 +26,7 @@
 
   programs.direnv = {
     enable = true;
+    enableZshIntegration = true;
     nix-direnv.enable = true;
   };
 
@@ -45,10 +51,6 @@
       # carapace
       zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
       source <(carapace _carapace)
-
-      # direnv
-      eval "$(direnv hook zsh)"
-      source ~/.nix-profile/share/nix-direnv/direnvrc
 
       # fzf
       eval "$(fzf --zsh)"

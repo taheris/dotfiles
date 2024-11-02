@@ -1,5 +1,14 @@
-{ pkgs, ... }:
+{
+  lib,
+  pkgs,
+  host,
+  ...
+}:
 
+let
+  inherit (lib) mkIf;
+
+in
 {
   home.packages = with pkgs; [
     cachix
@@ -9,10 +18,11 @@
     nix-index
     nix-output-monitor
     nix-tree
+    nixd
     nixfmt-rfc-style
   ];
 
-  nixpkgs = {
+  nixpkgs = mkIf (host ? isLinux) ({
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
@@ -23,5 +33,5 @@
       #outputs.overlays.modifications
       #outputs.overlays.unstable-packages
     ];
-  };
+  });
 }

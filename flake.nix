@@ -6,6 +6,7 @@
       "https://cache.nixos.org"
       "https://cache.garnix.io"
     ];
+
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
@@ -25,6 +26,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -33,59 +44,94 @@
       nixpkgs,
       flake-parts,
       home-manager,
+      nix-darwin,
+      mac-app-util,
       ...
     }:
 
     let
       inherit (self) outputs;
+      inherit (builtins)
+        catAttrs
+        filter
+        listToAttrs
+        ;
+
+      hosts = import ./hosts.nix;
+      linuxHosts = filter (host: host ? isLinux) hosts;
+      darwinHosts = filter (host: host ? isDarwin) hosts;
 
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       debug = true;
-      systems = [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-darwin"
-        "x86_64-linux"
-      ];
+      systems = catAttrs "system" hosts;
 
       perSystem =
         { pkgs, ... }:
         {
           formatter = pkgs.nixfmt-rfc-style;
-          packages = import ./nix/pkgs pkgs;
+          packages = import ./pkgs pkgs;
         };
 
       flake = {
-        overlays = import ./nix/overlays { inherit inputs; };
-        nixosModules = import ./nix/modules/nixos;
-        homeManagerModules = import ./nix/modules/home-manager;
+        overlays = import ./overlays { inherit inputs; };
+        nixosModules = import ./modules/nixos;
+        homeManagerModules = import ./modules/home-manager;
 
-        nixosConfigurations = {
-          nix = nixpkgs.lib.nixosSystem {
-            modules = [
-              ./nix/nixos/configuration.nix
-              {
-                _module.args = {
-                  hostname = "nix";
+        nixosConfigurations = listToAttrs (
+          map (host: {
+            name = host.name;
+            value = nixpkgs.lib.nixosSystem {
+              specialArgs = {
+                inherit inputs outputs host;
+              };
+              system = host.system;
+              modules = [
+                ./nixos/configuration.nix
+              ];
+            };
+          }) linuxHosts
+        );
+
+        homeConfigurations = listToAttrs (
+          map (host: {
+            name = "${host.user}@${host.name}";
+            value = home-manager.lib.homeManagerConfiguration {
+              pkgs = nixpkgs.legacyPackages.${host.system};
+              modules = [ ./home/home.nix ];
+              extraSpecialArgs = {
+                inherit inputs outputs host;
+              };
+            };
+          }) linuxHosts
+        );
+
+        darwinConfigurations = listToAttrs (
+          map (host: {
+            name = host.name;
+            value =
+              let
+                specialArgs = {
+                  inherit inputs outputs host;
                 };
-              }
-            ];
-            specialArgs = {
-              inherit inputs outputs;
-            };
-          };
-        };
-
-        homeConfigurations = {
-          "shaun@nix" = home-manager.lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.x86_64-linux;
-            modules = [ ./nix/home-manager/home.nix ];
-            extraSpecialArgs = {
-              inherit inputs outputs;
-            };
-          };
-        };
+              in
+              nix-darwin.lib.darwinSystem {
+                inherit specialArgs;
+                modules = [
+                  ./darwin/configuration.nix
+                  mac-app-util.darwinModules.default
+                  home-manager.darwinModules.home-manager
+                  {
+                    home-manager.extraSpecialArgs = specialArgs;
+                    home-manager.sharedModules = [ mac-app-util.homeManagerModules.default ];
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.useUserPackages = true;
+                    home-manager.users.${host.user} = import ./home/home.nix;
+                  }
+                ];
+              };
+          }) darwinHosts
+        );
       };
     };
 }
