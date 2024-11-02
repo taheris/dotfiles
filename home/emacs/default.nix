@@ -2,13 +2,13 @@
   config,
   lib,
   pkgs,
-  host,
   ...
 }:
 
 let
   inherit (builtins) toPath;
   inherit (lib) mkIf;
+  inherit (pkgs.stdenv) isCygwin isDarwin isLinux;
 
   package = pkgs.emacs29-pgtk;
 
@@ -29,9 +29,9 @@ let
     (progn
       (require 'org)
       (setq org-confirm-babel-evaluate t
-            IS-LINUX ${if host ? isLinux then "t" else "nil"}
-            IS-MAC ${if host ? isDarwin then "t" else "nil"}
-            IS-WINDOWS nil)
+            IS-LINUX ${if isLinux then "t" else "nil"}
+            IS-MAC ${if isDarwin then "t" else "nil"}
+            IS-WINDOWS ${if isCygwin then "t" else "nil"})
       (org-babel-tangle-file \"${toPath ./config.org}\"))
   '';
 in
@@ -41,11 +41,11 @@ in
     inherit package;
   };
 
-  services.emacs = mkIf (host ? isLinux) ({
+  services.emacs = mkIf isLinux {
     enable = true;
     inherit package;
     client.enable = true;
-  });
+  };
 
   home = {
     activation.doomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -58,7 +58,7 @@ in
 
     file."${doom}/config.org" = {
       source = ./config.org;
-      onChange = mkIf (host ? isLinux) configChange;
+      onChange = mkIf isLinux configChange;
     };
 
     packages =

@@ -58,8 +58,8 @@
         ;
 
       hosts = import ./hosts.nix;
-      linuxHosts = filter (host: host ? isLinux) hosts;
-      darwinHosts = filter (host: host ? isDarwin) hosts;
+      linuxHosts = filter (host: host.system == "x86_64-linux") hosts;
+      darwinHosts = filter (host: host.system == "aarch64-darwin") hosts;
 
     in
     flake-parts.lib.mkFlake { inherit inputs; } {

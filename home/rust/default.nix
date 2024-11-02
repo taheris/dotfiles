@@ -1,12 +1,7 @@
-{
-  lib,
-  pkgs,
-  host,
-  ...
-}:
+{ pkgs, ... }:
 
 let
-  inherit (lib) mkIf;
+  inherit (pkgs.stdenv) isLinux;
 
   packages = with pkgs; [
     cargo-audit
@@ -33,7 +28,7 @@ let
 in
 {
   home = {
-    packages = packages ++ (if host ? isLinux then linuxPackages else [ ]);
+    packages = packages ++ (if isLinux then linuxPackages else [ ]);
 
     sessionPath = [ "$HOME/.cargo/bin" ];
     sessionVariables = {

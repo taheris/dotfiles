@@ -1,12 +1,8 @@
-{
-  lib,
-  pkgs,
-  host,
-  ...
-}:
+{ lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
+  inherit (pkgs.stdenv) isLinux;
 
 in
 {
@@ -22,7 +18,7 @@ in
     nixfmt-rfc-style
   ];
 
-  nixpkgs = mkIf (host ? isLinux) ({
+  nixpkgs = mkIf isLinux {
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
@@ -33,5 +29,5 @@ in
       #outputs.overlays.modifications
       #outputs.overlays.unstable-packages
     ];
-  });
+  };
 }

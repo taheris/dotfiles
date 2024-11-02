@@ -7,6 +7,7 @@
 
 let
   inherit (lib) mkIf;
+  inherit (pkgs.stdenv) isLinux;
 
   packages = with pkgs; [
     btop
@@ -57,14 +58,14 @@ in
 
   home = {
     username = host.user;
-    homeDirectory = if host ? isLinux then "/home/${host.user}" else "/Users/${host.user}";
+    homeDirectory = if isLinux then "/home/${host.user}" else "/Users/${host.user}";
 
-    packages = packages ++ (if host ? isLinux then linuxPackages else [ ]);
+    packages = packages ++ (if isLinux then linuxPackages else [ ]);
   };
 
   programs.home-manager.enable = true;
 
-  xdg = mkIf (host ? isLinux) ({
+  xdg = mkIf isLinux {
     enable = true;
     mimeApps.enable = true;
 
@@ -73,7 +74,7 @@ in
       config.common.default = "kde";
       extraPortals = [ pkgs.xdg-desktop-portal-kde ];
     };
-  });
+  };
 
   systemd.user.startServices = "sd-switch";
 

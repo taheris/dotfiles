@@ -1,15 +1,15 @@
 {
   lib,
   pkgs,
-  host,
   ...
 }:
 
 let
   inherit (lib) mkIf;
+  inherit (pkgs.stdenv) isLinux;
 
 in
-mkIf (host ? isLinux) ({
+mkIf isLinux {
   programs.librewolf.enable = true;
 
   xdg.desktopEntries.librewolf =
@@ -71,4 +71,4 @@ mkIf (host ? isLinux) ({
         };
       };
     };
-})
+}

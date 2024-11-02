@@ -11,11 +11,32 @@ let
     mkForce
     ;
 
+  dockerCompat =
+    pkgs.runCommand "${pkgs.podman.pname}-docker-compat-${pkgs.podman.version}"
+      {
+        inherit (pkgs.podman) meta;
+        outputs = [
+          "out"
+          "man"
+        ];
+      }
+      ''
+        mkdir -p $out/bin
+        ln -s ${pkgs.podman}/bin/podman $out/bin/docker
+
+        mkdir -p $man/share/man/man1
+        for f in ${pkgs.podman.man}/share/man/man1/*; do
+          basename=$(basename $f | sed s/podman/docker/g)
+          ln -s $f $man/share/man/man1/$basename
+        done
+      '';
+
 in
 {
   environment = {
     systemPackages = with pkgs; [
       coreutils
+      dockerCompat
     ];
   };
 
@@ -29,6 +50,8 @@ in
 
     brews = [
       "pam-reattach"
+      "podman"
+      "podman-compose"
     ];
 
     casks = [
@@ -46,6 +69,7 @@ in
       "little-snitch"
       "mactex"
       "micro-snitch"
+      "podman-desktop"
       "slack"
       "tailscale"
       "tidal"
