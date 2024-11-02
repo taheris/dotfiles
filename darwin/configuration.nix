@@ -57,8 +57,10 @@ in
     };
 
     onActivation = {
+      autoUpdate = true;
       cleanup = "zap";
       extraFlags = [ "--verbose" ];
+      upgrade = true;
     };
   };
 
