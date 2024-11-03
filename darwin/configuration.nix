@@ -1,16 +1,12 @@
 {
   inputs,
   pkgs,
-  lib,
   config,
+  host,
   ...
 }:
 
 let
-  inherit (lib)
-    mkForce
-    ;
-
   dockerCompat =
     pkgs.runCommand "${pkgs.podman.pname}-docker-compat-${pkgs.podman.version}"
       {
@@ -38,6 +34,10 @@ in
       coreutils
       dockerCompat
     ];
+
+    variables = {
+      LANG = "en_US.UTF-8";
+    };
   };
 
   fonts.packages = with pkgs; [
@@ -65,7 +65,12 @@ in
       "karabiner-elements"
       "keepassxc"
       "ledger-live"
-      "librewolf"
+      {
+        name = "librewolf";
+        args = {
+          no_quarantine = true;
+        };
+      }
       "little-snitch"
       "mactex"
       "micro-snitch"
@@ -115,10 +120,6 @@ in
       shellInit = ''
         eval "$(${config.homebrew.brewPrefix}/brew shellenv)"
       '';
-
-      variables = {
-        LANG = "en_US.UTF-8";
-      };
     };
   };
 
@@ -160,8 +161,8 @@ in
     ];
   };
 
-  users.users.shaun = {
-    name = "shaun";
-    home = "/Users/shaun";
+  users.users.${host.user} = {
+    name = "${host.user}";
+    home = "/Users/${host.user}";
   };
 }

@@ -4,7 +4,7 @@
   lib,
   config,
   pkgs,
-  hostname,
+  host,
   ...
 }:
 
@@ -34,7 +34,7 @@ in
           value.source = value.flake;
         };
       in
-      { machine-id.text = "${hostname}"; } // flakePaths;
+      { machine-id.text = "${host.name}"; } // flakePaths;
 
     pathsToLink = [ "/share/zsh" ];
 
@@ -62,7 +62,7 @@ in
 
   networking = {
     networkmanager.enable = true;
-    hostName = hostname;
+    hostName = host.name;
   };
 
   nix = {
@@ -73,7 +73,7 @@ in
       auto-optimise-store = true;
       trusted-users = [
         "root"
-        "shaun"
+        "@wheel"
       ];
     };
   };
@@ -100,7 +100,7 @@ in
 
     displayManager = {
       autoLogin.enable = true;
-      autoLogin.user = "shaun";
+      autoLogin.user = "${host.user}";
       sddm.wayland.enable = true;
     };
 
@@ -166,7 +166,7 @@ in
   };
 
   users.users = {
-    shaun = {
+    ${host.user} = {
       isNormalUser = true;
       extraGroups = [ "wheel" ];
       shell = pkgs.zsh;
