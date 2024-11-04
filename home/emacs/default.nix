@@ -6,34 +6,15 @@
 }:
 
 let
-  inherit (builtins) toPath;
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkMerge;
+  inherit (lib.meta) getExe;
   inherit (pkgs.stdenv) isCygwin isDarwin isLinux;
 
   package = pkgs.emacs29-pgtk;
 
   doom = "${config.xdg.configHome}/doom";
   emacs = "${config.xdg.configHome}/emacs";
-  path = "$PATH:${config.programs.emacs.package}/bin:${pkgs.git}/bin:${emacs}/bin";
 
-  configChange = ''
-    export PATH=${path}
-    run emacs --batch --eval "${tangleConfig}"
-    run doom sync -e
-    run ln -sf ${./init.el} ${doom}/init.el
-    run ln -sf ${./config.el} ${doom}/config.el
-    run ln -sf ${./packages.el} ${doom}/packages.el
-  '';
-
-  tangleConfig = ''
-    (progn
-      (require 'org)
-      (setq org-confirm-babel-evaluate t
-            IS-LINUX ${if isLinux then "t" else "nil"}
-            IS-MAC ${if isDarwin then "t" else "nil"}
-            IS-WINDOWS ${if isCygwin then "t" else "nil"})
-      (org-babel-tangle-file \"${toPath ./config.org}\"))
-  '';
 in
 {
   programs.emacs = {
@@ -49,16 +30,27 @@ in
 
   home = {
     activation.doomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      export PATH=${path}
+      export PATH="$PATH:${config.programs.emacs.package}/bin:${pkgs.git}/bin:${emacs}/bin"
       if [[ ! -d ${emacs} ]]; then
         git clone --depth 1 https://github.com/doomemacs/doomemacs ${emacs}
         doom install
       fi
     '';
 
-    file."${doom}/config.org" = {
+    file.doomConfig = {
       source = ./config.org;
-      #onChange = configChange;
+      target = "${doom}/config.org";
+      onChange = ''
+        ${getExe package} --batch \
+          --eval "(require 'ob-tangle)" \
+          --eval "(setq org-confirm-babel-evaluate t)" \
+          --eval "(setq IS-LINUX ${if isLinux then "t" else "nil"})" \
+          --eval "(setq IS-MAC ${if isDarwin then "t" else "nil"})" \
+          --eval "(setq IS-WINDOWS ${if isCygwin then "t" else "nil"})" \
+          --eval "(org-babel-tangle-file \"${doom}/config.org\")"
+
+        ${emacs}/bin/doom sync -e
+      '';
     };
 
     packages =
@@ -80,7 +72,10 @@ in
 
         emacsPackages = with pkgs.emacsPackages; [ vterm ];
       in
-      basePackages ++ emacsPackages;
+      mkMerge [
+        basePackages
+        emacsPackages
+      ];
 
     sessionPath = [ "${emacs}/bin" ];
   };
