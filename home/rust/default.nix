@@ -11,7 +11,7 @@ let
     cargo-flamegraph
     cargo-fuzz
     cargo-outdated
-    #cargo-sweep
+    cargo-sweep
     cargo-release
     cargo-udeps
     cargo-update

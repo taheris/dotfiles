@@ -73,6 +73,7 @@ in
       }
       "little-snitch"
       "mactex"
+      "mate-translate"
       "micro-snitch"
       "podman-desktop"
       "slack"

@@ -1,7 +1,10 @@
 { ... }:
 
 {
-  home = {
-    file.".editrc".source = ./editrc;
+  home.file = {
+    editRc = {
+      source = ./editrc;
+      target = ".editrc";
+    };
   };
 }

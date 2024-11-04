@@ -2356,7 +2356,7 @@ Make format errors popup small and quitable.
         rustic-test-arguments "--all-features"
         rust-mode-treesitter-derive t
         lsp-rust-all-features t
-        lsp-rust-analyzer-cargo-watch-command "clippy"
+        lsp-rust-analyzer-cargo-watch-command "check"
         lsp-rust-analyzer-cargo-watch-args ["--all-features", " --", "-D", "warnings", "-D", "rust-2018-idioms"]
         lsp-rust-analyzer-import-granularity "module"
         lsp-rust-clippy-preference "on")
@@ -2497,14 +2497,14 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "87dfb2d1de3909e6471666d7009643d7c309a93b")
+  :pin "4aa6b7ca79b1548c36e593d0d68d2dfa644fa958")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! gptel
   :config
   (setq gptel-default-mode 'org-mode
-        gptel-model "gpt-4-turbo")
+        gptel-model "gpt-4o")
 
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
@@ -2521,7 +2521,7 @@ Make format errors popup small and quitable.
     :host "api.mistral.ai"
     :key #'gptel-api-key-from-auth-source
     :stream t
-    :models '("mistral-large-2402" "mistral-medium-2312"))
+    :models '("mistral-large-latest" "open-codestral-mamba"))
 
   (map! :leader
         (:prefix ("l" . "GPTel")
@@ -2572,7 +2572,7 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
 #+begin_src emacs-lisp :tangle packages.el
 (package! ellama
   :recipe (:host github :repo "s-kostyaev/ellama" :files ("*.el"))
-  :pin "8270e71c335b1656384e6c1b9d61c2a7ecc65bbb")
+  :pin "882b0b241c2f69124edce70d41dc95ff49cb40e8")
 #+end_src
 
 #+begin_src emacs-lisp

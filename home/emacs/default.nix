@@ -6,7 +6,8 @@
 }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) concatStringsSep mkIf mkMerge;
+  inherit (lib.hm) dag;
   inherit (lib.meta) getExe;
   inherit (pkgs.stdenv) isCygwin isDarwin isLinux;
 
@@ -14,6 +15,13 @@ let
 
   doom = "${config.xdg.configHome}/doom";
   emacs = "${config.xdg.configHome}/emacs";
+
+  path = concatStringsSep ":" [
+    "$PATH"
+    "${config.programs.emacs.package}/bin"
+    "${pkgs.git}/bin"
+    "${emacs}/bin"
+  ];
 
 in
 {
@@ -29,9 +37,9 @@ in
   };
 
   home = {
-    activation.doomEmacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      export PATH="$PATH:${config.programs.emacs.package}/bin:${pkgs.git}/bin:${emacs}/bin"
+    activation.doomEmacs = dag.entryAfter [ "writeBoundary" ] ''
       if [[ ! -d ${emacs} ]]; then
+        export PATH=${path}
         git clone --depth 1 https://github.com/doomemacs/doomemacs ${emacs}
         doom install
       fi
@@ -49,7 +57,11 @@ in
           --eval "(setq IS-WINDOWS ${if isCygwin then "t" else "nil"})" \
           --eval "(org-babel-tangle-file \"${doom}/config.org\")"
 
-        ${emacs}/bin/doom sync -e
+        export PATH=${path}
+        export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
+        export SSL_CERT_DIR=${pkgs.cacert}/etc/ssl/certs
+
+        doom sync -e
       '';
     };
 
