@@ -58,7 +58,7 @@ in
 
     file."${doom}/config.org" = {
       source = ./config.org;
-      onChange = mkIf isLinux configChange;
+      #onChange = configChange;
     };
 
     packages =

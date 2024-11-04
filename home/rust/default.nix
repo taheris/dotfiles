@@ -1,6 +1,7 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
+  inherit (lib) mkIf mkMerge;
   inherit (pkgs.stdenv) isLinux;
 
   packages = with pkgs; [
@@ -10,7 +11,7 @@ let
     cargo-flamegraph
     cargo-fuzz
     cargo-outdated
-    cargo-sweep
+    #cargo-sweep
     cargo-release
     cargo-udeps
     cargo-update
@@ -28,7 +29,10 @@ let
 in
 {
   home = {
-    packages = packages ++ (if isLinux then linuxPackages else [ ]);
+    packages = mkMerge [
+      packages
+      (mkIf isLinux linuxPackages)
+    ];
 
     sessionPath = [ "$HOME/.cargo/bin" ];
     sessionVariables = {

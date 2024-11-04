@@ -6,8 +6,8 @@
 }:
 
 let
-  inherit (lib) mkIf;
-  inherit (pkgs.stdenv) isLinux;
+  inherit (lib) mkIf mkMerge;
+  inherit (pkgs.stdenv) isDarwin isLinux;
 
   packages = with pkgs; [
     btop
@@ -58,9 +58,15 @@ in
 
   home = {
     username = host.user;
-    homeDirectory = if isLinux then "/home/${host.user}" else "/Users/${host.user}";
+    homeDirectory = mkMerge [
+      (mkIf isLinux "/home/${host.user}")
+      (mkIf isDarwin "/Users/${host.user}")
+    ];
 
-    packages = packages ++ (if isLinux then linuxPackages else [ ]);
+    packages = mkMerge [
+      packages
+      (mkIf isLinux linuxPackages)
+    ];
   };
 
   programs.home-manager.enable = true;

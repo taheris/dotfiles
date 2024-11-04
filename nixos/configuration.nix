@@ -57,7 +57,8 @@ in
     noto-fonts-extra
   ];
 
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_GB.utf8";
+
   time.timeZone = "Europe/Lisbon";
 
   networking = {

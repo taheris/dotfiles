@@ -881,24 +881,25 @@ in
     # home-manager
     hm = "home-manager";
     hmb = "home-manager build";
+    hmbf = "home-manager build --flake ${dotfiles}";
     hme = "home-manager edit";
     hmeg = "home-manager expire-generations";
     hmego = "home-manager expire-generations '-30 days'";
     hmg = "home-manager generations";
     hmh = "home-manager help";
-    hmi = "home-manager init";
     hmn = "home-manager news";
+    hmnf = "home-manager news --flake ${dotfiles}";
     hmo = "home-manager option";
     hmp = "home-manager packages";
     hmrmg = "home-manager remove-generations";
     hms = "home-manager switch";
-    hmun = "home-manager uninstall";
+    hmsf = "home-manager switch --flake ${dotfiles}";
 
     # darwin-rebuild
     dr = "darwin-rebuild";
     drlg = "darwin-rebuild --list-generations";
     drs = "darwin-rebuild switch";
-    drsf = "darwin-rebuild switch --flake ~/src/github.com/taheris/dotfiles";
+    drsf = "darwin-rebuild switch --flake ${dotfiles}";
     drsg = "darwin-rebuild --switch-generation";
   };
 }
