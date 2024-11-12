@@ -1,14 +1,5 @@
-{
-  lib,
-  pkgs,
-  host,
-  ...
-}:
+{ pkgs, outputs, ... }:
 
-let
-  inherit (lib) mkIf;
-
-in
 {
   home.packages = with pkgs; [
     cachix
@@ -22,16 +13,16 @@ in
     nixfmt-rfc-style
   ];
 
-  nixpkgs = mkIf (host.system == "x86_64-linux") {
+  nixpkgs = {
     config = {
       allowUnfree = true;
       allowUnfreePredicate = _: true;
     };
 
     overlays = [
-      #outputs.overlays.additions
-      #outputs.overlays.modifications
-      #outputs.overlays.unstable-packages
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.stable-packages
     ];
   };
 }

@@ -11,7 +11,7 @@ let
   inherit (lib.meta) getExe;
   inherit (pkgs.stdenv) isCygwin isDarwin isLinux;
 
-  package = pkgs.emacs29-pgtk;
+  package = pkgs.emacs30-pgtk;
 
   doom = "${config.xdg.configHome}/doom";
   emacs = "${config.xdg.configHome}/emacs";
@@ -79,6 +79,7 @@ in
           ltex-ls
           marksman
           sqlite
+          sqlite-vss
           yaml-language-server
         ];
 

@@ -7,6 +7,7 @@ let
   packages = with pkgs; [
     cargo-audit
     cargo-bloat
+    cargo-deny
     cargo-expand
     cargo-flamegraph
     cargo-fuzz

@@ -1,6 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 
 let
+  inherit (pkgs.stdenv) isLinux;
+
   dotfiles = "~/src/github.com/taheris/dotfiles";
   aliasFile = "${dotfiles}/home/zsh/alias.nix";
 
@@ -133,7 +135,7 @@ in
 
     # misc
     sudo = "sudo ";
-    o = "open";
+    o = (if isLinux then "xdg-open" else "open");
     tf = "tail -f";
     cl = "clear";
     cls = "clear;ls";

@@ -17,7 +17,7 @@ pkgs.stdenv.mkDerivation {
   meta = {
     description = "MonacoB fonts patched with nerd-fonts";
     homepage = "https://github.com/vjpr/monaco-bold";
-    #license = lib.licenses.unfree;
+    license = lib.licenses.unfree;
     platforms = lib.platforms.all;
   };
 

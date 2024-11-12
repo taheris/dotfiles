@@ -2504,7 +2504,7 @@ Make format errors popup small and quitable.
 (use-package! gptel
   :config
   (setq gptel-default-mode 'org-mode
-        gptel-model "gpt-4o")
+        gptel-model 'gpt-4o)
 
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
@@ -2643,7 +2643,7 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
 #+begin_src emacs-lisp :tangle packages.el
 (package! elisa
   :recipe (:host github :repo "s-kostyaev/elisa" :files ("*.el"))
-  :pin "85373924896c92b7c27d6737d247f0084df99d6a")
+  :pin "4a4d1db3594a53fd90fcd453cf642d96f70a70ff")
 #+end_src
 
 #+begin_src emacs-lisp

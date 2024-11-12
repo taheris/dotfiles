@@ -1,8 +1,9 @@
 {
-  inputs,
   pkgs,
   config,
   host,
+  inputs,
+  outputs,
   ...
 }:
 
@@ -108,10 +109,18 @@ in
   };
 
   nixpkgs = {
-    config.allowUnfree = true;
-    hostPlatform = "aarch64-darwin";
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = _: true;
+    };
 
-    overlays = [ ];
+    hostPlatform = host.system;
+
+    overlays = [
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.stable-packages
+    ];
   };
 
   programs = {

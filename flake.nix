@@ -42,6 +42,7 @@
     inputs@{
       self,
       nixpkgs,
+      nixpkgs-stable,
       flake-parts,
       home-manager,
       nix-darwin,
@@ -67,10 +68,10 @@
       systems = catAttrs "system" hosts;
 
       perSystem =
-        { pkgs, ... }:
+        { system, pkgs, ... }:
         {
           formatter = pkgs.nixfmt-rfc-style;
-          packages = import ./pkgs pkgs;
+          packages = import ./packages { inherit pkgs; };
         };
 
       flake = {
@@ -124,8 +125,6 @@
                   {
                     home-manager.extraSpecialArgs = specialArgs;
                     home-manager.sharedModules = [ mac-app-util.homeManagerModules.default ];
-                    home-manager.useGlobalPkgs = true;
-                    home-manager.useUserPackages = true;
                     home-manager.users.${host.user} = import ./home/home.nix;
                   }
                 ];

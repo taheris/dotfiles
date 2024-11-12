@@ -123,9 +123,9 @@
     nvidia-container-toolkit.enable = true;
   };
 
-  networking.useDHCP = lib.mkDefault true;
-  networking.interfaces.eno1.useDHCP = lib.mkDefault true;
-  networking.interfaces.wlp9s0.useDHCP = lib.mkDefault true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  networking = {
+    useDHCP = lib.mkDefault true;
+    interfaces.eno1.useDHCP = lib.mkDefault true;
+    interfaces.wlp9s0.useDHCP = lib.mkDefault true;
+  };
 }
