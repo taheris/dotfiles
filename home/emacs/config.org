@@ -2108,7 +2108,10 @@ Read the calibre eBook library.
         :ne "M-a" #'calibredb-set-metadata--author_sort
         :ne "M-A" #'calibredb-set-metadata--authors
         :ne "M-T" #'calibredb-set-metadata--title
-        :ne "M-c" #'calibredb-set-metadata--comments))
+        :ne "M-c" #'calibredb-set-metadata--comments)
+
+  (set-popup-rules!
+    '(("\\*calibredb-entry\\*" :side right :size 0.5 :quit nil :modeline t))))
 #+end_src
 
 *** nov

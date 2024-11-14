@@ -17,6 +17,7 @@ let
     cargo-udeps
     cargo-update
     cargo-watch
+    mold-wrapped
     rustup
     sccache
     wasm-pack
@@ -35,9 +36,27 @@ in
       (mkIf isLinux linuxPackages)
     ];
 
-    sessionPath = [ "$HOME/.cargo/bin" ];
-    sessionVariables = {
-      RUSTC_WRAPPER = "sccache";
+    file.cargo = {
+      target = ".cargo/config.toml";
+      source = (pkgs.formats.toml { }).generate "cargo-config" {
+        build = {
+          rustc-wrapper = "${pkgs.sccache}/bin/sccache";
+        };
+
+        profile.dev = {
+          split-debuginfo = "unpacked";
+        };
+
+        target.x86_64-unknown-linux-gnu = {
+          linker = "clang";
+          rustflags = [
+            "-C"
+            "link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold"
+          ];
+        };
+      };
     };
+
+    sessionPath = [ "$HOME/.cargo/bin" ];
   };
 }
