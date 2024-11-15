@@ -2512,7 +2512,8 @@ Make format errors popup small and quitable.
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
     :stream t
-    :models '("hermes3:70b-llama3.1-q4_K_M"
+    :models '("qwen2.5-coder:32b-instruct-q8_0"
+              "hermes3:70b-llama3.1-q4_K_M"
               "llama3.1:70b-instruct-q4_K_M"
               "llama3.1:70b-text-q4_K_M"))
 
@@ -2588,8 +2589,8 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
   (setq ellama-naming-scheme #'my-generate-ellama-name
         ellama-sessions-directory "~/Documents/org/ellama"
         ellama-provider (make-llm-ollama
-          :chat-model "hermes3:70b-llama3.1-q4_K_M"
-          :embedding-model "hermes3:70b-llama3.1-q4_K_M"))
+          :chat-model "qwen2.5-coder:32b-instruct-q8_0"
+          :embedding-model "qwen2.5-coder:32b-instruct-q8_0"))
 
   (map! :leader
     (:prefix-map ("e" . "Ellama")
@@ -2655,10 +2656,10 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
   (setopt elisa-prompt-rewriting-enabled t
           elisa-reranker-enabled t
           elisa-chat-provider (make-llm-ollama
-            :chat-model "hermes3:70b-llama3.1-q4_K_M"
-            :embedding-model "hermes3:70b-llama3.1-q4_K_M")
+            :chat-model "qwen2.5-coder:32b-instruct-q8_0"
+            :embedding-model "qwen2.5-coder:32b-instruct-q8_0")
           elisa-embeddings-provider (make-llm-ollama
-            :embedding-model "hermes3:70b-llama3.1-q4_K_M"))
+            :embedding-model "qwen2.5-coder:32b-instruct-q8_0"))
 
   :config
   (setopt elisa-web-search-function 'elisa-search-searxng))

@@ -10,17 +10,19 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
-    initrd.availableKernelModules = [
-      "ahci"
-      "nvme"
-      "sd_mod"
-      "sr_mod"
-      "thunderbolt"
-      "usb_storage"
-      "usbhid"
-      "xhci_pci"
-    ];
-    initrd.kernelModules = [ ];
+    initrd = {
+      availableKernelModules = [
+        "ahci"
+        "nvme"
+        "sd_mod"
+        "sr_mod"
+        "thunderbolt"
+        "usb_storage"
+        "usbhid"
+        "xhci_pci"
+      ];
+      kernelModules = [ ];
+    };
 
     kernel.sysctl = {
       "kernel.sysrq" = 0;
@@ -51,7 +53,6 @@
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "amdgpu.gpu_recovery=1"
-      #"amdgpu.reset_method=4"
       "nvidia-drm.fbdev=1"
       "nvidia-drm.modeset=1"
       # disable power management for Intel I225-V
@@ -60,7 +61,6 @@
       "video=DP-1:6016x3384@60"
     ];
     blacklistedKernelModules = [ ];
-    #extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -123,9 +123,8 @@
     nvidia-container-toolkit.enable = true;
   };
 
-  networking = {
-    useDHCP = lib.mkDefault true;
-    interfaces.eno1.useDHCP = lib.mkDefault true;
-    interfaces.wlp9s0.useDHCP = lib.mkDefault true;
+  networking.interfaces = {
+    eno1.useDHCP = true;
+    wlp9s0.useDHCP = true;
   };
 }

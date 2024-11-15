@@ -25,6 +25,7 @@ let
 
   linuxPackages = with pkgs; [
     cargo-rr
+    clang
     rr
   ];
 

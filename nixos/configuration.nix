@@ -114,8 +114,9 @@ in
       acceleration = "cuda";
 
       environmentVariables = {
-        OLLAMA_FLASH_ATTENTION = "True";
         CUDA_ERROR_LEVEL = "50";
+        OLLAMA_FLASH_ATTENTION = "True";
+        OLLAMA_KEEP_ALIVE = "30m";
       };
     };
 
@@ -144,16 +145,6 @@ in
       enable = true;
       pulse.enable = true;
     };
-
-    #searx = {
-    #  enable = true;
-    #  environmentFile = "/var/lib/secret/searx.env";
-
-    #  settings = {
-    #    server.port = 8080;
-    #    server.secret_key = "@SEARX_SECRET_KEY@";
-    #  };
-    #};
 
     tailscale = {
       enable = true;
