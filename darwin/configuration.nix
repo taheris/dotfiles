@@ -41,11 +41,6 @@ in
     };
   };
 
-  fonts.packages = with pkgs; [
-    julia-mono
-    libre-baskerville
-  ];
-
   homebrew = {
     enable = true;
 

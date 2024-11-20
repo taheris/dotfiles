@@ -48,15 +48,6 @@ in
     ];
   };
 
-  fonts.packages = with pkgs; [
-    julia-mono
-    libre-baskerville
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
-    noto-fonts-extra
-  ];
-
   i18n.defaultLocale = "en_GB.utf8";
 
   time.timeZone = "Europe/Lisbon";

@@ -475,24 +475,24 @@ literate
 #+begin_src emacs-lisp :tangle (if IS-LINUX "yes" "no")
 (setq doom-font (font-spec :family "MonacoB Nerd Font Mono" :size 17)
       doom-big-font (font-spec :family "MonacoB Nerd Font Mono" :size 24)
-      doom-variable-pitch-font (font-spec :family "Libre Baskerville")
-      doom-serif-font (font-spec :family "Libre Baskerville")
+      doom-variable-pitch-font (font-spec :family "Bookerly")
+      doom-serif-font (font-spec :family "Bookerly")
       doom-unicode-font (font-spec :family "JuliaMono"))
 #+end_src
 
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
 (setq doom-font (font-spec :family "MonacoB Nerd Font Mono" :size 16)
       doom-big-font (font-spec :family "MonacoB Nerd Font Mono" :size 22)
-      doom-variable-pitch-font (font-spec :family "Libre Baskerville" :size 18)
-      doom-serif-font (font-spec :family "Libre Baskerville")
+      doom-variable-pitch-font (font-spec :family "Bookerly" :size 18)
+      doom-serif-font (font-spec :family "Bookerly")
       doom-unicode-font (font-spec :family "JuliaMono"))
 #+end_src
 
 #+begin_src emacs-lisp :tangle (if IS-WINDOWS "yes" "no")
 (setq doom-font (font-spec :family "MonoLisa ss01 ss03 ss06 zero" :size 32 :weight 'medium)
       doom-big-font (font-spec :family "MonoLisa ss01 ss03 ss06 zero" :size 48 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "Libre Baskerville")
-      doom-serif-font (font-spec :family "Libre Baskerville")
+      doom-variable-pitch-font (font-spec :family "Bookerly")
+      doom-serif-font (font-spec :family "Bookerly")
       doom-unicode-font (font-spec :family "JuliaMono"))
 #+end_src
 
@@ -2156,11 +2156,12 @@ Use =nov= to read eBooks.
   (defun +nov-mode-setup ()
     (setq-local line-spacing 0.4
                 mode-line-format nil
-                nov-text-width 100
+                nov-text-width 80
                 shr-use-colors nil
                 visual-fill-column-center-text t
-                visual-fill-column-width 110)
+                visual-fill-column-width 90)
 
+    (buffer-face-mode 1)
     (visual-line-mode 1)
     (visual-fill-column-mode 1)
     (hl-line-mode 0)
