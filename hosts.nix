@@ -7,6 +7,13 @@
   }
 
   {
+    name = "m1";
+    user = "shaun";
+    system = "aarch64-darwin";
+    fontSize = 16;
+  }
+
+  {
     name = "joy";
     user = "shaun";
     system = "aarch64-darwin";

@@ -1,6 +1,23 @@
-{ ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+let
+  inherit (lib) mkIf;
+  inherit (pkgs.stdenv) isDarwin;
+
+in
+{
+  home.file = {
+    karabiner = mkIf isDarwin {
+      source = ./karabiner.json;
+      target = "${config.xdg.configHome}/karabiner/karabiner.json";
+    };
+  };
+
   programs.readline.variables = {
     editing-mode = "emacs";
   };

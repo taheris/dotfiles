@@ -139,16 +139,79 @@ in
     defaults = {
       NSGlobalDomain = {
         AppleICUForce24HourTime = true;
+        AppleMeasurementUnits = "Centimeters";
+        AppleMetricUnits = 1;
         ApplePressAndHoldEnabled = false;
         AppleScrollerPagingBehavior = true;
         AppleShowAllExtensions = true;
         AppleShowScrollBars = "WhenScrolling";
+        AppleTemperatureUnit = "Celsius";
         InitialKeyRepeat = 15;
         KeyRepeat = 2;
+        NSAutomaticCapitalizationEnabled = false;
+        NSAutomaticDashSubstitutionEnabled = false;
+        NSAutomaticPeriodSubstitutionEnabled = false;
+        NSAutomaticQuoteSubstitutionEnabled = false;
         NSDocumentSaveNewDocumentsToCloud = false;
+        NSNavPanelExpandedStateForSaveMode = true;
+        NSNavPanelExpandedStateForSaveMode2 = true;
+        NSTextShowsControlCharacters = true;
+        "com.apple.mouse.tapBehavior" = 1;
+        "com.apple.sound.beep.feedback" = 0;
+        "com.apple.sound.beep.volume" = 0.0;
+        "com.apple.trackpad.scaling" = 3.0;
       };
+
+      WindowManager = {
+        AutoHide = true;
+        EnableStandardClickToShowDesktop = false;
+      };
+
+      controlcenter = {
+        BatteryShowPercentage = true;
+        Sound = true;
+      };
+
+      dock = {
+        autohide = true;
+        autohide-time-modifier = 0.5;
+        expose-animation-duration = 0.0;
+        mineffect = "scale";
+        mru-spaces = false;
+        show-recents = false;
+        tilesize = 44;
+        wvous-br-corner = 1;
+      };
+
+      finder = {
+        AppleShowAllExtensions = true;
+        FXPreferredViewStyle = "clmv";
+        NewWindowTarget = "Home";
+        _FXSortFoldersFirst = true;
+      };
+
       loginwindow.GuestEnabled = false;
-      finder.FXPreferredViewStyle = "clmv";
+      magicmouse.MouseButtonMode = "TwoButton";
+
+      menuExtraClock = {
+        Show24Hour = true;
+        ShowDayOfMonth = true;
+        ShowDayOfWeek = true;
+      };
+
+      screencapture.include-date = false;
+      screensaver.askForPasswordDelay = 5;
+
+      trackpad = {
+        ActuationStrength = 0;
+        Clicking = true;
+        FirstClickThreshold = 0;
+        SecondClickThreshold = 0;
+        TrackpadRightClick = true;
+        TrackpadThreeFingerTapGesture = 0;
+      };
+
+      universalaccess.reduceMotion = true;
     };
 
     patches = [

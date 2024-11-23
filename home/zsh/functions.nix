@@ -25,5 +25,12 @@ in
     calc() {
       bc -l <<< "$@"
     }
+
+    tarball() {
+      local file=$1
+      tar cf - $file \
+        | pv -s $(du -sb $file | awk '{print $1}') \
+        | gzip > $file.tar.gz
+    }
   '';
 }

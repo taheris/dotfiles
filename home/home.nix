@@ -22,6 +22,7 @@ let
     mtr
     mycli
     pciutils
+    pv
     ripgrep
     tree
     unzip
