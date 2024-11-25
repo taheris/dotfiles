@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib) mkIf mkMerge;
@@ -16,6 +21,7 @@ let
     cargo-release
     cargo-udeps
     cargo-update
+    cargo-valgrind
     cargo-watch
     mold-wrapped
     rustup
@@ -58,6 +64,6 @@ in
       };
     };
 
-    sessionPath = [ "$HOME/.cargo/bin" ];
+    sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
   };
 }

@@ -117,7 +117,7 @@
         amdgpuBusId = "PCI:108:0:0";
       };
 
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
     };
 
     nvidia-container-toolkit.enable = true;

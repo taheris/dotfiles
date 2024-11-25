@@ -2508,7 +2508,7 @@ Make format errors popup small and quitable.
 (use-package! gptel
   :config
   (setq gptel-default-mode 'org-mode
-        gptel-model 'gpt-4o)
+        gptel-model 'o1-preview)
 
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"

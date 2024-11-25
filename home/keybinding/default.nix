@@ -7,7 +7,7 @@
 
 let
   inherit (lib) mkIf;
-  inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv) isDarwin isLinux;
 
 in
 {
@@ -18,20 +18,27 @@ in
     };
   };
 
-  programs.readline.variables = {
-    editing-mode = "emacs";
+  home.packages = with pkgs; [
+    bazecor
+  ];
+
+  dconf.settings = mkIf isLinux {
+    "org/gnome/desktop/interface" = {
+      gtk-key-theme = "Emacs";
+    };
   };
 
-  gtk = {
+  gtk = mkIf isLinux {
     gtk2.extraConfig = ''
       gtk-key-theme-name = "Emacs"
     '';
+
     gtk3.extraConfig = {
       gtk-key-theme-name = "Emacs";
     };
   };
 
-  dconf.settings."org/gnome/desktop/interface" = {
-    gtk-key-theme = "Emacs";
+  programs.readline.variables = {
+    editing-mode = "emacs";
   };
 }
