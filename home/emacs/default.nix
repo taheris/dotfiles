@@ -84,10 +84,13 @@ in
         ];
 
         emacsPackages = with pkgs.emacsPackages; [ vterm ];
+
+        nodePackages = with pkgs.nodePackages; [ vscode-langservers-extracted ];
       in
       mkMerge [
         basePackages
         emacsPackages
+        nodePackages
       ];
 
     sessionPath = [ "${emacs}/bin" ];

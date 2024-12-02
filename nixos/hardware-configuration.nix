@@ -50,7 +50,7 @@
       "kvm-amd"
       "tcp_bbr"
     ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_11;
     kernelParams = [
       "amdgpu.gpu_recovery=1"
       "nvidia-drm.fbdev=1"
@@ -117,7 +117,7 @@
         amdgpuBusId = "PCI:108:0:0";
       };
 
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
     nvidia-container-toolkit.enable = true;

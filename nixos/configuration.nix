@@ -113,7 +113,7 @@ in
 
     postgresql = {
       enable = true;
-      extraPlugins = [ pkgs.postgresqlPackages.pgvector ];
+      extensions = [ pkgs.postgresqlPackages.pgvector ];
 
       settings = {
         log_connections = true;

@@ -787,6 +787,24 @@ in
     nd = "nix develop";
     ndz = "nix develop --command zsh";
 
+    # nix-env
+    ne = "nix-env";
+    nedg = "nix-env --profile /nix/var/nix/profiles/system --delete-generations";
+
+    # nix flake
+    nf = "nix flake";
+    nfa = "nix flake archive";
+    nfc = "nix flake check";
+    nfcl = "nix flake clone";
+    nfi = "nix flake init";
+    nfk = "nix flake check";
+    nfl = "nix flake lock";
+    nfm = "nix flake metadata";
+    nfn = "nix flake new";
+    nfp = "nix flake prefetch";
+    nfs = "nix flake show";
+    nfup = "nix flake update";
+
     # nix hash
     nh = "nix hash";
     nhc = "nix hash convert";
@@ -841,21 +859,8 @@ in
     nstv = "nix store verify";
     nstva = "nix store verify --all";
     ncg = "nix-collect-garbage";
-    ncgo = "nix-collect-garbage --delete-older-than 30d";
-
-    # nix flake
-    nf = "nix flake";
-    nfa = "nix flake archive";
-    nfc = "nix flake check";
-    nfcl = "nix flake clone";
-    nfi = "nix flake init";
-    nfk = "nix flake check";
-    nfl = "nix flake lock";
-    nfm = "nix flake metadata";
-    nfn = "nix flake new";
-    nfp = "nix flake prefetch";
-    nfs = "nix flake show";
-    nfup = "nix flake update";
+    ncgd = "nix-collect-garbage --delete";
+    ncgdo = "nix-collect-garbage --delete-older-than 30d";
 
     # nixos
     nobv = "nixos-build-vms";
