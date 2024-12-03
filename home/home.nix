@@ -43,6 +43,7 @@ in
     ./alacritty
     ./dotfile
     ./emacs
+    ./flatpak
     ./font
     ./gpg
     ./git

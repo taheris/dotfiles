@@ -32,6 +32,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?branch=add-gpg-key";
+
     mac-app-util = {
       url = "github:hraban/mac-app-util";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,11 +44,10 @@
     inputs@{
       self,
       nixpkgs,
-      nixpkgs-stable,
       flake-parts,
       home-manager,
-      nix-darwin,
       mac-app-util,
+      nix-darwin,
       ...
     }:
 
@@ -68,7 +69,7 @@
       systems = catAttrs "system" hosts;
 
       perSystem =
-        { system, pkgs, ... }:
+        { pkgs, ... }:
         {
           formatter = pkgs.nixfmt-rfc-style;
           packages = import ./packages { inherit pkgs; };
