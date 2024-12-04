@@ -21,7 +21,6 @@ let
     cargo-release
     cargo-udeps
     cargo-update
-    cargo-valgrind
     cargo-watch
     mold-wrapped
     rustup
@@ -31,6 +30,7 @@ let
 
   linuxPackages = with pkgs; [
     cargo-rr
+    cargo-valgrind
     clang
     rr
   ];

@@ -18,8 +18,8 @@ in
     };
   };
 
-  home.packages = with pkgs; [
-    bazecor
+  home.packages = mkIf isLinux [
+    pkgs.bazecor
   ];
 
   dconf.settings = mkIf isLinux {

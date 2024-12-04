@@ -13,6 +13,26 @@
       signByDefault = true;
     };
 
+    includes = [
+      {
+        condition = "hasconfig:remote.*.url:git@github.com:blockjoy/**";
+        contents = {
+          user = {
+            email = "shaun@blockjoy.com";
+            signingKey = "ED2521879B846B13";
+          };
+        };
+      }
+    ];
+
+    extraConfig = {
+      init.defaultBranch = "main";
+      merge.conflictstyle = "diff3";
+      merge.tool = "merged";
+      mergetool.merged.cmd = "vim $MERGED";
+      pull.rebase = "true";
+    };
+
     delta = {
       enable = true;
 
@@ -37,12 +57,5 @@
       };
     };
 
-    extraConfig = {
-      init.defaultBranch = "main";
-      merge.conflictstyle = "diff3";
-      merge.tool = "merged";
-      mergetool.merged.cmd = "vim $MERGED";
-      pull.rebase = "true";
-    };
   };
 }
