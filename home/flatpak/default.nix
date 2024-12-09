@@ -47,6 +47,7 @@ in
         GSK_RENDERER = "ngl";
       };
 
+      "com.discordapp.Discord".Context.sockets = [ "wayland" ];
       "com.slack.Slack".Context.sockets = [ "wayland" ];
       "com.usebottles.bottles".Context.sockets = [ "!wayland" ];
     };

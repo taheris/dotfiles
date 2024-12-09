@@ -2499,7 +2499,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "f90a77b711b0a5da1bc498d23cdbc64b773349e5")
+  :pin "97218f8247a3772114d2e47f2ca59ec0e905a96a")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2510,11 +2510,11 @@ Make format errors popup small and quitable.
 
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
+    :models '("llama3.3:70b"
+              "qwen2.5-coder:32b-instruct-q8_0"
+              "qwq:32b-preview-q8_0")
     :stream t
-    :models '("qwen2.5-coder:32b-instruct-q8_0"
-              "hermes3:70b-llama3.1-q4_K_M"
-              "llama3.1:70b-instruct-q4_K_M"
-              "llama3.1:70b-text-q4_K_M"))
+    :request-params '(:keep_alive "60m"))
 
   (gptel-make-anthropic "Anthropic"
     :key #'gptel-api-key-from-auth-source
@@ -2523,8 +2523,8 @@ Make format errors popup small and quitable.
   (gptel-make-openai "mistral"
     :host "api.mistral.ai"
     :key #'gptel-api-key-from-auth-source
-    :stream t
-    :models '("mistral-large-latest" "open-codestral-mamba"))
+    :models '("mistral-large-latest" "open-codestral-mamba")
+    :stream t)
 
   (map! :leader
         (:prefix ("l" . "GPTel")
