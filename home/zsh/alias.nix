@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  inherit (pkgs.stdenv) isLinux;
+  inherit (pkgs.stdenv) isDarwin;
 
   dotfiles = "~/src/github.com/taheris/dotfiles";
   aliasFile = "${dotfiles}/home/zsh/alias.nix";
@@ -18,7 +18,7 @@ in
     V = " --version";
 
     # misc
-    C = "| gsed -z '$ s/\n$//' | pbcopy ";
+    C = "| ${if isDarwin then "pbcopy" else "wl-copy"}";
     F = "| fzf";
     G = "| grep";
     EG = "| egrep";
@@ -135,7 +135,7 @@ in
 
     # misc
     sudo = "sudo ";
-    o = (if isLinux then "xdg-open" else "open");
+    o = (if isDarwin then "open" else "xdg-open");
     tf = "tail -f";
     cl = "clear";
     cls = "clear;ls";
@@ -181,12 +181,10 @@ in
     gbvv = "git branch --verbose --verbose";
 
     # git checkout
-    co = "git checkout";
     gco = "git checkout";
     gcob = "git checkout -b";
     gcot = "git checkout --track";
     gcop = "git checkout --patch";
-    gnb = "git checkout -b";
 
     # git clone
     gcl = "git clone";
@@ -556,16 +554,16 @@ in
     cr = "cargo run";
     cre = "cargo run --example";
     crr = "cargo run --release";
-    ck = "cargo check";
-    ckaf = "cargo check --all-features";
-    ckat = "cargo check --all-targets";
-    ckaft = "cargo check --all-features --all-targets --workspace";
-    ckw = "cargo check --workspace";
+    cck = "cargo check";
+    cckaf = "cargo check --all-features";
+    cckat = "cargo check --all-targets";
+    cckaft = "cargo check --all-features --all-targets --workspace";
+    cckw = "cargo check --workspace";
     ccl = "cargo clippy";
     cclaf = "cargo clippy --all-features -- -Dwarnings -Drust-2018-idioms";
     cclat = "cargo clippy --all-targets";
     cclaft = "cargo clippy --all-features --all-targets --workspace";
-    cckw = "cargo clippy --workspace";
+    cclw = "cargo clippy --workspace";
     cup = "cargo update";
     cupp = "cargo update --package";
     cs = "cargo search";
@@ -797,7 +795,6 @@ in
     nfc = "nix flake check";
     nfcl = "nix flake clone";
     nfi = "nix flake init";
-    nfk = "nix flake check";
     nfl = "nix flake lock";
     nfm = "nix flake metadata";
     nfn = "nix flake new";

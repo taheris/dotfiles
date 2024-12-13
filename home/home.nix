@@ -35,6 +35,7 @@ let
     iotop
     ltrace
     usbutils
+    wl-clipboard
   ];
 
 in
