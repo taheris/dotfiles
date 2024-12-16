@@ -50,7 +50,7 @@
       "kvm-amd"
       "tcp_bbr"
     ];
-    kernelPackages = pkgs.linuxPackages_6_11;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
       "amdgpu.gpu_recovery=1"
       "nvidia-drm.fbdev=1"
