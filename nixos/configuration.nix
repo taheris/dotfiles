@@ -141,6 +141,14 @@ in
       enable = true;
     };
 
+    udev.extraRules = ''
+      # fix dygma bazecor permissions
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="2201", MODE="0666"
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="2200", MODE="0666"
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="35ef", MODE="0666"
+      KERNEL=="hidraw*", ATTRS{idVendor}=="35ef", MODE="0666"
+    '';
+
     xserver = {
       enable = true;
       videoDrivers = [

@@ -55,6 +55,7 @@
       "amdgpu.gpu_recovery=1"
       "nvidia-drm.fbdev=1"
       "nvidia-drm.modeset=1"
+      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
       # disable power management for Intel I225-V
       "pcie_port_pm=off"
       "pcie_aspm.policy=performance"
