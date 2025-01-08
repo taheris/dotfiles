@@ -21,7 +21,11 @@
         "usbhid"
         "xhci_pci"
       ];
-      kernelModules = [ ];
+
+      luks.devices = {
+        "luks-9473fe30-86ac-49db-8ddd-0e6eedc0b936".device = "/dev/disk/by-uuid/9473fe30-86ac-49db-8ddd-0e6eedc0b936";
+        "luks-b204925e-8745-42ee-bf7e-001e1430dc14".device = "/dev/disk/by-uuid/b204925e-8745-42ee-bf7e-001e1430dc14";
+      };
     };
 
     kernel.sysctl = {
@@ -50,7 +54,9 @@
       "kvm-amd"
       "tcp_bbr"
     ];
+
     kernelPackages = pkgs.linuxPackages_latest;
+
     kernelParams = [
       "amdgpu.gpu_recovery=1"
       "nvidia-drm.fbdev=1"
@@ -61,6 +67,7 @@
       "pcie_aspm.policy=performance"
       "video=DP-1:6016x3384@60"
     ];
+
     blacklistedKernelModules = [ ];
 
     loader = {
@@ -71,18 +78,16 @@
         consoleMode = "max";
       };
     };
-
-    supportedFilesystems = [ "bcachefs" ];
   };
 
   fileSystems = {
     "/" = {
-      device = "UUID=94973779-aec1-4b5c-9665-28da553fdd30";
-      fsType = "bcachefs";
+      device = "/dev/disk/by-uuid/11e69d97-251d-40c6-9b44-6a49d5c1323e";
+      fsType = "ext4";
     };
 
     "/boot" = {
-      device = "/dev/disk/by-uuid/CCFE-8B5B";
+      device = "/dev/disk/by-uuid/5952-C034";
       fsType = "vfat";
       options = [
         "fmask=0077"
@@ -91,7 +96,7 @@
     };
   };
 
-  swapDevices = [ { device = "/dev/disk/by-uuid/268c9e6a-810c-4c26-9d3e-4fc2ef6661ec"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/e9ad89ea-b73f-4d36-8dfd-7a3ec4787b9a"; } ];
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
