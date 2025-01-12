@@ -52,6 +52,7 @@ in
 
     casks = [
       "alacritty"
+      "bazecor"
       "bettertouchtool"
       "calibre"
       "cookie"
@@ -68,6 +69,7 @@ in
         };
       }
       "little-snitch"
+      "logitech-options"
       "mactex"
       "mate-translate"
       "micro-snitch"

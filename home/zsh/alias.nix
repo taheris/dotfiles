@@ -320,9 +320,9 @@ in
     gsma = "git submodule add";
     gsmf = "git submodule foreach";
     gsmi = "git submodule init";
-    gsml = "git submodule status";
     gsmm = "git-submodule-move";
-    gsms = "git submodule sync";
+    gsms = "git submodule status";
+    gsmsy = "git submodule sync";
     gsmup = "git submodule update";
     gsmupr = "git submodule update --recursive";
     gsmuprr = "git submodule update --recursive --remote";
