@@ -40,7 +40,6 @@ in
 
     systemPackages = with pkgs; [
       curl
-      git
       kdePackages.discover
       kdePackages.plasma-browser-integration
       vim

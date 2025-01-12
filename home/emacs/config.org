@@ -1100,7 +1100,7 @@ sacrificing visual amenities with the =org-appear= package.
 **** Tweaking defaults
 
 #+begin_src emacs-lisp
-(setq org-directory "~/Documents/org"       ; Let's put files here.
+(setq org-directory "~/src/github.com/taheris/org"
       org-agenda-files (list org-directory) ; Seems like the obvious place.
       org-use-property-inheritance t        ; It's convenient to have properties inherited.
       org-log-done 'time                    ; Having the time a item is done sounds convenient.

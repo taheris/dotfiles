@@ -3,7 +3,8 @@
 let
   inherit (pkgs.stdenv) isDarwin;
 
-  dotfiles = "~/src/github.com/taheris/dotfiles";
+  gitPersonal = "~/src/github.com/taheris";
+  dotfiles = "${gitPersonal}/dotfiles";
   aliasFile = "${dotfiles}/home/zsh/alias.nix";
 
   gitLog = {
@@ -76,9 +77,12 @@ in
   };
 
   programs.zsh.shellAliases = {
-    # dotfiles
-    dfs = "cd ${dotfiles}";
+    # terminal
+    e = "\${(z)EDITOR}";
+    o = (if isDarwin then "open" else "xdg-open");
     ae = "vim ${aliasFile}";
+    dfs = "cd ${dotfiles}";
+    org = "cd ${gitPersonal}/org";
 
     # cd
     cdb = "cd -";
@@ -129,13 +133,8 @@ in
     psw = "ps ww";
     psa = "ps auxww";
 
-    # editor
-    e = "\${(z)EDITOR}";
-    less = "less -R --quit-if-one-screen --redraw-on-quit";
-
     # misc
-    sudo = "sudo ";
-    o = (if isDarwin then "open" else "xdg-open");
+    less = "less -R --quit-if-one-screen --redraw-on-quit";
     tf = "tail -f";
     cl = "clear";
     cls = "clear;ls";
@@ -205,7 +204,6 @@ in
     gcahs = "git commit --amend --reuse-message HEAD --gpg-sign";
     gcams = "git commit --verbose --amend --gpg-sign";
     gcara = "git commit --amend --reset-author";
-    gcrsh = "git reset 'HEAD^'";
 
     # git conflict
     gcfl = "git --no-pager diff --name-only --diff-filter=U";
@@ -215,6 +213,14 @@ in
     gcfol = "gcfo $(gcfl)";
     gcft = "git checkout --theirs --";
     gcftl = "gcft $(gcfl)";
+
+    # git-crypt
+    gcr = "git-crypt";
+    gcri = "git-crypt init";
+    gcrs = "git-crypt status";
+    gcrl = "git-crypt lock";
+    gcru = "git-crypt unlock";
+    gcra = "git-crypt add-gpg-user";
 
     # git ls-files
     gl = "git ls-files";
