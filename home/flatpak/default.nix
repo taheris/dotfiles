@@ -25,6 +25,7 @@ in
       "com.mastermindzh.tidal-hifi"
       "com.slack.Slack"
       "com.usebottles.bottles"
+      "io.github.pwr_solaar.solaar"
       "org.mozilla.Thunderbird"
 
       {
@@ -47,9 +48,18 @@ in
         GSK_RENDERER = "ngl";
       };
 
-      "com.discordapp.Discord".Context.sockets = [ "wayland" ];
-      "com.slack.Slack".Context.sockets = [ "wayland" ];
-      "com.usebottles.bottles".Context.sockets = [ "!wayland" ];
+      "com.discordapp.Discord".Context.sockets = [
+        "wayland"
+        "!x11"
+      ];
+      "com.slack.Slack".Context.sockets = [
+        "wayland"
+        "!x11"
+      ];
+      "com.usebottles.bottles".Context.sockets = [
+        "!wayland"
+        "!x11"
+      ];
     };
   };
 }

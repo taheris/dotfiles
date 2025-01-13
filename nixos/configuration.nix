@@ -33,6 +33,7 @@ in
           name = "nix/path/${name}";
           value.source = value.flake;
         };
+
       in
       { machine-id.text = "${host.name}"; } // flakePaths;
 
@@ -140,13 +141,23 @@ in
       enable = true;
     };
 
-    udev.extraRules = ''
-      # fix dygma bazecor permissions
-      SUBSYSTEMS=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="2201", MODE="0666"
-      SUBSYSTEMS=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="2200", MODE="0666"
-      SUBSYSTEMS=="usb", ATTRS{idVendor}=="35ef", MODE="0666"
-      KERNEL=="hidraw*", ATTRS{idVendor}=="35ef", MODE="0666"
-    '';
+    udev.packages = [
+      (pkgs.runCommand "custom-udev-rules" { } ''
+        mkdir -p $out/lib/udev/rules.d
+
+        cat > $out/lib/udev/rules.d/40-logitech-solaar.rules << EOF
+        SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", TAG+="uaccess"
+        SUBSYSTEM=="hidraw", KERNELS=="0005:046D:*", TAG+="uaccess"
+        EOF
+
+        cat > $out/lib/udev/rules.d/99-dygma-bazecor.rules << EOF
+        SUBSYSTEMS=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="2201", MODE="0666"
+        SUBSYSTEMS=="usb", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="2200", MODE="0666"
+        SUBSYSTEMS=="usb", ATTRS{idVendor}=="35ef", MODE="0666"
+        KERNEL=="hidraw*", ATTRS{idVendor}=="35ef", MODE="0666"
+        EOF
+      '')
+    ];
 
     xserver = {
       enable = true;
