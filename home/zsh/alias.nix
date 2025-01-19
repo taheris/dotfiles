@@ -134,6 +134,7 @@ in
     psa = "ps auxww";
 
     # misc
+    sudo = "sudo "; # use aliases with sudo
     less = "less -R --quit-if-one-screen --redraw-on-quit";
     tf = "tail -f";
     cl = "clear";

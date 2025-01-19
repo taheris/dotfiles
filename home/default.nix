@@ -2,6 +2,7 @@
   lib,
   pkgs,
   host,
+  inputs,
   ...
 }:
 
@@ -29,14 +30,19 @@ let
     zip
   ];
 
-  linuxPackages = with pkgs; [
-    ethtool
-    gpustat
-    iotop
-    ltrace
-    usbutils
-    wl-clipboard
-  ];
+  linuxPackages =
+    with pkgs;
+    [
+      ethtool
+      gpustat
+      iotop
+      ltrace
+      usbutils
+      wl-clipboard
+    ]
+    ++ [
+      inputs.isd.packages.${host.system}.default
+    ];
 
 in
 {
@@ -51,6 +57,7 @@ in
     ./keybinding
     ./librewolf
     ./nix
+    ./plasma
     ./rust
     ./starship
     ./sql

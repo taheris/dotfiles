@@ -25,7 +25,6 @@ in
       "com.mastermindzh.tidal-hifi"
       "com.slack.Slack"
       "com.usebottles.bottles"
-      "io.github.pwr_solaar.solaar"
       "org.mozilla.Thunderbird"
 
       {
@@ -43,11 +42,6 @@ in
     ];
 
     overrides = {
-      "com.github.tchx84.Flatseal".Environment = {
-        # https://github.com/tchx84/Flatseal/issues/726
-        GSK_RENDERER = "ngl";
-      };
-
       "com.discordapp.Discord".Context.sockets = [
         "wayland"
         "!x11"

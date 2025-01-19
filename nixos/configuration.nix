@@ -137,6 +137,10 @@ in
       pulse.enable = true;
     };
 
+    solaar = {
+      enable = true;
+    };
+
     tailscale = {
       enable = true;
     };

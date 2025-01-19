@@ -2499,14 +2499,14 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "97218f8247a3772114d2e47f2ca59ec0e905a96a")
+  :pin "447a37e715323bc447bbb37e045e0dbacd8e7bad")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! gptel
   :config
   (setq gptel-default-mode 'org-mode
-        gptel-model 'o1-preview)
+        gptel-model 'o1)
 
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"

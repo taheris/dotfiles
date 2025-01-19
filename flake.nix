@@ -27,6 +27,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    isd = {
+      url = "github:isd-project/isd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,8 +44,14 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/?branch=add-gpg-key";
 
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
+    solaar = {
+      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -48,6 +64,8 @@
       home-manager,
       mac-app-util,
       nix-darwin,
+      plasma-manager,
+      solaar,
       ...
     }:
 
@@ -89,6 +107,7 @@
               };
               system = host.system;
               modules = [
+                solaar.nixosModules.default
                 ./nixos/configuration.nix
               ];
             };
@@ -100,7 +119,10 @@
             name = "${host.user}@${host.name}";
             value = home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${host.system};
-              modules = [ ./home/home.nix ];
+              modules = [
+                plasma-manager.homeManagerModules.plasma-manager
+                ./home
+              ];
               extraSpecialArgs = {
                 inherit inputs outputs host;
               };
@@ -126,7 +148,7 @@
                   {
                     home-manager.extraSpecialArgs = specialArgs;
                     home-manager.sharedModules = [ mac-app-util.homeManagerModules.default ];
-                    home-manager.users.${host.user} = import ./home/home.nix;
+                    home-manager.users.${host.user} = import ./home;
                   }
                 ];
               };
