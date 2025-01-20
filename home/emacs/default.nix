@@ -85,7 +85,10 @@ in
 
         emacsPackages = with pkgs.emacsPackages; [ vterm ];
 
-        nodePackages = with pkgs.nodePackages; [ vscode-langservers-extracted ];
+        nodePackages = with pkgs.nodePackages; [
+          prettier
+          vscode-langservers-extracted
+        ];
       in
       mkMerge [
         basePackages

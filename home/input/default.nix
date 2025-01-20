@@ -16,6 +16,16 @@ in
       source = ./karabiner.json;
       target = "${config.xdg.configHome}/karabiner/karabiner.json";
     };
+
+    solaarConfig = mkIf isLinux {
+      source = ./solaar-config.yaml;
+      target = "${config.xdg.configHome}/solaar/config.yaml";
+    };
+
+    solaarRules = mkIf isLinux {
+      source = ./solaar-rules.yaml;
+      target = "${config.xdg.configHome}/solaar/rules.yaml";
+    };
   };
 
   home.packages = mkIf isLinux [

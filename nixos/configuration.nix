@@ -175,7 +175,10 @@ in
   users.users = {
     ${host.user} = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ];
+      extraGroups = [
+        "uinput"
+        "wheel"
+      ];
       shell = pkgs.zsh;
     };
   };

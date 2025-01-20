@@ -54,7 +54,7 @@ in
     ./font
     ./gpg
     ./git
-    ./keybinding
+    ./input
     ./librewolf
     ./nix
     ./plasma
