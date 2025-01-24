@@ -1,12 +1,11 @@
-{ lib, pkgs, ... }:
+{ lib, host, ... }:
 
 let
-  inherit (lib) mkIf;
-  inherit (pkgs.stdenv) isLinux;
+  inherit (lib) hasSuffix optionalAttrs;
 
 in
-{
-  programs.plasma = mkIf isLinux {
+optionalAttrs (hasSuffix "linux" host.system) {
+  programs.plasma = {
     enable = true;
 
     configFile.kwinrc.Desktops = {

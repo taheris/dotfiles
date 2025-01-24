@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   config,
   host,
@@ -8,6 +9,8 @@
 }:
 
 let
+  inherit (lib) mkBefore;
+
   dockerCompat =
     pkgs.runCommand "${pkgs.podman.pname}-docker-compat-${pkgs.podman.version}"
       {
@@ -36,6 +39,10 @@ in
       dockerCompat
     ];
 
+    systemPath = mkBefore [
+      "/usr/local/texlive/2024/bin/universal-darwin"
+    ];
+
     variables = {
       LANG = "en_GB.UTF-8";
     };
@@ -59,6 +66,7 @@ in
       "discord"
       "eloston-chromium"
       "gpg-suite"
+      "ibkr"
       "karabiner-elements"
       "keepassxc"
       "ledger-live"
@@ -75,8 +83,10 @@ in
       "micro-snitch"
       "podman-desktop"
       "slack"
+      "steam"
       "tailscale"
       "tidal"
+      "trader-workstation"
       "wireshark"
     ];
 

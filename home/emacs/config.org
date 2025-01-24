@@ -782,15 +782,15 @@ Automatic indentation on yank/paste.
 ** IRC
 
 #+begin_src emacs-lisp
-(setq circe-default-user "sigma1"
-      circe-default-nick "sigma1"
-      circe-default-realname "sigma1")
+(setq circe-default-user "proto1"
+      circe-default-nick "proto1"
+      circe-default-realname "proto1")
 
 (set-irc-server! "irc.libera.chat"
   '(:tls t
     :port 6697
-    :sasl-username "sigma1"
-    :sasl-password (lambda (server) (my-auth-source-get :user "sigma1" :host "irc.libera.chat"))))
+    :sasl-username "proto1"
+    :sasl-password (lambda (server) (my-auth-source-get :user "proto1" :host "irc.libera.chat"))))
 #+end_src
 
 ** Info colors
@@ -943,10 +943,13 @@ Thanks go to ~tecosaur~ for his config at https://github.com/tecosaur/emacs-conf
 
 #+begin_src emacs-lisp :tangle packages.el :noweb no-export
 (package! org
-  :recipe (:host nil :repo "https://git.tecosaur.net/mirrors/org-mode.git" :remote "mirror"
+  :recipe (:host nil
+           :repo "https://git.tecosaur.net/mirrors/org-mode.git"
+           :remote "mirror"
            :fork (:host nil :repo "https://git.tecosaur.net/tec/org-mode.git" :branch "dev" :remote "tecosaur")
            :files (:defaults "etc")
-           :build t))
+           :build t)
+  :pin nil)
 
 (unpin! org)
 
@@ -1223,7 +1226,7 @@ Now, by default, LSPs don't really function at all in ~src~ blocks.
                 (format "Prepare local buffer environment for org source block (%s)."
                         (upcase ,lang))))))))
 (defvar org-babel-lang-list
-  '("go" "python" "ipython" "bash" "sh"))
+  '("rust" "python" "bash" "sh"))
 (dolist (lang org-babel-lang-list)
   (eval `(lsp-org-babel-enable ,lang)))
 #+end_src
@@ -2537,6 +2540,13 @@ Make format errors popup small and quitable.
     :key #'gptel-api-key-from-auth-source
     :models '("mistral-large-latest" "open-codestral-mamba")
     :stream t)
+
+  (gptel-make-openai "Cerebras"
+    :host "api.cerebras.ai"
+    :endpoint "/v1/chat/completions"
+    :stream t
+    :key #'gptel-api-key-from-auth-source
+    :models '(llama3.1-70b llama3.1-8b))
 
   (map! :leader
         (:prefix ("l" . "LLM")
