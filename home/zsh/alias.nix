@@ -177,6 +177,8 @@ in
     gbd = "git branch --delete";
     gbD = "git branch --delete -D";
     gbm = "git branch --move";
+    gbsu = "git branch --set-upstream-to";
+    gbsub = "branch=$(git rev-parse --abbrev-ref HEAD); git branch --set-upstream-to='origin/\${branch}' '\${branch}'";
     gbv = "git branch --verbose";
     gbvv = "git branch --verbose --verbose";
 
@@ -363,7 +365,6 @@ in
     gcp = "git cherry-pick --ff";
     gcpnc = "git cherry-pick --no-commit";
     grp = "git rev-parse HEAD";
-    gbsu = "branch=$(git rev-parse --abbrev-ref HEAD); git branch --set-upstream-to='origin/\${branch}' '\${branch}'";
 
     # brew
     bi = "brew info";

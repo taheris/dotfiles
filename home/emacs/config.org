@@ -2499,20 +2499,18 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "447a37e715323bc447bbb37e045e0dbacd8e7bad")
+  :pin "da66b37c75a48d1db075ce9dd525121e58a2c9af")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! gptel
   :config
   (setq gptel-default-mode 'org-mode
-        gptel-model 'o1)
+        gptel-model 'o1-preview)
 
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
-    :models '("llama3.3:70b"
-              "qwen2.5-coder:32b-instruct-q8_0"
-              "qwq:32b-preview-q8_0")
+    :models '("deepseek-r1:32b-qwen-distill-q8_0" "deepseek-r1:70b")
     :stream t
     :request-params '(:keep_alive "60m"))
 
@@ -2588,8 +2586,8 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
   (setq ellama-naming-scheme #'my-generate-ellama-name
         ellama-sessions-directory "~/Documents/org/ellama"
         ellama-provider (make-llm-ollama
-          :chat-model "qwen2.5-coder:32b-instruct-q8_0"
-          :embedding-model "qwen2.5-coder:32b-instruct-q8_0"))
+          :chat-model "deepseek-r1:32b-qwen-distill-q8_0"
+          :embedding-model "deepseek-r1:32b-qwen-distill-q8_0"))
 
   (map! :leader
     (:prefix-map ("e" . "Ellama")
@@ -2655,10 +2653,10 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
   (setopt elisa-prompt-rewriting-enabled t
           elisa-reranker-enabled t
           elisa-chat-provider (make-llm-ollama
-            :chat-model "qwen2.5-coder:32b-instruct-q8_0"
-            :embedding-model "qwen2.5-coder:32b-instruct-q8_0")
+            :chat-model "deepseek-r1:32b-qwen-distill-q8_0"
+            :embedding-model "deepseek-r1:32b-qwen-distill-q8_0")
           elisa-embeddings-provider (make-llm-ollama
-            :embedding-model "qwen2.5-coder:32b-instruct-q8_0"))
+            :embedding-model "deepseek-r1:32b-qwen-distill-q8_0"))
 
   :config
   (setopt elisa-web-search-function 'elisa-search-searxng))

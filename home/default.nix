@@ -2,7 +2,6 @@
   lib,
   pkgs,
   host,
-  inputs,
   ...
 }:
 
@@ -30,19 +29,15 @@ let
     zip
   ];
 
-  linuxPackages =
-    with pkgs;
-    [
-      ethtool
-      gpustat
-      iotop
-      ltrace
-      usbutils
-      wl-clipboard
-    ]
-    ++ [
-      inputs.isd.packages.${host.system}.default
-    ];
+  linuxPackages = with pkgs; [
+    easyeffects
+    ethtool
+    gpustat
+    iotop
+    ltrace
+    usbutils
+    wl-clipboard
+  ];
 
 in
 {

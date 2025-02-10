@@ -27,11 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    isd = {
-      url = "github:isd-project/isd";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     mac-app-util = {
       url = "github:hraban/mac-app-util";
       inputs.nixpkgs.follows = "nixpkgs";

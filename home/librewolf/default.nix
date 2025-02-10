@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, pkgs, ... }:
 
 let
   inherit (lib) mkIf;
@@ -10,7 +6,19 @@ let
 
 in
 mkIf isLinux {
-  programs.librewolf.enable = true;
+  programs.librewolf = {
+    enable = true;
+
+    nativeMessagingHosts = with pkgs; [
+      plasma-browser-integration
+      tridactyl-native
+    ];
+  };
+
+  xdg.configFile.tridactylrc = {
+    source = ./tridactylrc;
+    target = "tridactyl/tridactylrc";
+  };
 
   xdg.desktopEntries.librewolf =
     let

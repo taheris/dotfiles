@@ -1,9 +1,4 @@
-{
-  lib,
-  pkgs,
-  host,
-  ...
-}:
+{ host, ... }:
 
 let
   font = "MonacoB Nerd Font Mono";

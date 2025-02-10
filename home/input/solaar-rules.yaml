@@ -2,8 +2,8 @@
 ---
 - Device: 3A2950F9
 - Rule:
-    - MouseGesture: Mouse Left
-    - Execute: [qdbus, org.kde.KWin, /KWin, org.kde.KWin.previousDesktop]
+  - MouseGesture: Mouse Left
+  - Execute: [qdbus, org.kde.KWin, /KWin, previousDesktop]
 - Rule:
-    - MouseGesture: Mouse Right
-    - Execute: [qdbus, org.kde.KWin, /KWin, org.kde.KWin.nextDesktop]
+  - MouseGesture: Mouse Right
+  - Execute: [qdbus, org.kde.KWin, /KWin, nextDesktop]
