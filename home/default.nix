@@ -30,6 +30,7 @@ let
   ];
 
   linuxPackages = with pkgs; [
+    dmidecode
     easyeffects
     ethtool
     gpustat

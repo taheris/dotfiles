@@ -25,6 +25,7 @@ in
       "com.mastermindzh.tidal-hifi"
       "com.slack.Slack"
       "com.usebottles.bottles"
+      "com.valvesoftware.Steam"
       "org.mozilla.Thunderbird"
 
       {

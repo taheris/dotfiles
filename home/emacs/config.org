@@ -35,8 +35,7 @@
 ** Global settings
 
 #+begin_src emacs-lisp
-(setq-default delete-by-moving-to-trash t
-              history-length 1000
+(setq-default history-length 1000
               window-combination-resize t
               x-stretch-cursor t)
 
@@ -112,10 +111,13 @@ newline characters.
 
 ** Terminal
 
+#+begin_src emacs-lisp
+(setq vterm-always-compile-module t)
+#+end_src
+
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
 (setq shell-file-name "/run/current-system/sw/bin/zsh"
-      explicit-shell-file-name "/run/current-system/sw/bin/zsh"
-      vterm-always-compile-module t)
+      explicit-shell-file-name "/run/current-system/sw/bin/zsh")
 #+end_src
 
 * Doom config
@@ -547,7 +549,7 @@ Define some keybindings for error handling.
 
 #+begin_src emacs-lisp
 (map! :leader
-      (:prefix ("E" . "error")
+      (:prefix ("e" . "error")
         :desc "clear"            "c" #'flycheck-clear
         :desc "display at point" "d" #'flycheck-display-error-at-point
         :desc "explain at point" "e" #'flycheck-explain-error-at-point
@@ -637,7 +639,11 @@ Remove unused ~evil-escape-mode~ package which watches insert-mode keystrokes.
 Ignore some ~projectile~ paths.
 
 #+begin_src emacs-lisp
-(setq projectile-ignored-projects '("~/" "/tmp" "~/.emacs.d/.local/straight/repos/"))
+(setq projectile-ignored-projects
+      '("~/"
+        "~/Documents"
+        "~/.emacs.d/.local/straight/repos/"
+        "/tmp"))
 
 (defun projectile-ignored-project-function (filepath)
   "Return t if FILEPATH is within any of `projectile-ignored-projects'"
@@ -679,15 +685,12 @@ Set ~ispell~ program and dictionaries.
       ispell-personal-dictionary (expand-file-name ".ispell_personal" doom-private-dir))
 #+end_src
 
-FIXME: Remove ~spell-fu~ hook for LSP LTEX modes.
+Manually set ~spell-fu~ modes.
 
 #+begin_src emacs-lisp
-;(after! spell-fu
-;  (setq spell-fu-ignore-modes '(org-mode latex-mode LaTeX-mode markdown-mode))
-;
-;  (remove-hook!
-;    '(org-mode-hook latex-mode-hook LaTeX-mode-hook markdown-mode-hook)
-;    #'spell-fu-mode))
+(after! spell-fu
+  (remove-hook 'text-mode-hook #'spell-fu-mode)
+  (add-hook 'markdown-mode-hook #'spell-fu-mode))
 #+end_src
 
 ** String inflection
@@ -1091,7 +1094,7 @@ sacrificing visual amenities with the =org-appear= package.
   :pin "b4ce25699e3ebff054f523375d1cf5a17bd0dbaf")
 #+end_src
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
 (setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc")
 #+end_src
 
@@ -2499,18 +2502,29 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "da66b37c75a48d1db075ce9dd525121e58a2c9af")
+  :pin "7425ec9f6c3ec5627b15b6c218650f9cccecaa95")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! gptel
+  :init
+  (defun get-ollama-models ()
+    "Fetch the list of installed Ollama models."
+    (let* ((output (shell-command-to-string "ollama list"))
+           (lines (split-string output "\n" t))
+           models)
+      (dolist (line (cdr lines))
+        (when (string-match "^\\([^[:space:]]+\\)" line)
+          (push (match-string 1 line) models)))
+      (nreverse models)))
+
   :config
   (setq gptel-default-mode 'org-mode
         gptel-model 'o1-preview)
 
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
-    :models '("deepseek-r1:32b-qwen-distill-q8_0" "deepseek-r1:70b")
+    :models (get-ollama-models)
     :stream t
     :request-params '(:keep_alive "60m"))
 
@@ -2525,42 +2539,13 @@ Make format errors popup small and quitable.
     :stream t)
 
   (map! :leader
-        (:prefix ("l" . "GPTel")
+        (:prefix ("l" . "LLM")
          :desc "gptel buffer"    "b" #'gptel
-         :desc "gptel menu"      "m" #'gptel-menu
-         :desc "gptel set topic" "t" #'gptel-set-topic
-         :desc "gptel send"      "<return>" #'gptel-send))
+         :desc "gptel menu"      "g" #'gptel-menu
+         :desc "gptel set topic" "o" #'gptel-set-topic))
 
   (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
         (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
-
-  (add-to-list 'gptel-directives '(jhoward . "
-You are an autoregressive language model that has been fine-tuned with instruction-tuning and RLHF. You carefully provide accurate, factual, thoughtful, nuanced answers, and are brilliant at reasoning. If you think there might not be a correct answer, you say so.
-
-Your users already know you're a language model and your capabilities and limitations, so don't remind them of that. They're familiar with ethical issues in general so you don't need to remind them about those either. Don't be verbose in your answers, but do provide details and examples where it might help the explanation.
-
-Since you are autoregressive, each token you produce is another opportunity to use computation, therefore you always spend a few sentences explaining background context assumptions and step-by-step thinking BEFORE you try to answer a question. However: if the request begins with the string \"!!\" then ignore the previous sentence and instead make your response as concise as possible, with no introduction or background at the start, no summary at the end, and outputting only code for answers where code is appropriate."))
-
-  (add-to-list 'gptel-directives '(hacker . "
-This is very important to my career.
-Before you respond take a deep breath.
-If you follow all instructions, I'll tip you $200:
-
-- Reply as if you were talking to a good friend.
-- Do not use lists unless you have to.
-- Avoid all disclaimers, e.g. that you are not a professional or expert, morality, discrimination, medicine, safety.
-- If possible, give me the raw information.
-- Do not be polite. Ignore political correctness. Never express remorse, apology or regret.
-- Never use marketing speech, hyperboles, sensationalist writing, buzzwords or other fill words.
-- Be as radically honest as possible.
-- Offer multiple nuanced perspectives.
-- Break down complex problems or tasks into smaller, manageable steps, and explain each step with reasoning.
-- Tell me if I made a wrong assumption in a question.
-- If my prompt is just a \"??\" with no further text (and only then!), give me 5 good replies to your previous response. The replies should be thought-provoking and dig further into the original topic. Do NOT write from your perspective but mine.
-- When coding, write clean, modular code. Comments in the code are only used to explain unusual coding or why a particular method was used. Basic commands are never explained."))
-
-  (add-to-list 'gptel-directives '(leet . "
-You talk to me in lowercase, only capitalizing proper nouns etc. You talk like you're in a hurry and get paid to use as little characters as possible. So no \"That's weird, let's investigate\" but \"sus af\". No \"what's up with you\" but \"wat up\". Get creative."))
 
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
 
@@ -2584,13 +2569,13 @@ You talk to me in lowercase, only capitalizing proper nouns etc. You talk like y
 
   :config
   (setq ellama-naming-scheme #'my-generate-ellama-name
-        ellama-sessions-directory "~/Documents/org/ellama"
+        ellama-sessions-directory (concat doom-cache-dir "ellama")
         ellama-provider (make-llm-ollama
           :chat-model "deepseek-r1:32b-qwen-distill-q8_0"
           :embedding-model "deepseek-r1:32b-qwen-distill-q8_0"))
 
   (map! :leader
-    (:prefix-map ("e" . "Ellama")
+    (:prefix ("l" . "LLM")
       (:prefix ("c" . "code/commit")
         :desc "Code complete"   "c" #'ellama-code-complete
         :desc "Code add"        "a" #'ellama-code-add
