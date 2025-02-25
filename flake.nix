@@ -45,8 +45,18 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    secrets = {
+      url = "git+ssh://git@github.com/taheris/secrets.git?ref=main&shallow=1";
+      flake = false;
+    };
+
     solaar = {
       url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -61,6 +71,7 @@
       nix-darwin,
       plasma-manager,
       solaar,
+      sops-nix,
       ...
     }:
 
@@ -102,8 +113,9 @@
               };
               system = host.system;
               modules = [
-                solaar.nixosModules.default
                 ./nixos/configuration.nix
+                solaar.nixosModules.default
+                sops-nix.nixosModules.sops
               ];
             };
           }) linuxHosts
@@ -116,6 +128,7 @@
               pkgs = nixpkgs.legacyPackages.${host.system};
               modules = [
                 plasma-manager.homeManagerModules.plasma-manager
+                sops-nix.homeManagerModules.sops
                 ./home
               ];
               extraSpecialArgs = {
@@ -142,7 +155,10 @@
                   home-manager.darwinModules.home-manager
                   {
                     home-manager.extraSpecialArgs = specialArgs;
-                    home-manager.sharedModules = [ mac-app-util.homeManagerModules.default ];
+                    home-manager.sharedModules = [
+                      mac-app-util.homeManagerModules.default
+                      sops-nix.homeManagerModules.sops
+                    ];
                     home-manager.users.${host.user} = import ./home;
                   }
                 ];

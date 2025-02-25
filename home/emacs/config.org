@@ -115,9 +115,10 @@ newline characters.
 (setq vterm-always-compile-module t)
 #+end_src
 
-#+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
+#+begin_src emacs-lisp :tangle (if IS-WINDOWS "no" "yes")
 (setq shell-file-name "/run/current-system/sw/bin/zsh"
-      explicit-shell-file-name "/run/current-system/sw/bin/zsh")
+      explicit-shell-file-name "/run/current-system/sw/bin/zsh"
+      vterm-shell "/run/current-system/sw/bin/zsh")
 #+end_src
 
 * Doom config
@@ -2505,7 +2506,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "7425ec9f6c3ec5627b15b6c218650f9cccecaa95")
+  :pin "ce042d692a5d31bb1aadcf5ad96817547b1b3045")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2523,13 +2524,13 @@ Make format errors popup small and quitable.
 
   :config
   (setq gptel-default-mode 'org-mode
-        gptel-model 'o1-preview)
+        gptel-model 'claude-3-7-sonnet-20250219)
 
   (gptel-make-ollama "Ollama"
     :host "localhost:11434"
     :models (get-ollama-models)
     :stream t
-    :request-params '(:keep_alive "60m"))
+    :request-params '(:keep_alive "30m"))
 
   (gptel-make-anthropic "Anthropic"
     :key #'gptel-api-key-from-auth-source
@@ -2633,26 +2634,21 @@ Make format errors popup small and quitable.
   (set-popup-rules!
     '(("\\*ellama\\*" :side right :size 0.33 :quit nil :modeline t))))
 #+end_src
+#+end_src
 
-** ELISA
+** Aidermacs
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! elisa
-  :recipe (:host github :repo "s-kostyaev/elisa" :files ("*.el"))
-  :pin "4a4d1db3594a53fd90fcd453cf642d96f70a70ff")
+(package! aidermacs
+  :recipe (:host github :repo "MatthewZMD/aidermacs" :files ("*.el"))
+  :pin "a24435bc41eda2a72d5fb419bedb2ce2458ef690")
 #+end_src
 
 #+begin_src emacs-lisp
-(use-package! elisa
-  :init
-  (setopt elisa-prompt-rewriting-enabled t
-          elisa-reranker-enabled t
-          elisa-chat-provider (make-llm-ollama
-            :chat-model "deepseek-r1:32b-qwen-distill-q8_0"
-            :embedding-model "deepseek-r1:32b-qwen-distill-q8_0")
-          elisa-embeddings-provider (make-llm-ollama
-            :embedding-model "deepseek-r1:32b-qwen-distill-q8_0"))
-
+(use-package! aidermacs
   :config
-  (setopt elisa-web-search-function 'elisa-search-searxng))
+  (setq aidermacs-backend 'vterm
+        aidermacs-default-model "anthropic/claude-3-7-sonnet-20250219"
+        aidermacs-use-architect-mode t
+        aidermacs-architect-model "anthropic/claude-3-7-sonnet-20250219"))
 #+end_src

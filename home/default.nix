@@ -55,6 +55,7 @@ in
     ./nix
     ./plasma
     ./rust
+    ./secrets
     ./starship
     ./sql
     ./tmux
@@ -84,7 +85,7 @@ in
     portal = {
       enable = true;
       config.common.default = "kde";
-      extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+      extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
     };
   };
 

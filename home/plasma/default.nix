@@ -1,10 +1,19 @@
-{ lib, host, ... }:
+{
+  lib,
+  host,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib) hasSuffix optionalAttrs;
 
 in
 optionalAttrs (hasSuffix "linux" host.system) {
+  home.packages = with pkgs; [
+    kdePackages.discover
+  ];
+
   programs.plasma = {
     enable = true;
 

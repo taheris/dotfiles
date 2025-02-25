@@ -103,6 +103,7 @@ in
   };
 
   nix = {
+    enable = true;
     gc.automatic = true;
     optimise.automatic = true;
 
@@ -138,10 +139,6 @@ in
         eval "$(${config.homebrew.brewPrefix}/brew shellenv)"
       '';
     };
-  };
-
-  services = {
-    nix-daemon.enable = true;
   };
 
   system = {

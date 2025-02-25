@@ -39,10 +39,12 @@ in
 
     pathsToLink = [ "/share/zsh" ];
 
+    sessionVariables = {
+      VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
+    };
+
     systemPackages = with pkgs; [
       curl
-      kdePackages.discover
-      kdePackages.plasma-browser-integration
       vim
       wget
     ];

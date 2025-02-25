@@ -11,7 +11,7 @@ let
   inherit (lib.meta) getExe;
   inherit (pkgs.stdenv) isCygwin isDarwin isLinux;
 
-  package = pkgs.emacs30-pgtk;
+  package = with pkgs; (emacsPackagesFor emacs30-pgtk).emacsWithPackages (epkgs: [ epkgs.vterm ]);
 
   doom = "${config.xdg.configHome}/doom";
   emacs = "${config.xdg.configHome}/emacs";
@@ -97,5 +97,13 @@ in
       ];
 
     sessionPath = [ "${emacs}/bin" ];
+  };
+
+  sops.templates.authinfo = {
+    path = "${config.home.homeDirectory}/.authinfo";
+    content = ''
+      machine api.anthropic.com login apikey password ${config.sops.placeholder.anthropic}
+      machine api.openai.com login apikey password ${config.sops.placeholder.openai}
+    '';
   };
 }

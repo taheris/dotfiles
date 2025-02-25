@@ -23,8 +23,10 @@
       ];
 
       luks.devices = {
-        "luks-9473fe30-86ac-49db-8ddd-0e6eedc0b936".device = "/dev/disk/by-uuid/9473fe30-86ac-49db-8ddd-0e6eedc0b936";
-        "luks-b204925e-8745-42ee-bf7e-001e1430dc14".device = "/dev/disk/by-uuid/b204925e-8745-42ee-bf7e-001e1430dc14";
+        "luks-9473fe30-86ac-49db-8ddd-0e6eedc0b936".device =
+          "/dev/disk/by-uuid/9473fe30-86ac-49db-8ddd-0e6eedc0b936";
+        "luks-b204925e-8745-42ee-bf7e-001e1430dc14".device =
+          "/dev/disk/by-uuid/b204925e-8745-42ee-bf7e-001e1430dc14";
       };
     };
 
@@ -62,6 +64,7 @@
       "nvidia-drm.fbdev=1"
       "nvidia-drm.modeset=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+      "nvidia.NVreg_TemporaryFilePath=/var/tmp"
       # disable power management for Intel I225-V
       "pcie_port_pm=off"
       "pcie_aspm.policy=performance"
@@ -104,6 +107,11 @@
     graphics = {
       enable = true;
       enable32Bit = true;
+
+      extraPackages = with pkgs; [
+        libvdpau-va-gl
+        nvidia-vaapi-driver
+      ];
     };
 
     nvidia = {

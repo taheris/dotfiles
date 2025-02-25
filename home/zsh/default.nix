@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -7,6 +7,7 @@
   ];
 
   home.packages = with pkgs; [
+    aider-chat
     carapace
     expect
     fzf
@@ -38,6 +39,11 @@
     '';
 
     initExtra = ''
+      # env secrets
+      export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic.path})"
+      export OPENAI_API_KEY="$(cat ${config.sops.secrets.openai.path})"
+
+      # env misc
       export LS_COLORS=$(vivid generate tokyonight-night)
       export RUSTC_WRAPPER="${pkgs.sccache}/bin/sccache"
 

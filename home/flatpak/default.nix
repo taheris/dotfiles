@@ -43,10 +43,6 @@ in
     ];
 
     overrides = {
-      "com.discordapp.Discord".Context.sockets = [
-        "wayland"
-        "!x11"
-      ];
       "com.slack.Slack".Context.sockets = [
         "wayland"
         "!x11"
