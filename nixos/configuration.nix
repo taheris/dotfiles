@@ -106,6 +106,7 @@ in
 
     solaar = {
       enable = true;
+      extraArgs = "--restart-on-wake-up";
     };
 
     tailscale = {

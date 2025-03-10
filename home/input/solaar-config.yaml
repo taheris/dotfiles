@@ -1,20 +1,68 @@
 - 1.1.14
 - _NAME: MX Vertical Wireless Mouse
-  _absent: [hi-res-scroll, hires-smooth-invert, hires-smooth-resolution, hires-scroll-mode, scroll-ratchet, smart-shift, thumb-scroll-invert, thumb-scroll-mode,
-    onboard_profiles, report_rate, report_rate_extended, pointer_speed, dpi_extended, speed-change, backlight, backlight_level, backlight_duration_hands_out,
-    backlight_duration_hands_in, backlight_duration_powered, backlight-timed, led_control, led_zone_, rgb_control, rgb_zone_, brightness_control, per-key-lighting,
-    fn-swap, disable-keyboard-keys, crown-smooth, divert-crown, divert-gkeys, m-key-leds, mr-key-led, multiplatform, gesture2-gestures, gesture2-divert,
-    gesture2-params, sidetone, equalizer, adc_power_management]
+  _absent:
+    [
+      adc_power_management,
+      backlight,
+      backlight-timed,
+      backlight_duration_hands_in,
+      backlight_duration_hands_out,
+      backlight_duration_powered,
+      backlight_level,
+      brightness_control,
+      crown-smooth,
+      disable-keyboard-keys,
+      divert-crown,
+      divert-gkeys,
+      dpi_extended,
+      equalizer,
+      fn-swap,
+      gesture2-divert,
+      gesture2-gestures,
+      gesture2-params,
+      hi-res-scroll,
+      hires-scroll-mode,
+      hires-smooth-invert,
+      hires-smooth-resolution,
+      led_control,
+      led_zone_,
+      m-key-leds,
+      mr-key-led,
+      multiplatform,
+      onboard_profiles,
+      per-key-lighting,
+      pointer_speed,
+      report_rate,
+      report_rate_extended,
+      rgb_control,
+      rgb_zone_,
+      scroll-ratchet,
+      sidetone,
+      smart-shift,
+      speed-change,
+      thumb-scroll-invert,
+      thumb-scroll-mode,
+    ]
   _battery: 4096
   _modelId: B020407BC08A
-  _sensitive: {change-host: true, divert-keys: true, dpi: true, hires-scroll-mode: ignore, hires-smooth-invert: ignore, hires-smooth-resolution: ignore,
-    lowres-scroll-mode: true, persistent-remappable-keys: true, reprogrammable-keys: true}
+  _sensitive:
+    {
+      change-host: true,
+      divert-keys: true,
+      dpi: true,
+      hires-scroll-mode: ignore,
+      hires-smooth-invert: ignore,
+      hires-smooth-resolution: ignore,
+      lowres-scroll-mode: true,
+      persistent-remappable-keys: true,
+      reprogrammable-keys: true,
+    }
   _serial: 3A2950F9
   _unitId: 2E6F52FB
   _wpid: 407B
   change-host: null
-  divert-keys: {82: 0, 83: 0, 86: 0, 253: 2}
+  divert-keys: { 82: 0, 83: 0, 86: 0, 253: 2 }
   dpi: 1800
   lowres-scroll-mode: false
   persistent-remappable-keys: null
-  reprogrammable-keys: {80: 80, 81: 81, 82: 82, 83: 83, 86: 86, 253: 253}
+  reprogrammable-keys: { 80: 80, 81: 81, 82: 82, 83: 83, 86: 86, 253: 253 }
