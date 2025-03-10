@@ -10,6 +10,8 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
+    blacklistedKernelModules = [ ];
+
     initrd = {
       availableKernelModules = [
         "ahci"
@@ -63,15 +65,12 @@
       "amdgpu.gpu_recovery=1"
       "nvidia-drm.fbdev=1"
       "nvidia-drm.modeset=1"
+      "nvidia.NVreg_EnableS0ixPowerManagement=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
       "nvidia.NVreg_TemporaryFilePath=/var/tmp"
-      # disable power management for Intel I225-V
-      "pcie_port_pm=off"
       "pcie_aspm.policy=performance"
-      "video=DP-1:6016x3384@60"
+      "pcie_port_pm=off" # Intel I225-V
     ];
-
-    blacklistedKernelModules = [ ];
 
     loader = {
       efi.canTouchEfiVariables = true;
@@ -115,12 +114,15 @@
     };
 
     nvidia = {
-      modesetting.enable = true;
-      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
       open = false;
 
+      modesetting.enable = true;
+      nvidiaPersistenced = true;
+      nvidiaSettings = true;
+
       powerManagement = {
-        enable = false;
+        enable = true;
         finegrained = false;
       };
 
@@ -130,8 +132,6 @@
         nvidiaBusId = "PCI:1:0:0";
         amdgpuBusId = "PCI:108:0:0";
       };
-
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
 
     nvidia-container-toolkit.enable = true;
@@ -141,4 +141,6 @@
     eno1.useDHCP = true;
     wlp9s0.useDHCP = true;
   };
+
+  powerManagement.enable = true;
 }

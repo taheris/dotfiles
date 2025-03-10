@@ -15,7 +15,6 @@ let
     dnsutils
     fd
     gnumake
-    gnupg
     iftop
     jq
     lsof

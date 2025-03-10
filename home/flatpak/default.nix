@@ -47,10 +47,6 @@ in
         "wayland"
         "!x11"
       ];
-      "com.usebottles.bottles".Context.sockets = [
-        "!wayland"
-        "!x11"
-      ];
     };
   };
 }
