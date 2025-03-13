@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   pkgs,
   modulesPath,
   ...
@@ -10,8 +9,6 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
-    blacklistedKernelModules = [ ];
-
     initrd = {
       availableKernelModules = [
         "ahci"
@@ -21,6 +18,7 @@
         "thunderbolt"
         "usb_storage"
         "usbhid"
+        "xhci_hcd"
         "xhci_pci"
       ];
 
@@ -63,9 +61,6 @@
 
     kernelParams = [
       "amdgpu.gpu_recovery=1"
-      "nvidia-drm.fbdev=1"
-      "nvidia-drm.modeset=1"
-      "nvidia.NVreg_EnableS0ixPowerManagement=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
       "nvidia.NVreg_TemporaryFilePath=/var/tmp"
       "pcie_aspm.policy=performance"
@@ -101,7 +96,12 @@
   swapDevices = [ { device = "/dev/disk/by-uuid/e9ad89ea-b73f-4d36-8dfd-7a3ec4787b9a"; } ];
 
   hardware = {
-    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+
+    cpu.amd.updateMicrocode = true;
 
     graphics = {
       enable = true;
