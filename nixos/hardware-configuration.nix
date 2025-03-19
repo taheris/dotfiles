@@ -65,6 +65,7 @@
       "nvidia.NVreg_TemporaryFilePath=/var/tmp"
       "pcie_aspm.policy=performance"
       "pcie_port_pm=off" # Intel I225-V
+      "usbhid.quirks=0x05ac:0x9243:0x0004" # Pro Display XDR
     ];
 
     loader = {

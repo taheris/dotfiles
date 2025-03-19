@@ -8,9 +8,9 @@
 
   home.packages = with pkgs; [
     aider-chat
+    bat
     carapace
     expect
-    fzf
     kubectl
     vivid
     zsh-completions
@@ -24,6 +24,18 @@
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    tmux.enableShellIntegration = true;
+
+    defaultOptions = [
+      "--preview='bat --color=always {}'"
+      "--multi"
+      "--layout=reverse-list"
+    ];
   };
 
   programs.zsh = {
@@ -44,6 +56,7 @@
       export OPENAI_API_KEY="$(cat ${config.sops.secrets.openai.path})"
 
       # env misc
+      export FZF_CTRL_R_OPTS="--preview= --layout=default"
       export LS_COLORS=$(vivid generate tokyonight-night)
       export RUSTC_WRAPPER="${pkgs.sccache}/bin/sccache"
 

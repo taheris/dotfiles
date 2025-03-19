@@ -2,6 +2,7 @@
   inputs,
   outputs,
   lib,
+  config,
   pkgs,
   host,
   ...
@@ -11,6 +12,7 @@ let
   inherit (lib)
     filterAttrs
     mapAttrs
+    mapAttrs'
     isType
     ;
 
@@ -24,6 +26,15 @@ in
   };
 
   environment = {
+    etc =
+      let
+        flakePath = name: value: {
+          name = "nix/path/${name}";
+          value.source = value.flake;
+        };
+      in
+      mapAttrs' flakePath config.nix.registry;
+
     pathsToLink = [ "/share/zsh" ];
 
     sessionVariables = {
@@ -117,7 +128,7 @@ in
       (pkgs.runCommand "custom-udev-rules" { } ''
         mkdir -p $out/lib/udev/rules.d
 
-        cat > $out/lib/udev/rules.d/40-logitech-solaar.rules << EOF
+        cat > $out/lib/udev/rules.d/99-logitech-solaar.rules << EOF
         SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", TAG+="uaccess"
         SUBSYSTEM=="hidraw", KERNELS=="0005:046D:*", TAG+="uaccess"
         EOF

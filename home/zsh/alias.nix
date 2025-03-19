@@ -168,6 +168,11 @@ in
     jcfu = "journalctl --follow --unit";
     jcfun = "journalctl --follow --lines 100 --unit";
 
+    # fzf
+    f = "fzf";
+    fj = "fzf-json";
+    fp = "fzf --preview";
+
     # git
     g = "git";
 

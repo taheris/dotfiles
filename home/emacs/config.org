@@ -2552,7 +2552,7 @@ Make format errors popup small and quitable.
         (:prefix ("l" . "LLM")
          :desc "gptel buffer"    "b" #'gptel
          :desc "gptel menu"      "g" #'gptel-menu
-         :desc "gptel set topic" "o" #'gptel-set-topic))
+         :desc "gptel org topic" "o" #'gptel-org-set-topic))
 
   (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
         (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")

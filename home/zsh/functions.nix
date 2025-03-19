@@ -32,5 +32,10 @@ in
         | pv -s $(du -sb $file | awk '{print $1}') \
         | gzip > $file.tar.gz
     }
+
+    fzf-json() {
+      local file=$1
+      echo "" | fzf --preview 'jq {q} < '"$file"' ' --query "."
+    }
   '';
 }
