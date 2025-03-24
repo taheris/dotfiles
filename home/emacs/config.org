@@ -640,7 +640,8 @@ Remove unused ~evil-escape-mode~ package which watches insert-mode keystrokes.
 Ignore some ~projectile~ paths.
 
 #+begin_src emacs-lisp
-(setq projectile-ignored-projects
+(setq projectile-enable-caching nil
+      projectile-ignored-projects
       '("~/"
         "~/Documents"
         "~/.emacs.d/.local/straight/repos/"
@@ -2506,7 +2507,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "d9edbbc3d809ab9d699d08504e4385ef7724f04b")
+  :pin "e1dc99096a26ef8a79a081d07a7fa494da46c425")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2640,7 +2641,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! aidermacs
   :recipe (:host github :repo "MatthewZMD/aidermacs" :files ("*.el"))
-  :pin "0cf26f7246e4b856ad23250294097f1afb798b9a")
+  :pin "b43bed23a45ad7a3577c1ac9d00b342eb4309c05")
 #+end_src
 
 #+begin_src emacs-lisp

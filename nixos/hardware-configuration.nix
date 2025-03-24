@@ -23,10 +23,8 @@
       ];
 
       luks.devices = {
-        "luks-9473fe30-86ac-49db-8ddd-0e6eedc0b936".device =
-          "/dev/disk/by-uuid/9473fe30-86ac-49db-8ddd-0e6eedc0b936";
-        "luks-b204925e-8745-42ee-bf7e-001e1430dc14".device =
-          "/dev/disk/by-uuid/b204925e-8745-42ee-bf7e-001e1430dc14";
+        "root".device = "/dev/disk/by-uuid/b204925e-8745-42ee-bf7e-001e1430dc14";
+        "swap".device = "/dev/disk/by-uuid/9473fe30-86ac-49db-8ddd-0e6eedc0b936";
       };
     };
 

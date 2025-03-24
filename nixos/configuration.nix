@@ -38,6 +38,7 @@ in
     pathsToLink = [ "/share/zsh" ];
 
     sessionVariables = {
+      SSH_ASKPASS_REQUIRE = "prefer";
       VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     };
 
@@ -80,21 +81,41 @@ in
     ];
   };
 
-  programs.zsh.enable = true;
+  programs = {
+    ssh = {
+      startAgent = true;
+      enableAskPassword = true;
+      askPassword = "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
+    };
+
+    zsh.enable = true;
+  };
 
   security = {
+    pam.services = {
+      login.gnupg = {
+        enable = true;
+        noAutostart = true;
+        storeOnly = true;
+      };
+
+      sddm.gnupg = {
+        enable = true;
+        noAutostart = true;
+        storeOnly = true;
+      };
+
+      sddm.kwallet.enable = true;
+    };
+
     sudo.wheelNeedsPassword = false;
   };
 
   services = {
-    desktopManager = {
-      plasma6.enable = true;
-    };
-
-    displayManager = {
-      autoLogin.enable = true;
-      autoLogin.user = "${host.user}";
-      sddm.wayland.enable = true;
+    desktopManager.plasma6.enable = true;
+    displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
     };
 
     flatpak.enable = true;
@@ -177,7 +198,9 @@ in
     };
   };
 
-  systemd.services.systemd-machine-id-commit.enable = true;
+  systemd.services = {
+    systemd-machine-id-commit.enable = true;
+  };
 
   system.stateVersion = "24.11";
 }

@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib) mkIf;
@@ -6,6 +11,10 @@ let
 
 in
 {
+  home.file = {
+    "${config.xdg.configHome}/pam-gnupg".text = "9B571D8B78DDF8D06045387D176120709E41CC9D";
+  };
+
   home.packages = with pkgs; [
     gnupg
   ];
@@ -24,5 +33,9 @@ in
 
       maxCacheTtl = timeout;
       maxCacheTtlSsh = timeout;
+
+      extraConfig = ''
+        allow-preset-passphrase
+      '';
     };
 }
