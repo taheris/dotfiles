@@ -53,6 +53,7 @@
     initExtra = ''
       # env secrets
       export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic.path})"
+      export GEMINI_API_KEY="$(cat ${config.sops.secrets.gemini.path})"
       export OPENAI_API_KEY="$(cat ${config.sops.secrets.openai.path})"
 
       # env misc
