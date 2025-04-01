@@ -104,6 +104,7 @@ in
     content = ''
       machine api.anthropic.com login apikey password ${config.sops.placeholder.anthropic}
       machine api.openai.com login apikey password ${config.sops.placeholder.openai}
+      machine irc.libera.chat login proto1 password ${config.sops.placeholder.libera}
     '';
   };
 }
