@@ -91,7 +91,7 @@ in
     ];
 
     masApps = {
-      Bitwarden = 1352778147;
+      #Bitwarden = 1352778147;
     };
 
     onActivation = {
