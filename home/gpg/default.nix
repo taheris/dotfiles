@@ -7,7 +7,7 @@
 
 let
   inherit (lib) mkIf;
-  inherit (pkgs.stdenv) isLinux;
+  inherit (pkgs.stdenv) isDarwin isLinux;
 
 in
 {
@@ -18,6 +18,14 @@ in
   home.packages = with pkgs; [
     gnupg
   ];
+
+  programs.ssh = mkIf isDarwin {
+    enable = true;
+    addKeysToAgent = "yes";
+    extraConfig = ''
+      UseKeychain yes
+    '';
+  };
 
   services.gpg-agent =
     let
