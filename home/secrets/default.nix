@@ -21,6 +21,7 @@ in
 
   sops.secrets = {
     anthropic = { };
+    cerebras = { };
     gemini = { };
     libera = { };
     openai = { };

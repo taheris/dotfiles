@@ -2507,7 +2507,7 @@ Make format errors popup small and quitable.
 #+begin_src emacs-lisp :tangle packages.el
 (package! gptel
   :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "35d53cada3e1fc323b6a18739368e85a82a9e419")
+  :pin "55355bdead3d19d520157236f4420241cdb89e63")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -2547,7 +2547,7 @@ Make format errors popup small and quitable.
     :endpoint "/v1/chat/completions"
     :stream t
     :key #'gptel-api-key-from-auth-source
-    :models '(llama3.1-70b llama3.1-8b))
+    :models '(llama3.3-70b llama3.1-8b))
 
   (gptel-make-gemini "Gemini"
     :key (getenv "GEMINI_API_KEY")
