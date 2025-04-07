@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (lib) mkIf mkOptionDefault;
+  inherit (lib) mkIf;
   inherit (pkgs.stdenv) isLinux;
 
 in
@@ -27,19 +27,6 @@ in
       "com.usebottles.bottles"
       "com.valvesoftware.Steam"
       "org.mozilla.Thunderbird"
-
-      {
-        appId = "com.onepassword.OnePassword//stable";
-        origin = "onepassword-origin";
-      }
-    ];
-
-    remotes = mkOptionDefault [
-      {
-        name = "onepassword-origin";
-        location = "https://downloads.1password.com/linux/flatpak/repo/";
-        gpg-import = "src/github.com/taheris/dotfiles/home/flatpak/1password.asc";
-      }
     ];
 
     overrides = {

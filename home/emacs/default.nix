@@ -13,8 +13,10 @@ let
 
   package =
     with pkgs;
-    (emacsPackagesFor (emacs30-pgtk.override { withNativeCompilation = false; })).emacsWithPackages
-      (epkgs: [ epkgs.vterm ]);
+    let
+      pkg = if isDarwin then emacs30-pgtk.override { withNativeCompilation = false; } else emacs30-pgtk;
+    in
+    (emacsPackagesFor pkg).emacsWithPackages (epkgs: [ epkgs.vterm ]);
 
   doom = "${config.xdg.configHome}/doom";
   emacs = "${config.xdg.configHome}/emacs";

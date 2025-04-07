@@ -83,6 +83,7 @@ in
     ae = "vim ${aliasFile}";
     dfs = "cd ${dotfiles}";
     org = "cd ${gitPersonal}/org";
+    sec = "cd ${gitPersonal}/secrets";
 
     # cd
     cdb = "cd -";
