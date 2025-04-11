@@ -84,7 +84,6 @@ in
           ltex-ls
           marksman
           sqlite
-          sqlite-vss
           yaml-language-server
         ];
 

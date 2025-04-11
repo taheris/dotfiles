@@ -226,6 +226,7 @@ ophints                      ; highlight the region an operation acts on
 (popup                       ; tame sudden yet inevitable temporary windows
  ;+all                       ; catch all popups that start with an asterix
  +defaults)                  ; default popup rules
+;;smooth-scroll              ; So smooth you won't believe it's not butter
 ;;(tabs                      ; an tab bar for Emacs
 ;;  +centaur-tabs)           ; ... with prettier tabs
 ;;treemacs                   ; a project drawer, like neotree but cooler
@@ -308,7 +309,6 @@ docker                       ; port everything to containers
 make                         ; run make tasks from Emacs
 ;;pass                       ; password manager for nerds
 pdf                          ; pdf enhancements
-;;prodigy                    ; FIXME managing external services & code builders
 terraform                    ; infrastructure as code
 tmux                         ; an API for interacting with tmux
 tree-sitter                  ; syntax and parsing, sitting in a tree...
@@ -2547,7 +2547,7 @@ Make format errors popup small and quitable.
     :endpoint "/v1/chat/completions"
     :stream t
     :key #'gptel-api-key-from-auth-source
-    :models '(llama3.3-70b llama3.1-8b))
+    :models '(llama-4-scout-17b-16e-instruct llama3.3-70b llama3.1-8b))
 
   (gptel-make-gemini "Gemini"
     :key (getenv "GEMINI_API_KEY")
@@ -2568,91 +2568,19 @@ Make format errors popup small and quitable.
   (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-c <return>"))
 #+end_src
 
-** Ellama
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! ellama
-  :recipe (:host github :repo "s-kostyaev/ellama" :files ("*.el"))
-  :pin "882b0b241c2f69124edce70d41dc95ff49cb40e8")
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! ellama
-  :init
-  (defun my-generate-ellama-name (_provider _action _prompt)
-    (format "*ellama* %s" (ellama-get-current-time)))
-
-  :config
-  (setq ellama-naming-scheme #'my-generate-ellama-name
-        ellama-sessions-directory (concat doom-cache-dir "ellama")
-        ellama-provider (make-llm-ollama
-          :chat-model "deepseek-r1:32b-qwen-distill-q8_0"
-          :embedding-model "deepseek-r1:32b-qwen-distill-q8_0"))
-
-  (map! :leader
-    (:prefix ("l" . "LLM")
-      (:prefix ("c" . "code/commit")
-        :desc "Code complete"   "c" #'ellama-code-complete
-        :desc "Code add"        "a" #'ellama-code-add
-        :desc "Code edit"       "e" #'ellama-code-edit
-        :desc "Code improve"    "i" #'ellama-code-improve
-        :desc "Code review"     "r" #'ellama-code-review
-        :desc "Commit message"  "m" #'ellama-generate-commit-message)
-      (:prefix ("s" . "summarize/session")
-        :desc "Summarize"            "s" #'ellama-summarize
-        :desc "Summarize webpage"    "w" #'ellama-summarize-webpage
-        :desc "Summarize kill ring"  "k" #'ellama-summarize-killring
-        :desc "Session load"         "l" #'ellama-load-session
-        :desc "Session rename"       "r" #'ellama-session-rename
-        :desc "Session delete"       "d" #'ellama-session-remove
-        :desc "Session activate"     "a" #'ellama-session-switch)
-      (:prefix ("i" . "improve")
-        :desc "Improve wording"      "w" #'ellama-improve-wording
-        :desc "Improve grammar"      "g" #'ellama-improve-grammar
-        :desc "Improve conciseness"  "c" #'ellama-improve-conciseness)
-      (:prefix ("m" . "make")
-        :desc "Make list"    "l" #'ellama-make-list
-        :desc "Make table"   "t" #'ellama-make-table
-        :desc "Make format"  "f" #'ellama-make-format)
-      (:prefix ("a" . "ask")
-        :desc "Ask about"         "a" #'ellama-ask-about
-        :desc "Ask interactive"   "i" #'ellama-chat
-        :desc "Ask current line"  "l" #'ellama-ask-line
-        :desc "Ask selection"     "s" #'ellama-ask-selection)
-      (:prefix ("t" . "text")
-        :desc "Text translate"      "t" #'ellama-translate
-        :desc "Text complete"       "c" #'ellama-complete
-        :desc "Translate buffer"    "b" #'ellama-translate-buffer
-        :desc "Translation enable"  "e" #'ellama-chat-translation-enable
-        :desc "Translation disable" "d" #'ellama-chat-translation-disable)
-      (:prefix ("d" . "define")
-        :desc "Define word" "w" #'ellama-define-word)
-      (:prefix ("x" . "context")
-        :desc "Context add buffer"     "b" #'ellama-context-add-buffer
-        :desc "Context add file"       "f" #'ellama-context-add-file
-        :desc "Context add selection"  "s" #'ellama-context-add-selection
-        :desc "Context add info node"  "i" #'ellama-context-add-info-node)
-      (:prefix ("p" . "provider")
-        :desc "Provider select" "s" #'ellama-provider-select)))
-
-  (set-popup-rules!
-    '(("\\*ellama\\*" :side right :size 0.33 :quit nil :modeline t))))
-#+end_src
-#+end_src
-
 ** Aidermacs
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! aidermacs
   :recipe (:host github :repo "MatthewZMD/aidermacs" :files ("*.el"))
-  :pin "b43bed23a45ad7a3577c1ac9d00b342eb4309c05")
+  :pin "658eca5aaf63ab0f2ec732dc0b87f64f9e88a05d")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! aidermacs
   :config
   (setq aidermacs-backend 'vterm
-        aidermacs-default-model "anthropic/claude-3-7-sonnet-20250219"
+        aidermacs-default-model "cerebrus/llama-4-scout-17b-16e-instruct"
         aidermacs-use-architect-mode t
         aidermacs-architect-model "anthropic/claude-3-7-sonnet-20250219"))
 #+end_src

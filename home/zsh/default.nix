@@ -60,6 +60,7 @@
       # env misc
       export FZF_CTRL_R_OPTS="--preview= --layout=default"
       export LS_COLORS=$(vivid generate tokyonight-night)
+      export PATH="$PATH:$HOME/.juliaup/bin"
       export RUSTC_WRAPPER="${pkgs.sccache}/bin/sccache"
 
       # case-insensitive completion
