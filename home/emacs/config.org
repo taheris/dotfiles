@@ -1264,13 +1264,12 @@ Use =nov= to read eBooks.
 (package! eaf
   :recipe (:host github :repo "emacs-eaf/emacs-application-framework"
            :files ("app" "core" "*.el" "*.py"))
-  :pin "e16075c602d535b4d6fe1d59e7e05ecd468272da")
+  :pin "38e688b08018f1dd57e8366210f37a303f971fa6")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! eaf
   :defer t
-  :load-path "~/.config/doom/eaf"
   :config
   (setq eaf-browser-dark-mode nil
         eaf-browser-default-search-engine "duckduckgo"
@@ -1289,10 +1288,7 @@ Use =nov= to read eBooks.
         eaf-webengine-fixed-font-size 14
         eaf-webengine-scroll-step 200)
 
-  (require 'eaf-all-the-icons)
   (require 'eaf-browser)
-  (require 'eaf-evil)
-  (require 'eaf-markdown-previewer)
   (require 'eaf-pdf-viewer)
 
   (define-key key-translation-map (kbd "SPC")

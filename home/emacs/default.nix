@@ -80,14 +80,17 @@ in
               en-science
             ]
           ))
-          d2
           ltex-ls
-          marksman
           sqlite
-          yaml-language-server
         ];
 
         emacsPackages = with pkgs.emacsPackages; [ vterm ];
+
+        langPackages = with pkgs; [
+          d2
+          marksman
+          yaml-language-server
+        ];
 
         nodePackages = with pkgs.nodePackages; [
           prettier
@@ -97,10 +100,14 @@ in
       mkMerge [
         basePackages
         emacsPackages
+        langPackages
         nodePackages
       ];
 
     sessionPath = [ "${emacs}/bin" ];
+    sessionVariables = {
+      QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtbase.outPath}/lib/qt-6/plugins";
+    };
   };
 
   sops.templates.authinfo = {
