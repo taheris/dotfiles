@@ -87,6 +87,7 @@ in
       "tailscale"
       "tidal"
       "trader-workstation"
+      "vlc"
       "wireshark"
     ];
 

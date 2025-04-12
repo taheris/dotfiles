@@ -27,6 +27,7 @@ in
       "com.usebottles.bottles"
       "com.valvesoftware.Steam"
       "org.mozilla.Thunderbird"
+      "org.videolan.VLC"
     ];
 
     overrides = {
