@@ -53,6 +53,7 @@ in
     ./librewolf
     ./nix
     ./plasma
+    ./python
     ./rust
     ./secrets
     ./starship

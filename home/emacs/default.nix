@@ -84,7 +84,10 @@ in
           sqlite
         ];
 
-        emacsPackages = with pkgs.emacsPackages; [ vterm ];
+        emacsPackages = with pkgs.emacsPackages; [
+          jupyter
+          vterm
+        ];
 
         langPackages = with pkgs; [
           d2

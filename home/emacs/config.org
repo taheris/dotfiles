@@ -5,7 +5,7 @@
 #+property: header-args :tangle no :results silent :eval no-export
 #+startup: fold
 
-* Emacs config
+* Emacs
 
 ** Personal Info
 
@@ -121,7 +121,7 @@ newline characters.
       vterm-shell "/run/current-system/sw/bin/zsh")
 #+end_src
 
-* Doom config
+* Doom
 
 ** Modules
 :PROPERTIES:
@@ -250,7 +250,7 @@ fold                         ; (nigh) universal code folding
 ;;lispy                      ; vim for lisp, for people who don't like vim
 multiple-cursors             ; editing in many places at once
 ;;objed                      ; text object editing for the innocent
-parinfer                   ; turn lisp into python, sort of
+;;parinfer                   ; turn lisp into python, sort of
 rotate-text                  ; cycle region at point between text candidates
 snippets                     ; my elves. They type so I don't have to
 word-wrap                    ; soft wrapping with language-aware indent
@@ -273,7 +273,7 @@ vc                           ; version-control and Emacs, sitting in a tree
 #+begin_src emacs-lisp
 ;;eshell                     ; the elisp shell that works everywhere
 ;;shell                      ; simple shell REPL for Emacs
-term                       ; basic terminal emulator for Emacs
+term                         ; basic terminal emulator for Emacs
 vterm                        ; the best terminal emulation in Emacs
 #+end_src
 
@@ -294,7 +294,7 @@ grammar                      ; tasing grammar mistake every you make
 ;;biblio                     ; Writes a PhD for you (citation needed)
 ;;collab                     ; buffers with friends
 (debugger +lsp)              ; FIXME stepping through code, to help you add bugs
-direnv                     ; be direct about your environment
+direnv                       ; be direct about your environment
 docker                       ; port everything to containers
 ;;editorconfig               ; let someone else argue about tabs vs spaces
 ;;ein                        ; tame Jupyter notebooks with emacs
@@ -594,6 +594,14 @@ Define some global popup rules.
    ("\\*Flycheck errors\\*" :side right :size 0.33 :quit nil :modeline t)))
 #+end_src
 
+*** Writeroom
+
+Reduce zoom size.
+
+#+begin_src emacs-lisp
+(setq +zen-text-scale 0.8)
+#+end_src
+
 * Packages
 
 ** Setup
@@ -660,28 +668,7 @@ Ignore some ~projectile~ paths.
         :desc "Multi-occur" "/" #'projectile-multi-occur))
 #+end_src
 
-** Search
-
-Search string variable values by some pattern.
-
-#+begin_src emacs-lisp
-(defun search-variables-by-value (pattern)
-  "Search for variables whose values match PATTERN."
-  (interactive "sEnter value pattern (regexp): ")
-  (let ((result '()))
-    (mapatoms (lambda (sym)
-                (when (and (boundp sym)      ; Ensure the symbol is a variable
-                           (stringp (symbol-value sym)) ; Check if the value is a string
-                           (string-match pattern (symbol-value sym))) ; Match the pattern
-                  (push (list sym (symbol-value sym)) result))))
-    (if result
-        (with-output-to-temp-buffer "*Variable Search*"
-          (dolist (entry result)
-            (princ (format "%s : %s\n" (car entry) (cadr entry)))))
-      (message "No match found."))))
-#+end_src
-
-** Spelling
+** Ispell
 
 Set ~ispell~ program and dictionaries.
 
@@ -785,7 +772,7 @@ Automatic indentation on yank/paste.
       (snap-indent-indent (region-beginning) (region-end)))))
 #+end_src
 
-** IRC
+** Circe
 
 #+begin_src emacs-lisp
 (setq circe-default-user "proto1"
@@ -868,15 +855,8 @@ Turn off passive-voice checking.
 
 #+begin_src emacs-lisp
 (after! writegood-mode
+  (add-hook 'writegood-mode-hook #'writegood-duplicates-turn-off)
   (add-hook 'writegood-mode-hook #'writegood-passive-voice-turn-off))
-#+end_src
-
-** Writeroom
-
-Reduce zoom size.
-
-#+begin_src emacs-lisp
-(setq +zen-text-scale 0.8)
 #+end_src
 
 * Applications
@@ -1087,7 +1067,6 @@ Add LSP support inside ~src~ blocks.
 #+begin_src emacs-lisp
 (cl-defmacro lsp-org-babel-enable (lang)
   "Support LANG in org source code block."
-  (setq centaur-lsp 'lsp-mode)
   (cl-check-type lang stringp)
   (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
          (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
@@ -1110,7 +1089,7 @@ Add LSP support inside ~src~ blocks.
                 (format "Prepare local buffer environment for org source block (%s)."
                         (upcase ,lang))))))))
 (defvar org-babel-lang-list
-  '("rust" "python" "bash" "sh"))
+  '("rust" "python" "jupyter-python" "bash" "sh"))
 (dolist (lang org-babel-lang-list)
   (eval `(lsp-org-babel-enable ,lang)))
 #+end_src
@@ -1381,6 +1360,114 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
         :desc "Toggle grammar check" "G" #'+lsp-ltex-toggle))
 #+end_src
 
+** LLM
+
+*** GPTel
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! gptel
+  :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
+  :pin "55355bdead3d19d520157236f4420241cdb89e63")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! gptel
+  :init
+  (defun get-ollama-models ()
+    "Fetch the list of installed Ollama models."
+    (let* ((output (shell-command-to-string "ollama list"))
+           (lines (split-string output "\n" t))
+           models)
+      (dolist (line (cdr lines))
+        (when (string-match "^\\([^[:space:]]+\\)" line)
+          (push (match-string 1 line) models)))
+      (nreverse models)))
+
+  :config
+  (setq gptel-default-mode 'org-mode
+        gptel-model 'claude-3-7-sonnet-20250219
+        gptel-backend (gptel-make-anthropic "Anthropic"
+                        :key #'gptel-api-key-from-auth-source
+                        :stream t))
+
+  (gptel-make-ollama "Ollama"
+    :host "localhost:11434"
+    :models (get-ollama-models)
+    :stream t
+    :request-params '(:keep_alive "30m"))
+
+  (gptel-make-openai "mistral"
+    :host "api.mistral.ai"
+    :key #'gptel-api-key-from-auth-source
+    :models '("mistral-large-latest" "open-codestral-mamba")
+    :stream t)
+
+  (gptel-make-openai "Cerebras"
+    :host "api.cerebras.ai"
+    :endpoint "/v1/chat/completions"
+    :stream t
+    :key #'gptel-api-key-from-auth-source
+    :models '(llama-4-scout-17b-16e-instruct llama3.3-70b llama3.1-8b))
+
+  (gptel-make-gemini "Gemini"
+    :key (getenv "GEMINI_API_KEY")
+    :stream t)
+
+  (map! :leader
+        (:prefix ("l" . "LLM")
+         :desc "gptel buffer"    "b" #'gptel
+         :desc "gptel menu"      "g" #'gptel-menu
+         :desc "gptel org topic" "o" #'gptel-org-set-topic))
+
+  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
+        (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
+
+  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
+
+(after! gptel-transient
+  (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-c <return>"))
+#+end_src
+
+*** Aidermacs
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! aidermacs
+  :recipe (:host github :repo "MatthewZMD/aidermacs" :files ("*.el"))
+  :pin "658eca5aaf63ab0f2ec732dc0b87f64f9e88a05d")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! aidermacs
+  :config
+  (setq aidermacs-backend 'vterm
+        aidermacs-default-model "cerebrus/llama-4-scout-17b-16e-instruct"
+        aidermacs-use-architect-mode t
+        aidermacs-architect-model "anthropic/claude-3-7-sonnet-20250219"))
+#+end_src
+
+* Functions
+
+** Search
+
+Search string variable values by some pattern.
+
+#+begin_src emacs-lisp
+(defun search-variables-by-value (pattern)
+  "Search for variables whose values match PATTERN."
+  (interactive "sEnter value pattern (regexp): ")
+  (let ((result '()))
+    (mapatoms (lambda (sym)
+                (when (and (boundp sym)      ; Ensure the symbol is a variable
+                           (stringp (symbol-value sym)) ; Check if the value is a string
+                           (string-match pattern (symbol-value sym))) ; Match the pattern
+                  (push (list sym (symbol-value sym)) result))))
+    (if result
+        (with-output-to-temp-buffer "*Variable Search*"
+          (dolist (entry result)
+            (princ (format "%s : %s\n" (car entry) (cadr entry)))))
+      (message "No match found."))))
+#+end_src
+
 * Languages
 
 ** Text
@@ -1473,6 +1560,14 @@ Make format errors popup small and quit-able.
           :desc "Implementation"  "i" #'lsp-find-implementation
           :desc "Reference"       "r" #'lsp-find-references
           :desc "Type definition" "t" #'lsp-find-type-definition)))
+#+end_src
+
+** Python
+
+#+begin_src emacs-lisp
+(after! ob-jupyter
+  (setq org-babel-jupyter-resource-directory "~/.config/emacs/.local/cache/jupyter")
+  (org-babel-jupyter-aliases-from-kernelspecs))
 #+end_src
 
 ** Nix
@@ -1578,85 +1673,3 @@ Make format errors popup small and quit-able.
   (setq ob-d2-command "d2 --layout elk --sketch"))
 #+end_src
 
-** GPTel
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! gptel
-  :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "55355bdead3d19d520157236f4420241cdb89e63")
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! gptel
-  :init
-  (defun get-ollama-models ()
-    "Fetch the list of installed Ollama models."
-    (let* ((output (shell-command-to-string "ollama list"))
-           (lines (split-string output "\n" t))
-           models)
-      (dolist (line (cdr lines))
-        (when (string-match "^\\([^[:space:]]+\\)" line)
-          (push (match-string 1 line) models)))
-      (nreverse models)))
-
-  :config
-  (setq gptel-default-mode 'org-mode
-        gptel-model 'claude-3-7-sonnet-20250219
-        gptel-backend (gptel-make-anthropic "Anthropic"
-                        :key #'gptel-api-key-from-auth-source
-                        :stream t))
-
-  (gptel-make-ollama "Ollama"
-    :host "localhost:11434"
-    :models (get-ollama-models)
-    :stream t
-    :request-params '(:keep_alive "30m"))
-
-  (gptel-make-openai "mistral"
-    :host "api.mistral.ai"
-    :key #'gptel-api-key-from-auth-source
-    :models '("mistral-large-latest" "open-codestral-mamba")
-    :stream t)
-
-  (gptel-make-openai "Cerebras"
-    :host "api.cerebras.ai"
-    :endpoint "/v1/chat/completions"
-    :stream t
-    :key #'gptel-api-key-from-auth-source
-    :models '(llama-4-scout-17b-16e-instruct llama3.3-70b llama3.1-8b))
-
-  (gptel-make-gemini "Gemini"
-    :key (getenv "GEMINI_API_KEY")
-    :stream t)
-
-  (map! :leader
-        (:prefix ("l" . "LLM")
-         :desc "gptel buffer"    "b" #'gptel
-         :desc "gptel menu"      "g" #'gptel-menu
-         :desc "gptel org topic" "o" #'gptel-org-set-topic))
-
-  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
-        (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
-
-  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
-
-(after! gptel-transient
-  (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-c <return>"))
-#+end_src
-
-** Aidermacs
-
-#+begin_src emacs-lisp :tangle packages.el
-(package! aidermacs
-  :recipe (:host github :repo "MatthewZMD/aidermacs" :files ("*.el"))
-  :pin "658eca5aaf63ab0f2ec732dc0b87f64f9e88a05d")
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package! aidermacs
-  :config
-  (setq aidermacs-backend 'vterm
-        aidermacs-default-model "cerebrus/llama-4-scout-17b-16e-instruct"
-        aidermacs-use-architect-mode t
-        aidermacs-architect-model "anthropic/claude-3-7-sonnet-20250219"))
-#+end_src
