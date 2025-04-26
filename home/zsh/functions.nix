@@ -4,7 +4,7 @@ let
   home = config.home.homeDirectory;
 in
 {
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     github-clone() {
       local repo=$*
       local outdir="${home}/src/github.com/$repo"

@@ -46,11 +46,10 @@
     defaultKeymap = "emacs";
     syntaxHighlighting.enable = true;
 
-    initExtraFirst = ''
+    initContent = ''
+      # settings
       unset zle_bracketed_paste
-    '';
 
-    initExtra = ''
       # env secrets
       export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic.path})"
       export CEREBRAS_API_KEY="$(cat ${config.sops.secrets.cerebras.path})"

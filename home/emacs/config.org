@@ -1570,6 +1570,12 @@ Make format errors popup small and quit-able.
   (org-babel-jupyter-aliases-from-kernelspecs))
 #+end_src
 
+Disable ZeroMQ in macOS.
+
+#+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
+(setq jupyter-use-zmq nil)
+#+end_src
+
 ** Nix
 
 #+begin_src emacs-lisp
