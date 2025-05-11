@@ -299,6 +299,7 @@ docker                       ; port everything to containers
 ;;editorconfig               ; let someone else argue about tabs vs spaces
 ;;ein                        ; tame Jupyter notebooks with emacs
 (eval +overlay)              ; run code, run (also, repls)
+llm                          ; when I said you needed friends, I didn't mean...
 (lookup                      ; helps you navigate your code and documentation
  +dictionary                 ; dictionary/thesaurus is nice
  +docsets)                   ; ...or in Dash docsets locally
@@ -356,6 +357,7 @@ emacs-lisp                   ; drown in parentheses
 ;;(haskell +lsp)             ; a language that's lazier than I am
 ;;hy                         ; readability of scheme w/ speed of python
 ;;idris                      ; a language you can depend on
+;;janet                      ; Fun fact: Janet is me!
 ;;(java +lsp)                ; the poster child for carpal tunnel syndrome
 (javascript                  ; all(hope(abandon(ye(who(enter(here))))))
  +lsp
@@ -1364,26 +1366,18 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 *** GPTel
 
-#+begin_src emacs-lisp :tangle packages.el
-(package! gptel
-  :recipe (:host github :repo "karthink/gptel" :files ("*.el"))
-  :pin "55355bdead3d19d520157236f4420241cdb89e63")
-#+end_src
-
 #+begin_src emacs-lisp
-(use-package! gptel
-  :init
-  (defun get-ollama-models ()
-    "Fetch the list of installed Ollama models."
-    (let* ((output (shell-command-to-string "ollama list"))
-           (lines (split-string output "\n" t))
-           models)
-      (dolist (line (cdr lines))
-        (when (string-match "^\\([^[:space:]]+\\)" line)
-          (push (match-string 1 line) models)))
-      (nreverse models)))
+(defun get-ollama-models ()
+  "Fetch the list of installed Ollama models."
+  (let* ((output (shell-command-to-string "ollama list"))
+         (lines (split-string output "\n" t))
+         models)
+    (dolist (line (cdr lines))
+      (when (string-match "^\\([^[:space:]]+\\)" line)
+        (push (match-string 1 line) models)))
+    (nreverse models)))
 
-  :config
+(after! gptel
   (setq gptel-default-mode 'org-mode
         gptel-model 'claude-3-7-sonnet-20250219
         gptel-backend (gptel-make-anthropic "Anthropic"
@@ -1414,10 +1408,16 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
     :stream t)
 
   (map! :leader
-        (:prefix ("l" . "LLM")
-         :desc "gptel buffer"    "b" #'gptel
-         :desc "gptel menu"      "g" #'gptel-menu
-         :desc "gptel org topic" "o" #'gptel-org-set-topic))
+        (:prefix ("l" . "llm")
+         :desc "Add text to context"        "a" #'gptel-add
+         :desc "Explain"                    "e" #'gptel-quick
+         :desc "Add file to context"        "f" #'gptel-add-file
+         :desc "Open gptel"                 "l" #'gptel
+         :desc "Send to gptel"              "s" #'gptel-send
+         :desc "Open gptel menu"            "m" #'gptel-menu
+         :desc "Rewrite"                    "r" #'gptel-rewrite
+         :desc "Org: set topic"             "o" #'gptel-org-set-topic
+         :desc "Org: set properties"        "O" #'gptel-org-set-properties))
 
   (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
         (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
