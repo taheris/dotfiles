@@ -22,7 +22,6 @@ let
     cargo-udeps
     cargo-update
     cargo-watch
-    mold-wrapped
     rustup
     sccache
     wasm-pack
@@ -32,6 +31,7 @@ let
     cargo-rr
     cargo-valgrind
     clang
+    mold-wrapped
     rr
   ];
 
@@ -54,13 +54,17 @@ in
           split-debuginfo = "unpacked";
         };
 
-        target.x86_64-unknown-linux-gnu = {
-          linker = "clang";
-          rustflags = [
-            "-C"
-            "link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold"
-          ];
-        };
+        target.x86_64-unknown-linux-gnu =
+          if isLinux then
+            {
+              linker = "clang";
+              rustflags = [
+                "-C"
+                "link-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold"
+              ];
+            }
+          else
+            { };
       };
     };
 

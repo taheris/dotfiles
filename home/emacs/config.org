@@ -1407,22 +1407,22 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
     :key (getenv "GEMINI_API_KEY")
     :stream t)
 
-  (map! :leader
-        (:prefix ("l" . "llm")
-         :desc "Add text to context"        "a" #'gptel-add
-         :desc "Explain"                    "e" #'gptel-quick
-         :desc "Add file to context"        "f" #'gptel-add-file
-         :desc "Open gptel"                 "l" #'gptel
-         :desc "Send to gptel"              "s" #'gptel-send
-         :desc "Open gptel menu"            "m" #'gptel-menu
-         :desc "Rewrite"                    "r" #'gptel-rewrite
-         :desc "Org: set topic"             "o" #'gptel-org-set-topic
-         :desc "Org: set properties"        "O" #'gptel-org-set-properties))
-
   (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
         (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
 
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
+
+(map! :leader
+      (:prefix ("l" . "llm")
+       :desc "Add text to context"        "a" #'gptel-add
+       :desc "Explain"                    "e" #'gptel-quick
+       :desc "Add file to context"        "f" #'gptel-add-file
+       :desc "Open gptel"                 "l" #'gptel
+       :desc "Send to gptel"              "s" #'gptel-send
+       :desc "Open gptel menu"            "m" #'gptel-menu
+       :desc "Rewrite"                    "r" #'gptel-rewrite
+       :desc "Org: set topic"             "o" #'gptel-org-set-topic
+       :desc "Org: set properties"        "O" #'gptel-org-set-properties))
 
 (after! gptel-transient
   (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-c <return>"))
