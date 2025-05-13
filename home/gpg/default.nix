@@ -34,7 +34,11 @@ in
     {
       enable = true;
       enableSshSupport = true;
-      pinentryPackage = mkIf isLinux pkgs.pinentry-qt;
+
+      pinentry = mkIf isLinux {
+        package = pkgs.wayprompt;
+        program = "pinentry-wayprompt";
+      };
 
       defaultCacheTtl = timeout;
       defaultCacheTtlSsh = timeout;
