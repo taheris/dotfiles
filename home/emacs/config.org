@@ -1401,7 +1401,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
     :endpoint "/v1/chat/completions"
     :stream t
     :key #'gptel-api-key-from-auth-source
-    :models '(llama-4-scout-17b-16e-instruct llama3.3-70b llama3.1-8b))
+    :models '(qwen-3-32b llama-4-scout-17b-16e-instruct deepseek-r1-distill-llama-70b llama3.3-70b))
 
   (gptel-make-gemini "Gemini"
     :key (getenv "GEMINI_API_KEY")
@@ -1440,7 +1440,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 (use-package! aidermacs
   :config
   (setq aidermacs-backend 'vterm
-        aidermacs-default-model "cerebrus/llama-4-scout-17b-16e-instruct"
+        aidermacs-default-model "cerebrus/qwen-3-32b"
         aidermacs-use-architect-mode t
         aidermacs-architect-model "anthropic/claude-3-7-sonnet-20250219"))
 #+end_src
