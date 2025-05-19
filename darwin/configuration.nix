@@ -239,6 +239,8 @@ in
          auth       required       pam_opendirectory.so
       '')
     ];
+
+    primaryUser = "${host.user}";
   };
 
   users.users.${host.user} = {
