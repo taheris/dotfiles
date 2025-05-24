@@ -1366,6 +1366,10 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 *** GPTel
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! gptel :pin "fc06fe9e3b0f5a269d9c8eaf7195de43d1fbee67")
+#+end_src
+
 #+begin_src emacs-lisp
 (defun get-ollama-models ()
   "Fetch the list of installed Ollama models."
@@ -1379,7 +1383,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 (after! gptel
   (setq gptel-default-mode 'org-mode
-        gptel-model 'claude-3-7-sonnet-20250219
+        gptel-model 'claude-opus-4-20250514
         gptel-backend (gptel-make-anthropic "Anthropic"
                         :key #'gptel-api-key-from-auth-source
                         :stream t))
@@ -1442,7 +1446,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
   (setq aidermacs-backend 'vterm
         aidermacs-default-model "cerebrus/qwen-3-32b"
         aidermacs-use-architect-mode t
-        aidermacs-architect-model "anthropic/claude-3-7-sonnet-20250219"))
+        aidermacs-architect-model "anthropic/claude-opus-4-20250514"))
 #+end_src
 
 * Functions
