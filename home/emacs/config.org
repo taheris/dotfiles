@@ -1367,7 +1367,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** GPTel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "fc06fe9e3b0f5a269d9c8eaf7195de43d1fbee67")
+(package! gptel :pin "a5af15c770b66a61d0609a736e1db37495655559")
 #+end_src
 
 #+begin_src emacs-lisp
