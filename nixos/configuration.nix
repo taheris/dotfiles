@@ -60,6 +60,12 @@ in
   nix = {
     nixPath = [ "/etc/nix/path" ];
     registry = (mapAttrs (_: flake: { inherit flake; })) ((filterAttrs (_: isType "flake")) inputs);
+
+    gc = {
+      automatic = true;
+      dates = "monthly";
+    };
+
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;

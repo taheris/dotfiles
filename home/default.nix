@@ -14,6 +14,7 @@ let
     docker-compose
     dnsutils
     fd
+    file
     gnumake
     iftop
     jq
