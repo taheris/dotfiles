@@ -34,9 +34,11 @@ let
 in
 {
   environment = {
-    systemPackages = [
-      pkgs.coreutils
+    systemPackages = with pkgs; [
+      coreutils
+      curl
       dockerCompat
+      wget
     ];
 
     systemPath = mkBefore [
