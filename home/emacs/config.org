@@ -1683,3 +1683,148 @@ Disable ZeroMQ in macOS.
   (setq ob-d2-command "d2 --layout elk --sketch"))
 #+end_src
 
+** Razor
+
+#+begin_src emacs-lisp
+(defvar razor-mode-syntax-table
+  (let ((table (make-syntax-table)))
+    ;; Comments
+    (modify-syntax-entry ?/ ". 12" table)
+    (modify-syntax-entry ?# "<" table)
+    (modify-syntax-entry ?\n ">" table)
+    ;; Strings
+    (modify-syntax-entry ?' "\"" table)
+    (modify-syntax-entry ?\" "\"" table)
+    table)
+  "Syntax table for `razor-mode'.")
+
+(defvar razor-font-lock-keywords
+  `(
+    ;; Comments
+    ("\\(//.*\\|#.*\\)$" . font-lock-comment-face)
+
+    ;; Commands (fundamental)
+    (,(regexp-opt '("say" "whisper" "yell" "overhead" "cast" "wft" "waitfortarget"
+                    "target" "dclick" "dclicktype" "lift" "lifttype" "drop" "droprelloc"
+                    "findtype" "wait" "pause" "setvar" "unsetvar" "timer" "createtimer"
+                    "settimer" "removetimer" "cooldown" "organizer" "restock" "scavenger"
+                    "attack" "useobject" "usetype" "move" "walk" "turn" "run" "pathfind"
+                    "hotkey" "sysmsg" "clearsysmsg" "poplist" "pushlist" "removelist"
+                    "createlist" "clearlist" "dress" "undress" "dressconfig" "targettype"
+                    "targetrelloc" "menu" "menuresponse" "gumpresponse" "gumpclose"
+                    "clearjournal" "skill" "useskill" "feed" "rename" "shownames"
+                    "togglehands" "equipitem" "unequipitem" "lift" "lifttype" "organizer"
+                    "restock" "scavenger" "sell" "buy" "clearbuy" "clearsell" "organizer"
+                    "restock" "scavenger" "autoloot" "dress" "counter" "sound" "music"
+                    "stopsound" "guild" "alliance" "emote" "random" "virtue" "msg"
+                    "headmsg" "partymsg" "guildmsg" "allymsg" "whispermsg" "yellmsg"
+                    "emotemsg" "promptmsg" "timermsg" "waitforgump" "replygump"
+                    "waitformenu" "replymenu" "waitforprompt" "cancelprompt"
+                    "addfriend" "removefriend" "contextmenu" "waitforcontext"
+                    "clearignore" "clearfriends" "ignore" "clearall" "sysmessage"
+                    "headmessage" "waitforsysmsg" "setability" "moveitem" "moveitemoffset"
+                    "movetype" "movetypeoffset" "walk" "usetype" "useobject" "virtue"
+                    "clickobject" "useonce" "clearuseonce" "clearusequeue" "interrupt"
+                    "cancel" "cancelautotarget" "canceltarget" "cleardragdrop" "dragdrop"
+                    "lift" "drop") 'words)
+     . font-lock-keyword-face)
+
+    ;; Control flow
+    (,(regexp-opt '("if" "elseif" "else" "endif" "while" "endwhile" "for" "endfor"
+                    "foreach" "in" "break" "continue" "loop" "stop" "not" "and" "or"
+                    "repeat" "until" "switch" "case" "default" "endswitch" "goto"
+                    "label" "call" "return" "exit" "end") 'words)
+     . font-lock-builtin-face)
+
+    ;; Special variables and expressions
+    (,(regexp-opt '("self" "backpack" "lefthand" "righthand" "hands" "lasttarget"
+                    "last" "lastobject" "hp" "maxhp" "mana" "maxmana" "stam" "maxstam"
+                    "diffhits" "diffmana" "diffstam" "diffweight" "weight" "maxweight"
+                    "followers" "maxfollowers" "gold" "mounted" "poisoned" "paralyzed"
+                    "hidden" "warmode" "invuln" "dead" "findbuff" "findtype" "findlayer"
+                    "skill" "count" "counter" "insysmsg" "ingump" "injournal" "listexists"
+                    "inlist" "targetexists" "varexist" "timerexists" "timer" "inrange"
+                    "buffexists" "finddebuff" "findlayer" "position" "x" "y" "z"
+                    "queued" "muted" "noto" "invul" "blessed" "yellowhits" "grayhits"
+                    "criminal" "enemy" "friendly" "gray" "grey" "blue" "green" "orange"
+                    "red" "yellow" "humanoid" "monster" "both" "any" "beneficial"
+                    "harmful" "neutral" "friend" "innocent" "murderer" "attackable"
+                    "criminal" "enemy" "friendly" "gray" "grey" "blue" "green" "orange"
+                    "red" "yellow" "closest" "nearest" "next" "prev" "previous" "random") 'words)
+     . font-lock-variable-name-face)
+
+    ;; Numbers
+    ("\\<[0-9]+\\(\\.[0-9]+\\)?\\>" . font-lock-constant-face)
+
+    ;; Operators
+    ("\\(==\\|!=\\|<=\\|>=\\|<\\|>\\|=\\)" . font-lock-constant-face)
+
+    ;; @ prefix for silent commands
+    ("^\\s-*@" . font-lock-preprocessor-face)
+
+    ;; Strings
+    ("'[^']*'" . font-lock-string-face)
+    ("\"[^\"]*\"" . font-lock-string-face)
+
+    ;; Serial numbers (hex)
+    ("\\<0x[0-9A-Fa-f]+\\>" . font-lock-constant-face)
+
+    ;; Time units
+    ("\\<[0-9]+\\s-*\\(ms\\|sec\\|seconds\\|min\\|minutes\\|hrs\\|hours\\)\\>"
+     . font-lock-constant-face))
+  "Keyword highlighting for `razor-mode'.")
+
+(defvar razor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-c") 'comment-region)
+    (define-key map (kbd "C-c C-u") 'uncomment-region)
+    map)
+  "Keymap for `razor-mode'.")
+
+(define-derived-mode razor-mode prog-mode "Razor"
+  "Major mode for editing Razor Script files.
+
+\\{razor-mode-map}"
+  :syntax-table razor-mode-syntax-table
+  (setq-local font-lock-defaults '(razor-font-lock-keywords))
+  (setq-local comment-start "// ")
+  (setq-local comment-start-skip "\\(//+\\|#+\\)\\s-*")
+  (setq-local comment-end "")
+  (setq-local indent-line-function 'razor-indent-line))
+
+(defun razor-indent-line ()
+  "Indent current line for Razor Script."
+  (interactive)
+  (let ((indent-level 0)
+        (not-indented t)
+        (cur-indent 0))
+    (save-excursion
+      (beginning-of-line)
+      (if (bobp)
+          (setq cur-indent 0)
+        (while not-indented
+          (forward-line -1)
+          (if (looking-at "^[ \t]*\\(if\\|while\\|for\\|foreach\\|repeat\\|switch\\)\\>")
+              (progn
+                (setq cur-indent (+ (current-indentation) 4))
+                (setq not-indented nil))
+            (if (looking-at "^[ \t]*\\(endif\\|endwhile\\|endfor\\|until\\|endswitch\\)\\>")
+                (progn
+                  (setq cur-indent (current-indentation))
+                  (setq not-indented nil))
+              (if (looking-at "^[ \t]*\\(else\\|elseif\\|case\\|default\\)\\>")
+                  (progn
+                    (setq cur-indent (current-indentation))
+                    (setq not-indented nil))
+                (if (bobp)
+                    (setq not-indented nil))))))))
+    (save-excursion
+      (beginning-of-line)
+      (if (looking-at "^[ \t]*\\(endif\\|endwhile\\|endfor\\|else\\|elseif\\|until\\|endswitch\\|case\\|default\\)\\>")
+          (setq cur-indent (max 0 (- cur-indent 4)))))
+    (indent-line-to cur-indent)))
+
+(add-to-list 'auto-mode-alist '("\\.razor\\'" . razor-mode))
+
+(provide 'razor-mode)
+#+end_src
