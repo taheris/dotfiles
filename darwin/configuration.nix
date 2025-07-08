@@ -66,7 +66,6 @@ in
       "calibre"
       "cookie"
       "discord"
-      "eloston-chromium"
       "gpg-suite"
       "ibkr"
       "karabiner-elements"
@@ -86,11 +85,12 @@ in
       "podman-desktop"
       "slack"
       "steam"
-      "tailscale"
+      "tailscale-app"
       "tidal"
       "trader-workstation"
+      "ungoogled-chromium"
       "vlc"
-      "wireshark"
+      "wireshark-app"
     ];
 
     masApps = {
