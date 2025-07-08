@@ -35,11 +35,11 @@
     "flake-compat_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1733328505,
-        "narHash": "sha256-NeCCThCEP3eCl2l/+27kNNK7QrwZB1IJCrXfrbv5oqU=",
+        "lastModified": 1747046372,
+        "narHash": "sha256-CIVLLkVgvHYbgI2UpXvIIBJ12HWgX+fjA8Xf8PUmqCY=",
         "owner": "edolstra",
         "repo": "flake-compat",
-        "rev": "ff81ac966bb2cae68946d5ed5fc4994f96d0ffec",
+        "rev": "9100a0f413b0c601e0533d1d94ffd501ce2e7885",
         "type": "github"
       },
       "original": {
@@ -341,16 +341,18 @@
         "snowfall-lib": "snowfall-lib"
       },
       "locked": {
-        "lastModified": 1736321133,
-        "narHash": "sha256-WcMlGvUYUEUCxtrG3DHExdnvAHKuJazi9FLhAiqOorw=",
-        "rev": "808a089a32a2c0f436f106fc554215c4930b3c69",
-        "revCount": 67,
-        "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/Svenum/Solaar-Flake/0.1.2/019444d0-161f-78ca-a740-5eee5d09f672/source.tar.gz"
+        "lastModified": 1751535505,
+        "narHash": "sha256-MOFgDU5wtIe96/dBfjWHDuV372+jGq5IBB/3km0yBr0=",
+        "owner": "Svenum",
+        "repo": "Solaar-Flake",
+        "rev": "b6668450e18e3f788855fc5f54a84861ec3ffee9",
+        "type": "github"
       },
       "original": {
-        "type": "tarball",
-        "url": "https://flakehub.com/f/Svenum/Solaar-Flake/%2A.tar.gz"
+        "owner": "Svenum",
+        "ref": "main",
+        "repo": "Solaar-Flake",
+        "type": "github"
       }
     },
     "sops-nix": {
