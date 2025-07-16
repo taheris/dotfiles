@@ -1367,7 +1367,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** GPTel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "a5af15c770b66a61d0609a736e1db37495655559")
+(package! gptel :pin "34ecadea17870b07fe7f146376b5a25f45fb27af")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1437,7 +1437,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 #+begin_src emacs-lisp :tangle packages.el
 (package! aidermacs
   :recipe (:host github :repo "MatthewZMD/aidermacs" :files ("*.el"))
-  :pin "658eca5aaf63ab0f2ec732dc0b87f64f9e88a05d")
+  :pin "5084913506b8b243c732a77b6de4768f18edcff3")
 #+end_src
 
 #+begin_src emacs-lisp

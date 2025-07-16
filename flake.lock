@@ -73,15 +73,16 @@
       "locked": {
         "lastModified": 1751413152,
         "narHash": "sha256-Tyw1RjYEsp5scoigs1384gIg6e0GoBVjms4aXFfRssQ=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
+        "ref": "refs/heads/main",
         "rev": "77826244401ea9de6e3bac47c2db46005e1f30b5",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/hercules-ci/flake-parts.git"
       },
       "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/hercules-ci/flake-parts.git"
       }
     },
     "flake-utils": {
@@ -148,17 +149,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1751824240,
-        "narHash": "sha256-aDDC0CHTlL7QDKWWhdbEgVPK6KwWt+ca0QkmHYZxMzI=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "fd9e55f5fac45a26f6169310afca64d56b681935",
-        "type": "github"
+        "lastModified": 1752603129,
+        "narHash": "sha256-S+wmHhwNQ5Ru689L2Gu8n1OD6s9eU9n9mD827JNR+kw=",
+        "ref": "refs/heads/master",
+        "rev": "e8c19a3cec2814c754f031ab3ae7316b64da085b",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nix-community/home-manager.git"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nix-community/home-manager.git"
       }
     },
     "mac-app-util": {
@@ -174,15 +176,16 @@
       "locked": {
         "lastModified": 1742156590,
         "narHash": "sha256-aTM/2CrNN5utdVEQGsOA+kl4UozgH7VPLBQL5OXtBrg=",
-        "owner": "hraban",
-        "repo": "mac-app-util",
+        "ref": "refs/heads/master",
         "rev": "341ede93f290df7957047682482c298e47291b4d",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/hraban/mac-app-util.git"
       },
       "original": {
-        "owner": "hraban",
-        "repo": "mac-app-util",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/hraban/mac-app-util.git"
       }
     },
     "nix-darwin": {
@@ -194,62 +197,66 @@
       "locked": {
         "lastModified": 1751313918,
         "narHash": "sha256-HsJM3XLa43WpG+665aGEh8iS8AfEwOIQWk3Mke3e7nk=",
-        "owner": "LnL7",
-        "repo": "nix-darwin",
+        "ref": "refs/heads/master",
         "rev": "e04a388232d9a6ba56967ce5b53a8a6f713cdfcf",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/LnL7/nix-darwin.git"
       },
       "original": {
-        "owner": "LnL7",
-        "repo": "nix-darwin",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/LnL7/nix-darwin.git"
       }
     },
     "nix-flatpak": {
       "locked": {
         "lastModified": 1751276396,
         "narHash": "sha256-oOYrnKStMsOXST+wKnzuSZ49h8Dr1Q3mIn2f5Kb5GAw=",
-        "owner": "gmodena",
-        "repo": "nix-flatpak",
+        "ref": "refs/heads/main",
         "rev": "59adb9ad1cbd915494fc35cd0e0a9d582ca9de74",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/gmodena/nix-flatpak.git"
       },
       "original": {
-        "owner": "gmodena",
-        "repo": "nix-flatpak",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/gmodena/nix-flatpak.git"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1751792365,
-        "narHash": "sha256-J1kI6oAj25IG4EdVlg2hQz8NZTBNYvIS0l4wpr9KcUo=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1fd8bada0b6117e6c7eb54aad5813023eed37ccb",
-        "type": "github"
+        "lastModified": 1752480373,
+        "narHash": "sha256-JHQbm+OcGp32wAsXTE/FLYGNpb+4GLi5oTvCxwSoBOA=",
+        "ref": "nixos-unstable",
+        "rev": "62e0f05ede1da0d54515d4ea8ce9c733f12d9f08",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nixos/nixpkgs.git"
       },
       "original": {
-        "owner": "nixos",
         "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nixos/nixpkgs.git"
       }
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1735563628,
-        "narHash": "sha256-OnSAY7XDSx7CtDoqNh8jwVwh4xNL/2HaJxGjryLWzX8=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "b134951a4c9f3c995fd7be05f3243f8ecd65d798",
-        "type": "github"
+        "lastModified": 1752436162,
+        "narHash": "sha256-Kt1UIPi7kZqkSc5HVj6UY5YLHHEzPBkgpNUByuyxtlw=",
+        "ref": "nixos-25.05",
+        "rev": "dfcd5b901dbab46c9c6e80b265648481aafb01f8",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nixos/nixpkgs.git"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
+        "ref": "nixos-25.05",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nixos/nixpkgs.git"
       }
     },
     "plasma-manager": {
@@ -264,15 +271,16 @@
       "locked": {
         "lastModified": 1748196248,
         "narHash": "sha256-1iHjsH6/5UOerJEoZKE+Gx1BgAoge/YcnUsOA4wQ/BU=",
-        "owner": "nix-community",
-        "repo": "plasma-manager",
+        "ref": "refs/heads/trunk",
         "rev": "b7697abe89967839b273a863a3805345ea54ab56",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nix-community/plasma-manager.git"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "plasma-manager",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nix-community/plasma-manager.git"
       }
     },
     "root": {
@@ -343,16 +351,17 @@
       "locked": {
         "lastModified": 1751535505,
         "narHash": "sha256-MOFgDU5wtIe96/dBfjWHDuV372+jGq5IBB/3km0yBr0=",
-        "owner": "Svenum",
-        "repo": "Solaar-Flake",
+        "ref": "main",
         "rev": "b6668450e18e3f788855fc5f54a84861ec3ffee9",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/Svenum/Solaar-Flake.git"
       },
       "original": {
-        "owner": "Svenum",
         "ref": "main",
-        "repo": "Solaar-Flake",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/Svenum/Solaar-Flake.git"
       }
     },
     "sops-nix": {
@@ -362,17 +371,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1751606940,
-        "narHash": "sha256-KrDPXobG7DFKTOteqdSVeL1bMVitDcy7otpVZWDE6MA=",
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "rev": "3633fc4acf03f43b260244d94c71e9e14a2f6e0d",
-        "type": "github"
+        "lastModified": 1752544651,
+        "narHash": "sha256-GllP7cmQu7zLZTs9z0J2gIL42IZHa9CBEXwBY9szT0U=",
+        "ref": "refs/heads/master",
+        "rev": "2c8def626f54708a9c38a5861866660395bb3461",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/Mic92/sops-nix.git"
       },
       "original": {
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/Mic92/sops-nix.git"
       }
     },
     "systems": {
