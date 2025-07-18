@@ -1430,6 +1430,8 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 (after! gptel-transient
   (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-c <return>"))
+
+(add-hook 'org-mode-hook 'gptel-mode)
 #+end_src
 
 *** Aidermacs
