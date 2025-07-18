@@ -301,10 +301,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1744016956,
-        "narHash": "sha256-ERFmSTStJ7aLEPZhGfD8L+sx1TU9Gn6tfTkTkGw9Gy4=",
+        "lastModified": 1752863233,
+        "narHash": "sha256-Mpnwp+83k0xQ6RDUNLUaXoW9p0zCMFS8QEVxc+7IsSA=",
         "ref": "main",
-        "rev": "068c8b49dde1fd3e86c9cfd2e43ea46e3da23484",
+        "rev": "350226e49386f27a3ee4d544902e5747ddb6a902",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/secrets.git"

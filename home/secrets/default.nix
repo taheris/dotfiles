@@ -24,6 +24,7 @@ in
     cerebras = { };
     gemini = { };
     libera = { };
+    mistral = { };
     openai = { };
   };
 }

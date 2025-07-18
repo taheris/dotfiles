@@ -1,3 +1,8 @@
+:PROPERTIES:
+:GPTEL_MODEL: claude-opus-4-20250514
+:GPTEL_BACKEND: Anthropic
+:GPTEL_SYSTEM: You are a large language model living in Emacs and a helpful assistant. Respond concisely.
+:END:
 #+title: Doom Emacs Config
 #+author: taheris
 #+property: header-args:emacs-lisp :tangle yes :comments link
@@ -959,6 +964,13 @@ Add a newline when inserting new headings.
         (plain-list-item . auto)))
 #+end_src
 
+Don't trim trailing whitespaces.
+
+#+begin_src emacs-lisp
+(after! ws-butler
+  (add-to-list 'ws-butler-global-exempt-modes 'org-mode))
+#+end_src
+
 **** Display
 
 #+begin_src emacs-lisp
@@ -1383,6 +1395,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 (after! gptel
   (setq gptel-default-mode 'org-mode
+        gptel-display-buffer-action 'display-buffer-same-window
         gptel-model 'claude-opus-4-20250514
         gptel-backend (gptel-make-anthropic "Anthropic"
                         :key #'gptel-api-key-from-auth-source
