@@ -2,6 +2,7 @@
 :GPTEL_MODEL: claude-opus-4-20250514
 :GPTEL_BACKEND: Anthropic
 :GPTEL_SYSTEM: You are a large language model living in Emacs and a helpful assistant. Respond concisely.
+:GPTEL_BOUNDS: ((response (47286 47483) (48200 48409) (48410 48456) (48457 48488) (48489 48516) (48591 48592) (48593 48641) (48642 48679) (48689 48718) (48732 48774) (48783 48802) (48814 48867) (48868 48908) (48909 48982) (48984 49245) (49246 49247) (49251 49290) (49294 49309) (49313 49848) (49849 50060) (50061 50155) (50156 50253)))
 :END:
 #+title: Doom Emacs Config
 #+author: taheris
@@ -234,7 +235,7 @@ ophints                      ; highlight the region an operation acts on
 ;;smooth-scroll              ; So smooth you won't believe it's not butter
 ;;(tabs                      ; an tab bar for Emacs
 ;;  +centaur-tabs)           ; ... with prettier tabs
-;;treemacs                   ; a project drawer, like neotree but cooler
+treemacs                     ; a project drawer, like neotree but cooler
 ;;unicode                    ; extended unicode support for various languages
 (vc-gutter +pretty)          ; vcs diff in the fringe
 vi-tilde-fringe              ; fringe tildes to mark beyond EOB
@@ -1440,11 +1441,23 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
        :desc "Rewrite"                    "r" #'gptel-rewrite
        :desc "Org: set topic"             "o" #'gptel-org-set-topic
        :desc "Org: set properties"        "O" #'gptel-org-set-properties))
+#+end_src
 
-(after! gptel-transient
-  (transient-suffix-put 'gptel-menu (kbd "RET") :key "C-c <return>"))
+Send with ~C-c <return>~.
 
-(add-hook 'org-mode-hook 'gptel-mode)
+#+begin_src emacs-lisp
+(after! gptel
+  (define-key gptel-mode-map (kbd "RET") nil)
+  (define-key gptel-mode-map (kbd "<normal-state> RET") nil)
+  (define-key gptel-mode-map (kbd "<visual-state> RET") nil))
+#+end_src
+
+Open all org-mode buffers with gptel.
+
+#+begin_src emacs-lisp
+(after! org
+  (add-hook 'org-mode-hook 'gptel-mode)
+  (define-key org-mode-map (kbd "C-c RET") #'gptel-send))
 #+end_src
 
 *** Aidermacs
@@ -1462,6 +1475,63 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
         aidermacs-default-model "cerebrus/qwen-3-32b"
         aidermacs-use-architect-mode t
         aidermacs-architect-model "anthropic/claude-opus-4-20250514"))
+#+end_src
+
+*** Voice
+
+#+begin_src emacs-lisp
+(defvar my-audio-recording-filename nil)
+(defvar my-audio-recording-process nil)
+
+(defun my-start-audio-recording ()
+  "Start audio recording."
+  (interactive)
+  (let* ((timestamp (format-time-string "%Y-%m-%dT%H%M%S"))
+         (filename (expand-file-name (format "sox_%s.mp3" timestamp) temporary-file-directory))
+         (sox-app (expand-file-name "~/.nix-profile/Applications/Sox.app")))
+
+    (setq my-audio-recording-filename filename)
+    (setq my-audio-recording-process
+          (if (eq system-type 'darwin)
+              (start-process "audio-rec" nil "open" "-a" sox-app "--args" filename)
+            (start-process "audio-rec" nil "sox" "-d" filename)))
+
+    (message "Recording started: %s" filename)))
+
+(defun my-stop-audio-recording ()
+  "Stop audio recording and transcribe."
+  (interactive)
+  (when my-audio-recording-process
+    (if (eq system-type 'darwin)
+        (call-process "pkill" nil nil nil "sox")
+      (interrupt-process my-audio-recording-process))
+
+    (setq my-audio-recording-process nil)
+    (message "Recording stopped.")
+
+    (sit-for 0.05)
+    (my-transcribe-audio my-audio-recording-filename)
+    (gptel-send)))
+
+(defun my-transcribe-audio (filename)
+  "Transcribe audio file using Mistral API."
+  (let* ((api-key (getenv "MISTRAL_API_KEY"))
+         (response (shell-command-to-string
+                   (format "curl -s -L 'https://api.mistral.ai/v1/audio/transcriptions' \
+                           --header 'x-api-key: %s' \
+                           --form 'file=@%s' \
+                           --form 'model=voxtral-mini-latest'"
+                           api-key filename)))
+         (json (json-parse-string response)))
+
+    (if-let ((error-msg (gethash "message" json)))
+        (message "Transcription error: %s" error-msg)
+      (when-let ((text (gethash "text" json)))
+        (insert text)
+        (message "Audio transcribed.")))))
+
+(global-set-key [f18] 'my-start-audio-recording)
+(global-set-key [f19] 'my-stop-audio-recording)
 #+end_src
 
 * Functions

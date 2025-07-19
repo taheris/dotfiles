@@ -23,6 +23,28 @@
                 "type": "basic"
               }
             ]
+          },
+          {
+            "description": "fn to f18 on down and f19 on up",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "fn"
+                },
+                "to": [
+                  {
+                    "key_code": "f18",
+                    "repeat": false
+                  }
+                ],
+                "to_after_key_up": [
+                  {
+                    "key_code": "f19"
+                  }
+                ]
+              }
+            ]
           }
         ]
       },

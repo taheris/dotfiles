@@ -11,6 +11,10 @@ let
 
 in
 {
+  imports = [
+    ./voice.nix
+  ];
+
   home.file = {
     karabiner = mkIf isDarwin {
       source = ./karabiner.json;

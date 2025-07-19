@@ -5,6 +5,7 @@ let
     pythonPkgs: with pythonPkgs; [
       fastapi
       jupyter
+      kaleido
       numpy
       pandas
       plotly
