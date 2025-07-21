@@ -29,7 +29,7 @@ let
 
   linuxPackages = with pkgs; [
     cargo-rr
-    cargo-valgrind
+    #cargo-valgrind
     clang
     mold-wrapped
     rr

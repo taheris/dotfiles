@@ -5,6 +5,7 @@ let
 
 in
 {
+  intercept-fn-keys = callPackage ./intercept-fn-keys { };
   monaco = callPackage ./monaco { };
   monacob = callPackage ./monacob { };
   #monolisa = callPackage ./monolisa {};

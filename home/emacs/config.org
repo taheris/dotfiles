@@ -2,7 +2,7 @@
 :GPTEL_MODEL: claude-opus-4-20250514
 :GPTEL_BACKEND: Anthropic
 :GPTEL_SYSTEM: You are a large language model living in Emacs and a helpful assistant. Respond concisely.
-:GPTEL_BOUNDS: ((response (47398 47401) (47402 47655) (47667 47668) (47670 47741) (48275 48484) (48485 48531) (48532 48563) (48564 48591) (48666 48667) (48668 48716) (48717 48754) (48764 48793) (48807 48849) (48858 48877) (48889 48942) (48943 48983) (48984 49057) (49059 49320) (49321 49322) (49326 49365) (49369 49384) (49388 49923) (49924 50135) (50136 50230) (50231 50328)))
+:GPTEL_BOUNDS: ((response (48545 48583) (48584 48744) (48784 48786) (48788 48848) (48850 48867) (48885 48900) (48901 48916) (48941 48942) (48943 48946) (48948 49026) (49028 49035) (49036 49063) (49112 49115) (49117 49154) (49156 49195) (49197 49278) (49386 49389) (49391 49436) (49437 49531) (49566 49568) (49570 49577) (49688 49690) (49701 49768) (49804 49806) (49810 49838) (49868 49908) (49909 49911) (49913 49917) (49921 49999) (50016 50018) (50020 50022) (50026 50078) (50260 50262) (50264 50310) (50879 50941) (50942 50965) (51220 51221) (51225 51232) (51238 51254) (51273 51300) (51307 51323) (51342 51369) (51370 51485) (51486 51574)))
 :END:
 #+title: Doom Emacs Config
 #+author: taheris
@@ -1483,58 +1483,79 @@ Send with ~C-c RET~ only.
 *** Voice
 
 #+begin_src emacs-lisp
-(defvar my-audio-recording-filename nil)
-(defvar my-audio-recording-process nil)
+(defvar my-voice-debug nil)
+(defvar my-voice-recording-active nil)
+(defvar my-voice-recording-filename nil)
+(defvar my-voice-recording-process nil)
 
-(defun my-start-audio-recording ()
-  "Start audio recording."
+(defun my-start-voice-recording ()
+  "Start voice recording."
   (interactive)
-  (let* ((timestamp (format-time-string "%Y-%m-%dT%H%M%S"))
-         (filename (expand-file-name (format "sox_%s.mp3" timestamp) temporary-file-directory))
-         (sox-app (expand-file-name "~/.nix-profile/Applications/Sox.app")))
+  (when (not my-voice-recording-active)
+    (let* ((timestamp (format-time-string "%Y-%m-%dT%H%M%S"))
+           (wav-file (expand-file-name (format "sox_%s.wav" timestamp) temporary-file-directory))
+           (sox-app (expand-file-name "~/.nix-profile/Applications/Sox.app")))
 
-    (setq my-audio-recording-filename filename)
-    (setq my-audio-recording-process
-          (if (eq system-type 'darwin)
-              (start-process "audio-rec" nil "open" "-a" sox-app "--args" filename)
-            (start-process "audio-rec" nil "sox" "-d" filename)))
+      (setq my-voice-recording-active t
+            my-voice-recording-filename wav-file
+            my-voice-recording-process
+            (if (eq system-type 'darwin)
+                (start-process "voice-rec" nil "open" "-a" sox-app "--args" wav-file)
+              (start-process "voice-rec" nil "parecord" "--channels" "1" "--latency-msec" "50" wav-file)))
 
-    (message "Recording started: %s" filename)))
+      (message "Recording started: %s" wav-file))))
 
-(defun my-stop-audio-recording ()
-  "Stop audio recording and transcribe."
+(defun my-stop-voice-recording ()
+  "Stop voice recording and transcribe."
   (interactive)
-  (when my-audio-recording-process
-    (if (eq system-type 'darwin)
-        (call-process "pkill" nil nil nil "sox")
-      (interrupt-process my-audio-recording-process))
+  (when my-voice-recording-process
+    (let* ((wav-file my-voice-recording-filename)
+           (mp3-file (concat (file-name-sans-extension wav-file) ".mp3"))
+           (sox-app (expand-file-name "~/.nix-profile/Applications/Sox.app")))
+            
+      (sleep-for 0.1)
+      (if (eq system-type 'darwin)
+          (progn
+            (call-process "pkill" nil nil nil "sox")
+            (start-process "voice-rec" nil "open" "-a" sox-app "--args" wav-file mp3-file))
+        (progn
+          (signal-process my-voice-recording-process 'SIGTERM)
+          (start-process "voice-rec" nil "sox" wav-file mp3-file)))
+      (sleep-for 0.1)
+    
+      (setq my-voice-recording-active nil
+            my-voice-recording-process nil)
+      (message "Recording converted: %s" mp3-file)
+      
+      (my-transcribe-voice mp3-file)
+      (gptel-send))))
 
-    (setq my-audio-recording-process nil)
-    (message "Recording stopped.")
-
-    (sit-for 0.05)
-    (my-transcribe-audio my-audio-recording-filename)
-    (gptel-send)))
-
-(defun my-transcribe-audio (filename)
+(defun my-transcribe-voice (mp3-file)
   "Transcribe audio file using Mistral API."
-  (let* ((api-key (getenv "MISTRAL_API_KEY"))
-         (response (shell-command-to-string
-                   (format "curl -s -L 'https://api.mistral.ai/v1/audio/transcriptions' \
-                           --header 'x-api-key: %s' \
-                           --form 'file=@%s' \
-                           --form 'model=voxtral-mini-latest'"
-                           api-key filename)))
+  (let* ((api-url "https://api.mistral.ai/v1/audio/transcriptions")
+         (api-key (getenv "MISTRAL_API_KEY"))
+         (api-model "voxtral-mini-latest")
+         (curl (format "curl -s -L '%s' --header 'x-api-key: %s' --form 'model=%s' --form 'file=@%s'"
+                        api-url api-key api-model mp3-file))
+         (response (shell-command-to-string curl))
          (json (json-parse-string response)))
 
+    (when my-voice-debug
+      (message "DEBUG: Transcription response: %s" response))
+    
     (if-let ((error-msg (gethash "message" json)))
         (message "Transcription error: %s" error-msg)
       (when-let ((text (gethash "text" json)))
         (insert text)
         (message "Audio transcribed.")))))
 
-(global-set-key [f18] 'my-start-audio-recording)
-(global-set-key [f19] 'my-stop-audio-recording)
+(if (eq system-type 'gnu/linux)
+    (progn
+      (global-set-key (kbd "s-<Launch8>") 'my-start-voice-recording)
+      (global-set-key (kbd "s-<Launch9>") 'my-stop-voice-recording))
+  (progn
+    (global-set-key [f18] 'my-start-voice-recording)
+    (global-set-key [f19] 'my-stop-voice-recording)))
 #+end_src
 
 * Functions

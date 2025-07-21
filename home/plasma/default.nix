@@ -87,6 +87,8 @@ optionalAttrs (hasSuffix "linux" host.system) {
       "Window Quick Tile Bottom" = "Meta+Alt+Shift+J";
       "Window Quick Tile Top" = "Meta+Alt+Shift+K";
       "Window Quick Tile Right" = "Meta+Alt+Shift+L";
+      "Window Above Other Windows" = "Meta+Alt+Shift+A";
+      "Window Below Other Windows" = "Meta+Alt+Shift+B";
 
       "Switch to Desktop 1" = "Meta+Alt+1";
       "Switch to Desktop 2" = "Meta+Alt+2";

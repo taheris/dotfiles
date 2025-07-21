@@ -35,7 +35,9 @@ let
     ethtool
     gpustat
     iotop
+    keyd
     ltrace
+    pulseaudio
     usbutils
     wl-clipboard
   ];
