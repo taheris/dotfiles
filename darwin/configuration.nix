@@ -42,7 +42,7 @@ in
     ];
 
     systemPath = mkBefore [
-      "/usr/local/texlive/2024/bin/universal-darwin"
+      "/Library/TeX/texbin"
     ];
 
     variables = {

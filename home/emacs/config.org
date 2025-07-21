@@ -2,7 +2,7 @@
 :GPTEL_MODEL: claude-opus-4-20250514
 :GPTEL_BACKEND: Anthropic
 :GPTEL_SYSTEM: You are a large language model living in Emacs and a helpful assistant. Respond concisely.
-:GPTEL_BOUNDS: ((response (47286 47483) (48200 48409) (48410 48456) (48457 48488) (48489 48516) (48591 48592) (48593 48641) (48642 48679) (48689 48718) (48732 48774) (48783 48802) (48814 48867) (48868 48908) (48909 48982) (48984 49245) (49246 49247) (49251 49290) (49294 49309) (49313 49848) (49849 50060) (50061 50155) (50156 50253)))
+:GPTEL_BOUNDS: ((response (47398 47401) (47402 47655) (47667 47668) (47670 47741) (48275 48484) (48485 48531) (48532 48563) (48564 48591) (48666 48667) (48668 48716) (48717 48754) (48764 48793) (48807 48849) (48858 48877) (48889 48942) (48943 48983) (48984 49057) (49059 49320) (49321 49322) (49326 49365) (49369 49384) (49388 49923) (49924 50135) (50136 50230) (50231 50328)))
 :END:
 #+title: Doom Emacs Config
 #+author: taheris
@@ -740,8 +740,6 @@ Change the case pattern for a symbol.
 #+begin_src emacs-lisp
 (after! smartparens
   (sp-with-modes '(org-mode)
-    (sp-local-pair "~" "~")
-    (sp-local-pair "=" "=")
     (sp-local-pair "<<" ">>" :actions '(insert)))
 
   (map! :map smartparens-mode-map
@@ -1034,7 +1032,7 @@ Don't trim trailing whitespaces.
 (after! org
   (map! :map org-mode-map
         :ni "C-<return>" #'org-insert-heading
-        :ni "s-<return>" #'org-insert-subheading
+        :ni "S-<return>" #'org-insert-subheading
         :i  [return]     (cmd! (org-return electric-indent-mode)))
 
   (map! :map evil-org-mode-map
@@ -1384,16 +1382,6 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 #+end_src
 
 #+begin_src emacs-lisp
-(defun get-ollama-models ()
-  "Fetch the list of installed Ollama models."
-  (let* ((output (shell-command-to-string "ollama list"))
-         (lines (split-string output "\n" t))
-         models)
-    (dolist (line (cdr lines))
-      (when (string-match "^\\([^[:space:]]+\\)" line)
-        (push (match-string 1 line) models)))
-    (nreverse models)))
-
 (after! gptel
   (setq gptel-default-mode 'org-mode
         gptel-display-buffer-action 'display-buffer-same-window
@@ -1430,6 +1418,16 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
   (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
 
+(defun get-ollama-models ()
+  "Fetch the list of installed Ollama models."
+  (let* ((output (shell-command-to-string "ollama list"))
+         (lines (split-string output "\n" t))
+         models)
+    (dolist (line (cdr lines))
+      (when (string-match "^\\([^[:space:]]+\\)" line)
+        (push (match-string 1 line) models)))
+    (nreverse models)))
+
 (map! :leader
       (:prefix ("l" . "llm")
        :desc "Add text to context"        "a" #'gptel-add
@@ -1443,21 +1441,26 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
        :desc "Org: set properties"        "O" #'gptel-org-set-properties))
 #+end_src
 
-Send with ~C-c <return>~.
-
-#+begin_src emacs-lisp
-(after! gptel
-  (define-key gptel-mode-map (kbd "RET") nil)
-  (define-key gptel-mode-map (kbd "<normal-state> RET") nil)
-  (define-key gptel-mode-map (kbd "<visual-state> RET") nil))
-#+end_src
-
 Open all org-mode buffers with gptel.
 
 #+begin_src emacs-lisp
 (after! org
-  (add-hook 'org-mode-hook 'gptel-mode)
-  (define-key org-mode-map (kbd "C-c RET") #'gptel-send))
+  (add-hook 'org-mode-hook 'gptel-mode))
+#+end_src
+
+Send with ~C-c RET~ only.
+
+#+begin_src emacs-lisp
+(after! gptel
+  (dolist (key '("RET"
+                 "<normal-state> RET"
+                 "<visual-state> RET"
+                 "<normal-state> S-<return>"
+                 "<visual-state> S-<return>"))
+    (define-key gptel-mode-map (kbd key) nil)))
+
+(after! org
+  (define-key org-mode-map (kbd "C-c <return>") #'gptel-send))
 #+end_src
 
 *** Aidermacs
