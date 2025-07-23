@@ -1,9 +1,3 @@
-:PROPERTIES:
-:GPTEL_MODEL: claude-opus-4-20250514
-:GPTEL_BACKEND: Anthropic
-:GPTEL_SYSTEM: You are a large language model living in Emacs and a helpful assistant. Respond concisely.
-:GPTEL_BOUNDS: ((response (48419 48457) (48458 48618) (48658 48660) (48662 48722) (48724 48741) (48759 48774) (48775 48790) (48815 48816) (48817 48820) (48822 48900) (48902 48909) (48910 48937) (48986 48989) (48991 49028) (49030 49069) (49071 49152) (49260 49263) (49265 49310) (49311 49405) (49440 49442) (49444 49451) (49562 49565) (49606 49658) (49834 49836) (49838 49884) (50453 50515) (50516 50539) (50794 50795) (50799 50806) (50812 50828) (50847 50874) (50881 50897) (50916 50943) (50944 51059) (51060 51148)))
-:END:
 #+title: Doom Emacs Config
 #+author: taheris
 #+property: header-args:emacs-lisp :tangle yes :comments link
@@ -1378,46 +1372,10 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** GPTel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "34ecadea17870b07fe7f146376b5a25f45fb27af")
+(package! gptel :pin "fc78b45a78b417c76b32b738f54664b4fe87c220")
 #+end_src
 
 #+begin_src emacs-lisp
-(after! gptel
-  (setq gptel-default-mode 'org-mode
-        gptel-display-buffer-action 'display-buffer-same-window
-        gptel-model 'claude-opus-4-20250514
-        gptel-backend (gptel-make-anthropic "Anthropic"
-                        :key #'gptel-api-key-from-auth-source
-                        :stream t))
-
-  (gptel-make-ollama "Ollama"
-    :host "localhost:11434"
-    :models (get-ollama-models)
-    :stream t
-    :request-params '(:keep_alive "30m"))
-
-  (gptel-make-openai "mistral"
-    :host "api.mistral.ai"
-    :key #'gptel-api-key-from-auth-source
-    :models '("mistral-large-latest" "open-codestral-mamba")
-    :stream t)
-
-  (gptel-make-openai "Cerebras"
-    :host "api.cerebras.ai"
-    :endpoint "/v1/chat/completions"
-    :stream t
-    :key #'gptel-api-key-from-auth-source
-    :models '(qwen-3-32b llama-4-scout-17b-16e-instruct deepseek-r1-distill-llama-70b llama3.3-70b))
-
-  (gptel-make-gemini "Gemini"
-    :key (getenv "GEMINI_API_KEY")
-    :stream t)
-
-  (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
-        (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
-
-  (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
-
 (defun get-ollama-models ()
   "Fetch the list of installed Ollama models."
   (let* ((output (shell-command-to-string "ollama list"))
@@ -1428,17 +1386,55 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
         (push (match-string 1 line) models)))
     (nreverse models)))
 
-(map! :leader
-      (:prefix ("l" . "llm")
-       :desc "Add text to context"        "a" #'gptel-add
-       :desc "Explain"                    "e" #'gptel-quick
-       :desc "Add file to context"        "f" #'gptel-add-file
-       :desc "Open gptel"                 "l" #'gptel
-       :desc "Send to gptel"              "s" #'gptel-send
-       :desc "Open gptel menu"            "m" #'gptel-menu
-       :desc "Rewrite"                    "r" #'gptel-rewrite
-       :desc "Org: set topic"             "o" #'gptel-org-set-topic
-       :desc "Org: set properties"        "O" #'gptel-org-set-properties))
+(after! gptel
+  (let* ((gptel-anthropic (gptel-make-anthropic "Anthropic"
+                            :key #'gptel-api-key-from-auth-source
+                            :stream t))
+
+         (gptel-cerebras (gptel-make-openai "Cerebras"
+                           :host "api.cerebras.ai"
+                           :endpoint "/v1/chat/completions"
+                           :stream t
+                           :key #'gptel-api-key-from-auth-source
+                           :models '(qwen-3-235b-a22b qwen-3-32b llama-4-scout-17b-16e-instruct)))
+
+         (gptel-gemini (gptel-make-gemini "Gemini"
+                         :key (getenv "GEMINI_API_KEY")
+                         :stream t))
+
+         (gptel-mistral (gptel-make-openai "mistral"
+                          :host "api.mistral.ai"
+                          :key #'gptel-api-key-from-auth-source
+                          :models '("mistral-large-latest" "open-codestral-mamba")
+                          :stream t))
+
+         (gptel-ollama (gptel-make-ollama "Ollama"
+                         :host "localhost:11434"
+                         :models (get-ollama-models)
+                         :stream t
+                         :request-params '(:keep_alive "30m"))))
+
+    (setq gptel-backend gptel-cerebras
+          gptel-model 'qwen-3-235b-a22b
+          gptel-default-mode 'org-mode
+          gptel-display-buffer-action 'display-buffer-same-window)
+
+    (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
+          (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
+
+    (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
+
+  (map! :leader
+        (:prefix ("l" . "llm")
+         :desc "Add text to context"        "a" #'gptel-add
+         :desc "Explain"                    "e" #'gptel-quick
+         :desc "Add file to context"        "f" #'gptel-add-file
+         :desc "Open gptel"                 "l" #'gptel
+         :desc "Send to gptel"              "s" #'gptel-send
+         :desc "Open gptel menu"            "m" #'gptel-menu
+         :desc "Rewrite"                    "r" #'gptel-rewrite
+         :desc "Org: set topic"             "o" #'gptel-org-set-topic
+         :desc "Org: set properties"        "O" #'gptel-org-set-properties)))
 #+end_src
 
 Open all org-mode buffers with gptel.
@@ -1448,7 +1444,7 @@ Open all org-mode buffers with gptel.
   (add-hook 'org-mode-hook 'gptel-mode))
 #+end_src
 
-Send with ~C-c RET~ only.
+Call ~gptel-send~ with =C-c RET= only.
 
 #+begin_src emacs-lisp
 (after! gptel
@@ -1463,6 +1459,30 @@ Send with ~C-c RET~ only.
   (define-key org-mode-map (kbd "C-c <return>") #'gptel-send))
 #+end_src
 
+Don't save or restore gptel state to org buffer.
+
+#+begin_src emacs-lisp
+(defcustom inhibit-gptel-org-save nil
+  "Non-nil to inhibit saving gptel state.")
+(defcustom inhibit-gptel-org-restore nil
+  "Non-nil to inhibit restoring gptel state.")
+
+(advice-add 'gptel-org--save-state :around
+            (lambda (orig-fun &rest args)
+              (unless inhibit-gptel-org-save (apply orig-fun args))))
+
+(advice-add 'gptel-org--restore-state :around
+            (lambda (orig-fun &rest args)
+              (when (and (not inhibit-gptel-org-restore)
+                         (org-entry-get (point-min) "GPTEL_BOUNDS"))
+                (apply orig-fun args))))
+
+(add-hook 'gptel-save-state-hook
+          (lambda () (setq-local inhibit-gptel-org-save t)))
+(add-hook 'gptel-mode-hook
+          (lambda () (setq-local inhibit-gptel-org-restore t)))
+#+end_src
+
 *** Aidermacs
 
 #+begin_src emacs-lisp :tangle packages.el
@@ -1475,7 +1495,7 @@ Send with ~C-c RET~ only.
 (use-package! aidermacs
   :config
   (setq aidermacs-backend 'vterm
-        aidermacs-default-model "cerebrus/qwen-3-32b"
+        aidermacs-default-model "cerebrus/qwen-3-235b-a22b"
         aidermacs-use-architect-mode t
         aidermacs-architect-model "anthropic/claude-opus-4-20250514"))
 #+end_src
@@ -1516,6 +1536,7 @@ Send with ~C-c RET~ only.
       (if (eq system-type 'darwin)
           (call-process "pkill" nil nil nil "sox")
         (signal-process my-voice-recording-process 'SIGTERM))
+
       (start-process "voice-mp3" nil "sox" wav-file mp3-file)
       (sleep-for 0.1)
     

@@ -38,6 +38,7 @@ let
     keyd
     ltrace
     pulseaudio
+    texlive.combined.scheme-full
     usbutils
     wl-clipboard
   ];
