@@ -2,7 +2,7 @@
 :GPTEL_MODEL: claude-opus-4-20250514
 :GPTEL_BACKEND: Anthropic
 :GPTEL_SYSTEM: You are a large language model living in Emacs and a helpful assistant. Respond concisely.
-:GPTEL_BOUNDS: ((response (48545 48583) (48584 48744) (48784 48786) (48788 48848) (48850 48867) (48885 48900) (48901 48916) (48941 48942) (48943 48946) (48948 49026) (49028 49035) (49036 49063) (49112 49115) (49117 49154) (49156 49195) (49197 49278) (49386 49389) (49391 49436) (49437 49531) (49566 49568) (49570 49577) (49688 49690) (49701 49768) (49804 49806) (49810 49838) (49868 49908) (49909 49911) (49913 49917) (49921 49999) (50016 50018) (50020 50022) (50026 50078) (50260 50262) (50264 50310) (50879 50941) (50942 50965) (51220 51221) (51225 51232) (51238 51254) (51273 51300) (51307 51323) (51342 51369) (51370 51485) (51486 51574)))
+:GPTEL_BOUNDS: ((response (48419 48457) (48458 48618) (48658 48660) (48662 48722) (48724 48741) (48759 48774) (48775 48790) (48815 48816) (48817 48820) (48822 48900) (48902 48909) (48910 48937) (48986 48989) (48991 49028) (49030 49069) (49071 49152) (49260 49263) (49265 49310) (49311 49405) (49440 49442) (49444 49451) (49562 49565) (49606 49658) (49834 49836) (49838 49884) (50453 50515) (50516 50539) (50794 50795) (50799 50806) (50812 50828) (50847 50874) (50881 50897) (50916 50943) (50944 51059) (51060 51148)))
 :END:
 #+title: Doom Emacs Config
 #+author: taheris
@@ -1510,17 +1510,13 @@ Send with ~C-c RET~ only.
   (interactive)
   (when my-voice-recording-process
     (let* ((wav-file my-voice-recording-filename)
-           (mp3-file (concat (file-name-sans-extension wav-file) ".mp3"))
-           (sox-app (expand-file-name "~/.nix-profile/Applications/Sox.app")))
+           (mp3-file (concat (file-name-sans-extension wav-file) ".mp3")))
             
       (sleep-for 0.1)
       (if (eq system-type 'darwin)
-          (progn
-            (call-process "pkill" nil nil nil "sox")
-            (start-process "voice-rec" nil "open" "-a" sox-app "--args" wav-file mp3-file))
-        (progn
-          (signal-process my-voice-recording-process 'SIGTERM)
-          (start-process "voice-rec" nil "sox" wav-file mp3-file)))
+          (call-process "pkill" nil nil nil "sox")
+        (signal-process my-voice-recording-process 'SIGTERM))
+      (start-process "voice-mp3" nil "sox" wav-file mp3-file)
       (sleep-for 0.1)
     
       (setq my-voice-recording-active nil
