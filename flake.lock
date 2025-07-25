@@ -73,13 +73,14 @@
       "locked": {
         "lastModified": 1753121425,
         "narHash": "sha256-TVcTNvOeWWk1DXljFxVRp+E0tzG1LhrVjOGGoMHuXio=",
-        "ref": "refs/heads/main",
+        "ref": "main",
         "rev": "644e0fc48951a860279da645ba77fe4a6e814c5e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/hercules-ci/flake-parts.git"
       },
       "original": {
+        "ref": "main",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/hercules-ci/flake-parts.git"
@@ -149,15 +150,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1753181343,
-        "narHash": "sha256-CLQfNtUqirNVSYoW/kYbvL4PeeNasmZonaPnjO3+1YQ=",
-        "ref": "refs/heads/master",
-        "rev": "0cdfcdbb525b77b951c889b6131047bc374f48fe",
+        "lastModified": 1753387274,
+        "narHash": "sha256-Y1hAI9h+9DLBbgKvZBsHaeptFIcRw4iC6ySPmzyqmlM=",
+        "ref": "master",
+        "rev": "a35f6b60430ff0c7803bd2a727df84c87569c167",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
       },
       "original": {
+        "ref": "master",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -176,13 +178,14 @@
       "locked": {
         "lastModified": 1742156590,
         "narHash": "sha256-aTM/2CrNN5utdVEQGsOA+kl4UozgH7VPLBQL5OXtBrg=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "341ede93f290df7957047682482c298e47291b4d",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/hraban/mac-app-util.git"
       },
       "original": {
+        "ref": "master",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/hraban/mac-app-util.git"
@@ -197,13 +200,14 @@
       "locked": {
         "lastModified": 1751313918,
         "narHash": "sha256-HsJM3XLa43WpG+665aGEh8iS8AfEwOIQWk3Mke3e7nk=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "e04a388232d9a6ba56967ce5b53a8a6f713cdfcf",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/LnL7/nix-darwin.git"
       },
       "original": {
+        "ref": "master",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/LnL7/nix-darwin.git"
@@ -213,13 +217,14 @@
       "locked": {
         "lastModified": 1751276396,
         "narHash": "sha256-oOYrnKStMsOXST+wKnzuSZ49h8Dr1Q3mIn2f5Kb5GAw=",
-        "ref": "refs/heads/main",
+        "ref": "main",
         "rev": "59adb9ad1cbd915494fc35cd0e0a9d582ca9de74",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/gmodena/nix-flatpak.git"
       },
       "original": {
+        "ref": "main",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/gmodena/nix-flatpak.git"
@@ -227,10 +232,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1752950548,
-        "narHash": "sha256-NS6BLD0lxOrnCiEOcvQCDVPXafX1/ek1dfJHX1nUIzc=",
+        "lastModified": 1753250450,
+        "narHash": "sha256-i+CQV2rPmP8wHxj0aq4siYyohHwVlsh40kV89f3nw1s=",
         "ref": "nixos-unstable",
-        "rev": "c87b95e25065c028d31a94f06a62927d18763fdf",
+        "rev": "fc02ee70efb805d3b2865908a13ddd4474557ecf",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -244,10 +249,10 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1753115646,
-        "narHash": "sha256-yLuz5cz5Z+sn8DRAfNkrd2Z1cV6DaYO9JMrEz4KZo/c=",
+        "lastModified": 1753345091,
+        "narHash": "sha256-CdX2Rtvp5I8HGu9swBmYuq+ILwRxpXdJwlpg8jvN4tU=",
         "ref": "nixos-25.05",
-        "rev": "92c2e04a475523e723c67ef872d8037379073681",
+        "rev": "3ff0e34b1383648053bba8ed03f201d3466f90c9",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -271,13 +276,14 @@
       "locked": {
         "lastModified": 1748196248,
         "narHash": "sha256-1iHjsH6/5UOerJEoZKE+Gx1BgAoge/YcnUsOA4wQ/BU=",
-        "ref": "refs/heads/trunk",
+        "ref": "trunk",
         "rev": "b7697abe89967839b273a863a3805345ea54ab56",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/plasma-manager.git"
       },
       "original": {
+        "ref": "trunk",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/plasma-manager.git"
@@ -373,13 +379,14 @@
       "locked": {
         "lastModified": 1752544651,
         "narHash": "sha256-GllP7cmQu7zLZTs9z0J2gIL42IZHa9CBEXwBY9szT0U=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "2c8def626f54708a9c38a5861866660395bb3461",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"
       },
       "original": {
+        "ref": "master",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"

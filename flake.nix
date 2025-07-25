@@ -18,29 +18,29 @@
     nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.05&shallow=1";
 
     flake-parts = {
-      url = "git+ssh://git@github.com/hercules-ci/flake-parts.git?shallow=1";
+      url = "git+ssh://git@github.com/hercules-ci/flake-parts.git?ref=main&shallow=1";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     home-manager = {
-      url = "git+ssh://git@github.com/nix-community/home-manager.git?shallow=1";
+      url = "git+ssh://git@github.com/nix-community/home-manager.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     mac-app-util = {
-      url = "git+ssh://git@github.com/hraban/mac-app-util.git?shallow=1";
+      url = "git+ssh://git@github.com/hraban/mac-app-util.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-darwin = {
-      url = "git+ssh://git@github.com/LnL7/nix-darwin.git?shallow=1";
+      url = "git+ssh://git@github.com/LnL7/nix-darwin.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-flatpak.url = "git+ssh://git@github.com/gmodena/nix-flatpak.git?shallow=1";
+    nix-flatpak.url = "git+ssh://git@github.com/gmodena/nix-flatpak.git?ref=main&shallow=1";
 
     plasma-manager = {
-      url = "git+ssh://git@github.com/nix-community/plasma-manager.git?shallow=1";
+      url = "git+ssh://git@github.com/nix-community/plasma-manager.git?ref=trunk&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
@@ -56,7 +56,7 @@
     };
 
     sops-nix = {
-      url = "git+ssh://git@github.com/Mic92/sops-nix.git?shallow=1";
+      url = "git+ssh://git@github.com/Mic92/sops-nix.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
