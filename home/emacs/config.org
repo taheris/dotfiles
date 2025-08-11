@@ -932,12 +932,43 @@ Set =calc= defaults.
 (setq ob-mermaid-cli-path "/opt/homebrew/bin/mmdc")
 #+end_src
 
+**** SRS
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! fsrs)
+
+(package! org-srs
+  :recipe (:host github :repo "bohonghuang/org-srs")
+  :pin "199c37ea027ddb4df375def841dfdc5c523e5742")
+#+end_src
+
+#+begin_src emacs-lisp
+(after! org-srs
+  (map! :localleader
+        :map org-mode-map
+        :prefix ("z" . "SRS")
+
+        :desc "Create item"   "c" #'org-srs-item-create
+
+        :desc "Start review"   "r" #'org-srs-review-start
+        :desc "Quit review"    "q" #'org-srs-review-quit
+        :desc "Suspend review" "z" #'org-srs-review-suspend
+
+        :desc "Rate again" "a" #'org-srs-review-rate-again
+        :desc "Rate easy"  "e" #'org-srs-review-rate-easy
+        :desc "Rate good"  "g" #'org-srs-review-rate-good
+        :desc "Rate hard"  "h" #'org-srs-review-rate-hard)
+
+  (add-hook! org-mode #'org-srs-embed-overlay-mode))
+#+end_src
+
 *** Behaviour
 
 **** Setup
 
 #+begin_src emacs-lisp
 (setq org-directory "~/src/github.com/taheris/org"
+      org-roam-directory (concat org-directory "/roam")
       org-catch-invisible-edits 'smart
       org-export-allow-bind-keywords t
       org-export-with-sub-superscripts '{}
@@ -945,7 +976,6 @@ Set =calc= defaults.
       org-image-max-width nil
       org-list-allow-alphabetical t
       org-log-done 'time
-      org-roam-directory (concat org-directory "/roam")
       org-use-property-inheritance t)
 #+end_src
 
@@ -1372,7 +1402,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** GPTel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "fc78b45a78b417c76b32b738f54664b4fe87c220")
+(package! gptel :pin "3fe5e08ddd8b1bc6f1eee8a9c6548bf7a029f55e")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1396,7 +1426,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                            :endpoint "/v1/chat/completions"
                            :stream t
                            :key #'gptel-api-key-from-auth-source
-                           :models '(qwen-3-235b-a22b qwen-3-32b llama-4-scout-17b-16e-instruct)))
+                           :models '(qwen-3-coder-480b qwen-3-235b-a22b-instruct-2507 qwen-3-235b-a22b-thinking-2507)))
 
          (gptel-gemini (gptel-make-gemini "Gemini"
                          :key (getenv "GEMINI_API_KEY")
@@ -1415,7 +1445,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                          :request-params '(:keep_alive "30m"))))
 
     (setq gptel-backend gptel-cerebras
-          gptel-model 'qwen-3-235b-a22b
+          gptel-model 'qwen-3-235b-a22b-thinking-2507
           gptel-default-mode 'org-mode
           gptel-display-buffer-action 'display-buffer-same-window)
 
@@ -1495,9 +1525,9 @@ Don't save or restore gptel state to org buffer.
 (use-package! aidermacs
   :config
   (setq aidermacs-backend 'vterm
-        aidermacs-default-model "cerebrus/qwen-3-235b-a22b"
+        aidermacs-default-model "cerebrus/qwen-3-coder-480b"
         aidermacs-use-architect-mode t
-        aidermacs-architect-model "anthropic/claude-opus-4-20250514"))
+        aidermacs-architect-model "ChatGPT/gpt-5"))
 #+end_src
 
 *** Voice

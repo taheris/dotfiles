@@ -111,6 +111,7 @@ in
     optimise.automatic = true;
 
     settings = {
+      download-buffer-size = 500 * 1024 * 1024;
       experimental-features = "nix-command flakes";
       trusted-users = [
         "root"
