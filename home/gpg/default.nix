@@ -21,7 +21,21 @@ in
 
   programs.ssh = mkIf isDarwin {
     enable = true;
-    addKeysToAgent = "yes";
+    enableDefaultConfig = false;
+
+    matchBlocks."*" = {
+      addKeysToAgent = "yes";
+      compression = true;
+      controlMaster = "no";
+      controlPath = "~/.ssh/master-%r@%n:%p";
+      controlPersist = "no";
+      forwardAgent = false;
+      hashKnownHosts = false;
+      serverAliveCountMax = 3;
+      serverAliveInterval = 0;
+      userKnownHostsFile = "~/.ssh/known_hosts";
+    };
+
     extraConfig = ''
       UseKeychain yes
     '';
