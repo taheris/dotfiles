@@ -14,7 +14,7 @@
   }
 
   {
-    name = "joy";
+    name = "m2";
     user = "shaun";
     system = "aarch64-darwin";
     fontSize = 16;
