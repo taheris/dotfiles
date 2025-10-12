@@ -127,7 +127,7 @@
             value = home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${host.system};
               modules = [
-                plasma-manager.homeManagerModules.plasma-manager
+                plasma-manager.homeModules.plasma-manager
                 sops-nix.homeManagerModules.sops
                 ./home
               ];

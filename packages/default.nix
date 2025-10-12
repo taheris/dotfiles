@@ -10,4 +10,5 @@ in
   monaco = callPackage ./monaco { };
   monacob = callPackage ./monacob { };
   sqlite-vss = callPackage ./sqlite-vss { };
+  tws = callPackage ./tws { };
 }

@@ -40,6 +40,7 @@ let
     ltrace
     pulseaudio
     texlive.combined.scheme-full
+    tws
     usbutils
     wl-clipboard
   ];
