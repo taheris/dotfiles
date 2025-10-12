@@ -13,6 +13,7 @@ let
     filterAttrs
     mapAttrs
     mapAttrs'
+    mkAfter
     isType
     ;
 
@@ -221,6 +222,7 @@ in
 
   systemd.services = {
     systemd-machine-id-commit.enable = true;
+    tailscaled.serviceConfig.Environment = mkAfter [ "TS_NO_LOGS_NO_SUPPORT=true" ];
   };
 
   system.stateVersion = "24.11";

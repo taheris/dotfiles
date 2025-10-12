@@ -31,9 +31,17 @@ let
         done
       '';
 
+  tailscaleEnv = pkgs.writeText "tailscaled-env.txt" ''
+    TS_NO_LOGS_NO_SUPPORT=true
+  '';
+
 in
 {
   environment = {
+    etc = {
+      "tailscale/tailscaled-env.txt".source = tailscaleEnv;
+    };
+
     systemPackages = with pkgs; [
       coreutils
       curl
@@ -149,6 +157,11 @@ in
     stateVersion = 5;
     configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
 
+    activationScripts.tailscaleEnv.text = ''
+      install -d -o root -g wheel -m 0755 /private/var/root/Library/Containers/io.tailscale.ipn.macsys.network-extension/Data
+      install -m 0644 ${tailscaleEnv} /private/var/root/Library/Containers/io.tailscale.ipn.macsys.network-extension/Data/tailscaled-env.txt
+    '';
+
     defaults = {
       NSGlobalDomain = {
         AppleICUForce24HourTime = true;
@@ -231,8 +244,8 @@ in
 
     patches = [
       (pkgs.writeText "pam_tid.patch" ''
-        --- /etc/pam.d/sudo	2024-11-01 22:03:50
-        +++ /etc/pam.d/sudo	2024-11-01 22:03:54
+        --- /etc/pam.d/sudo 2024-11-01 22:03:50
+        +++ /etc/pam.d/sudo 2024-11-01 22:03:54
         @@ -1,4 +1,6 @@
          # sudo: auth account password session
         +auth       optional       ${pkgs.pam-reattach}/lib/pam/pam_reattach.so
