@@ -1399,10 +1399,10 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 ** LLM
 
-*** GPTel
+*** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "3fe5e08ddd8b1bc6f1eee8a9c6548bf7a029f55e")
+(package! gptel :pin "054f59c38a73e52cf179f5866ef07f5dd23512e0")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1513,21 +1513,23 @@ Don't save or restore gptel state to org buffer.
           (lambda () (setq-local inhibit-gptel-org-restore t)))
 #+end_src
 
-*** Aidermacs
+*** agent-shell
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! aidermacs
-  :recipe (:host github :repo "MatthewZMD/aidermacs" :files ("*.el"))
+(package! shell-maker)
+(package! acp
+  :recipe (:host github :repo "xenodium/acp.el")
+  :pin "041b32f515fd21b0f241c4f2568de15c52378de2")
+(package! agent-shell
+  :recipe (:host github :repo "xenodium/agent-shell")
   :pin "5084913506b8b243c732a77b6de4768f18edcff3")
 #+end_src
 
 #+begin_src emacs-lisp
-(use-package! aidermacs
+(use-package! agent-shell
   :config
-  (setq aidermacs-backend 'vterm
-        aidermacs-default-model "cerebrus/qwen-3-coder-480b"
-        aidermacs-use-architect-mode t
-        aidermacs-architect-model "ChatGPT/gpt-5"))
+  (setq agent-shell-anthropic-claude-environment
+        (agent-shell-make-environment-variables :inherit-env t)))
 #+end_src
 
 *** Voice

@@ -48,6 +48,7 @@ in
 {
   imports = [
     ./alacritty
+    ./agent
     ./dotfile
     ./emacs
     ./flatpak
