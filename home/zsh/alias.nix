@@ -414,6 +414,8 @@ in
     dmp = "doom purge";
     dmv = "doom version";
     dmin = "doom install";
+    dmpup = "~/bin/doom-pin-update.sh";
+    dmpupd = "~/bin/doom-pin-update.sh --dry-run";
     dmsy = "doom sync";
     dmsypr = "doom sync --prune";
     dmsyu = "doom sync -u";

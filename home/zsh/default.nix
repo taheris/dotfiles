@@ -7,11 +7,11 @@
   ];
 
   home.packages = with pkgs; [
-    aider-chat
     bat
     carapace
     expect
     kubectl
+    shellcheck
     vivid
     zsh-completions
   ];

@@ -4,6 +4,13 @@ let
   home = config.home.homeDirectory;
 in
 {
+  home.file = {
+    "bin/doom-pin-update.sh" = {
+      source = ./doom-pin-update.sh;
+      executable = true;
+    };
+  };
+
   programs.zsh.initContent = ''
     github-clone() {
       local repo=$*
