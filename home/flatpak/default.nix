@@ -21,6 +21,7 @@ in
     packages = [
       "com.bitwarden.desktop"
       "com.discordapp.Discord"
+      "com.github.Matoking.protontricks"
       "com.github.tchx84.Flatseal"
       "com.mastermindzh.tidal-hifi"
       "com.slack.Slack"

@@ -143,7 +143,7 @@ in
 
     ollama = {
       enable = true;
-      acceleration = "cuda";
+      #acceleration = "cuda";
 
       environmentVariables = {
         CUDA_ERROR_LEVEL = "50";
