@@ -1525,7 +1525,7 @@ Don't save or restore gptel state to org buffer.
   :pin "041b32f515fd21b0f241c4f2568de15c52378de2")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "e4394d58d8a39c173fc68e790ed639d5563c589d")
+  :pin "ba9990062850ade3fd992e04cf317aeb29604ff3")
 #+end_src
 
 #+begin_src emacs-lisp

@@ -5,7 +5,7 @@
     cachix
     devenv
     manix
-    nix-direnv-flakes
+    nix-direnv
     nix-index
     nix-output-monitor
     nix-tree
