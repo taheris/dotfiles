@@ -696,7 +696,7 @@ Manually set ~spell-fu~ modes.
 Change the case pattern for a symbol.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! string-inflection :pin "50ad54970b3cc79b6b83979bde9889ad9a9e1a9c")
+(package! string-inflection :pin "91d6c991abcf9cfb2af403368962a9c7983235b4")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -928,7 +928,7 @@ Set =calc= defaults.
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-mermaid
   :recipe (:host github :repo "arnm/ob-mermaid")
-  :pin "b4ce25699e3ebff054f523375d1cf5a17bd0dbaf")
+  :pin "372c2d91d3cdba5da9f7ac23e7bce7a0b3b46862")
 #+end_src
 
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
@@ -942,7 +942,7 @@ Set =calc= defaults.
 
 (package! org-srs
   :recipe (:host github :repo "bohonghuang/org-srs")
-  :pin "199c37ea027ddb4df375def841dfdc5c523e5742")
+  :pin "7f2d1e4bb299d529d7b9066620cadbeb331c2ef8")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -995,6 +995,14 @@ Don't trim trailing whitespaces.
 #+begin_src emacs-lisp
 (after! ws-butler
   (add-to-list 'ws-butler-global-exempt-modes 'org-mode))
+#+end_src
+
+Fix for https://github.com/emacs-lsp/lsp-mode/issues/4898
+
+#+begin_src emacs-lisp
+(defun lsp--detect-org-element-api--always-true (orig-fun &rest args) t)
+
+(advice-add 'lsp--detect-org-element-api :around #'lsp--detect-org-element-api--always-true)
 #+end_src
 
 **** Display
@@ -1141,7 +1149,7 @@ Add LSP support inside ~src~ blocks.
 Read the calibre eBook library.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! calibredb :pin "bb9cfb5e5f9c2bb45386c1a9d1273a7832f8c28b")
+(package! calibredb :pin "99a234167a092bc0017d11c814f0b8c0da53a107")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1224,7 +1232,7 @@ Read the calibre eBook library.
 Use =nov= to read eBooks.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! nov :pin "cc31ce0356226c3a2128119b08de6107e38fdd17")
+(package! nov :pin "933816c190633fa1f2f0667ba105d1311572b3c6")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1283,7 +1291,7 @@ Use =nov= to read eBooks.
 (package! eaf
   :recipe (:host github :repo "emacs-eaf/emacs-application-framework"
            :files ("app" "core" "*.el" "*.py"))
-  :pin "38e688b08018f1dd57e8366210f37a303f971fa6")
+  :pin "ada92215ad864c2d142feb6ad6e1127e90bce668")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1332,7 +1340,7 @@ Use =nov= to read eBooks.
 Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! lsp-ltex :pin "49371b22e1e971d65680d2a02cb404a46e7710ef")
+(package! lsp-ltex :pin "8348eb3b682991a4145bbbaec3acfc9294de6045")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1405,7 +1413,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "054f59c38a73e52cf179f5866ef07f5dd23512e0")
+(package! gptel :pin "f1cd66a5a9e844058e9f838827524af68cf9dd91")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1429,7 +1437,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                            :endpoint "/v1/chat/completions"
                            :stream t
                            :key #'gptel-api-key-from-auth-source
-                           :models '(qwen-3-coder-480b qwen-3-235b-a22b-instruct-2507 qwen-3-235b-a22b-thinking-2507)))
+                           :models '(zai-glm-4.6)))
 
          (gptel-gemini (gptel-make-gemini "Gemini"
                          :key (getenv "GEMINI_API_KEY")
@@ -1448,7 +1456,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                          :request-params '(:keep_alive "30m"))))
 
     (setq gptel-backend gptel-cerebras
-          gptel-model 'qwen-3-235b-a22b-thinking-2507
+          gptel-model 'zai-glm-4.6
           gptel-default-mode 'org-mode
           gptel-display-buffer-action 'display-buffer-same-window)
 
@@ -1522,17 +1530,25 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "041b32f515fd21b0f241c4f2568de15c52378de2")
+  :pin "f9dd828c7bfb209523e907cc947668924ff9f1bf")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "ba9990062850ade3fd992e04cf317aeb29604ff3")
+  :pin "a16e1e0a1c9cf01246c23ca4d9dbd81ad9be9fd9")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! agent-shell
   :config
   (setq agent-shell-anthropic-claude-environment
-        (agent-shell-make-environment-variables :inherit-env t)))
+        (agent-shell-make-environment-variables
+          "ANTHROPIC_API_KEY_USE" "https://docs.z.ai/scenario-example/develop-tools/claude"
+          "ANTHROPIC_API_KEY" (getenv "ZAI_API_KEY")
+          "ANTHROPIC_BASE_URL" "https://api.z.ai/api/anthropic"
+          "ANTHROPIC_MODEL" "GLM-4.6"
+          "ANTHROPIC_SMALL_FAST_MODEL" "GLM-4.5-Air"
+          "ANTHROPIC_DEFAULT_OPUS_MODEL" "GLM-4.6"
+          "ANTHROPIC_DEFAULT_SONNET_MODEL" "GLM-4.6"
+          "ANTHROPIC_DEFAULT_HAIKU_MODEL" "GLM-4.5-Air")))
 #+end_src
 
 *** Voice
@@ -1756,7 +1772,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "63def39e881afa496502d9c410f4ea948e59490d")
+  :pin "4af63a4a6a09e801a0210be3e5d1ebe5f49bbdcd")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1803,7 +1819,7 @@ Disable ZeroMQ in macOS.
 #+begin_src emacs-lisp :tangle packages.el
 (package! move-mode
   :recipe (:host github :repo "amnn/move-mode" :files ("*.el"))
-  :pin "f974cc69f279c45026f7386e0194be74779334a8")
+  :pin "6e4aaf6aae1e9b4aee096557c9f7b1f3550a1e59")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1825,7 +1841,7 @@ Disable ZeroMQ in macOS.
 #+begin_src emacs-lisp :tangle packages.el
 (package! d2-mode
   :recipe (:host github :repo "andorsk/d2-mode" :files ("*.el"))
-  :pin "69374e0249df20139f3f2d475de9eae2b201d019")
+  :pin "e1fc7d6c1915acaf476060c0f79b8bdef6bd1952")
 
 (package! ob-d2
   :recipe (:host github :repo "xcapaldi/ob-d2" :files ("*.el"))

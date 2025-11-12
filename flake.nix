@@ -30,6 +30,8 @@
     mac-app-util = {
       url = "git+ssh://git@github.com/hraban/mac-app-util.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
+      # https://github.com/hraban/mac-app-util/issues/39
+      inputs.cl-nix-lite.url = "github:r4v3n6101/cl-nix-lite/url-fix";
     };
 
     nix-darwin = {

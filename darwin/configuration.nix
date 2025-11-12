@@ -78,7 +78,7 @@ in
       "ibkr"
       "karabiner-elements"
       "keepassxc"
-      "ledger-live"
+      "ledger-wallet"
       {
         name = "librewolf";
         args = {

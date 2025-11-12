@@ -116,10 +116,10 @@ in
   sops.templates.authinfo = {
     path = "${config.home.homeDirectory}/.authinfo";
     content = ''
-      machine api.anthropic.com login apikey password ${config.sops.placeholder.anthropic}
-      machine api.cerebras.ai login apikey password ${config.sops.placeholder.cerebras}
-      machine api.mistral.ai login apikey password ${config.sops.placeholder.mistral}
-      machine api.openai.com login apikey password ${config.sops.placeholder.openai}
+      machine api.anthropic.com login apikey password ${config.sops.placeholder."llm/anthropic"}
+      machine api.cerebras.ai login apikey password ${config.sops.placeholder."llm/cerebras"}
+      machine api.mistral.ai login apikey password ${config.sops.placeholder."llm/mistral"}
+      machine api.openai.com login apikey password ${config.sops.placeholder."llm/openai"}
       machine irc.libera.chat login proto1 password ${config.sops.placeholder.libera}
     '';
   };

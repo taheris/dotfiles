@@ -17,14 +17,15 @@ in
   sops = {
     defaultSopsFile = "${toString inputs.secrets}/sops/secrets.yaml";
     age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
-  };
 
-  sops.secrets = {
-    anthropic = { };
-    cerebras = { };
-    gemini = { };
-    libera = { };
-    mistral = { };
-    openai = { };
+    secrets = {
+      libera = { };
+      "llm/anthropic" = { };
+      "llm/cerebras" = { };
+      "llm/gemini" = { };
+      "llm/mistral" = { };
+      "llm/openai" = { };
+      "llm/zai" = { };
+    };
   };
 }

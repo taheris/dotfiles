@@ -51,11 +51,12 @@
       unset zle_bracketed_paste
 
       # env secrets
-      export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets.anthropic.path})"
-      export CEREBRAS_API_KEY="$(cat ${config.sops.secrets.cerebras.path})"
-      export GEMINI_API_KEY="$(cat ${config.sops.secrets.gemini.path})"
-      export MISTRAL_API_KEY="$(cat ${config.sops.secrets.mistral.path})"
-      export OPENAI_API_KEY="$(cat ${config.sops.secrets.openai.path})"
+      export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets."llm/anthropic".path})"
+      export CEREBRAS_API_KEY="$(cat ${config.sops.secrets."llm/cerebras".path})"
+      export GEMINI_API_KEY="$(cat ${config.sops.secrets."llm/gemini".path})"
+      export MISTRAL_API_KEY="$(cat ${config.sops.secrets."llm/mistral".path})"
+      export OPENAI_API_KEY="$(cat ${config.sops.secrets."llm/openai".path})"
+      export ZAI_API_KEY="$(cat ${config.sops.secrets."llm/zai".path})"
 
       # env misc
       export FZF_CTRL_R_OPTS="--preview= --layout=default"

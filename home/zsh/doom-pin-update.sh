@@ -71,7 +71,7 @@ update_package() {
         return 1
     fi
 
-    # Get the latest commit from the default remote branch
+    # Get the latest commit from remote tracking branch
     new_pin=$(get_latest_commit "$EMACS_DIR/$repo_dir")
 
     if [[ -z "$new_pin" ]]; then
@@ -104,11 +104,14 @@ fetch_repo() {
     git -C "$repo_path" fetch --quiet 2>/dev/null
 }
 
-# Get the latest commit hash from upstream branch
+# Get the latest commit hash from remote tracking branch
 get_latest_commit() {
     local repo_path="$1"
-    git -C "$repo_path" rev-parse '@{u}' 2>/dev/null || \
-        git -C "$repo_path" log -1 --format="%H" 2>/dev/null || \
+    # Try to get the latest commit from the remote tracking branch
+    git -C "$repo_path" rev-parse origin/HEAD 2>/dev/null || \
+        git -C "$repo_path" rev-parse origin/main 2>/dev/null || \
+        git -C "$repo_path" rev-parse origin/master 2>/dev/null || \
+        git -C "$repo_path" rev-parse '@{u}' 2>/dev/null || \
         echo ""
 }
 
