@@ -80,6 +80,9 @@ in
               en-science
             ]
           ))
+          hunspell
+          hunspellDicts.en-gb-large
+          hunspellDicts.en-us-large
           ltex-ls
           sqlite
         ];

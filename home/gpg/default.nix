@@ -19,7 +19,7 @@ in
     gnupg
   ];
 
-  programs.ssh = mkIf isDarwin {
+  programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
 
@@ -36,7 +36,7 @@ in
       userKnownHostsFile = "~/.ssh/known_hosts";
     };
 
-    extraConfig = ''
+    extraConfig = mkIf isDarwin ''
       UseKeychain yes
     '';
   };

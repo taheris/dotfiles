@@ -50,7 +50,14 @@ in
     ];
   };
 
-  i18n.defaultLocale = "en_GB.UTF-8";
+  i18n = {
+    defaultLocale = "en_GB.UTF-8";
+    supportedLocales = [
+      "en_GB.UTF-8/UTF-8"
+      "en_US.UTF-8/UTF-8"
+    ];
+  };
+
   time.timeZone = "Europe/Lisbon";
 
   networking = {
@@ -68,8 +75,11 @@ in
     };
 
     settings = {
-      experimental-features = "nix-command flakes";
       auto-optimise-store = true;
+      experimental-features = [
+        "flakes"
+        "nix-command"
+      ];
       trusted-users = [
         "root"
         "@wheel"
@@ -89,12 +99,7 @@ in
   };
 
   programs = {
-    ssh = {
-      startAgent = true;
-      enableAskPassword = true;
-      askPassword = "${pkgs.kdePackages.ksshaskpass.out}/bin/ksshaskpass";
-    };
-
+    ssh.startAgent = false;
     zsh.enable = true;
   };
 
@@ -115,14 +120,18 @@ in
       sddm.kwallet.enable = true;
     };
 
+    rtkit.enable = true;
     sudo.wheelNeedsPassword = false;
   };
 
   services = {
     desktopManager.plasma6.enable = true;
-    displayManager.sddm = {
-      enable = true;
-      wayland.enable = true;
+
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
     };
 
     flatpak.enable = true;
@@ -186,11 +195,7 @@ in
 
     xserver = {
       enable = true;
-
-      videoDrivers = [
-        "amdgpu"
-        "nvidia"
-      ];
+      videoDrivers = [ "nvidia" ];
     };
   };
 

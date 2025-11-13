@@ -137,10 +137,5 @@
     nvidia-container-toolkit.enable = true;
   };
 
-  networking.interfaces = {
-    eno1.useDHCP = true;
-    wlp9s0.useDHCP = true;
-  };
-
   powerManagement.enable = true;
 }
