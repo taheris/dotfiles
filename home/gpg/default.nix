@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   ...
@@ -12,7 +11,7 @@ let
 in
 {
   home.file = {
-    "${config.xdg.configHome}/pam-gnupg".text = "9B571D8B78DDF8D06045387D176120709E41CC9D";
+    ".pam-gnupg".text = "9B571D8B78DDF8D06045387D176120709E41CC9D";
   };
 
   home.packages = with pkgs; [
@@ -47,7 +46,6 @@ in
     in
     {
       enable = true;
-      enableSshSupport = true;
 
       pinentry = mkIf isLinux {
         package = pkgs.wayprompt;

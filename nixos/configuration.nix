@@ -99,25 +99,20 @@ in
   };
 
   programs = {
+    gamemode.enable = true;
     ssh.startAgent = false;
     zsh.enable = true;
   };
 
   security = {
-    pam.services = {
-      login.gnupg = {
+    pam.services.login = {
+      gnupg = {
         enable = true;
         noAutostart = true;
         storeOnly = true;
       };
 
-      sddm.gnupg = {
-        enable = true;
-        noAutostart = true;
-        storeOnly = true;
-      };
-
-      sddm.kwallet.enable = true;
+      kwallet.enable = true;
     };
 
     rtkit.enable = true;
@@ -203,6 +198,7 @@ in
     ${host.user} = {
       isNormalUser = true;
       extraGroups = [
+        "gamemode"
         "input"
         "wheel"
       ];
