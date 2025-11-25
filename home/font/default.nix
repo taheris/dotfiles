@@ -1,21 +1,6 @@
 { pkgs, ... }:
 
 let
-  inherit (pkgs.stdenv) mkDerivation;
-
-  mkFont =
-    font: url:
-    mkDerivation rec {
-      name = "${font}-${version}";
-      src = pkgs.fetchurl url;
-      version = "1.0";
-      phases = [ "installPhase" ];
-
-      installPhase = ''
-        mkdir -p $out/share/fonts/${font}
-        cp -v ${src} $out/share/fonts/${font}
-      '';
-    };
 
   bookerly = pkgs.stdenvNoCC.mkDerivation {
     pname = "bookerly";
@@ -38,18 +23,19 @@ let
 
 in
 {
-  home.packages =
-    with pkgs;
-    [
-      bookerly
-      julia-mono
-      libre-baskerville
-      monaco
-      monacob
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-color-emoji
-    ] ;
+  home.packages = with pkgs; [
+    bookerly
+    font-awesome
+    ibm-plex
+    julia-mono
+    libre-baskerville
+    monaco
+    monacob
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    roboto
+  ];
 
   fonts.fontconfig = {
     enable = true;

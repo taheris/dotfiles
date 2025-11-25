@@ -696,7 +696,7 @@ Manually set ~spell-fu~ modes.
 Change the case pattern for a symbol.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! string-inflection :pin "91d6c991abcf9cfb2af403368962a9c7983235b4")
+(package! string-inflection :pin "4a2f87d7b47f5efe702a78f8a40a98df36eeba13")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -942,7 +942,7 @@ Set =calc= defaults.
 
 (package! org-srs
   :recipe (:host github :repo "bohonghuang/org-srs")
-  :pin "7f2d1e4bb299d529d7b9066620cadbeb331c2ef8")
+  :pin "dcfcddd769be3fb2f4bd08cf78bd56f15b183085")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1340,7 +1340,7 @@ Use =nov= to read eBooks.
 Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! lsp-ltex :pin "8348eb3b682991a4145bbbaec3acfc9294de6045")
+(package! lsp-ltex :pin "f21924d70c3101a91f77d7aad2997efc7547abfc")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1413,7 +1413,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "f1cd66a5a9e844058e9f838827524af68cf9dd91")
+(package! gptel :pin "7a4bd1d4cb06278aca76e0cce0b1b207df365bca")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1530,25 +1530,28 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "f9dd828c7bfb209523e907cc947668924ff9f1bf")
+  :pin "3c6a39c09684145b82721b506b80fa857664258a")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "a16e1e0a1c9cf01246c23ca4d9dbd81ad9be9fd9")
+  :pin "3803449d80318bb4005fd9509ebc8a669750ceea")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! agent-shell
   :config
-  (setq agent-shell-anthropic-claude-environment
-        (agent-shell-make-environment-variables
-          "ANTHROPIC_API_KEY_USE" "https://docs.z.ai/scenario-example/develop-tools/claude"
-          "ANTHROPIC_API_KEY" (getenv "ZAI_API_KEY")
-          "ANTHROPIC_BASE_URL" "https://api.z.ai/api/anthropic"
-          "ANTHROPIC_MODEL" "GLM-4.6"
-          "ANTHROPIC_SMALL_FAST_MODEL" "GLM-4.5-Air"
-          "ANTHROPIC_DEFAULT_OPUS_MODEL" "GLM-4.6"
-          "ANTHROPIC_DEFAULT_SONNET_MODEL" "GLM-4.6"
-          "ANTHROPIC_DEFAULT_HAIKU_MODEL" "GLM-4.5-Air")))
+  (defvar my-agent-shell-anthropic-env-vars
+    (agent-shell-make-environment-variables
+      "ANTHROPIC_API_KEY_USE" "https://docs.z.ai/scenario-example/develop-tools/claude"
+      "ANTHROPIC_API_KEY" (getenv "ZAI_API_KEY")
+      "ANTHROPIC_BASE_URL" "https://api.z.ai/api/anthropic"
+      "ANTHROPIC_MODEL" "GLM-4.6"
+      "ANTHROPIC_SMALL_FAST_MODEL" "GLM-4.5-Air"
+      "ANTHROPIC_DEFAULT_OPUS_MODEL" "GLM-4.6"
+      "ANTHROPIC_DEFAULT_SONNET_MODEL" "GLM-4.6"
+      "ANTHROPIC_DEFAULT_HAIKU_MODEL" "GLM-4.5-Air"))
+
+  (setq agent-shell-anthropic-claude-environment my-agent-shell-anthropic-env-vars
+        agent-shell-file-completion-enabled t))
 #+end_src
 
 *** Voice
@@ -1772,7 +1775,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "4af63a4a6a09e801a0210be3e5d1ebe5f49bbdcd")
+  :pin "dd67a2a63d6fa044fbd7d41cf6d436f7237f4f8a")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1795,8 +1798,7 @@ Disable ZeroMQ in macOS.
   (add-to-list 'flycheck-checkers 'protobuf-buf))
 
 (after! apheleia
-  (add-to-list 'apheleia-formatters
-               '(buf . ("buf" "format" buffer-file-name)))
+  (add-to-list 'apheleia-formatters '(buf . ("buf" "format" buffer-file-name)))
   (add-to-list 'apheleia-mode-alist '(protobuf-mode . buf)))
 #+end_src
 
@@ -1858,4 +1860,56 @@ Disable ZeroMQ in macOS.
 (use-package! ob-d2
   :config
   (setq ob-d2-command "d2 --layout elk --sketch"))
+#+end_src
+
+** Typst
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! typst-ts-mode
+  :recipe (:host codeberg :repo "meow_king/typst-ts-mode")
+  :pin "7c2ef0d5bd2b5a8727fe6d00938c47ba562e0c94")
+
+(package! typst-preview
+  :recipe (:host github :repo "havarddj/typst-preview.el")
+  :pin "c685857f2d61133fc268509b39796b2718728f29")
+
+(package! ox-typst
+  :recipe (:host github :repo "jmpunkt/ox-typst" :files ("*.el"))
+  :pin "d75218627ca8441254b1c562c35673cbd96509ff")
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package! typst-ts-mode
+  :mode "\\.typ")
+
+(after! lsp-mode
+  (add-to-list 'lsp-language-id-configuration '(typst-ts-mode . "typst"))
+  (lsp-register-client (make-lsp-client
+                        :new-connection (lsp-stdio-connection "tinymist")
+                        :activation-fn  (lsp-activate-on "typst")
+                        :server-id 'tinymist
+                        :initialization-options `(:tinymist (:exportPdf "onSave"))))
+
+  (add-hook 'typst-ts-mode-hook #'lsp! 'append))
+
+(after! apheleia
+  (add-to-list 'apheleia-formatters '(typ . ("typstyle" buffer-file-name)))
+  (add-to-list 'apheleia-mode-alist '(typst-ts-mode . typ)))
+
+(use-package! ox-typst)
+(use-package! websocket)
+
+(use-package! typst-preview
+  :after typst-ts-mode
+
+  :init
+  (setq typst-preview-autostart t)
+
+  :config
+  (map! :map typst-ts-mode-map
+        :localleader
+        :desc "Compile" "c"   #'typst-ts-compile
+        :desc "Preview" "p"   #'typst-preview-mode
+        :desc "View"    "v"   #'typst-ts-preview
+        :desc "Watch"   "w"   #'typst-ts-watch-mode))
 #+end_src

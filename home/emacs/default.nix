@@ -50,24 +50,29 @@ in
       fi
     '';
 
-    file.doomConfig = {
-      source = ./config.org;
-      target = "${doom}/config.org";
-      onChange = ''
-        ${getExe package} --batch \
-          --eval "(require 'ob-tangle)" \
-          --eval "(setq org-confirm-babel-evaluate t)" \
-          --eval "(setq IS-LINUX ${if isLinux then "t" else "nil"})" \
-          --eval "(setq IS-MAC ${if isDarwin then "t" else "nil"})" \
-          --eval "(setq IS-WINDOWS ${if isCygwin then "t" else "nil"})" \
-          --eval "(org-babel-tangle-file \"${doom}/config.org\")"
+    file = {
+      doomConfig = {
+        source = ./config.org;
+        target = "${doom}/config.org";
+        onChange = ''
+          ${getExe package} --batch \
+            --eval "(require 'ob-tangle)" \
+            --eval "(setq org-confirm-babel-evaluate t)" \
+            --eval "(setq IS-LINUX ${if isLinux then "t" else "nil"})" \
+            --eval "(setq IS-MAC ${if isDarwin then "t" else "nil"})" \
+            --eval "(setq IS-WINDOWS ${if isCygwin then "t" else "nil"})" \
+            --eval "(org-babel-tangle-file \"${doom}/config.org\")"
 
-        export PATH=${path}
-        export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
-        export SSL_CERT_DIR=${pkgs.cacert}/etc/ssl/certs
+          export PATH=${path}
+          export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
+          export SSL_CERT_DIR=${pkgs.cacert}/etc/ssl/certs
 
-        doom sync -e
-      '';
+          doom sync -e
+        '';
+      };
+
+      ".config/emacs/.local/cache/tree-sitter".source =
+        "${pkgs.emacsPackages.treesit-grammars.with-all-grammars}/lib";
     };
 
     packages =
@@ -85,6 +90,13 @@ in
           hunspellDicts.en-us-large
           ltex-ls
           sqlite
+          tinymist
+          tree-sitter-grammars.tree-sitter-typst
+          (typst.withPackages (ps: [
+            ps.fontawesome
+            ps.moderner-cv
+          ]))
+          typstyle
         ];
 
         emacsPackages = with pkgs.emacs.pkgs; [

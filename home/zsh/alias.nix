@@ -161,13 +161,38 @@ in
     scp = "noglob scp";
     sftp = "noglob sftp";
 
+    # systemctl
+    sc = "systemctl";
+    scl = "systemctl list-units";
+    sclf = "systemctl list-units --state=failed";
+    sclr = "systemctl list-units --state=running";
+    scs = "systemctl status";
+    scst = "systemctl start";
+    scsp = "systemctl stop";
+    sce = "systemctl enable";
+    scd = "systemctl disable";
+    scrl = "systemctl reload";
+    scrs = "systemctl restart";
+    scu = "systemctl --user";
+    scus = "systemctl --user status";
+    scust = "systemctl --user start";
+    scusp = "systemctl --user stop";
+    scue = "systemctl --user enable";
+    scud = "systemctl --user disable";
+    scurl = "systemctl --user reload";
+    scurs = "systemctl --user restart";
+
     # journalctl
     jc = "journalctl";
     jcf = "journalctl --follow";
-    jcfa = "journalctl --follow --all";
-    jcfan = "journalctl --follow --all --lines 100";
-    jcfu = "journalctl --follow --unit";
-    jcfun = "journalctl --follow --lines 100 --unit";
+    jcb = "journalctl --boot";
+    jcb1 = "journalctl --boot -1";
+    jcb2 = "journalctl --boot -2";
+    jcp = "journalctl --boot --priority";
+    jcpe = "journalctl --boot --priority err";
+    jcpw = "journalctl --boot --priority warning";
+    jcu = "journalctl --pager-end --user-unit";
+    jcuf = "journalctl --follow --user-unit";
 
     # fzf
     f = "fzf";
