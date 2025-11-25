@@ -27,13 +27,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mac-app-util = {
-      url = "git+ssh://git@github.com/hraban/mac-app-util.git?ref=master&shallow=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-      # https://github.com/hraban/mac-app-util/issues/39
-      inputs.cl-nix-lite.url = "github:r4v3n6101/cl-nix-lite/url-fix";
-    };
-
     nix-darwin = {
       url = "git+ssh://git@github.com/LnL7/nix-darwin.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -69,7 +62,6 @@
       nixpkgs,
       flake-parts,
       home-manager,
-      mac-app-util,
       nix-darwin,
       plasma-manager,
       solaar,
@@ -153,12 +145,10 @@
                 inherit specialArgs;
                 modules = [
                   ./darwin/configuration.nix
-                  mac-app-util.darwinModules.default
                   home-manager.darwinModules.home-manager
                   {
                     home-manager.extraSpecialArgs = specialArgs;
                     home-manager.sharedModules = [
-                      mac-app-util.homeManagerModules.default
                       sops-nix.homeManagerModules.sops
                     ];
                     home-manager.users.${host.user} = import ./home;
