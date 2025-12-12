@@ -942,7 +942,7 @@ Set =calc= defaults.
 
 (package! org-srs
   :recipe (:host github :repo "bohonghuang/org-srs")
-  :pin "dcfcddd769be3fb2f4bd08cf78bd56f15b183085")
+  :pin "2a7b49854b65d116f929f1ae193bd2365f2f9b0c")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1340,7 +1340,7 @@ Use =nov= to read eBooks.
 Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! lsp-ltex :pin "f21924d70c3101a91f77d7aad2997efc7547abfc")
+(package! lsp-ltex :pin "7870f252562eda24c56567576336651e2a986c25")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1413,7 +1413,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "7a4bd1d4cb06278aca76e0cce0b1b207df365bca")
+(package! gptel :pin "ef24f5f50bdad336ed0f28a0a8a7a0ef2b79c1bf")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1530,10 +1530,10 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "3c6a39c09684145b82721b506b80fa857664258a")
+  :pin "9caa610d8d56b1001c6a5d17bddb508f1734f5b6")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "3803449d80318bb4005fd9509ebc8a669750ceea")
+  :pin "5105919ee0a146e3746df54539294c464c0d065a")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1775,7 +1775,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "dd67a2a63d6fa044fbd7d41cf6d436f7237f4f8a")
+  :pin "a93c97116fefb530f3d1c6fbc43d1aec1d926ccb")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1875,7 +1875,7 @@ Disable ZeroMQ in macOS.
 
 (package! ox-typst
   :recipe (:host github :repo "jmpunkt/ox-typst" :files ("*.el"))
-  :pin "d75218627ca8441254b1c562c35673cbd96509ff")
+  :pin "ac8893c79fa85a92a9251a695776971526ba8d76")
 #+end_src
 
 #+begin_src emacs-lisp
