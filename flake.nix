@@ -14,7 +14,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-unstable&shallow=1";
+    nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
     nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.05&shallow=1";
 
     flake-parts = {

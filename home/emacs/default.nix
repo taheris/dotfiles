@@ -30,9 +30,13 @@ let
 
 in
 {
-  programs.emacs = {
-    enable = true;
-    inherit package;
+  programs = {
+    emacs = {
+      enable = true;
+      inherit package;
+    };
+
+    calibre.enable = true;
   };
 
   services.emacs = mkIf isLinux {

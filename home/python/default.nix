@@ -20,7 +20,10 @@ in
 {
   home.packages = with pkgs; [
     (python3.withPackages pythonPackages)
-    ty
-    uv
   ];
+
+  programs = {
+    ty.enable = true;
+    uv.enable = true;
+  };
 }

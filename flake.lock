@@ -7,10 +7,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1765495779,
-        "narHash": "sha256-MhA7wmo/7uogLxiewwRRmIax70g6q1U/YemqTGoFHlM=",
+        "lastModified": 1765835352,
+        "narHash": "sha256-XswHlK/Qtjasvhd1nOa1e8MgZ8GS//jBoTqWtrS1Giw=",
         "ref": "main",
-        "rev": "5635c32d666a59ec9a55cab87e898889869f7b71",
+        "rev": "a34fae9c08a15ad73f295041fec82323541400a9",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/hercules-ci/flake-parts.git"
@@ -47,10 +47,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1765480374,
-        "narHash": "sha256-HlbvQAqLx7WqZFFQZ8nu5UUJAVlXiV/kqKbyueA8srw=",
+        "lastModified": 1765980955,
+        "narHash": "sha256-rB45jv4uwC90vM9UZ70plfvY/2Kdygs+zlQ07dGQFk4=",
         "ref": "master",
-        "rev": "39cb677ed9e908e90478aa9fe5f3383dfc1a63f3",
+        "rev": "89c9508bbe9b40d36b3dc206c2483ef176f15173",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -69,10 +69,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1765065051,
-        "narHash": "sha256-b7W9WsvyMOkUScNxbzS45KEJp0iiqRPyJ1I3JBE+oEE=",
+        "lastModified": 1765684049,
+        "narHash": "sha256-svCS2r984qEowMT0y3kCrsD/m0J6zaF5I/UusS7QaH0=",
         "ref": "master",
-        "rev": "7e22bf538aa3e0937effcb1cee73d5f1bcc26f79",
+        "rev": "9b628e171bfaea1a3d1edf31eee46251e0fe4a33",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/LnL7/nix-darwin.git"
@@ -103,16 +103,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1765186076,
-        "narHash": "sha256-hM20uyap1a0M9d344I692r+ik4gTMyj60cQWO+hAYP8=",
-        "ref": "nixos-unstable",
-        "rev": "addf7cf5f383a3101ecfba091b98d0a1263dc9b8",
+        "lastModified": 1765934234,
+        "narHash": "sha256-pJjWUzNnjbIAMIc5gRFUuKCDQ9S1cuh3b2hKgA7Mc4A=",
+        "ref": "nixpkgs-unstable",
+        "rev": "af84f9d270d404c17699522fab95bbf928a2d92f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
       },
       "original": {
-        "ref": "nixos-unstable",
+        "ref": "nixpkgs-unstable",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -120,10 +120,10 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1765363881,
-        "narHash": "sha256-3C3xWn8/2Zzr7sxVBmpc1H1QfxjNfta5IMFe3O9ZEPw=",
+        "lastModified": 1765687488,
+        "narHash": "sha256-7YAJ6xgBAQ/Nr+7MI13Tui1ULflgAdKh63m1tfYV7+M=",
         "ref": "nixos-25.05",
-        "rev": "d2b1213bf5ec5e62d96b003ab4b5cbc42abfc0d0",
+        "rev": "d02bcc33948ca19b0aaa0213fe987ceec1f4ebe1",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -200,10 +200,10 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1765314326,
-        "narHash": "sha256-V59q8hTSzQ9risdcXfTn4FPfKG9pNhjBoQH62A+OhyU=",
+        "lastModified": 1765533253,
+        "narHash": "sha256-uqslimZxAt7KtpxKXWBANdOT40/iHKULoEnA8yp/GbI=",
         "ref": "main",
-        "rev": "ab1e1e8c9ede7462d26af86d25b3ee12cb7ac441",
+        "rev": "c78dd3ce38b71225d1f9f6255ad8270598734106",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Svenum/Solaar-Flake.git"
@@ -222,10 +222,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1765231718,
-        "narHash": "sha256-qdBzo6puTgG4G2RHG0PkADg22ZnQo1JmSVFRxrD4QM4=",
+        "lastModified": 1765836173,
+        "narHash": "sha256-hWRYfdH2ONI7HXbqZqW8Q1y9IRbnXWvtvt/ONZovSNY=",
         "ref": "master",
-        "rev": "7fd1416aba1865eddcdec5bb11339b7222c2363e",
+        "rev": "443a7f2e7e118c4fc63b7fae05ab3080dd0e5c63",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"
