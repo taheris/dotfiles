@@ -20,7 +20,7 @@ let
     jq
     lsof
     mtr
-    mycli
+    #mycli
     pciutils
     pv
     ripgrep
