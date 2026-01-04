@@ -44,6 +44,7 @@
 
     autocd = true;
     defaultKeymap = "emacs";
+    dotDir = "${config.xdg.configHome}/zsh";
     syntaxHighlighting.enable = true;
 
     initContent = ''

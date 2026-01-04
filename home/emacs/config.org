@@ -942,7 +942,7 @@ Set =calc= defaults.
 
 (package! org-srs
   :recipe (:host github :repo "bohonghuang/org-srs")
-  :pin "2a7b49854b65d116f929f1ae193bd2365f2f9b0c")
+  :pin "c0aff45392b1f836fd943467cc266cef50899a44")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1232,7 +1232,7 @@ Read the calibre eBook library.
 Use =nov= to read eBooks.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! nov :pin "933816c190633fa1f2f0667ba105d1311572b3c6")
+(package! nov :pin "874daf5e4791a6d4f47741422c80e2736e907351")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1291,7 +1291,7 @@ Use =nov= to read eBooks.
 (package! eaf
   :recipe (:host github :repo "emacs-eaf/emacs-application-framework"
            :files ("app" "core" "*.el" "*.py"))
-  :pin "ada92215ad864c2d142feb6ad6e1127e90bce668")
+  :pin "60c7a77f7be256db74fd40e1a07910b0e1a81ea0")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1340,7 +1340,7 @@ Use =nov= to read eBooks.
 Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! lsp-ltex :pin "7870f252562eda24c56567576336651e2a986c25")
+(package! lsp-ltex :pin "6adc2b4d32a907943a6ce06e2267090241e7af6a")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1413,7 +1413,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "ef24f5f50bdad336ed0f28a0a8a7a0ef2b79c1bf")
+(package! gptel :pin "93d58e4cce68c8f603562904f77a3e329eaf5a24")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1530,10 +1530,10 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "9caa610d8d56b1001c6a5d17bddb508f1734f5b6")
+  :pin "7b67facc657a7388a53ea8bba5d6e7eba20fa3e0")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "5105919ee0a146e3746df54539294c464c0d065a")
+  :pin "6303b9eec3cab66b4eba650d722c77b418a31388")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1775,7 +1775,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "a93c97116fefb530f3d1c6fbc43d1aec1d926ccb")
+  :pin "3acf23cce5aac088a7c6585484a8b38c48448255")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1821,7 +1821,7 @@ Disable ZeroMQ in macOS.
 #+begin_src emacs-lisp :tangle packages.el
 (package! move-mode
   :recipe (:host github :repo "amnn/move-mode" :files ("*.el"))
-  :pin "6e4aaf6aae1e9b4aee096557c9f7b1f3550a1e59")
+  :pin "e72e2d5102669b82ba70599fb64e64241d49376d")
 #+end_src
 
 #+begin_src emacs-lisp
