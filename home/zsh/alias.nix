@@ -443,6 +443,7 @@ in
     dmpupd = "~/bin/doom-pin-update.sh --dry-run";
     dmsy = "doom sync";
     dmsypr = "doom sync --prune";
+    dmsyr = "doom sync --rebuild";
     dmsyu = "doom sync -u";
     dmup = "doom upgrade";
     dmupp = "doom upgrade --packages";

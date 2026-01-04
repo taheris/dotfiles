@@ -36,7 +36,9 @@ in
       inherit package;
     };
 
-    calibre.enable = true;
+    calibre = mkIf isLinux {
+      enable = true;
+    };
   };
 
   services.emacs = mkIf isLinux {
