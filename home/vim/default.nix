@@ -1,6 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    nodejs
+  ];
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
