@@ -372,10 +372,10 @@ in
     gsmrm = "git-submodule-remove";
 
     # git tag
-    gt = "git tag";
-    gtl = "git tag --list";
-    gts = "git tag --sign";
-    gvt = "git verify-tag";
+    gtg = "git tag";
+    gtgl = "git tag --list";
+    gtgs = "git tag --sign";
+    gvtg = "git verify-tag";
 
     # git misc
     gs = "git status";

@@ -1455,8 +1455,8 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                          :stream t
                          :request-params '(:keep_alive "30m"))))
 
-    (setq gptel-backend gptel-cerebras
-          gptel-model 'zai-glm-4.6
+    (setq gptel-backend gptel-anthropic
+          gptel-model 'claude-opus-4-5-20251101
           gptel-default-mode 'org-mode
           gptel-display-buffer-action 'display-buffer-same-window)
 
@@ -1539,18 +1539,7 @@ Don't save or restore gptel state to org buffer.
 #+begin_src emacs-lisp
 (use-package! agent-shell
   :config
-  (defvar my-agent-shell-anthropic-env-vars
-    (agent-shell-make-environment-variables
-      "ANTHROPIC_API_KEY_USE" "https://docs.z.ai/scenario-example/develop-tools/claude"
-      "ANTHROPIC_API_KEY" (getenv "ZAI_API_KEY")
-      "ANTHROPIC_BASE_URL" "https://api.z.ai/api/anthropic"
-      "ANTHROPIC_MODEL" "GLM-4.6"
-      "ANTHROPIC_SMALL_FAST_MODEL" "GLM-4.5-Air"
-      "ANTHROPIC_DEFAULT_OPUS_MODEL" "GLM-4.6"
-      "ANTHROPIC_DEFAULT_SONNET_MODEL" "GLM-4.6"
-      "ANTHROPIC_DEFAULT_HAIKU_MODEL" "GLM-4.5-Air"))
-
-  (setq agent-shell-anthropic-claude-environment my-agent-shell-anthropic-env-vars
+  (setq agent-shell-anthropic-authentication (agent-shell-anthropic-make-authentication :login t)
         agent-shell-file-completion-enabled t))
 #+end_src
 

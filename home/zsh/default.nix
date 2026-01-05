@@ -6,18 +6,25 @@
     ./functions.nix
   ];
 
-  home.packages = with pkgs; [
-    bat
-    carapace
-    expect
-    kubectl
-    shellcheck
-    vivid
-    zsh-completions
-  ];
+  home = {
+    packages = with pkgs; [
+      bat
+      carapace
+      expect
+      kubectl
+      shellcheck
+      vivid
+      zsh-completions
+    ];
 
-  home.sessionVariables = {
-    DIRENV_WARN_TIMEOUT = "30s";
+    sessionPath = [
+      "${config.home.homeDirectory}/.juliaup/bin"
+      "${config.home.homeDirectory}/go/bin"
+    ];
+
+    sessionVariables = {
+      DIRENV_WARN_TIMEOUT = "30s";
+    };
   };
 
   programs.direnv = {
@@ -52,7 +59,6 @@
       unset zle_bracketed_paste
 
       # env secrets
-      export ANTHROPIC_API_KEY="$(cat ${config.sops.secrets."llm/anthropic".path})"
       export CEREBRAS_API_KEY="$(cat ${config.sops.secrets."llm/cerebras".path})"
       export GEMINI_API_KEY="$(cat ${config.sops.secrets."llm/gemini".path})"
       export MISTRAL_API_KEY="$(cat ${config.sops.secrets."llm/mistral".path})"
@@ -62,7 +68,6 @@
       # env misc
       export FZF_CTRL_R_OPTS="--preview= --layout=default"
       export LS_COLORS=$(vivid generate tokyonight-night)
-      export PATH="$PATH:$HOME/.juliaup/bin"
       export RUSTC_WRAPPER="${pkgs.sccache}/bin/sccache"
 
       # case-insensitive completion

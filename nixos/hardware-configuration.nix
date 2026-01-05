@@ -113,6 +113,11 @@
       ];
     };
 
+    logitech.wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
+
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       open = false;
