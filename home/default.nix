@@ -83,10 +83,6 @@ in
     ];
   };
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "gradle-7.6.6"
-  ];
-
   programs.home-manager.enable = true;
 
   xdg = mkIf isLinux {

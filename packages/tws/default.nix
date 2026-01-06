@@ -10,45 +10,48 @@ let
 
   version = "10.40.1b";
 
-  libPath = lib.makeLibraryPath (with pkgs; [
-    atk
-    alsa-lib
-    at-spi2-atk
-    at-spi2-core
-    cairo
-    cups
-    dbus
-    expat
-    ffmpeg
-    fontconfig
-    freetype
-    gdk-pixbuf
-    glib
-    gtk3
-    (javaPackages.openjfx17.override { withWebKit = true; })
-    libdrm
-    libgbm
-    libGL
-    libxkbcommon
-    libz
-    pango
-    nss_latest
-    nspr
-    mesa
-    systemd
-    wayland
-    xorg.libXfixes
-    xorg.libXcomposite
-    xorg.libXdamage
-    xorg.libXext
-    xorg.libXrandr
-    xorg.libXrender
-    xorg.libXtst
-    xorg.libXi
-    xorg.libXxf86vm
-    xorg.libxcb
-    xorg.libX11
-  ]);
+  libPath = lib.makeLibraryPath (
+    with pkgs;
+    [
+      alsa-lib
+      at-spi2-atk
+      at-spi2-core
+      atk
+      cairo
+      cups
+      dbus
+      expat
+      ffmpeg
+      fontconfig
+      freetype
+      gdk-pixbuf
+      glib
+      gtk3
+      libGL
+      libdrm
+      libgbm
+      libxkbcommon
+      libz
+      mesa
+      nspr
+      nss_latest
+      openjfx
+      pango
+      systemd
+      wayland
+      xorg.libX11
+      xorg.libXcomposite
+      xorg.libXdamage
+      xorg.libXext
+      xorg.libXfixes
+      xorg.libXi
+      xorg.libXrandr
+      xorg.libXrender
+      xorg.libXtst
+      xorg.libXxf86vm
+      xorg.libxcb
+    ]
+  );
 
 in
 pkgs.stdenv.mkDerivation {
