@@ -24,10 +24,10 @@ mac-brew: ## Install Homebrew on macOS
 	@eval "$(/opt/homebrew/bin/brew shellenv)"
 
 mac-nix: ## Install Nix on macOS
-	@curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+	@curl -fsSL https://install.determinate.systems/nix | sh -s -- install --prefer-upstream-nix
 
 mac-flake: ## Bootstrap nix-darwin on macOS
-	@nix run nix-darwin -- switch --flake .
+	@sudo nix run nix-darwin -- switch --flake .
 
 nixos-boot: ## Add a new boot configuration on NixOS
 	@nixos-rebuild --flake . boot
