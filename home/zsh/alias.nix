@@ -252,9 +252,9 @@ in
     gcr = "git-crypt";
     gcri = "git-crypt init";
     gcrs = "git-crypt status";
-    gcrl = "git-crypt lock";
-    gcru = "git-crypt unlock";
-    gcra = "git-crypt add-gpg-user";
+    gcrlk = "git-crypt lock";
+    gcruk = "git-crypt unlock";
+    gcrau = "git-crypt add-gpg-user";
 
     # git ls-files
     gl = "git ls-files";
@@ -376,6 +376,17 @@ in
     gtgl = "git tag --list";
     gtgs = "git tag --sign";
     gvtg = "git verify-tag";
+
+    # git worktree
+    gwt = "git worktree";
+    gwta = "git worktree add";
+    gwtl = "git worktree list";
+    gwtm = "git worktree move";
+    gwtpr = "git worktree prune";
+    gwtr = "git worktree repair";
+    gwtrm = "git worktree remove";
+    gwtlk = "git worktree lock";
+    gwtuk = "git worktree unlock";
 
     # git misc
     gs = "git status";
@@ -837,7 +848,7 @@ in
     nfc = "nix flake check";
     nfcl = "nix flake clone";
     nfi = "nix flake init";
-    nfl = "nix flake lock";
+    nflk = "nix flake lock";
     nfm = "nix flake metadata";
     nfn = "nix flake new";
     nfp = "nix flake prefetch";

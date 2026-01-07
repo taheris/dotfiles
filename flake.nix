@@ -54,6 +54,12 @@
       url = "git+ssh://git@github.com/Mic92/sops-nix.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    wrapix = {
+      url = "git+ssh://git@github.com/taheris/wrapix.git?ref=main&shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
   };
 
   outputs =
@@ -66,6 +72,7 @@
       plasma-manager,
       solaar,
       sops-nix,
+      wrapix,
       ...
     }:
 
@@ -87,10 +94,17 @@
       systems = catAttrs "system" hosts;
 
       perSystem =
-        { pkgs, ... }:
+        { pkgs, inputs', ... }:
+        let
+          wrapix = inputs'.wrapix.legacyPackages.lib;
+        in
         {
           formatter = pkgs.nixfmt-rfc-style;
-          packages = import ./packages { inherit pkgs; };
+          packages = import ./packages { inherit pkgs; } // {
+            default = wrapix.mkSandbox {
+              profile = wrapix.profiles.base;
+            };
+          };
         };
 
       flake = {

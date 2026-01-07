@@ -58,7 +58,7 @@ in
       window.option_as_alt = "Both";
 
       keyboard.bindings = [
-        { key = "Return"; mods = "Shift"; chars = "\\n"; }
+        { key = "Return"; mods = "Shift"; chars = "\\u001b\\u000a"; }
       ];
     };
   };
