@@ -56,6 +56,10 @@ in
       scrolling.history = 100000;
       selection.save_to_clipboard = true;
       window.option_as_alt = "Both";
+
+      keyboard.bindings = [
+        { key = "Return"; mods = "Shift"; chars = "\\n"; }
+      ];
     };
   };
 }
