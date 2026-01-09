@@ -5,10 +5,6 @@
   ...
 }:
 
-let
-  inherit (builtins) toString;
-
-in
 {
   home.packages = with pkgs; [
     sops
@@ -19,8 +15,9 @@ in
     age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
 
     secrets = {
-      libera = { };
-      "llm/anthropic" = { };
+      "libera" = { };
+      "llm/anthropic/api" = { };
+      "llm/anthropic/oauth" = { };
       "llm/cerebras" = { };
       "llm/gemini" = { };
       "llm/mistral" = { };

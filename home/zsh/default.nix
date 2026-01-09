@@ -60,6 +60,7 @@
 
       # env secrets
       export CEREBRAS_API_KEY="$(cat ${config.sops.secrets."llm/cerebras".path})"
+      export CLAUDE_CODE_OAUTH_TOKEN="$(cat ${config.sops.secrets."llm/anthropic/oauth".path})"
       export GEMINI_API_KEY="$(cat ${config.sops.secrets."llm/gemini".path})"
       export MISTRAL_API_KEY="$(cat ${config.sops.secrets."llm/mistral".path})"
       export OPENAI_API_KEY="$(cat ${config.sops.secrets."llm/openai".path})"
