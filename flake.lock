@@ -84,10 +84,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1767792169,
-        "narHash": "sha256-WSAu+ZxF697u/OJDdBLO+YFhtqFsPowrXXOQbjDT/uA=",
+        "lastModified": 1767930051,
+        "narHash": "sha256-YXtqo8h5bAbqC64XAPMMsZdYk8XkwkyNj/7XOsIyVf8=",
         "ref": "master",
-        "rev": "aea57993a89bfc2a66c0434e0f4383ebf164e2a3",
+        "rev": "297a08510894822ddd93ee2cfc66d6ac65a3cebb",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -231,10 +231,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1763765937,
-        "narHash": "sha256-eS1CPg0KvCeeQyNQm1GWWdZoK8BWfHNJIIX/onhIu6U=",
+        "lastModified": 1767959401,
+        "narHash": "sha256-xOywitEemmEz8KbE+u68IKQLCZWYngsUsJDdRTeQ7KI=",
         "ref": "main",
-        "rev": "5d4b8a118a15349b0d224e70fc10bcd7031732ab",
+        "rev": "c13a4dd78c6a4b98c9243ee6097d05a3a90b083f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/secrets.git"
@@ -254,10 +254,10 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1767108589,
-        "narHash": "sha256-fVIBnIm3GtdcPxlUozIZ+hMGLDQnuxH5D4pHteFRGZY=",
+        "lastModified": 1767894877,
+        "narHash": "sha256-DB9vEEnEYilGUaHCljMRzT1embzD7uEjJugzRJgiLos=",
         "ref": "main",
-        "rev": "9f38d91d82c40aadeef0a867edd0c9ac7f548f2f",
+        "rev": "f5cac914bdeeecac7fca07e99c8fee18336f5bd5",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Svenum/Solaar-Flake.git"
@@ -276,10 +276,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1767499857,
-        "narHash": "sha256-0zUU/PW09d6oBaR8x8vMHcAhg1MOvo3CwoXgHijzzNE=",
+        "lastModified": 1767826491,
+        "narHash": "sha256-WSBENPotD2MIhZwolL6GC9npqgaS5fkM7j07V2i/Ur8=",
         "ref": "master",
-        "rev": "ecc41505948ec2ab0325f14c9862a4329c2b4190",
+        "rev": "ea3adcb6d2a000d9a69d0e23cad1f2cacb3a9fbe",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"
@@ -351,10 +351,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1767795358,
-        "narHash": "sha256-hWejg/zumA3fiACQQmaJhxTvtqflVYI/nGRHmBI5v94=",
+        "lastModified": 1767990092,
+        "narHash": "sha256-aUOf6GUP2f8wufDYXNMiJ6WCj+AD9tb2rw84z4/89sg=",
         "ref": "main",
-        "rev": "012686a0102099dc6fe7ac722d039e41c0b84b3e",
+        "rev": "bb6b1fe36a09f115638f566a69c14aaed71db601",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"

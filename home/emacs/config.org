@@ -1350,7 +1350,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
              +lsp-ltex-disable
              +lsp-ltex-setup)
 
-  :hook ((org-mode latex-mode LaTeX-mode markdown-mode) . #'+lsp-ltex-setup)
+  ;:hook ((org-mode latex-mode LaTeX-mode markdown-mode) . #'+lsp-ltex-setup)
 
   :config
   (add-to-list 'lsp-language-id-configuration '(doom-docs-org-mode . "org"))
@@ -1413,7 +1413,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "93d58e4cce68c8f603562904f77a3e329eaf5a24")
+(package! gptel :pin "f36ee0a750344768b02d08716f176cc20fd712c3")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1437,7 +1437,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                            :endpoint "/v1/chat/completions"
                            :stream t
                            :key #'gptel-api-key-from-auth-source
-                           :models '(zai-glm-4.6)))
+                           :models '(zai-glm-4.7)))
 
          (gptel-gemini (gptel-make-gemini "Gemini"
                          :key (getenv "GEMINI_API_KEY")
@@ -1455,8 +1455,8 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                          :stream t
                          :request-params '(:keep_alive "30m"))))
 
-    (setq gptel-backend gptel-anthropic
-          gptel-model 'claude-opus-4-5-20251101
+    (setq gptel-backend gptel-cerebras
+          gptel-model 'zai-glm-4.7
           gptel-default-mode 'org-mode
           gptel-display-buffer-action 'display-buffer-same-window)
 
@@ -1533,7 +1533,7 @@ Don't save or restore gptel state to org buffer.
   :pin "7b67facc657a7388a53ea8bba5d6e7eba20fa3e0")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "6303b9eec3cab66b4eba650d722c77b418a31388")
+  :pin "9a7913a7c7b9b8e076b38e7133122dc608e7667e")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1764,7 +1764,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "3acf23cce5aac088a7c6585484a8b38c48448255")
+  :pin "ce5ff11bc87cbd249c9a700bddbee62d94d72beb")
 #+end_src
 
 #+begin_src emacs-lisp

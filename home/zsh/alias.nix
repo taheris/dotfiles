@@ -477,6 +477,55 @@ in
     plx = "plutil -convert xml1 -o - --";
     plb = "plutil -convert binary1 -o - --";
 
+    # apple container
+    ac = "container";
+    acb = "container build";
+    accr = "container create";
+    ack = "container kill";
+    acl = "container list";
+    acla = "container list --all";
+    acr = "container run";
+    acrm = "container delete";
+    acsa = "container stats";
+    acsp = "container stop";
+    acst = "container start";
+
+    # apple container image
+    aci = "container image";
+    acii = "container image inspect";
+    acil = "container image list";
+    acild = "container image load";
+    acipl = "container image pull";
+    acipr = "container image prune";
+    acirm = "container image delete";
+    acis = "container image save";
+    acitg = "container image tag";
+
+    # apple container network
+    acn = "container network";
+    acncr = "container network create";
+    acni = "container network inspect";
+    acnl = "container network list";
+    acnrm = "container network delete";
+
+    # apple container system
+    acs = "container system";
+    acsd = "container system dns";
+    acsdf = "container system df";
+    acsk = "container system kernel";
+    acslg = "container system logs";
+    acss = "container system status";
+    acssp = "container system stop";
+    acsst = "container system start";
+
+    # apple container volume
+    acv = "container volume";
+    acvcr = "container volume create";
+    acvi = "container volume inspect";
+    acvl = "container volume list";
+    acvpr = "container volume prune";
+    acvrm = "container volume delete";
+
     # docker container
     dca = "docker container attach";
     dcc = "docker container commit";
@@ -958,5 +1007,10 @@ in
     drs = "darwin-rebuild switch";
     drsf = "darwin-rebuild switch --flake ${dotfiles}";
     drsg = "darwin-rebuild --switch-generation";
+
+    # linux-builder
+    lbp = "launchctl print system/org.nixos.linux-builder";
+    lbst = "sudo launchctl start org.nixos.linux-builder";
+    lbsp = "sudo launchctl stop org.nixos.linux-builder";
   };
 }

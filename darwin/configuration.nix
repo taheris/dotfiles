@@ -9,7 +9,7 @@
 }:
 
 let
-  inherit (lib) mkBefore;
+  inherit (lib) mkBefore mkForce;
 
   dockerCompat =
     pkgs.runCommand "${pkgs.podman.pname}-docker-compat-${pkgs.podman.version}"
@@ -113,10 +113,35 @@ in
     };
   };
 
+  launchd.daemons.linux-builder = {
+    serviceConfig = {
+      RunAtLoad = mkForce false;
+      KeepAlive = mkForce false;
+      StandardOutPath = "/var/log/linux-builder.log";
+      StandardErrorPath = "/var/log/linux-builder.log";
+    };
+  };
+
   nix = {
     enable = true;
     gc.automatic = true;
     optimise.automatic = true;
+
+    linux-builder = {
+      enable = true;
+      maxJobs = 4;
+      supportedFeatures = [ ];
+
+      config = {
+        virtualisation = {
+          cores = 6;
+          darwin-builder = {
+            diskSize = 40 * 1024;
+            memorySize = 8 * 1024;
+          };
+        };
+      };
+    };
 
     settings = {
       download-buffer-size = 500 * 1024 * 1024;

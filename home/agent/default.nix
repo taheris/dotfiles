@@ -1,9 +1,24 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
-{
-  home.packages = with pkgs; [
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (pkgs.stdenv) isDarwin;
+
+  packages = with pkgs; [
     claude-code-acp
     spec-kit
+  ];
+
+  darwinPackages = with pkgs; [
+    container
+    terminal-notifier
+  ];
+
+in
+{
+  home.packages = mkMerge [
+    packages
+    (mkIf isDarwin darwinPackages)
   ];
 
   programs.claude-code = {
@@ -21,16 +36,27 @@
         CLAUDE_CODE_ENABLE_TELEMETRY = "0";
       };
 
+      hooks = mkIf isDarwin {
+        Notification = [
+          {
+            matcher = "*";
+            hooks = [
+              {
+                type = "command";
+                command = "terminal-notifier -title 'Claude Code 🔔' -message 'Awaiting input...'";
+              }
+            ];
+          }
+        ];
+      };
+
       permissions = {
         defaultMode = "acceptEdits";
-        disableBypassPermissionsMode = "disable";
-
         allow = [
           "Bash(cargo check:*)"
           "Bash(cargo build:*)"
           "Bash(cargo test:*)"
           "Bash(bd:*)"
-          "Bash(find:*)"
           "Bash(git diff:*)"
           "Bash(git log:*)"
           "Bash(git status:*)"
@@ -42,9 +68,7 @@
 
           "WebSearch"
         ];
-
         ask = [ ];
-
         deny = [
           "Bash(su:*)"
           "Bash(sudo:*)"
