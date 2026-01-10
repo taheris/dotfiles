@@ -10,7 +10,7 @@
     nix-output-monitor
     nix-tree
     nixd
-    nixfmt-rfc-style
+    nixfmt
   ];
 
   nixpkgs = {
