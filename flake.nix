@@ -99,7 +99,7 @@
           wrapix = inputs'.wrapix.legacyPackages.lib;
         in
         {
-          formatter = pkgs.nixfmt-rfc-style;
+          formatter = pkgs.nixfmt;
           packages = import ./packages { inherit pkgs; } // {
             default = wrapix.mkSandbox {
               profile = wrapix.profiles.base;
