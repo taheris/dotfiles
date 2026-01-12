@@ -24,10 +24,12 @@ mkDerivation (finalAttrs: {
   nativeBuildInputs = [ pkgs.cmake ];
 
   buildInputs = [
+    pkgs.faiss
     pkgs.nlohmann_json
     pkgs.sqlite
-    pkgs.stable.faiss
-  ] ++ optional isLinux pkgs.gomp ++ optional isDarwin pkgs.llvmPackages.openmp;
+  ]
+  ++ optional isLinux pkgs.gomp
+  ++ optional isDarwin pkgs.llvmPackages.openmp;
 
   SQLITE_VSS_CMAKE_VERSION = finalAttrs.version;
 

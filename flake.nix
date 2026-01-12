@@ -72,7 +72,6 @@
       plasma-manager,
       solaar,
       sops-nix,
-      wrapix,
       ...
     }:
 
@@ -94,8 +93,12 @@
       systems = catAttrs "system" hosts;
 
       perSystem =
-        { pkgs, inputs', ... }:
+        { system, inputs', ... }:
         let
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+          };
           wrapix = inputs'.wrapix.legacyPackages.lib;
         in
         {
