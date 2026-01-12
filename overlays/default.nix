@@ -6,6 +6,10 @@
     import ../packages {
       inherit inputs;
       pkgs = final;
+    }
+    // {
+      beads = inputs.wrapix.inputs.beads.packages.${final.system}.default;
+      beads-viewer = inputs.wrapix.inputs.beads-viewer.packages.${final.system}.default;
     };
 
   modifications = final: prev: {

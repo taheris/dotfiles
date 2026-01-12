@@ -5,7 +5,6 @@ let
 
 in
 {
-  claude-code-acp = callPackage ./claude-code-acp { };
   intercept-fn-keys = callPackage ./intercept-fn-keys { };
   monaco = callPackage ./monaco { };
   monacob = callPackage ./monacob { };
