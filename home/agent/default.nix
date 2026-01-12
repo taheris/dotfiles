@@ -1,10 +1,16 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib) mkIf mkMerge;
   inherit (pkgs.stdenv) isDarwin;
 
   packages = with pkgs; [
+    beads
+    beads-viewer
     claude-code-acp
     spec-kit
   ];

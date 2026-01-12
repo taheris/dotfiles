@@ -29,4 +29,9 @@
       config.allowUnfree = true;
     };
   };
+
+  wrapix = final: _prev: {
+    beads = inputs.wrapix.inputs.beads.packages.${final.system}.default;
+    beads-viewer = inputs.wrapix.inputs.beads-viewer.packages.${final.system}.default;
+  };
 }

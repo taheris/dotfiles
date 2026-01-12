@@ -72,7 +72,6 @@
       plasma-manager,
       solaar,
       sops-nix,
-      wrapix,
       ...
     }:
 
@@ -133,7 +132,10 @@
           map (host: {
             name = "${host.user}@${host.name}";
             value = home-manager.lib.homeManagerConfiguration {
-              pkgs = nixpkgs.legacyPackages.${host.system};
+              pkgs = import nixpkgs {
+                system = host.system;
+                overlays = [ outputs.overlays.wrapix ];
+              };
               modules = [
                 plasma-manager.homeModules.plasma-manager
                 sops-nix.homeManagerModules.sops
