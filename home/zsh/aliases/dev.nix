@@ -1,206 +1,16 @@
-{ pkgs, ... }:
+{ ... }:
 
 let
-  inherit (pkgs.stdenv) isDarwin;
-
-  gitPersonal = "~/src/github.com/taheris";
-  dotfiles = "${gitPersonal}/dotfiles";
-  aliasFile = "${dotfiles}/home/zsh/alias.nix";
-
   gitLog = {
     medium = "%C(bold)Commit:%C(reset) %C(green)%H%C(red)%d%n%C(bold)Author:%C(reset) %C(cyan)%an <%ae>%n%C(bold)Date:%C(reset)   %C(blue)%ai (%ar)%C(reset)%n%+B";
     oneline = "%C(blue)%cd %C(yellow)%h%C(red)%d %C(white)%s";
   };
 in
 {
-  programs.zsh.shellGlobalAliases = {
-    # flags
-    H = " --help";
-    V = " --version";
-
-    # misc
-    C = "| ${if isDarwin then "pbcopy" else "wl-copy"}";
-    F = "| fzf";
-    G = "| grep";
-    EG = "| egrep";
-    FG = "| fgrep";
-    L = "| less";
-    S = "| sort";
-    U = "| uniq ";
-    X = "| xargs ";
-    XI = "| xargs -I{} ";
-    HH = "| head -n 1";
-    TT = "| tail -n -1";
-    T = "| tail -n +2";
-    CC = "| wc -c | tr -d ' '";
-    CL = "| wc -l | tr -d ' '";
-    CW = "| wc -w | tr -d ' '";
-    LC = "| tr '[:upper:]' '[:lower:]'";
-    UC = "| tr '[:lower:]' '[:upper:]'";
-    OC = "| openssl s_client -ign_eof -connect";
-
-    # redirects
-    N = ">/dev/null";
-    ON = "1>/dev/null";
-    EN = "2>/dev/null";
-    EO = "2>&1";
-    IR = "</dev/urandom";
-    IZ = "</dev/zero";
-
-    # awk
-    A1 = "| awk '{print $1}'";
-    A2 = "| awk '{print $2}'";
-    A3 = "| awk '{print $3}'";
-    A4 = "| awk '{print $4}'";
-    A5 = "| awk '{print $5}'";
-    A6 = "| awk '{print $6}'";
-    A7 = "| awk '{print $7}'";
-    A8 = "| awk '{print $8}'";
-    A9 = "| awk '{print $9}'";
-    AL = "| awk '{print $NF}'";
-
-    # kubernetes
-    LT = " --selector='app.kubernetes.io/managed-by=tilt' -oname";
-    NA = " --all-namespaces";
-    NI = " --namespace=ingress-nginx";
-    NS = " --namespace=kube-system";
-    OJ = " --output=json";
-    OY = " --output=yaml";
-
-    # rust
-    XL = " -- . ':(exclude)*.lock'";
-
-    # nix
-    AS = " --all-systems";
-    ST = " --show-trace";
-    STV = " --show-trace --print-build-logs --verbose";
-  };
-
   programs.zsh.shellAliases = {
-    # terminal
-    e = "\${(z)EDITOR}";
-    o = (if isDarwin then "open" else "xdg-open");
-    ae = "vim ${aliasFile}";
-    dfs = "cd ${dotfiles}";
-    org = "cd ${gitPersonal}/org";
-    sec = "cd ${gitPersonal}/secrets";
-
-    # cd
-    cdb = "cd -";
-    cdl = "cd $(ls -tr1 | tail -n-1)";
-    "..." = "cd ../..";
-    "...." = "cd ../../../";
-    "....." = "cd ../../../..";
-
-    # ls
-    ls = "ls --color=auto";
-    l = "ls -1A"; # Lists in one column, hidden files.
-    ll = "ls -lh"; # Lists human readable sizes.
-    la = "ll -A"; # Lists hidden files.
-    lr = "ll -R"; # Lists recursively.
-    lt = "ll -tr"; # Lists sorted by time.
-    lc = "lt -c"; # Lists sorted by time, shows change time.
-    lu = "lt -u"; # Lists sorted by time, shows access time.
-    lk = "ll -Sr"; # Lists sorted by size, largest last.
-    lh = "ll -at | head"; # Lists the most recently modified files.
-    llh = "ll -H";
-
-    # interactive
-    mv = "mv -i";
-    cp = "cp -i";
-    ln = "ln -i";
-
-    # du
-    du = "du -h";
-    du0 = "du -d 0";
-    du1 = "du -d 1";
-    du1s = "du -d 1 | sort --human-numeric-sort";
-    du2 = "du -d 2";
-    du2s = "du -d 2 | sort --human-numeric-sort";
-    du3 = "du -d 3";
-    du3s = "du -d 3 | sort --human-numeric-sort";
-
-    # fd
-    fdh = "fd --hidden --no-ignore --follow";
-    fde = "fd --extension";
-    fdf = "fd --type file";
-    fdfh = "fd --type file --hidden";
-    fdd = "fd --type directory";
-    fdl = "fd --type symlink";
-    fdx = "fd --type executable";
-    fdem = "fd --type empty";
-
-    # ps
-    psw = "ps ww";
-    psa = "ps auxww";
-
-    # misc
-    sudo = "sudo "; # use aliases with sudo
-    less = "less -R --quit-if-one-screen --redraw-on-quit";
-    tf = "tail -f";
-    cl = "clear";
-    cls = "clear;ls";
-    df = "df -h";
-    en = "echo -n";
-    gz = "tar -zcvf";
-    ka9 = "killall -9";
-    k9 = "kill -9";
-    sedi = "sed -i ''";
-    digs = "dig +short";
-    pw = "LC_ALL=C tr -dc '[:print:]' < /dev/urandom | head -c";
-    bc = "bc --mathlib";
-    locf = "loc --files";
-    locu = "loc -uu";
-    t2 = "tree -L 2";
-    iso = "date -u +'%Y-%m-%dT%H:%M:%SZ'";
-    sql = "sqlite3 -column -header -batch";
-
-    # noglob
-    find = "noglob find";
-    git = "noglob git";
-    scp = "noglob scp";
-    sftp = "noglob sftp";
-
-    # systemctl
-    sc = "systemctl";
-    scl = "systemctl list-units";
-    sclf = "systemctl list-units --state=failed";
-    sclr = "systemctl list-units --state=running";
-    scs = "systemctl status";
-    scst = "systemctl start";
-    scsp = "systemctl stop";
-    sce = "systemctl enable";
-    scd = "systemctl disable";
-    scrl = "systemctl reload";
-    scrs = "systemctl restart";
-    scu = "systemctl --user";
-    scus = "systemctl --user status";
-    scust = "systemctl --user start";
-    scusp = "systemctl --user stop";
-    scue = "systemctl --user enable";
-    scud = "systemctl --user disable";
-    scurl = "systemctl --user reload";
-    scurs = "systemctl --user restart";
-
-    # journalctl
-    jc = "journalctl";
-    jcf = "journalctl --follow";
-    jcb = "journalctl --boot";
-    jcb1 = "journalctl --boot -1";
-    jcb2 = "journalctl --boot -2";
-    jcp = "journalctl --boot --priority";
-    jcpe = "journalctl --boot --priority err";
-    jcpw = "journalctl --boot --priority warning";
-    jcu = "journalctl --pager-end --user-unit";
-    jcuf = "journalctl --follow --user-unit";
-
-    # fzf
-    f = "fzf";
-    fj = "fzf-json";
-    fp = "fzf --preview";
-
     # git
     g = "git";
+    git = "noglob git";
 
     # git branch
     gb = "git branch";
@@ -408,124 +218,6 @@ in
     gcpnc = "git cherry-pick --no-commit";
     grp = "git rev-parse HEAD";
 
-    # brew
-    bi = "brew info";
-    bin = "brew install";
-    binc = "brew install --cask";
-    bun = "brew uninstall";
-    bunc = "brew uninstall --cask";
-    brin = "brew reinstall";
-    brinc = "brew reinstall --cask";
-    bl = "brew list";
-    blc = "brew list --cask";
-    bln = "brew link";
-    blno = "brew link --overwrite";
-    buln = "brew unlink";
-    bo = "brew outdated";
-    boc = "brew outdated --cask";
-    bs = "brew search";
-    bup = ''
-      brew update && \
-      brew upgrade && \
-      brew upgrade --cask && \
-      brew cleanup && \
-      brew doctor'
-    '';
-
-    # brew services
-    bsl = "brew services list";
-    bsr = "brew services run";
-    bsst = "brew services start";
-    bssp = "brew services stop";
-    bsrs = "brew services restart";
-    bsc = "brew services cleanup";
-
-    # doom
-    dm = "doom";
-    dmb = "doom build";
-    dmd = "doom doctor";
-    dme = "doom env";
-    dmh = "doom help";
-    dmi = "doom info";
-    dmp = "doom purge";
-    dmv = "doom version";
-    dmin = "doom install";
-    dmpup = "~/bin/doom-pin-update.sh";
-    dmpupd = "~/bin/doom-pin-update.sh --dry-run";
-    dmsy = "doom sync";
-    dmsypr = "doom sync --prune";
-    dmsyr = "doom sync --rebuild";
-    dmsyu = "doom sync -u";
-    dmup = "doom upgrade";
-    dmupp = "doom upgrade --packages";
-
-    # gpg
-    gpgd = "gpg2 --decrypt";
-
-    # log
-    lgcl = "log collect";
-    lgc = "log config";
-    lge = "log erase";
-    lgsh = "log show";
-    lgs = "log stream";
-    lgsp = "log stream --process";
-    lgst = "log stats";
-
-    # plist
-    plp = "plutil -p --";
-    plj = "plutil -convert json -r -o - --";
-    plx = "plutil -convert xml1 -o - --";
-    plb = "plutil -convert binary1 -o - --";
-
-    # apple container
-    ac = "container";
-    acb = "container build";
-    accr = "container create";
-    ack = "container kill";
-    acl = "container list";
-    acla = "container list --all";
-    acr = "container run";
-    acrm = "container delete";
-    acsa = "container stats";
-    acsp = "container stop";
-    acst = "container start";
-
-    # apple container image
-    aci = "container image";
-    acii = "container image inspect";
-    acil = "container image list";
-    acild = "container image load";
-    acipl = "container image pull";
-    acipr = "container image prune";
-    acirm = "container image delete";
-    acis = "container image save";
-    acitg = "container image tag";
-
-    # apple container network
-    acn = "container network";
-    acncr = "container network create";
-    acni = "container network inspect";
-    acnl = "container network list";
-    acnrm = "container network delete";
-
-    # apple container system
-    acs = "container system";
-    acsd = "container system dns";
-    acsdf = "container system df";
-    acsk = "container system kernel";
-    acslg = "container system logs";
-    acss = "container system status";
-    acssp = "container system stop";
-    acsst = "container system start";
-
-    # apple container volume
-    acv = "container volume";
-    acvcr = "container volume create";
-    acvi = "container volume inspect";
-    acvl = "container volume list";
-    acvpr = "container volume prune";
-    acvrm = "container volume delete";
-
     # docker container
     dca = "docker container attach";
     dcc = "docker container commit";
@@ -724,37 +416,6 @@ in
     ruspd = "rustup set profile default";
     ruspc = "rustup set profile complete";
 
-    # ripgrep
-    rg = "rg --sort-files --follow --no-messages --max-columns 180";
-    rgf = "rg --files";
-    rgfh = "rg --files --hidden";
-    rgh = "rg --hidden";
-    rgi = "rg --no-ignore";
-    rgb = "rg-boundary";
-    rgl = "rg-limit";
-    rgt = "rg --type";
-    rgc = "rg --type c";
-    rgcmake = "rg --type cmake";
-    rgcpp = "rg --type cpp";
-    rgcss = "rg --type css";
-    rggo = "rg --type go";
-    rghtml = "rg --type html";
-    rgjs = "rg --type js";
-    rgjson = "rg --type json";
-    rgmd = "rg --type markdown";
-    rgorg = "rg --type org";
-    rgpy = "rg --type py";
-    rgrm = "rg --type readme";
-    rgrb = "rg --type ruby";
-    rgrs = "rg --type rust";
-    rgsc = "rg --type scala";
-    rgsh = "rg --type sh";
-    rgsql = "rg --type sql";
-    rgsw = "rg --type swift";
-    rgtoml = "rg --type toml";
-    rgtxt = "rg --type txt";
-    rgxml = "rg --type xml";
-
     # go
     gor = "go run";
     gog = "go generate";
@@ -765,6 +426,33 @@ in
     gotr = "go test ./...";
     gotrv = "go test ./... -v";
     gob = "go test -run=NONE -bench=.";
+
+    # direnv
+    de = "direnv";
+    dea = "direnv allow";
+    der = "direnv reload";
+
+    # doom
+    dm = "doom";
+    dmb = "doom build";
+    dmd = "doom doctor";
+    dme = "doom env";
+    dmh = "doom help";
+    dmi = "doom info";
+    dmp = "doom purge";
+    dmv = "doom version";
+    dmin = "doom install";
+    dmpup = "~/bin/doom-pin-update.sh";
+    dmpupd = "~/bin/doom-pin-update.sh --dry-run";
+    dmsy = "doom sync";
+    dmsypr = "doom sync --prune";
+    dmsyr = "doom sync --rebuild";
+    dmsyu = "doom sync -u";
+    dmup = "doom upgrade";
+    dmupp = "doom upgrade --packages";
+
+    # gpg
+    gpgd = "gpg2 --decrypt";
 
     # kubectl
     k = "kubectl";
@@ -865,152 +553,5 @@ in
     kdelsec = "kubectl delete secret";
     kdelsvc = "kubectl delete service";
     kdelss = "kubectl delete statefulset";
-
-    # direnv
-    de = "direnv";
-    dea = "direnv allow";
-    der = "direnv reload";
-
-    # nix build
-    nb = "nix build";
-    nbf = "nix build --file";
-    nbk = "nix build --keep-failed";
-
-    # nix channel
-    nc = "nix-channel";
-    nca = "nix-channel --add";
-    ncl = "nix-channel --list";
-    ncrm = "nix-channel --remove";
-    ncup = "nix-channel --update";
-
-    # nix develop
-    nd = "nix develop";
-    ndz = "nix develop --command zsh";
-
-    # nix-env
-    ne = "nix-env";
-    nedg = "nix-env --profile /nix/var/nix/profiles/system --delete-generations";
-
-    # nix flake
-    nf = "nix flake";
-    nfa = "nix flake archive";
-    nfc = "nix flake check";
-    nfcl = "nix flake clone";
-    nfi = "nix flake init";
-    nflk = "nix flake lock";
-    nfm = "nix flake metadata";
-    nfn = "nix flake new";
-    nfp = "nix flake prefetch";
-    nfs = "nix flake show";
-    nfup = "nix flake update";
-
-    # nix hash
-    nh = "nix hash";
-    nhc = "nix hash convert";
-    nhc16 = "nix hash convert --to nix16";
-    nhc32 = "nix hash convert --to nix32";
-    nhc64 = "nix hash convert --to nix64";
-    nhf = "nix hash file";
-    nhp = "nix hash path";
-
-    # nix-locate
-    nl = "nix-locate";
-    nlp = "nix-locate --package";
-    nlr = "nix-locate --regex";
-    nlw = "nix-locate --whole-name";
-
-    # nix profile
-    np = "nix profile";
-    npl = "nix profile list";
-    npin = "nix profile install";
-    nph = "nix profile history";
-    nprb = "nix profile rollback";
-    nprbt = "nix profile rollback --to";
-    nprm = "nix profile remove";
-    npup = "nix profile upgrade";
-    npupa = "nix profile upgrade --all";
-    npwh = "nix profile wipe-history";
-
-    # nix repl
-    nrp = "nix repl";
-    nrpf = "expect -c 'spawn nix repl; expect \"nix-repl>\"; send \":load-flake .\\n\"; interact'";
-    nrpp = "nix repl --expr 'import <nixpkgs> {}'";
-
-    # nix run
-    nr = "nix run";
-
-    # nix search
-    ns = "nix search";
-    nsp = "nix search nixpkgs";
-
-    # nix-shell
-    nsh = "nix-shell";
-    nshc = "nix-shell --command";
-    nshcs = "nix-shell --command \${SHELL}";
-    nshcsp = "nix-shell --command \${SHELL} --packages";
-    nshp = "nix-shell --packages";
-
-    # nix store
-    nst = "nix store";
-    nstgc = "nix store gc";
-    nstr = "nix store repair";
-    nstra = "nix store repair --all";
-    nstv = "nix store verify";
-    nstva = "nix store verify --all";
-    ncg = "nix-collect-garbage";
-    ncgd = "nix-collect-garbage --delete";
-    ncgdo = "nix-collect-garbage --delete-older-than 30d";
-
-    # nixos
-    nobv = "nixos-build-vms";
-    noc = "nixos-container";
-    noe = "nixos-enter";
-    noft = "nixos-firewall-tool";
-    nogc = "nixos-generate-config";
-    noh = "nixos-help";
-    noin = "nixos-install";
-    noo = "nixos-option";
-    nov = "nixos-version";
-
-    # nixos-rebuild
-    nor = "nixos-rebuild";
-    norbt = "nixos-rebuild boot";
-    norb = "nixos-rebuild build";
-    norbv = "nixos-rebuild build-vm";
-    norbvb = "nixos-rebuild build-vm-with-bootloader";
-    norlg = "nixos-rebuild list-generations";
-    norda = "nixos-rebuild dry-activate";
-    nordb = "nixos-rebuild dry-build";
-    nors = "nixos-rebuild switch";
-    nort = "nixos-rebuild test";
-
-    # home-manager
-    hm = "home-manager";
-    hmb = "home-manager build";
-    hmbf = "home-manager build --flake ${dotfiles}";
-    hme = "home-manager edit";
-    hmeg = "home-manager expire-generations";
-    hmego = "home-manager expire-generations '-30 days'";
-    hmg = "home-manager generations";
-    hmh = "home-manager help";
-    hmn = "home-manager news";
-    hmnf = "home-manager news --flake ${dotfiles}";
-    hmo = "home-manager option";
-    hmp = "home-manager packages";
-    hmrmg = "home-manager remove-generations";
-    hms = "home-manager switch";
-    hmsf = "home-manager switch --flake ${dotfiles}";
-
-    # darwin-rebuild
-    dr = "darwin-rebuild";
-    drlg = "darwin-rebuild --list-generations";
-    drs = "darwin-rebuild switch";
-    drsf = "darwin-rebuild switch --flake ${dotfiles}";
-    drsg = "darwin-rebuild --switch-generation";
-
-    # linux-builder
-    lbp = "launchctl print system/org.nixos.linux-builder";
-    lbst = "sudo launchctl start org.nixos.linux-builder";
-    lbsp = "sudo launchctl stop org.nixos.linux-builder";
   };
 }
