@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkForce mkIf mkMerge;
   inherit (pkgs.stdenv) isDarwin;
 
   packages = with pkgs; [
@@ -27,6 +27,15 @@ in
     (mkIf isDarwin darwinPackages)
   ];
 
+  launchd.agents.sops-nix = mkIf isDarwin {
+    enable = true;
+    config = {
+      EnvironmentVariables = {
+        PATH = mkForce "/usr/bin:/bin:/usr/sbin:/sbin";
+      };
+    };
+  };
+
   programs.claude-code = {
     enable = true;
 
@@ -39,7 +48,10 @@ in
         ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-4-5-20251101";
         ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-opus-4-5-20251101";
         ANTHROPIC_DEFAULT_HAIKU_MODEL = "claude-sonnet-4-5-20250929";
-        CLAUDE_CODE_ENABLE_TELEMETRY = "0";
+        CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
+        DISABLE_AUTOUPDATER = "1";
+        DISABLE_ERROR_REPORTING = "1";
+        DISABLE_TELEMETRY = "1";
       };
 
       hooks = mkIf isDarwin {
