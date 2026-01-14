@@ -113,12 +113,10 @@ in
     };
   };
 
-  launchd.daemons.linux-builder = {
-    serviceConfig = {
+  launchd.daemons = {
+    linux-builder.serviceConfig = {
       RunAtLoad = mkForce false;
       KeepAlive = mkForce false;
-      StandardOutPath = "/var/log/linux-builder.log";
-      StandardErrorPath = "/var/log/linux-builder.log";
     };
   };
 
