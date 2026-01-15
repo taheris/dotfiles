@@ -45,6 +45,7 @@ in
 
     systemPackages = with pkgs; [
       curl
+      pam_u2f
       vim
       wget
     ];
@@ -105,18 +106,20 @@ in
   };
 
   security = {
-    pam.services.login = {
-      gnupg = {
-        enable = true;
-        noAutostart = true;
-        storeOnly = true;
+    pam.services = {
+      login.gnupg = {
+          enable = true;
+          noAutostart = true;
+          storeOnly = true;
+        };
+
+        kwallet.enable = true;
       };
 
-      kwallet.enable = true;
+      sudo.u2fAuth = true;
     };
 
     rtkit.enable = true;
-    sudo.wheelNeedsPassword = false;
   };
 
   services = {
