@@ -171,6 +171,7 @@ in
     ack = "container kill";
     acl = "container list";
     acla = "container list --all";
+    aclg = "container logs";
     acr = "container run";
     acrm = "container delete";
     acsa = "container stats";
@@ -224,6 +225,17 @@ in
     lbp = "launchctl print system/org.nixos.linux-builder";
     lbst = "sudo launchctl start org.nixos.linux-builder";
     lbsp = "sudo launchctl stop org.nixos.linux-builder";
+
+    # wrapix-builder
+    wb = "wrapix-builder";
+    wbc = "wrapix-builder config";
+    wbs = "wrapix-builder status";
+    wbsu = "wrapix-builder setup";
+    wbsur = "wrapix-builder setup-routes";
+    wbsush = "wrapix-builder setup-ssh";
+    wbst = "wrapix-builder start";
+    wbsp = "wrapix-builder stop";
+    wbsh = "wrapix-builder ssh";
   }
 
   # linux-specific aliases

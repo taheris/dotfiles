@@ -13,6 +13,7 @@ let
     beads-viewer
     claude-code-acp
     spec-kit
+    wrapix-builder
   ];
 
   darwinPackages = with pkgs; [
