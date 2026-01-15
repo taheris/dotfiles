@@ -39,6 +39,15 @@ in
 {
   environment = {
     etc = {
+      "ssh/ssh_config.d/100-wrapix-builder.conf".text = ''
+        Host wrapix-builder
+          Hostname localhost
+          Port 2222
+          User builder
+          HostKeyAlias wrapix-builder
+          IdentityFile /etc/nix/wrapix_builder_ed25519
+      '';
+
       "tailscale/tailscaled-env.txt".source = tailscaleEnv;
     };
 
@@ -124,6 +133,21 @@ in
     enable = true;
     gc.automatic = true;
     optimise.automatic = true;
+
+    buildMachines = [
+      {
+        hostName = "wrapix-builder";
+        systems = [ "aarch64-linux" ];
+        maxJobs = 4;
+        protocol = "ssh-ng";
+        sshKey = "/etc/nix/wrapix_builder_ed25519";
+        sshUser = "builder";
+        supportedFeatures = [
+          "big-parallel"
+          "benchmark"
+        ];
+      }
+    ];
 
     linux-builder = {
       enable = true;
