@@ -51,6 +51,15 @@ in
     ];
   };
 
+  fonts = {
+    fontDir.enable = true;
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+    ];
+  };
+
   i18n = {
     defaultLocale = "en_GB.UTF-8";
     supportedLocales = [
@@ -101,6 +110,12 @@ in
 
   programs = {
     gamemode.enable = true;
+
+    niri = {
+      enable = true;
+      package = inputs.niri.packages.${host.system}.niri-unstable;
+    };
+
     ssh.startAgent = false;
     zsh.enable = true;
   };
@@ -108,12 +123,9 @@ in
   security = {
     pam.services = {
       login.gnupg = {
-          enable = true;
-          noAutostart = true;
-          storeOnly = true;
-        };
-
-        kwallet.enable = true;
+        enable = true;
+        noAutostart = true;
+        storeOnly = true;
       };
 
       sudo.u2fAuth = true;
@@ -123,8 +135,6 @@ in
   };
 
   services = {
-    desktopManager.plasma6.enable = true;
-
     displayManager = {
       sddm = {
         enable = true;
@@ -224,9 +234,13 @@ in
     };
   };
 
-  systemd.services = {
-    systemd-machine-id-commit.enable = true;
-    tailscaled.serviceConfig.Environment = mkAfter [ "TS_NO_LOGS_NO_SUPPORT=true" ];
+  systemd = {
+    services = {
+      systemd-machine-id-commit.enable = true;
+      tailscaled.serviceConfig.Environment = mkAfter [ "TS_NO_LOGS_NO_SUPPORT=true" ];
+    };
+
+    user.services.niri-flake-polkit.enable = false;
   };
 
   system.stateVersion = "24.11";

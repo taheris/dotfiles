@@ -49,6 +49,7 @@ in
   imports = [
     ./alacritty
     ./agent
+    ./desktop
     ./dotfile
     ./emacs
     ./flatpak
@@ -58,7 +59,6 @@ in
     ./input
     ./librewolf
     ./nix
-    ./plasma
     ./python
     ./rust
     ./secrets
@@ -83,17 +83,6 @@ in
   };
 
   programs.home-manager.enable = true;
-
-  xdg = mkIf isLinux {
-    enable = true;
-    mimeApps.enable = true;
-
-    portal = {
-      enable = true;
-      config.common.default = "kde";
-      extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
-    };
-  };
 
   systemd.user.startServices = "sd-switch";
 

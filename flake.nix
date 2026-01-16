@@ -17,6 +17,16 @@
     nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
     nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.05&shallow=1";
 
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dms-plugin-registry = {
+      url = "github:AvengeMedia/dms-plugin-registry";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-parts = {
       url = "git+ssh://git@github.com/hercules-ci/flake-parts.git?ref=main&shallow=1";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -24,6 +34,11 @@
 
     home-manager = {
       url = "git+ssh://git@github.com/nix-community/home-manager.git?ref=master&shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -66,8 +81,11 @@
     inputs@{
       self,
       nixpkgs,
+      dms,
+      dms-plugin-registry,
       flake-parts,
       home-manager,
+      niri,
       nix-darwin,
       plasma-manager,
       solaar,
@@ -125,6 +143,7 @@
               system = host.system;
               modules = [
                 ./nixos/configuration.nix
+                niri.nixosModules.niri
                 solaar.nixosModules.default
                 sops-nix.nixosModules.sops
               ];
@@ -138,6 +157,10 @@
             value = home-manager.lib.homeManagerConfiguration {
               pkgs = nixpkgs.legacyPackages.${host.system};
               modules = [
+                dms.homeModules.dank-material-shell
+                dms.homeModules.niri
+                dms-plugin-registry.modules.default
+                niri.homeModules.niri
                 plasma-manager.homeModules.plasma-manager
                 sops-nix.homeManagerModules.sops
                 ./home

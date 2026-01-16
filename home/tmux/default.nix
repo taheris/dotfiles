@@ -4,21 +4,22 @@
   programs.tmux = {
     enable = true;
 
-    prefix = "C-Space";
     baseIndex = 1;
     clock24 = true;
     escapeTime = 10;
     historyLimit = 100000;
     keyMode = "vi";
     mouse = true;
+    prefix = "C-Space";
     terminal = "xterm-256color";
 
     plugins = [ pkgs.tmuxPlugins.nord ];
 
     extraConfig = ''
-      set-option -g status-position top
-      set-option -g status-interval 2
-      set-option -g default-command "which reattach-to-user-namespace > /dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
+      set -g status-position top
+      set -g status-interval 2
+      set -g default-command "which reattach-to-user-namespace > /dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
+      set -g renumber-windows on
 
       bind-key Space   copy-mode
       bind-key C-Space copy-mode
