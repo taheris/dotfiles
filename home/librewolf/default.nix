@@ -10,7 +10,6 @@ mkIf isLinux {
     enable = true;
 
     nativeMessagingHosts = with pkgs; [
-      kdePackages.plasma-browser-integration
       tridactyl-native
     ];
   };
