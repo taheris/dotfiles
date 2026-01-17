@@ -11,7 +11,6 @@ let
     hasSuffix
     listToAttrs
     optionalAttrs
-    optionalString
     range
     splitString
     ;
@@ -85,34 +84,14 @@ let
 
 in
 optionalAttrs (hasSuffix "linux" host.system) {
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-      font-name = "Noto Sans";
-    };
-  };
-
   home = {
     packages = with pkgs; [
       catppuccin-gtk
       playerctl
       tela-icon-theme
+      wpaperd
       xwayland-satellite
     ];
-
-    pointerCursor = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
-      size = 24;
-
-      gtk.enable = true;
-      x11.enable = true;
-    };
-
-    sessionVariables = {
-      GTK_THEME = "catppuccin-mocha-blue-standard+default";
-      QS_ICON_THEME = "Tela";
-    };
 
   };
 
@@ -143,12 +122,14 @@ optionalAttrs (hasSuffix "linux" host.system) {
       settings = {
         binds = {
           # Window focus
-          "Mod+H".action.focus-column-left-or-last = [ ];
+          "Mod+H".action.focus-column-left = [ ];
+          "Mod+Shift+H".action.focus-column-first = [ ];
           "Mod+J".action.spawn = [ "${focusDownWrap}" ];
           "Mod+Shift+J".action.spawn = [ "${newWorkspaceBelow}" ];
           "Mod+K".action.spawn = [ "${focusUpWrap}" ];
           "Mod+Shift+K".action.spawn = [ "${newWorkspaceAbove}" ];
-          "Mod+L".action.focus-column-right-or-first = [ ];
+          "Mod+L".action.focus-column-right = [ ];
+          "Mod+Shift+L".action.focus-column-last = [ ];
 
           # Window move
           "Mod+Alt+H".action.move-column-left = [ ];
@@ -175,6 +156,8 @@ optionalAttrs (hasSuffix "linux" host.system) {
           "Mod+Alt+F".action.fullscreen-window = [ ];
           "Mod+R".action.switch-preset-column-width = [ ];
           "Mod+Shift+R".action.switch-preset-column-width-back = [ ];
+          "Mod+V".action.center-column = [ ];
+          "Mod+Alt+V".action.center-visible-columns = [ ];
           "Mod+Minus".action.set-column-width = "-5%";
           "Mod+Equal".action.set-column-width = "+5%";
 
@@ -186,10 +169,10 @@ optionalAttrs (hasSuffix "linux" host.system) {
           # DMS
           "Mod+Space" = dms "spotlight toggle";
           "Mod+Comma" = dms "settings toggle";
+          "Mod+Period" = dms "notepad toggle";
           "Mod+M" = dms "processlist toggle";
           "Mod+N" = dms "notifications toggle";
-          "Mod+P" = dms "notepad toggle";
-          "Mod+V" = dms "clipboard toggle";
+          "Mod+P" = dms "clipboard toggle";
           "Mod+Alt+Shift+P" = dms "powermenu toggle";
           "Mod+Alt+Shift+N" = dms "night toggle";
 
@@ -217,13 +200,18 @@ optionalAttrs (hasSuffix "linux" host.system) {
 
         gestures.hot-corners.enable = false;
 
+        cursor = {
+          theme = "Nordzy-cursors";
+          size = 24;
+        };
+
         input.keyboard = {
           repeat-delay = 200;
           repeat-rate = 30;
         };
 
         layout = {
-          center-focused-column = "always";
+          center-focused-column = "on-overflow";
           default-column-width.proportion = 0.5;
         };
 
@@ -262,6 +250,50 @@ optionalAttrs (hasSuffix "linux" host.system) {
   services = {
     mako.enable = true;
     polkit-gnome.enable = true;
+    wpaperd.enable = true;
+  };
+
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+    polarity = "dark";
+
+    cursor = {
+      name = "Nordzy-cursors";
+      package = pkgs.nordzy-cursor-theme;
+      size = 24;
+    };
+
+    image = pkgs.fetchurl {
+      url = "https://images.unsplash.com/photo-1729614499383-756f6e0e4d80";
+      sha256 = "05c2rx7i7k7w87dnzjcn1znbvj00q21a956kmqs4mfw558rxnmfw";
+      name = "wallpaper.jpg";
+    };
+
+    fonts = {
+      monospace = {
+        name = "MonacoB Nerd Font Mono";
+        package = pkgs.monacob;
+      };
+      serif = {
+        name = "Bookerly";
+        package = pkgs.bookerly;
+      };
+      sansSerif = {
+        name = "Noto Sans";
+        package = pkgs.noto-fonts;
+      };
+      emoji = {
+        name = "Noto Color Emoji";
+        package = pkgs.noto-fonts-color-emoji;
+      };
+    };
+
+    targets = {
+      emacs.enable = false;
+      librewolf.profileNames = [ "default" ];
+      wpaperd.enable = true;
+    };
   };
 
   xdg = {

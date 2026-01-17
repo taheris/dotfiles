@@ -70,6 +70,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     wrapix = {
       url = "git+ssh://git@github.com/taheris/wrapix.git?ref=main&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -90,6 +95,7 @@
       plasma-manager,
       solaar,
       sops-nix,
+      stylix,
       ...
     }:
 
@@ -146,6 +152,7 @@
                 niri.nixosModules.niri
                 solaar.nixosModules.default
                 sops-nix.nixosModules.sops
+                stylix.nixosModules.stylix
               ];
             };
           }) linuxHosts
@@ -163,6 +170,7 @@
                 niri.homeModules.niri
                 plasma-manager.homeModules.plasma-manager
                 sops-nix.homeManagerModules.sops
+                stylix.homeModules.stylix
                 ./home
               ];
               extraSpecialArgs = {
