@@ -207,6 +207,36 @@ in
     };
   };
 
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
+
+    fonts = {
+      monospace = {
+        name = "Noto Sans Mono";
+        package = pkgs.noto-fonts;
+      };
+      serif = {
+        name = "Noto Serif";
+        package = pkgs.noto-fonts;
+      };
+      sansSerif = {
+        name = "Noto Sans";
+        package = pkgs.noto-fonts;
+      };
+      emoji = {
+        name = "Noto Color Emoji";
+        package = pkgs.noto-fonts-color-emoji;
+      };
+    };
+
+    image = pkgs.fetchurl {
+      url = "https://images.unsplash.com/photo-1729614499383-756f6e0e4d80";
+      sha256 = "05c2rx7i7k7w87dnzjcn1znbvj00q21a956kmqs4mfw558rxnmfw";
+      name = "wallpaper.jpg";
+    };
+  };
+
   users.users = {
     ${host.user} = {
       isNormalUser = true;

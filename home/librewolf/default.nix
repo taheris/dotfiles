@@ -9,6 +9,10 @@ mkIf isLinux {
   programs.librewolf = {
     enable = true;
 
+    profiles.default = {
+      isDefault = true;
+    };
+
     nativeMessagingHosts = with pkgs; [
       tridactyl-native
     ];
