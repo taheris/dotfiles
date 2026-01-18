@@ -73,6 +73,16 @@ let
     niri msg action move-workspace-to-index "$((current + 1))"
   '';
 
+  # Spawn terminal in last directory
+  spawnTerminal = pkgs.writeShellScript "spawn-terminal" ''
+    dir="$XDG_RUNTIME_DIR/last-dir"
+    if [ -f "$dir" ]; then
+      exec alacritty --working-directory "$(cat "$dir")" -e tmux
+    else
+      exec alacritty -e tmux
+    fi
+  '';
+
   workspaceBinds =
     prefix: action:
     listToAttrs (
@@ -163,7 +173,7 @@ optionalAttrs (hasSuffix "linux" host.system) {
 
           # Spawn apps
           "Mod+E" = spawn "emacsclient -c -a emacs";
-          "Mod+T" = spawn "alacritty -e tmux";
+          "Mod+T".action.spawn = [ "${spawnTerminal}" ];
           "Mod+W" = spawn "librewolf";
 
           # DMS
