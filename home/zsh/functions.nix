@@ -12,6 +12,10 @@ in
   };
 
   programs.zsh.initContent = ''
+    chpwd() {
+      echo "$PWD" > "$XDG_RUNTIME_DIR/last-dir";
+    }
+
     github-clone() {
       local repo=$*
       local outdir="${home}/src/github.com/$repo"
