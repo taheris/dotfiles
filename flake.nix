@@ -42,6 +42,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nirinit = {
+      url = "github:amaanq/nirinit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-darwin = {
       url = "git+ssh://git@github.com/LnL7/nix-darwin.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -91,6 +96,7 @@
       flake-parts,
       home-manager,
       niri,
+      nirinit,
       nix-darwin,
       plasma-manager,
       solaar,
@@ -150,6 +156,7 @@
               modules = [
                 ./nixos/configuration.nix
                 niri.nixosModules.niri
+                nirinit.nixosModules.nirinit
                 solaar.nixosModules.default
                 sops-nix.nixosModules.sops
                 stylix.nixosModules.stylix

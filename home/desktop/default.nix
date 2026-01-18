@@ -213,6 +213,18 @@ optionalAttrs (hasSuffix "linux" host.system) {
         layout = {
           center-focused-column = "on-overflow";
           default-column-width.proportion = 0.5;
+
+          shadow = {
+            enable = true;
+            softness = 20;
+            spread = 5;
+            offset = {
+              x = 0;
+              y = 0;
+            };
+            color = "rgba(235 73 55 1.0)";
+            inactive-color = "rgba(0 0 0 0.0)";
+          };
         };
 
         hotkey-overlay.skip-at-startup = true;
