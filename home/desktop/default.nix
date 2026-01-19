@@ -205,8 +205,8 @@ optionalAttrs (hasSuffix "linux" host.system) {
           "Mod+F4".action.screenshot-screen = [ ];
           "Mod+F5".action.screenshot-window = [ ];
         }
-        // workspaceBinds "Mod+Alt+" "focus-workspace"
-        // workspaceBinds "Mod+Shift+" "move-column-to-workspace";
+        // workspaceBinds "Mod+" "focus-workspace"
+        // workspaceBinds "Mod+Alt+" "move-column-to-workspace";
 
         gestures.hot-corners.enable = false;
 
