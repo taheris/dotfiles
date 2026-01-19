@@ -63,6 +63,7 @@ in
     ./rust
     ./secrets
     ./starship
+    ./stylix
     ./sql
     ./tmux
     ./vim

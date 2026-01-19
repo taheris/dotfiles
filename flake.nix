@@ -205,9 +205,11 @@
                     home-manager.extraSpecialArgs = specialArgs;
                     home-manager.sharedModules = [
                       sops-nix.homeManagerModules.sops
+                      stylix.homeModules.stylix
                     ];
                     home-manager.users.${host.user} = import ./home;
                   }
+                  stylix.darwinModules.stylix
                 ];
               };
           }) darwinHosts
