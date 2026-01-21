@@ -158,13 +158,6 @@ in
       '';
     };
 
-    nirinit = {
-      enable = true;
-      settings = {
-        skip.apps = [ "steam" ];
-      };
-    };
-
     ollama = {
       enable = true;
       #acceleration = "cuda";
