@@ -51,11 +51,18 @@
     };
 
     kernelModules = [
+      "apple_bl_usb"
       "kvm-amd"
       "tcp_bbr"
     ];
 
     kernelPackages = pkgs.linuxPackages_latest;
+
+    extraModulePackages = [
+      (pkgs.apple-display-backlight.override {
+        kernel = config.boot.kernelPackages.kernel;
+      })
+    ];
 
     kernelParams = [
       "amdgpu.gpu_recovery=1"
@@ -63,7 +70,6 @@
       "nvidia.NVreg_TemporaryFilePath=/var/tmp"
       "pcie_aspm.policy=performance"
       "pcie_port_pm=off" # Intel I225-V
-      "usbhid.quirks=0x05ac:0x9243:0x0004" # Pro Display XDR
       "resume=/dev/mapper/swap" # Hibernate resume device
     ];
 

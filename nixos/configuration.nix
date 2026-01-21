@@ -198,6 +198,10 @@ in
         SUBSYSTEMS=="usb", ATTRS{idVendor}=="35ef", MODE="0666"
         KERNEL=="hidraw*", ATTRS{idVendor}=="35ef", MODE="0666"
         EOF
+
+        cat > $out/lib/udev/rules.d/99-apple-display-backlight.rules << EOF
+        SUBSYSTEM=="backlight", KERNEL=="apple_xdr_display", MODE="0664", GROUP="users"
+        EOF
       '')
     ];
 
