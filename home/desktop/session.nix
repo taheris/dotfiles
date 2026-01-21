@@ -28,9 +28,11 @@ in
         app_id,
         title,
         workspace_idx: $ws_idx[.workspace_id | tostring],
-        is_focused
+        is_focused,
+        column: (.layout.pos_in_scrolling_layout[0] // 999),
+        row: (.layout.pos_in_scrolling_layout[1] // 0)
       }) |
-      sort_by(.workspace_idx)
+      sort_by([.workspace_idx, .column, .row])
     ' > "${sessionFile}.tmp"
 
     mv "${sessionFile}.tmp" "${sessionFile}"
@@ -148,6 +150,44 @@ in
         echo "Could not find window for: $title ($app)"
       fi
     done < <(echo "$session" | ${jq} -c '.[]')
+
+    # Reorder windows within each workspace
+    # Process windows in reverse column order and move each to leftmost position
+    echo "Reordering windows within workspaces..."
+    for ws in $(echo "$session" | ${jq} -r '[.[].workspace_idx] | unique | sort | .[]'); do
+      [ "$ws" = "null" ] && continue
+
+      # Get windows for this workspace sorted by column descending (rightmost first)
+      ws_windows=$(echo "$session" | ${jq} -c --argjson ws "$ws" '
+        [.[] | select(.workspace_idx == $ws)] | sort_by(.column) | reverse
+      ')
+
+      # Get workspace_id for this workspace index
+      ws_id=$(niri msg -j workspaces | ${jq} -r --argjson idx "$ws" '.[] | select(.idx == $idx) | .id')
+      [ -z "$ws_id" ] && continue
+
+      # Focus each window (rightmost first) and move it all the way left
+      while IFS= read -r saved; do
+        title=$(echo "$saved" | ${jq} -r '.title')
+        app=$(echo "$saved" | ${jq} -r '.app_id')
+
+        # Find window by title or app_id, filtering to this workspace
+        window_id=$(niri msg -j windows | ${jq} -r --arg t "$title" --arg a "$app" --argjson wsid "$ws_id" '
+          [.[] | select(.workspace_id == $wsid and .app_id == $a)] |
+          (map(select(.title == $t)) | first | .id) //
+          (first | .id) //
+          empty
+        ')
+
+        if [ -n "$window_id" ]; then
+          niri msg action focus-window --id "$window_id"
+          # Move column all the way left
+          for _ in {1..50}; do
+            niri msg action move-column-left 2>/dev/null || true
+          done
+        fi
+      done < <(echo "$ws_windows" | ${jq} -c '.[]')
+    done
 
     # Restore focus
     focused_ws=$(echo "$session" | ${jq} -r '.[] | select(.is_focused) | .workspace_idx // empty')
