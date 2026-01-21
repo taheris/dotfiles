@@ -7,6 +7,8 @@
 }:
 
 let
+  session = import ./session.nix { inherit pkgs; };
+
   inherit (lib)
     hasSuffix
     listToAttrs
@@ -101,8 +103,9 @@ optionalAttrs (hasSuffix "linux" host.system) {
       tela-icon-theme
       wpaperd
       xwayland-satellite
+      (writeShellScriptBin "niri-session-save" "exec ${session.save}")
+      (writeShellScriptBin "niri-session-restore" "exec ${session.restore}")
     ];
-
   };
 
   programs = {
@@ -247,6 +250,7 @@ optionalAttrs (hasSuffix "linux" host.system) {
               "run"
             ];
           }
+          { command = [ "${session.restore}" ]; }
         ];
 
         window-rules = [
@@ -283,6 +287,31 @@ optionalAttrs (hasSuffix "linux" host.system) {
       enable = true;
       config.common.default = "gtk";
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
+  };
+
+  systemd.user = {
+    services.niri-session-save = {
+      Unit = {
+        Description = "Save niri session state";
+        After = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${session.save}";
+      };
+    };
+
+    timers.niri-session-save = {
+      Unit = {
+        Description = "Periodically save niri session state";
+        After = [ "graphical-session.target" ];
+      };
+      Timer = {
+        OnBootSec = "5min";
+        OnUnitActiveSec = "5min";
+      };
+      Install.WantedBy = [ "timers.target" ];
     };
   };
 }
