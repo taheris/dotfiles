@@ -7,7 +7,17 @@
 }:
 
 let
-  session = import ./session.nix { inherit pkgs; };
+  # Spawn terminal in last directory
+  spawnTerminal = pkgs.writeShellScript "spawn-terminal" ''
+    dir="$XDG_RUNTIME_DIR/last-dir"
+    if [ -f "$dir" ]; then
+      exec alacritty --working-directory "$(cat "$dir")" -e tmux
+    else
+      exec alacritty -e tmux
+    fi
+  '';
+
+  session = import ./session.nix { inherit pkgs spawnTerminal; };
 
   inherit (lib)
     hasSuffix
@@ -73,16 +83,6 @@ let
     niri msg action focus-workspace "$count"
     niri msg action focus-workspace-down
     niri msg action move-workspace-to-index "$((current + 1))"
-  '';
-
-  # Spawn terminal in last directory
-  spawnTerminal = pkgs.writeShellScript "spawn-terminal" ''
-    dir="$XDG_RUNTIME_DIR/last-dir"
-    if [ -f "$dir" ]; then
-      exec alacritty --working-directory "$(cat "$dir")" -e tmux
-    else
-      exec alacritty -e tmux
-    fi
   '';
 
   workspaceBinds =

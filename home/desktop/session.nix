@@ -1,8 +1,17 @@
-{ pkgs }:
+{ pkgs, spawnTerminal }:
 
 let
   jq = "${pkgs.jq}/bin/jq";
   sessionFile = "$XDG_DATA_HOME/niri-session/session.json";
+
+  # Map app_id to spawn command - apps with internal session restore should only spawn once
+  spawnCommands = {
+    Alacritty = "${spawnTerminal}";
+    emacs = "emacsclient -c -a emacs";
+  };
+
+  # Apps that manage their own session restore (only spawn one instance)
+  singleInstanceApps = [ "librewolf" "firefox" "chromium" "chrome" ];
 in
 {
   save = pkgs.writeShellScript "niri-session-save" ''
@@ -43,15 +52,45 @@ in
 
     echo "Restoring session..."
 
+    # App-specific spawn commands
+    get_spawn_cmd() {
+      case "$1" in
+        Alacritty) echo "${spawnCommands.Alacritty}" ;;
+        emacs) echo "${spawnCommands.emacs}" ;;
+        *) echo "$1" ;;
+      esac
+    }
+
+    # Apps that handle their own session restore (only spawn one)
+    is_single_instance() {
+      case "$1" in
+        ${builtins.concatStringsSep "|" singleInstanceApps}) return 0 ;;
+        *) return 1 ;;
+      esac
+    }
+
     # Spawn windows for each app, accounting for already-running instances
     for app in $(echo "$session" | ${jq} -r '[.[].app_id] | unique | .[]'); do
       needed=$(echo "$session" | ${jq} --arg app "$app" '[.[] | select(.app_id == $app)] | length')
       existing=$(niri msg -j windows | ${jq} --arg app "$app" '[.[] | select(.app_id == $app)] | length')
+
+      # Single-instance apps only need one spawn (they restore their own windows)
+      if is_single_instance "$app"; then
+        if [ "$existing" -eq 0 ]; then
+          echo "Spawning single instance of: $app (has internal session restore)"
+          spawn_cmd=$(get_spawn_cmd "$app")
+          niri msg action spawn -- $spawn_cmd &
+          sleep 1
+        fi
+        continue
+      fi
+
       to_spawn=$((needed - existing))
       if [ "$to_spawn" -gt 0 ]; then
         echo "Spawning $to_spawn instance(s) of: $app"
+        spawn_cmd=$(get_spawn_cmd "$app")
         for _ in $(seq 1 "$to_spawn"); do
-          niri msg action spawn -- "$app" &
+          niri msg action spawn -- $spawn_cmd &
           sleep 1
         done
       fi
