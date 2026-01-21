@@ -266,6 +266,7 @@ in
 
   systemd = {
     services = {
+      nvidia-suspend.wantedBy = [ "systemd-suspend-then-hibernate.service" ];
       systemd-machine-id-commit.enable = true;
       tailscaled.serviceConfig.Environment = mkAfter [ "TS_NO_LOGS_NO_SUPPORT=true" ];
     };
