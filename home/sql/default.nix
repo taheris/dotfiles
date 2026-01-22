@@ -2,7 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    #mycli
+    dolt
+    mycli
     pgcli
     postgresql
     pspg

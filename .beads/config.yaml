@@ -44,6 +44,10 @@ issue-prefix: "df"
 # If not set, bd sync will require you to run 'bd config set sync.branch <branch>'.
 sync-branch: "beads"
 
+# Sync mode for dolt backend (dolt-native uses Dolt remotes only, no JSONL)
+sync:
+  mode: "dolt-native"
+
 # Multi-repo configuration (experimental - bd-307)
 # Allows hydrating from multiple repositories and routing writes to the correct JSONL
 # repos:
