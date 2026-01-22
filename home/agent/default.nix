@@ -6,7 +6,7 @@
 
 let
   inherit (lib) mkForce mkIf mkMerge;
-  inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv) isDarwin isLinux;
 
   packages = with pkgs; [
     beads
@@ -21,11 +21,16 @@ let
     terminal-notifier
   ];
 
+  linuxPackages = with pkgs; [
+    libnotify
+  ];
+
 in
 {
   home.packages = mkMerge [
     packages
     (mkIf isDarwin darwinPackages)
+    (mkIf isLinux linuxPackages)
   ];
 
   launchd.agents.sops-nix = mkIf isDarwin {
@@ -46,23 +51,25 @@ in
       includeCoAuthoredBy = false;
 
       env = {
-        ANTHROPIC_DEFAULT_OPUS_MODEL = "claude-opus-4-5-20251101";
-        ANTHROPIC_DEFAULT_SONNET_MODEL = "claude-opus-4-5-20251101";
-        ANTHROPIC_DEFAULT_HAIKU_MODEL = "claude-sonnet-4-5-20250929";
+        ANTHROPIC_MODEL = "opus";
         CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
         DISABLE_AUTOUPDATER = "1";
         DISABLE_ERROR_REPORTING = "1";
         DISABLE_TELEMETRY = "1";
       };
 
-      hooks = mkIf isDarwin {
+      hooks = {
         Notification = [
           {
             matcher = "*";
             hooks = [
               {
                 type = "command";
-                command = "terminal-notifier -title 'Claude Code 🔔' -message 'Awaiting input...'";
+                command =
+                  if isDarwin then
+                    "terminal-notifier -title 'Claude Code 🔔' -message 'Awaiting input...'"
+                  else
+                    "notify-send 'Claude Code 🔔' 'Awaiting input...'";
               }
             ];
           }
