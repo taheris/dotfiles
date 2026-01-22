@@ -273,6 +273,44 @@ in
       nvidia-suspend.wantedBy = [ "systemd-suspend-then-hibernate.service" ];
       systemd-machine-id-commit.enable = true;
       tailscaled.serviceConfig.Environment = mkAfter [ "TS_NO_LOGS_NO_SUPPORT=true" ];
+
+      # Reset xHCI controller to fix RODE AI-1 hibernate and resume.
+      usb-xhci-reset-pre-sleep = {
+        description = "Unbind AMD xHCI controller before sleep";
+        before = [
+          "systemd-suspend.service"
+          "systemd-hibernate.service"
+          "systemd-suspend-then-hibernate.service"
+        ];
+        wantedBy = [
+          "systemd-suspend.service"
+          "systemd-hibernate.service"
+          "systemd-suspend-then-hibernate.service"
+        ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = pkgs.writeShellScript "xhci-unbind" ''
+            echo "0000:6c:00.4" > /sys/bus/pci/drivers/xhci_hcd/unbind 2>/dev/null || true
+          '';
+        };
+      };
+
+      usb-xhci-reset-post = {
+        description = "Reset AMD xHCI controller after boot/resume";
+        after = [ "graphical.target" ];
+        wantedBy = [
+          "graphical.target"
+          "post-resume.target"
+        ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = pkgs.writeShellScript "xhci-reset" ''
+            echo "0000:6c:00.4" > /sys/bus/pci/drivers/xhci_hcd/unbind 2>/dev/null || true
+            sleep 5
+            echo "0000:6c:00.4" > /sys/bus/pci/drivers/xhci_hcd/bind 2>/dev/null || true
+          '';
+        };
+      };
     };
 
     user.services.niri-flake-polkit.enable = false;
