@@ -3,13 +3,13 @@
 - Device: 3A2950F9
 - Rule:
   - MouseGesture: Mouse Left
-  - Execute: [niri, msg, action, focus-column-left]
+  - Execute: [/run/current-system/sw/bin/niri, msg, action, focus-column-left]
 - Rule:
   - MouseGesture: Mouse Right
-  - Execute: [niri, msg, action, focus-column-right]
+  - Execute: [/run/current-system/sw/bin/niri, msg, action, focus-column-right]
 - Rule:
   - MouseGesture: Mouse Up
-  - Execute: [niri, msg, action, focus-workspace-up]
+  - Execute: [/run/current-system/sw/bin/niri, msg, action, focus-workspace-up]
 - Rule:
   - MouseGesture: Mouse Down
-  - Execute: [niri, msg, action, focus-workspace-down]
+  - Execute: [/run/current-system/sw/bin/niri, msg, action, focus-workspace-down]
