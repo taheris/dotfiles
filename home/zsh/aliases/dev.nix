@@ -328,6 +328,7 @@ in
     cbb = "cargo build --bin";
     cbe = "cargo build --examples";
     cbr = "cargo build --release";
+    cbw = "cargo build --workspace";
     cbrm = "cargo build --release --target=x86_64-unknown-linux-musl";
     cbaf = "cargo build --all-features";
     cbn = "cargo bench";
@@ -336,6 +337,7 @@ in
     cbnaft = "cargo clippy --all-features --all-targets --workspace";
     ct = "cargo test";
     ctl = "cargo test --lib";
+    ctw = "cargo test --workspace";
     ctaf = "cargo test --all-features";
     ctlaf = "cargo test --lib --all-features";
     ctnc = "cargo test -- --nocapture";
