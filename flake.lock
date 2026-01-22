@@ -77,16 +77,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1768216872,
-        "narHash": "sha256-DwIR/r1TJnpVd/CT1E2OTkAjU7k9/KHbcVwg5zziFVg=",
+        "lastModified": 1769069582,
+        "narHash": "sha256-m0gVLeWfFeaWZpARuXgP00npmZcO7XCm7mXWA52bqTc=",
         "owner": "steveyegge",
         "repo": "beads",
-        "rev": "279192c5fbf851d0e47feaa7a5b5a9a6df325866",
+        "rev": "b5178e1895e7db638725f9aeaad3cd5039eb7e73",
         "type": "github"
       },
       "original": {
         "owner": "steveyegge",
-        "ref": "v0.47.1",
+        "ref": "v0.49.0",
         "repo": "beads",
         "type": "github"
       }
@@ -100,16 +100,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1767772687,
-        "narHash": "sha256-qesp5gwR9zlPpmq5BXW110Ab1KJ0M+v8VZJk1AxFw2w=",
+        "lastModified": 1768343907,
+        "narHash": "sha256-lFJPZFeXnhLhfGvZybpSJOi/11xcaP8bn+6KpxljlPM=",
         "owner": "Dicklesworthstone",
         "repo": "beads_viewer",
-        "rev": "fe9f22e612a29d0fafe7d2705529e6480c0806d5",
+        "rev": "09db3df572e7d12803eec78a6939ced4f96cedb7",
         "type": "github"
       },
       "original": {
         "owner": "Dicklesworthstone",
-        "ref": "v0.12.1",
+        "ref": "v0.13.0",
         "repo": "beads_viewer",
         "type": "github"
       }
@@ -143,11 +143,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768784795,
-        "narHash": "sha256-mhltGI4CV6xZOC5FjkODPexuVqPb7nKMHN7qPnQdqVA=",
+        "lastModified": 1769090164,
+        "narHash": "sha256-014NTXUSv0EVvgC3n3FKQ5iiimQdRecTcHqTzXUZFrY=",
         "owner": "AvengeMedia",
         "repo": "dms-plugin-registry",
-        "rev": "f520ece83ea17eb842122c4b55683e5eab8c3100",
+        "rev": "8a4d3b4f1da6eff364bd7192355191ceead168e9",
         "type": "github"
       },
       "original": {
@@ -311,10 +311,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1768836546,
-        "narHash": "sha256-nJZkTamcXXMW+SMYiGFB6lB8l0aJw0xjssfN8xYd/Fs=",
+        "lastModified": 1769102673,
+        "narHash": "sha256-/qvRFjn1s3bIJdSKG6IpaE6ML3j9anQKUqGhmt4Qe+E=",
         "ref": "master",
-        "rev": "b56c5ad14fcf8b5bc887463552483bf000ca562a",
+        "rev": "b0491fe55680bd19be8e74847969dad9d7784658",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -338,11 +338,11 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1768767453,
-        "narHash": "sha256-Omq1UHEJ1oxkTo2j8l6qQtmyPR7Uj+k7HC5Khd3jVVA=",
+        "lastModified": 1769095293,
+        "narHash": "sha256-GPlRdJ7LVLyabpJ2tDA9Bj5em9wi3mKXeedIDl7+LWs=",
         "owner": "sodiboo",
         "repo": "niri-flake",
-        "rev": "8eab7c21ef4edc97cc56ddb8e76a842e0818d6d7",
+        "rev": "180bdbbc91c89f540a52d2b31c8c08116c53b91f",
         "type": "github"
       },
       "original": {
@@ -425,10 +425,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1768783163,
-        "narHash": "sha256-tLj4KcRDLakrlpvboTJDKsrp6z2XLwyQ4Zmo+w8KsY4=",
+        "lastModified": 1768875095,
+        "narHash": "sha256-dYP3DjiL7oIiiq3H65tGIXXIT1Waiadmv93JS0sS+8A=",
         "ref": "nixpkgs-unstable",
-        "rev": "bde09022887110deb780067364a0818e89258968",
+        "rev": "ed142ab1b3a092c4d149245d0c4126a5d7ea00b0",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -442,11 +442,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1768621446,
-        "narHash": "sha256-6YwHV1cjv6arXdF/PQc365h1j+Qje3Pydk501Rm4Q+4=",
+        "lastModified": 1768940263,
+        "narHash": "sha256-sJERJIYTKPFXkoz/gBaBtRKke82h4DkX3BBSsKbfbvI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "72ac591e737060deab2b86d6952babd1f896d7c5",
+        "rev": "3ceaaa8bc963ced4d830e06ea2d0863b6490ff03",
         "type": "github"
       },
       "original": {
@@ -498,31 +498,6 @@
         "type": "github"
       }
     },
-    "plasma-manager": {
-      "inputs": {
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1767662275,
-        "narHash": "sha256-d5Q1GmQ+sW1Bt8cgDE0vOihzLaswsm8cSdg8124EqXE=",
-        "ref": "trunk",
-        "rev": "51816be33a1ff0d4b22427de83222d5bfa96d30e",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/nix-community/plasma-manager.git"
-      },
-      "original": {
-        "ref": "trunk",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/nix-community/plasma-manager.git"
-      }
-    },
     "quickshell": {
       "inputs": {
         "nixpkgs": [
@@ -556,7 +531,6 @@
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_2",
-        "plasma-manager": "plasma-manager",
         "secrets": "secrets",
         "solaar": "solaar",
         "sops-nix": "sops-nix",
@@ -612,10 +586,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1768709255,
-        "narHash": "sha256-aigyBfxI20FRtqajVMYXHtj5gHXENY2gLAXEhfJ8/WM=",
+        "lastModified": 1768863606,
+        "narHash": "sha256-1IHAeS8WtBiEo5XiyJBHOXMzECD6aaIOJmpQKzRRl64=",
         "ref": "master",
-        "rev": "5e8fae80726b66e9fec023d21cd3b3e638597aa9",
+        "rev": "c7067be8db2c09ab1884de67ef6c4f693973f4a2",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"
@@ -833,10 +807,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1768835034,
-        "narHash": "sha256-O0MSYoLT21oYq8WYhkEeBlMpGLjmCVjBPticJCiyX+M=",
+        "lastModified": 1769105462,
+        "narHash": "sha256-4zZ2kqzjh98dqHfT+XsTSjHQP+DphSVeGAjl2MEigRg=",
         "ref": "main",
-        "rev": "8a3a61cdce48a0c8b08e147585e0ef08b63c3525",
+        "rev": "17453e164bf57e3ddfdc1c4c307971db96fd8882",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"

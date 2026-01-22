@@ -49,12 +49,6 @@
 
     nix-flatpak.url = "git+ssh://git@github.com/gmodena/nix-flatpak.git?ref=main&shallow=1";
 
-    plasma-manager = {
-      url = "git+ssh://git@github.com/nix-community/plasma-manager.git?ref=trunk&shallow=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
     secrets = {
       url = "git+ssh://git@github.com/taheris/secrets.git?ref=main&shallow=1";
       flake = false;
@@ -92,7 +86,6 @@
       home-manager,
       niri,
       nix-darwin,
-      plasma-manager,
       solaar,
       sops-nix,
       stylix,
@@ -168,7 +161,6 @@
                 dms.homeModules.niri
                 dms-plugin-registry.modules.default
                 niri.homeModules.niri
-                plasma-manager.homeModules.plasma-manager
                 sops-nix.homeManagerModules.sops
                 stylix.homeModules.stylix
                 ./home
