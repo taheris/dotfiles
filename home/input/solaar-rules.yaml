@@ -13,3 +13,6 @@
 - Rule:
   - MouseGesture: Mouse Down
   - Execute: [/run/current-system/sw/bin/niri, msg, action, focus-workspace-down]
+- Rule:
+  - MouseGesture: []
+  - Execute: [/run/current-system/sw/bin/niri, msg, action, toggle-overview]
