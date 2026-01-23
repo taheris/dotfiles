@@ -594,9 +594,25 @@ Define some global popup rules.
 
 #+begin_src emacs-lisp
 (set-popup-rules!
- '(("\\*doom:scratch\\*" :side right :size 0.33 :quit nil :modeline t :select t)
-   ("\\*helpful-*" :side right :size 0.33 :quit nil :modeline t)
-   ("\\*Flycheck errors\\*" :side right :size 0.33 :quit nil :modeline t)))
+ '(("\\*doom:scratch\\*" :size 0.4 :select t :quit nil)
+   ("\\*helpful-*" :size 0.4 :select t)
+   ("\\*Flycheck errors\\*" :size 0.4 :select t)
+   ("\\*lsp-help\\*" :size 0.4 :select t)
+   ("\\*cargo-*" :size 0.4 :select t)
+   ("\\*rustic-*" :size 0.4 :select t)
+   ("\\*compilation\\*" :size 0.4 :select t)
+   ("\\*documentation\\*" :size 0.4 :select t)
+   ("\\*calibredb-entry\\*" :size 0.5 :select t)))
+
+(defun +popup/to-frame ()
+  "Pop current buffer out to a new frame."
+  (interactive)
+  (let ((buffer (current-buffer)))
+    (delete-window)
+    (display-buffer-pop-up-frame buffer nil)))
+
+(map! :leader
+      :desc "Pop out to frame" "w p" #'+popup/to-frame)
 #+end_src
 
 *** Writeroom
@@ -658,6 +674,8 @@ Ignore some ~projectile~ paths.
 
 #+begin_src emacs-lisp
 (setq projectile-enable-caching nil
+      projectile-globally-ignored-directories
+      '(".cargo" ".claude")
       projectile-ignored-projects
       '("~/"
         "~/Documents"
@@ -928,7 +946,7 @@ Set =calc= defaults.
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-mermaid
   :recipe (:host github :repo "arnm/ob-mermaid")
-  :pin "372c2d91d3cdba5da9f7ac23e7bce7a0b3b46862")
+  :pin "4f814ad5e1b96764af52d53799288ff3acc94b47")
 #+end_src
 
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
@@ -1221,10 +1239,7 @@ Read the calibre eBook library.
         :ne "M-a" #'calibredb-set-metadata--author_sort
         :ne "M-A" #'calibredb-set-metadata--authors
         :ne "M-T" #'calibredb-set-metadata--title
-        :ne "M-c" #'calibredb-set-metadata--comments)
-
-  (set-popup-rules!
-    '(("\\*calibredb-entry\\*" :side right :size 0.5 :quit nil :modeline t))))
+        :ne "M-c" #'calibredb-set-metadata--comments))
 #+end_src
 
 *** nov
@@ -1413,7 +1428,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "f36ee0a750344768b02d08716f176cc20fd712c3")
+(package! gptel :pin "96199593c107767ffe0b59ab2a1f996c112e4fdf")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1530,10 +1545,10 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "7b67facc657a7388a53ea8bba5d6e7eba20fa3e0")
+  :pin "9ab9b8f25cd7f42955171d471da5c3d016d1ef5a")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "9a7913a7c7b9b8e076b38e7133122dc608e7667e")
+  :pin "6e04a69aae1b78fc2f4c901d0538249b1820aa7a")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1668,12 +1683,6 @@ Mimic the style of markdown renderers.
   '(markdown-header-face-6 :height 0.75 :weight extra-bold :inherit markdown-header-face))
 #+end_src
 
-Make format errors popup small and quit-able.
-
-#+begin_src emacs-lisp
-(set-popup-rule! "\\*format-all-errors\\*" :ttl 0 :quit t)
-#+end_src
-
 ** LSP
 
 #+begin_src emacs-lisp
@@ -1681,8 +1690,9 @@ Make format errors popup small and quit-able.
   (setq lsp-enable-file-watchers nil
         +lsp-defer-shutdown 60)
 
-  (set-popup-rules!
-    '(("\\*lsp-help\\*" :side right :size 0.33 :quit nil :modeline t)))
+  (pushnew! lsp-file-watch-ignored-directories
+            "[/\\\\]\\.cargo\\'"
+            "[/\\\\]\\.claude\\'")
 
   (set-formatter! 'lsp-formatter #'lsp-format-buffer
                   :modes '(lsp-mode)))
@@ -1706,10 +1716,6 @@ Make format errors popup small and quit-able.
         lsp-rust-analyzer-cargo-watch-args ["--all-features", " --", "-D", "warnings", "-D", "rust-2018-idioms"]
         lsp-rust-analyzer-import-granularity "module"
         lsp-rust-clippy-preference "on")
-
-  (set-popup-rules!
-   '(("\\*cargo-*" :side right :size 0.33 :quit nil :modeline t)
-     ("\\*rustic-*" :side right :size 0.33 :quit nil :modeline t)))
 
   (map! :localleader
         :map rustic-mode-map
@@ -1749,22 +1755,13 @@ Disable ZeroMQ in macOS.
 (setq jupyter-use-zmq nil)
 #+end_src
 
-** Nix
-
-#+begin_src emacs-lisp
-(after! nix-mode
-  (set-popup-rules!
-   '(("\\*compilation\\*" :side right :size 0.33 :quit nil :modeline t)
-     ("\\*documentation\\*" :side right :size 0.33 :quit nil :modeline t))))
-#+end_src
-
 ** Protobuf
 
 #+begin_src emacs-lisp :tangle packages.el
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "ce5ff11bc87cbd249c9a700bddbee62d94d72beb")
+  :pin "6d23e8ec14908edda3fdb44027eb87b90499f789")
 #+end_src
 
 #+begin_src emacs-lisp
