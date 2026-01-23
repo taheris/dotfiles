@@ -240,9 +240,6 @@ optionalAttrs (hasSuffix "linux" host.system) {
           };
         };
 
-        # Workaround for suspend/resume blank screen bug (df-630528)
-        debug.force-disable-connectors-on-resume = true;
-
         hotkey-overlay.skip-at-startup = true;
         prefer-no-csd = true;
 

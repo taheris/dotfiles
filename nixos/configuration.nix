@@ -269,27 +269,15 @@ in
   };
 
   systemd = {
+    # Short delay for testing suspend-then-hibernate (default is 2h)
+    sleep.extraConfig = ''
+      HibernateDelaySec=60
+    '';
+
     services = {
       nvidia-suspend.wantedBy = [ "systemd-suspend-then-hibernate.service" ];
       systemd-machine-id-commit.enable = true;
       tailscaled.serviceConfig.Environment = mkAfter [ "TS_NO_LOGS_NO_SUPPORT=true" ];
-
-      rode-reset-wake = {
-        description = "Reset RODE AI-1 controller after boot";
-        after = [ "graphical.target" ];
-        wantedBy = [
-          "graphical.target"
-          "post-resume.target"
-        ];
-        serviceConfig = {
-          Type = "oneshot";
-          ExecStart = pkgs.writeShellScript "rode-reset" ''
-            echo "0000:6c:00.4" > /sys/bus/pci/drivers/xhci_hcd/unbind 2>/dev/null || true
-            sleep 5
-            echo "0000:6c:00.4" > /sys/bus/pci/drivers/xhci_hcd/bind 2>/dev/null || true
-          '';
-        };
-      };
     };
 
     user.services.niri-flake-polkit.enable = false;
