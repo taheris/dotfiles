@@ -68,7 +68,6 @@
       "amdgpu.gpu_recovery=1"
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
       "nvidia.NVreg_TemporaryFilePath=/var/tmp"
-      "pcie_aspm.policy=performance"
       "pcie_port_pm=off" # Intel I225-V
       "resume=/dev/mapper/swap" # Hibernate resume device
     ];
