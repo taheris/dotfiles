@@ -14,6 +14,7 @@ let
     claude-code-acp
     spec-kit
     wrapix-builder
+    wrapix-notifyd
   ];
 
   darwinPackages = with pkgs; [
@@ -33,11 +34,24 @@ in
     (mkIf isLinux linuxPackages)
   ];
 
-  launchd.agents.sops-nix = mkIf isDarwin {
-    enable = true;
-    config = {
-      EnvironmentVariables = {
-        PATH = mkForce "/usr/bin:/bin:/usr/sbin:/sbin";
+  launchd.agents = {
+    sops-nix = mkIf isDarwin {
+      enable = true;
+      config = {
+        EnvironmentVariables = {
+          PATH = mkForce "/usr/bin:/bin:/usr/sbin:/sbin";
+        };
+      };
+    };
+
+    wrapix-notifyd = mkIf isDarwin {
+      enable = true;
+      config = {
+        ProgramArguments = [ "${pkgs.wrapix-notifyd}/bin/wrapix-notifyd" ];
+        KeepAlive = true;
+        RunAtLoad = true;
+        StandardOutPath = "/tmp/wrapix-notifyd.log";
+        StandardErrorPath = "/tmp/wrapix-notifyd.log";
       };
     };
   };
@@ -115,4 +129,21 @@ in
       };
     };
   };
+
+  systemd.user.services.wrapix-notifyd = mkIf isLinux {
+    Unit = {
+      Description = "Wrapix notification daemon";
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${pkgs.wrapix-notifyd}/bin/wrapix-notifyd";
+      Restart = "always";
+      RestartSec = 5;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
 }
