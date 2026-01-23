@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./aliases
+    ./alias
     ./functions.nix
   ];
 

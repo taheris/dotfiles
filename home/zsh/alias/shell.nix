@@ -3,19 +3,19 @@
 let
   inherit (pkgs.stdenv) isDarwin;
 
-  gitPersonal = "~/src/github.com/taheris";
-  dotfiles = "${gitPersonal}/dotfiles";
-  aliasFile = "${dotfiles}/home/zsh/aliases";
+  taheris = "~/src/github.com/taheris";
+  dotfiles = "${taheris}/dotfiles";
+
 in
 {
   programs.zsh.shellAliases = {
     # terminal
     e = "\${(z)EDITOR}";
     o = (if isDarwin then "open" else "xdg-open");
-    ae = "vim ${aliasFile}";
+    ts = "cd ${taheris}";
     dfs = "cd ${dotfiles}";
-    org = "cd ${gitPersonal}/org";
-    sec = "cd ${gitPersonal}/secrets";
+    org = "cd ${taheris}/org";
+    sec = "cd ${taheris}/secrets";
 
     # cd
     cdb = "cd -";
