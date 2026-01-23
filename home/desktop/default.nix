@@ -146,13 +146,11 @@ optionalAttrs (hasSuffix "linux" host.system) {
 
           # Window move
           "Mod+Alt+H".action.move-column-left = [ ];
-          "Mod+Alt+Shift+H".action.swap-window-left = [ ];
           "Mod+Alt+J".action.move-window-down-or-to-workspace-down = [ ];
-          "Mod+Alt+Shift+J".action.move-column-to-workspace-down = [ ];
+          "Mod+Alt+Shift+J".action.move-workspace-down = [ ];
           "Mod+Alt+K".action.move-window-up-or-to-workspace-up = [ ];
-          "Mod+Alt+Shift+K".action.move-column-to-workspace-up = [ ];
+          "Mod+Alt+Shift+K".action.move-workspace-up = [ ];
           "Mod+Alt+L".action.move-column-right = [ ];
-          "Mod+Alt+Shift+L".action.swap-window-right = [ ];
 
           # Window action
           "Mod+O".action.toggle-overview = [ ];
