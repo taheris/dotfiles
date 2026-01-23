@@ -1,6 +1,7 @@
 { lib, pkgs, ... }:
 
 let
+  inherit (lib) optionalAttrs;
   inherit (pkgs.stdenv) isDarwin isLinux;
 
   gitPersonal = "~/src/github.com/taheris";
@@ -116,8 +117,8 @@ in
     hmsf = "home-manager switch --flake ${dotfiles}";
   }
 
-  # darwin-specific aliases
-  // lib.optionalAttrs isDarwin {
+  # darwin-specific
+  // optionalAttrs isDarwin {
     # brew
     bi = "brew info";
     bin = "brew install";
@@ -238,8 +239,8 @@ in
     wbsh = "wrapix-builder ssh";
   }
 
-  # linux-specific aliases
-  // lib.optionalAttrs isLinux {
+  # linux-specific
+  // optionalAttrs isLinux {
     # systemctl
     sc = "systemctl";
     scl = "systemctl list-units";

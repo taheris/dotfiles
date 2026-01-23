@@ -348,8 +348,12 @@ in
     cdoco = "cargo doc --open";
     cn = "cargo new";
     cr = "cargo run";
+    crb = "cargo run --bin";
     cre = "cargo run --example";
+    crp = "cargo run --package";
     crr = "cargo run --release";
+    crrb = "cargo run --release --bin";
+    crrp = "cargo run --release --package";
     cck = "cargo check";
     cckaf = "cargo check --all-features";
     cckat = "cargo check --all-targets";

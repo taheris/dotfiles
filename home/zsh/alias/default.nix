@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./core.nix
     ./dev.nix
     ./global.nix
-    ./os.nix
+    ./platform.nix
+    ./shell.nix
   ];
 }
