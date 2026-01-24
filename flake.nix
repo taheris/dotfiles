@@ -98,11 +98,12 @@
         catAttrs
         filter
         listToAttrs
+        match
         ;
 
       hosts = import ./hosts.nix;
-      linuxHosts = filter (host: host.system == "x86_64-linux") hosts;
-      darwinHosts = filter (host: host.system == "aarch64-darwin") hosts;
+      linuxHosts = filter (host: match ".*-linux" != null) hosts;
+      darwinHosts = filter (host: match ".*-darwin" host.system != null) hosts;
 
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
