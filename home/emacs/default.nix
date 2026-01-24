@@ -11,12 +11,7 @@ let
   inherit (lib.meta) getExe;
   inherit (pkgs.stdenv) isCygwin isDarwin isLinux;
 
-  package =
-    with pkgs;
-    let
-      pkg = if isDarwin then emacs30-pgtk.override { withNativeCompilation = false; } else emacs30-pgtk;
-    in
-    (emacsPackagesFor pkg).emacsWithPackages (epkgs: [ epkgs.vterm ]);
+  package = (pkgs.emacsPackagesFor pkgs.emacs30-pgtk).emacsWithPackages (epkgs: [ epkgs.vterm ]);
 
   doom = "${config.xdg.configHome}/doom";
   emacs = "${config.xdg.configHome}/emacs";
