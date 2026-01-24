@@ -1,18 +1,24 @@
 {
+  host,
   lib,
   pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkForce mkIf mkMerge;
+  inherit (lib) mkForce mkIf mkMerge optionals;
   inherit (pkgs.stdenv) isDarwin isLinux;
+  inherit (host) hasLinuxBuilder;
 
   packages = with pkgs; [
-    beads
-    beads-viewer
     claude-code-acp
     spec-kit
+  ];
+
+  # Packages that require an aarch64-linux builder when on aarch64-darwin
+  linuxBuilderPackages = with pkgs; [
+    beads
+    beads-viewer
     wrapix-builder
     wrapix-notifyd
   ];
@@ -30,6 +36,7 @@ in
 {
   home.packages = mkMerge [
     packages
+    (optionals hasLinuxBuilder linuxBuilderPackages)
     (mkIf isDarwin darwinPackages)
     (mkIf isLinux linuxPackages)
   ];
@@ -44,7 +51,7 @@ in
       };
     };
 
-    wrapix-notifyd = mkIf isDarwin {
+    wrapix-notifyd = mkIf (isDarwin && hasLinuxBuilder) {
       enable = true;
       config = {
         ProgramArguments = [ "${pkgs.wrapix-notifyd}/bin/wrapix-notifyd" ];
