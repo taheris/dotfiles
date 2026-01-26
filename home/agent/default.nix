@@ -18,7 +18,6 @@ let
   # Packages that require an aarch64-linux builder when on aarch64-darwin
   linuxBuilderPackages = with pkgs; [
     beads
-    beads-viewer
     wrapix-builder
     wrapix-notifyd
   ];

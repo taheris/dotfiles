@@ -9,7 +9,6 @@
     }
     // {
       beads = inputs.wrapix.inputs.beads.packages.${final.system}.default;
-      beads-viewer = inputs.wrapix.inputs.beads-viewer.packages.${final.system}.default;
       wrapix-builder = inputs.wrapix.packages.${final.system}.wrapix-builder;
       wrapix-notifyd = inputs.wrapix.packages.${final.system}.wrapix-notifyd;
     };
