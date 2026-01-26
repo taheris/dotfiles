@@ -62,7 +62,7 @@
   _wpid: 407B
   change-host: null
   divert-keys: { 82: 0, 83: 0, 86: 0, 253: 2 }
-  dpi: 1800
+  dpi: 2500
   lowres-scroll-mode: false
   persistent-remappable-keys: null
   reprogrammable-keys: { 80: 80, 81: 81, 82: 82, 83: 83, 86: 86, 253: 253 }
