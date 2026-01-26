@@ -44,9 +44,23 @@ issue-prefix: "df"
 # If not set, bd sync will require you to run 'bd config set sync.branch <branch>'.
 sync-branch: "beads"
 
-# Sync mode for dolt backend (dolt-native uses Dolt remotes only, no JSONL)
+# Sync configuration
+# git-portable: JSONL exported on push, imported on pull (works across machines)
+# dolt-native: Dolt remotes for sync (requires local dolt-remote setup)
 sync:
-  mode: "dolt-native"
+  mode: "git-portable"
+
+# Beads worktree setup (required for sync to work)
+# The beads branch holds the JSONL files that sync between machines.
+# Set up the worktree on first clone:
+#   git worktree add .git/beads-worktrees/beads beads
+#
+# NOTE: bd sync --full has a bug where it doesn't stage changes before committing.
+# Workaround: manually sync with git after running bd sync:
+#   bd sync
+#   git -C .git/beads-worktrees/beads add .beads/issues.jsonl
+#   git -C .git/beads-worktrees/beads commit -m "bd sync: $(date '+%Y-%m-%d %H:%M:%S')"
+#   git -C .git/beads-worktrees/beads push origin beads
 
 # Multi-repo configuration (experimental - bd-307)
 # Allows hydrating from multiple repositories and routing writes to the correct JSONL
