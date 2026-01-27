@@ -99,6 +99,7 @@ in
       "mactex"
       "mate-translate"
       "micro-snitch"
+      "omniwm"
       "podman-desktop"
       "slack"
       "steam"
@@ -120,12 +121,32 @@ in
       extraFlags = [ "--verbose" ];
       upgrade = true;
     };
+
+    taps = [
+      "BarutSRB/tap"
+    ];
   };
 
-  launchd.daemons = {
-    linux-builder.serviceConfig = {
-      RunAtLoad = mkForce false;
-      KeepAlive = mkForce false;
+  launchd = {
+    daemons = {
+      linux-builder.serviceConfig = {
+        RunAtLoad = mkForce false;
+        KeepAlive = mkForce false;
+      };
+    };
+
+    user.agents.omniwm = {
+      serviceConfig = {
+        Label = "com.barutsrb.omniwm";
+        ProgramArguments = [
+          "/usr/bin/open"
+          "-a"
+          "OmniWM"
+        ];
+        #RunAtLoad = true;
+        RunAtLoad = false;
+        KeepAlive = false;
+      };
     };
   };
 
