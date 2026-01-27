@@ -17,6 +17,14 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
+    swiftPackages =
+      let
+        pkgsSwift = import inputs.nixpkgs-swift { inherit (final) system; };
+      in
+      {
+        inherit (pkgsSwift) swiftPackages swift;
+      };
+
     typstPackages = prev.typstPackages // {
       moderner-cv = prev.typstPackages.moderner-cv.overrideAttrs (old: {
         version = "0.2.1";
