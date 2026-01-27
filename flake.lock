@@ -473,6 +473,23 @@
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
       }
     },
+    "nixpkgs-swift": {
+      "locked": {
+        "lastModified": 1769105483,
+        "narHash": "sha256-cC4W6KDq3942hk4zyoDWYOvb/9lvlsPZbrdlTj9hsxw=",
+        "ref": "refs/heads/master",
+        "rev": "70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nixos/nixpkgs.git"
+      },
+      "original": {
+        "rev": "70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/nixos/nixpkgs.git"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -531,6 +548,7 @@
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_2",
+        "nixpkgs-swift": "nixpkgs-swift",
         "secrets": "secrets",
         "solaar": "solaar",
         "sops-nix": "sops-nix",
