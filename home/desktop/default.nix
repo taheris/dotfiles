@@ -106,6 +106,14 @@ optionalAttrs (hasSuffix "linux" host.system) {
       (writeShellScriptBin "niri-session-save" "exec ${session.save}")
       (writeShellScriptBin "niri-session-restore" "exec ${session.restore}")
     ];
+
+    pointerCursor = {
+      name = "Nordzy-cursors";
+      size = 24;
+      package = pkgs.nordzy-cursors;
+      gtk.enable = true;
+      x11.enable = true;
+    };
   };
 
   programs = {
@@ -211,11 +219,6 @@ optionalAttrs (hasSuffix "linux" host.system) {
 
         gestures.hot-corners.enable = false;
 
-        cursor = {
-          theme = "Nordzy-cursors";
-          size = 24;
-        };
-
         input.keyboard = {
           repeat-delay = 200;
           repeat-rate = 30;
@@ -242,12 +245,6 @@ optionalAttrs (hasSuffix "linux" host.system) {
         prefer-no-csd = true;
 
         spawn-at-startup = [
-          {
-            command = [
-              "dms"
-              "run"
-            ];
-          }
           { command = [ "${session.restore}" ]; }
         ];
 
@@ -289,6 +286,20 @@ optionalAttrs (hasSuffix "linux" host.system) {
   };
 
   systemd.user = {
+    services.dms = {
+      Unit = {
+        Description = "Dank Material Shell";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${inputs.dms.packages.${host.system}.default}/bin/dms run";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+
     services.niri-session-save = {
       Unit = {
         Description = "Save niri session state";
