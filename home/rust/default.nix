@@ -24,6 +24,7 @@ let
     cargo-watch
     rustup
     sccache
+    tokei
     wasm-pack
   ];
 
