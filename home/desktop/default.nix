@@ -110,7 +110,7 @@ optionalAttrs (hasSuffix "linux" host.system) {
     pointerCursor = {
       name = "Nordzy-cursors";
       size = 24;
-      package = pkgs.nordzy-cursors;
+      package = pkgs.nordzy-cursor-theme;
       gtk.enable = true;
       x11.enable = true;
     };
