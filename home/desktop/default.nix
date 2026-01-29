@@ -317,8 +317,8 @@ optionalAttrs (hasSuffix "linux" host.system) {
         After = [ "graphical-session.target" ];
       };
       Timer = {
-        OnBootSec = "5min";
-        OnUnitActiveSec = "5min";
+        OnBootSec = "10min";
+        OnUnitActiveSec = "10min";
       };
       Install.WantedBy = [ "timers.target" ];
     };
