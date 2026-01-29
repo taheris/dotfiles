@@ -322,5 +322,20 @@ optionalAttrs (hasSuffix "linux" host.system) {
       };
       Install.WantedBy = [ "timers.target" ];
     };
+
+    services.niri-session-save-on-shutdown = {
+      Unit = {
+        Description = "Save niri session on logout/shutdown";
+        After = [ "graphical-session.target" ];
+        BindsTo = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${pkgs.coreutils}/bin/true";
+        ExecStop = "${session.save}";
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
   };
 }
