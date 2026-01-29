@@ -106,6 +106,8 @@ optionalAttrs (hasSuffix "linux" host.system) {
       (writeShellScriptBin "niri-session-save" "exec ${session.save}")
       (writeShellScriptBin "niri-session-restore" "exec ${session.restore}")
     ];
+
+    preferXdgDirectories = true;
   };
 
   programs = {
