@@ -11,6 +11,12 @@ let
 
 in
 {
+  # Enable cursor for GTK and X11 apps (stylix.cursor sets name/package/size)
+  home.pointerCursor = mkIf isLinux {
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/dracula.yaml";
