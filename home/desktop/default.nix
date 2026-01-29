@@ -106,14 +106,6 @@ optionalAttrs (hasSuffix "linux" host.system) {
       (writeShellScriptBin "niri-session-save" "exec ${session.save}")
       (writeShellScriptBin "niri-session-restore" "exec ${session.restore}")
     ];
-
-    pointerCursor = {
-      name = "Nordzy-cursors";
-      size = 24;
-      package = pkgs.nordzy-cursor-theme;
-      gtk.enable = true;
-      x11.enable = true;
-    };
   };
 
   programs = {
