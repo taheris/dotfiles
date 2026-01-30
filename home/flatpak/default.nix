@@ -32,6 +32,18 @@ in
     ];
 
     overrides = {
+      global = {
+        Context.filesystems = [
+          "~/.icons:ro"
+          "~/.local/share/icons:ro"
+          "/run/current-system/sw/share/icons:ro"
+        ];
+        Environment = {
+          XCURSOR_THEME = "Nordzy-cursors";
+          XCURSOR_SIZE = "24";
+        };
+      };
+
       "com.slack.Slack".Context.sockets = [
         "wayland"
         "!x11"
