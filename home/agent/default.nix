@@ -46,15 +46,6 @@ in
   ];
 
   launchd.agents = {
-    sops-nix = mkIf isDarwin {
-      enable = true;
-      config = {
-        EnvironmentVariables = {
-          PATH = mkForce "/usr/bin:/bin:/usr/sbin:/sbin";
-        };
-      };
-    };
-
     wrapix-notifyd = mkIf (isDarwin && hasLinuxBuilder) {
       enable = true;
       config = {
@@ -156,5 +147,4 @@ in
       WantedBy = [ "graphical-session.target" ];
     };
   };
-
 }
