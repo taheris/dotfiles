@@ -16,8 +16,6 @@
   inputs = {
     nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
     nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.05&shallow=1";
-    # Tracking: https://github.com/NixOS/nixpkgs/issues/483584
-    nixpkgs-swift.url = "git+ssh://git@github.com/nixos/nixpkgs.git?rev=70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7&shallow=1";
 
     dms = {
       url = "git+ssh://git@github.com/AvengeMedia/DankMaterialShell.git?ref=stable&shallow=1";

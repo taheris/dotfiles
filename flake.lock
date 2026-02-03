@@ -301,10 +301,10 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1770095660,
-        "narHash": "sha256-fWm0lhe+ebOUOKLsuk0r+XcNTd60RR5HaujSIvdT4zc=",
+        "lastModified": 1770133761,
+        "narHash": "sha256-3/2F3IfdyEz9ot0NytsVymt5Ma54EBBWcAc3CJKQFPE=",
         "ref": "main",
-        "rev": "a0db8b047eb7132f6175d15cc5bc73135d8d0a98",
+        "rev": "c44eff590edaff58ef9e34ecf38f6fbccb1be647",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/sodiboo/niri-flake.git"
@@ -390,10 +390,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1770073757,
-        "narHash": "sha256-Vy+G+F+3E/Tl+GMNgiHl9Pah2DgShmIUBJXmbiQPHbI=",
+        "lastModified": 1770107345,
+        "narHash": "sha256-tbS0Ebx2PiA1FRW8mt8oejR0qMXmziJmPaU1d4kYY9g=",
         "ref": "nixpkgs-unstable",
-        "rev": "47472570b1e607482890801aeaf29bfb749884f6",
+        "rev": "4533d9293756b63904b7238acb84ac8fe4c8c2c4",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -433,23 +433,6 @@
       },
       "original": {
         "ref": "nixos-25.05",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/nixos/nixpkgs.git"
-      }
-    },
-    "nixpkgs-swift": {
-      "locked": {
-        "lastModified": 1769105483,
-        "narHash": "sha256-cC4W6KDq3942hk4zyoDWYOvb/9lvlsPZbrdlTj9hsxw=",
-        "ref": "refs/heads/master",
-        "rev": "70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/nixos/nixpkgs.git"
-      },
-      "original": {
-        "rev": "70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -513,7 +496,6 @@
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_2",
-        "nixpkgs-swift": "nixpkgs-swift",
         "secrets": "secrets",
         "solaar": "solaar",
         "sops-nix": "sops-nix",
