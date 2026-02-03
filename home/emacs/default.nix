@@ -11,7 +11,20 @@ let
   inherit (lib.meta) getExe;
   inherit (pkgs.stdenv) isCygwin isDarwin isLinux;
 
-  package = (pkgs.emacsPackagesFor pkgs.emacs30-pgtk).emacsWithPackages (epkgs: [ epkgs.vterm ]);
+  package = emacsPackage.emacsWithPackages emacsPackages;
+  emacsPackage = with pkgs; emacsPackagesFor emacs30-pgtk;
+  emacsPackages =
+    epkgs: with epkgs; [
+      jupyter
+      pdf-tools
+      vterm
+    ];
+
+  epdfinfo = pkgs.runCommand "epdfinfo" { } ''
+    mkdir -p $out/bin
+    cp ${emacsPackage.pdf-tools}/share/emacs/site-lisp/elpa/pdf-tools-${emacsPackage.pdf-tools.version}/epdfinfo \
+      $out/bin/epdfinfo
+  '';
 
   doom = "${config.xdg.configHome}/doom";
   emacs = "${config.xdg.configHome}/emacs";
@@ -86,6 +99,7 @@ in
               en-science
             ]
           ))
+          epdfinfo
           hunspell
           hunspellDicts.en-gb-large
           hunspellDicts.en-us-large
@@ -98,11 +112,6 @@ in
             ps.moderner-cv
           ]))
           typstyle
-        ];
-
-        emacsPackages = with pkgs.emacs.pkgs; [
-          jupyter
-          vterm
         ];
 
         langPackages = with pkgs; [
@@ -118,7 +127,6 @@ in
       in
       mkMerge [
         basePackages
-        emacsPackages
         langPackages
         nodePackages
       ];
