@@ -211,7 +211,13 @@ optionalAttrs (hasSuffix "linux" host.system) {
         // workspaceBinds "Mod+" "focus-workspace"
         // workspaceBinds "Mod+Alt+" "move-column-to-workspace";
 
+        cursor = {
+          theme = "Nordzy-cursors";
+          size = 24;
+        };
+
         gestures.hot-corners.enable = false;
+        hotkey-overlay.skip-at-startup = true;
 
         input.keyboard = {
           repeat-delay = 200;
@@ -235,7 +241,6 @@ optionalAttrs (hasSuffix "linux" host.system) {
           };
         };
 
-        hotkey-overlay.skip-at-startup = true;
         prefer-no-csd = true;
 
         spawn-at-startup = [
