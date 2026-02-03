@@ -188,8 +188,9 @@ in
         if [ -n "$window_id" ]; then
           niri msg action focus-window --id "$window_id"
           # Move column all the way left
-          for _ in {1..50}; do
-            niri msg action move-column-left 2>/dev/null || true
+          col=$(niri msg -j windows | ${jq} --argjson id "$window_id" '.[] | select(.id == $id) | .layout.pos_in_scrolling_layout[0] // 0')
+          for _ in $(seq 1 "$col"); do
+            niri msg action move-column-left
           done
         fi
       done < <(echo "$ws_windows" | ${jq} -c '.[]')
