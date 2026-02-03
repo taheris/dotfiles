@@ -45,6 +45,7 @@ in
 
     systemPackages = with pkgs; [
       curl
+      mosh
       pam_u2f
       vim
       wget
@@ -73,6 +74,19 @@ in
   networking = {
     networkmanager.enable = true;
     hostName = host.name;
+
+    firewall = {
+      enable = true;
+      interfaces.tailscale0 = {
+        allowedTCPPorts = [ 22 ];
+        allowedUDPPortRanges = [
+          {
+            from = 60000;
+            to = 61000;
+          }
+        ];
+      };
+    };
   };
 
   nix = {
@@ -177,6 +191,16 @@ in
     solaar = {
       enable = true;
       extraArgs = "--restart-on-wake-up";
+    };
+
+    openssh = {
+      enable = true;
+      openFirewall = false;
+
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
     };
 
     tailscale = {
