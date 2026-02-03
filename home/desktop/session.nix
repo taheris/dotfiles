@@ -11,7 +11,13 @@ let
   };
 
   # Apps that manage their own session restore (only spawn one instance)
-  singleInstanceApps = [ "librewolf" "firefox" "chromium" "chrome" ];
+  singleInstanceApps = [
+    "chrome"
+    "chromium"
+    "firefox"
+    "librewolf"
+  ];
+
 in
 {
   save = pkgs.writeShellScript "niri-session-save" ''

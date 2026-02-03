@@ -6,7 +6,12 @@
 }:
 
 let
-  inherit (lib) mkForce mkIf mkMerge optionals;
+  inherit (lib)
+    mkForce
+    mkIf
+    mkMerge
+    optionals
+    ;
   inherit (pkgs.stdenv) isDarwin isLinux;
   inherit (host) hasLinuxBuilder;
 

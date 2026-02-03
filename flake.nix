@@ -20,12 +20,12 @@
     nixpkgs-swift.url = "git+ssh://git@github.com/nixos/nixpkgs.git?rev=70801e06d9730c4f1704fbd3bbf5b8e11c03a2a7&shallow=1";
 
     dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
+      url = "git+ssh://git@github.com/AvengeMedia/DankMaterialShell.git?ref=stable&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     dms-plugin-registry = {
-      url = "github:AvengeMedia/dms-plugin-registry";
+      url = "git+ssh://git@github.com/AvengeMedia/dms-plugin-registry.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -40,7 +40,7 @@
     };
 
     niri = {
-      url = "github:sodiboo/niri-flake";
+      url = "git+ssh://git@github.com/sodiboo/niri-flake.git?ref=main&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -119,14 +119,21 @@
             inherit system;
             config.allowUnfree = true;
           };
+
           wrapix = inputs'.wrapix.legacyPackages.lib;
+          ralph = wrapix.mkRalph { inherit sandbox; };
+          sandbox = wrapix.mkSandbox { };
+
         in
         {
+          devShells.default = pkgs.mkShell {
+            shellHook = ralph.shellHook;
+          };
+
           formatter = pkgs.nixfmt-tree;
+
           packages = import ./packages { inherit pkgs; } // {
-            default = wrapix.mkSandbox {
-              profile = wrapix.profiles.base;
-            };
+            default = sandbox.package;
           };
         };
 
