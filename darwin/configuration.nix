@@ -157,12 +157,28 @@ in
 
     buildMachines = [
       {
+        hostName = "nix";
+        sshUser = "${host.user}";
+        sshKey = "/etc/nix/nix_builder_key";
+        systems = [
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+          "kvm"
+          "nixos-test"
+        ];
+      }
+
+      {
         hostName = "wrapix-builder";
-        systems = [ "aarch64-linux" ];
         maxJobs = 4;
         protocol = "ssh-ng";
         sshKey = "/etc/nix/wrapix_builder_ed25519";
         sshUser = "builder";
+        systems = [ "aarch64-linux" ];
         supportedFeatures = [
           "big-parallel"
           "benchmark"
