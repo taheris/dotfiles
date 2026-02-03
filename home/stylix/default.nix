@@ -28,11 +28,13 @@ in
       size = 24;
     };
 
-    image = mkIf isLinux (pkgs.fetchurl {
-      url = "https://images.unsplash.com/photo-1729614499383-756f6e0e4d80";
-      sha256 = "05c2rx7i7k7w87dnzjcn1znbvj00q21a956kmqs4mfw558rxnmfw";
-      name = "wallpaper.jpg";
-    });
+    image = mkIf isLinux (
+      pkgs.fetchurl {
+        url = "https://images.unsplash.com/photo-1729614499383-756f6e0e4d80";
+        sha256 = "05c2rx7i7k7w87dnzjcn1znbvj00q21a956kmqs4mfw558rxnmfw";
+        name = "wallpaper.jpg";
+      }
+    );
 
     fonts = {
       monospace = {

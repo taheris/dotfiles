@@ -12,7 +12,10 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
-  hardeningDisable = ["pic" "format"];
+  hardeningDisable = [
+    "format"
+    "pic"
+  ];
 
   buildPhase = ''
     runHook preBuild

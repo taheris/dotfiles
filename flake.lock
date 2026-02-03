@@ -77,17 +77,19 @@
         ]
       },
       "locked": {
-        "lastModified": 1769405733,
-        "narHash": "sha256-WpROnW0dRi5ub0SlpKrMBs3pYlSBY4xw22hnTNvBMgI=",
-        "owner": "steveyegge",
-        "repo": "beads",
-        "rev": "6e82d1e2eea121ce5dc0964d554879f8b0c08563",
-        "type": "github"
+        "lastModified": 1769403857,
+        "narHash": "sha256-roOyTMy9nKxH2Bk8MnP4h2CDjStwK6z0ThQhFcM64QI=",
+        "ref": "refs/tags/v0.49.1",
+        "rev": "0d99d15370030b953a8df0ea67cd3d1b845bb07b",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/steveyegge/beads.git"
       },
       "original": {
-        "owner": "steveyegge",
-        "repo": "beads",
-        "type": "github"
+        "ref": "refs/tags/v0.49.1",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/steveyegge/beads.git"
       }
     },
     "dms": {
@@ -100,16 +102,17 @@
       "locked": {
         "lastModified": 1768575133,
         "narHash": "sha256-P//moH3z9r4PXirTzXVsccQINsK5AIlF9RWOBwK3vLc=",
-        "owner": "AvengeMedia",
-        "repo": "DankMaterialShell",
+        "ref": "stable",
         "rev": "a7cdb39b0b89b9af86160ad4e847a7d14ea44512",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/AvengeMedia/DankMaterialShell.git"
       },
       "original": {
-        "owner": "AvengeMedia",
         "ref": "stable",
-        "repo": "DankMaterialShell",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/AvengeMedia/DankMaterialShell.git"
       }
     },
     "dms-plugin-registry": {
@@ -119,17 +122,19 @@
         ]
       },
       "locked": {
-        "lastModified": 1769649148,
-        "narHash": "sha256-I93ZSe27qOEqKTqqYROZjnzPwyYvT46EZ+5g6u0vfzU=",
-        "owner": "AvengeMedia",
-        "repo": "dms-plugin-registry",
-        "rev": "5cb1ef20b2e4281656e2f2cbfd54aea38bc866be",
-        "type": "github"
+        "lastModified": 1770042642,
+        "narHash": "sha256-zdf9JTsAK1oOBg/JxYTbdH9eH6k+xIb3ED1HFHqWgHU=",
+        "ref": "master",
+        "rev": "0cdab9ea535f1cf6684ff5e436702f530234c86f",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
       },
       "original": {
-        "owner": "AvengeMedia",
-        "repo": "dms-plugin-registry",
-        "type": "github"
+        "ref": "master",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
       }
     },
     "firefox-gnome-theme": {
@@ -155,10 +160,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1768135262,
-        "narHash": "sha256-PVvu7OqHBGWN16zSi6tEmPwwHQ4rLPU9Plvs8/1TUBY=",
+        "lastModified": 1769996383,
+        "narHash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
         "ref": "main",
-        "rev": "80daad04eddbbf5a4d883996a73f3f542fa437ac",
+        "rev": "57928607ea566b5db3ad13af0e57e921e6b12381",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/hercules-ci/flake-parts.git"
@@ -269,10 +274,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1769699427,
-        "narHash": "sha256-dAQt3qXugGhg92A+jqaUcmH0elbgEN/mV4vy1+ohLZk=",
+        "lastModified": 1769978395,
+        "narHash": "sha256-gj1yP3spUb1vGtaF5qPhshd2j0cg4xf51pklDsIm19Q=",
         "ref": "master",
-        "rev": "2a08ab21abc8b482f41c521b5f9b0df5b18a67eb",
+        "rev": "984708c34d3495a518e6ab6b8633469bbca2f77a",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -296,17 +301,19 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1769647464,
-        "narHash": "sha256-SDZms/fjrXRgL+QA+RfvTMClhPGfPn1TnIdNwoujEo4=",
-        "owner": "sodiboo",
-        "repo": "niri-flake",
-        "rev": "e3d4bf00f7d40fca03fecab5c7a46277a6eb9fed",
-        "type": "github"
+        "lastModified": 1770056451,
+        "narHash": "sha256-8dDG3+suKAiWFAdP6S9OKasusbC/cP33wA/zQw/i9bE=",
+        "ref": "main",
+        "rev": "fffa014b0fd6ff9ebf1c86fc460fee2ea0ac9a5e",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/sodiboo/niri-flake.git"
       },
       "original": {
-        "owner": "sodiboo",
-        "repo": "niri-flake",
-        "type": "github"
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/sodiboo/niri-flake.git"
       }
     },
     "niri-stable": {
@@ -383,10 +390,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1769527094,
-        "narHash": "sha256-xV20Alb7ZGN7qujnsi5lG1NckSUmpIb05H2Xar73TDc=",
+        "lastModified": 1770015011,
+        "narHash": "sha256-7vUo0qWCl/rip+fzr6lcMlz9I0tN/8m7d5Bla/rS2kk=",
         "ref": "nixpkgs-unstable",
-        "rev": "afce96367b2e37fc29afb5543573cd49db3357b7",
+        "rev": "f08e6b11a5ed43637a8ac444dd44118bc7d273b9",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -400,11 +407,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1769598131,
-        "narHash": "sha256-e7VO/kGLgRMbWtpBqdWl0uFg8Y2XWFMdz0uUJvlML8o=",
+        "lastModified": 1769900590,
+        "narHash": "sha256-I7Lmgj3owOTBGuauy9FL6qdpeK2umDoe07lM4V+PnyA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fa83fd837f3098e3e678e6cf017b2b36102c7211",
+        "rev": "41e216c0ca66c83b12ab7a98cc326b5db01db646",
         "type": "github"
       },
       "original": {
@@ -562,10 +569,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1769469829,
-        "narHash": "sha256-wFcr32ZqspCxk4+FvIxIL0AZktRs6DuF8oOsLt59YBU=",
+        "lastModified": 1769921679,
+        "narHash": "sha256-twBMKGQvaztZQxFxbZnkg7y/50BW9yjtCBWwdjtOZew=",
         "ref": "master",
-        "rev": "c5eebd4eb2e3372fe12a8d70a248a6ee9dd02eff",
+        "rev": "1e89149dcfc229e7e2ae24a8030f124a31e4f24f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"
@@ -598,11 +605,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1769696109,
-        "narHash": "sha256-6G7lwaKwbYSWW+80qsKfkEVEYeoWgEkhEvboCG2w3ak=",
+        "lastModified": 1769978605,
+        "narHash": "sha256-Vjniae6HHJCb9xZLeUOP15aRQXSZuKeeaZFM+gRDCgo=",
         "owner": "nix-community",
         "repo": "stylix",
-        "rev": "cb2e9c4fc23b4e73e4d77b9122d685896c042802",
+        "rev": "ce22070ec5ce6169a6841da31baea33ce930ed38",
         "type": "github"
       },
       "original": {
@@ -767,10 +774,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1769636649,
-        "narHash": "sha256-uWdAEvfqeIpsrFnc5i5DTdPQAxT9aceZV6TZMBCIwmM=",
+        "lastModified": 1770059239,
+        "narHash": "sha256-vDiOGqGzd6+gTP+9hSFm4dTr08mmDKy/Nr55dE4keCE=",
         "ref": "main",
-        "rev": "cc91404ba8531700d8cff75fd1b9d199fc2acbd0",
+        "rev": "5d24fc0aaddf7821ef49ab2bad22492670bd618d",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"
@@ -802,11 +809,11 @@
     "xwayland-satellite-unstable": {
       "flake": false,
       "locked": {
-        "lastModified": 1769356222,
-        "narHash": "sha256-Q0BVubV9ZnmLs506EhBSPglM+YJK56wsQNbeecvWPUo=",
+        "lastModified": 1769713942,
+        "narHash": "sha256-0BtCSO2qzYK/akRDsERqRVLknCYD3FYErc+szreSHUo=",
         "owner": "Supreeeme",
         "repo": "xwayland-satellite",
-        "rev": "cf14278b92b0a91d01587f09b4b00ea655ae24e6",
+        "rev": "37ec78ee26e158b71f42e113e0e7dd9d5eb6bdb0",
         "type": "github"
       },
       "original": {

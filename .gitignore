@@ -1,3 +1,4 @@
-.bv/
 .claude/
+.direnv/
+.ralph/
 result
