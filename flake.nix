@@ -65,7 +65,7 @@
     };
 
     stylix = {
-      url = "github:nix-community/stylix";
+      url = "git+ssh://git@github.com/nix-community/stylix.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
