@@ -62,12 +62,12 @@ in
     enable = true;
 
     settings = {
-      model = "claude-opus-4-5-20251101";
+      model = "claude-opus-4-6";
       enableAllProjectMcpServers = false;
       includeCoAuthoredBy = false;
 
       env = {
-        ANTHROPIC_MODEL = "opus";
+        ANTHROPIC_MODEL = "claude-opus-4-6";
         CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
         DISABLE_AUTOUPDATER = "1";
         DISABLE_ERROR_REPORTING = "1";
