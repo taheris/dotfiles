@@ -98,9 +98,7 @@ in
 optionalAttrs (hasSuffix "linux" host.system) {
   home = {
     packages = with pkgs; [
-      catppuccin-gtk
       playerctl
-      tela-icon-theme
       wpaperd
       xwayland-satellite
       (writeShellScriptBin "niri-session-save" "exec ${session.save}")
@@ -110,26 +108,9 @@ optionalAttrs (hasSuffix "linux" host.system) {
     preferXdgDirectories = true;
   };
 
+  imports = [ ./dms.nix ];
+
   programs = {
-    dank-material-shell = {
-      enable = true;
-      managePluginSettings = true;
-
-      niri = {
-        enableSpawn = false;
-        enableKeybinds = false;
-      };
-
-      plugins = {
-        dockerManager.enable = true;
-
-        mediaPlayer = {
-          enable = true;
-          settings.preferredSource = "tidal";
-        };
-      };
-    };
-
     niri = {
       enable = true;
       package = inputs.niri.packages.${host.system}.niri-unstable;
