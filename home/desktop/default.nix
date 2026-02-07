@@ -99,6 +99,7 @@ optionalAttrs (hasSuffix "linux" host.system) {
   home = {
     packages = with pkgs; [
       playerctl
+      ungoogled-chromium
       wpaperd
       xwayland-satellite
       (writeShellScriptBin "niri-session-save" "exec ${session.save}")
@@ -260,9 +261,23 @@ optionalAttrs (hasSuffix "linux" host.system) {
 
     portal = {
       enable = true;
-      config.common.default = "gtk";
       extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+      config = {
+        common.default = "gtk";
+        niri = {
+          default = "gtk";
+          "org.freedesktop.impl.portal.ScreenCast" = "gnome";
+          "org.freedesktop.impl.portal.Screenshot" = "gnome";
+        };
+      };
     };
+
+    dataFile."xdg-desktop-portal/portals/gnome.portal".text = ''
+      [portal]
+      DBusName=org.freedesktop.impl.portal.desktop.gnome
+      Interfaces=org.freedesktop.impl.portal.Access;org.freedesktop.impl.portal.Account;org.freedesktop.impl.portal.AppChooser;org.freedesktop.impl.portal.Background;org.freedesktop.impl.portal.Clipboard;org.freedesktop.impl.portal.DynamicLauncher;org.freedesktop.impl.portal.FileChooser;org.freedesktop.impl.portal.GlobalShortcuts;org.freedesktop.impl.portal.InputCapture;org.freedesktop.impl.portal.Lockdown;org.freedesktop.impl.portal.Notification;org.freedesktop.impl.portal.Print;org.freedesktop.impl.portal.RemoteDesktop;org.freedesktop.impl.portal.ScreenCast;org.freedesktop.impl.portal.Screenshot;org.freedesktop.impl.portal.Settings;org.freedesktop.impl.portal.Usb;org.freedesktop.impl.portal.Wallpaper;
+      UseIn=gnome;niri
+    '';
   };
 
   systemd.user = {
