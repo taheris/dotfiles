@@ -49,6 +49,28 @@
         niri.hideWhenTyping = true;
       };
 
+      # Sounds
+      soundNewNotification = false;
+
+      # Music
+      audioVisualizerEnabled = true;
+      waveProgressEnabled = true;
+      scrollTitleEnabled = true;
+      audioScrollMode = "volume";
+
+      # Launcher
+      launcherLogoMode = "os";
+      appLauncherViewMode = "grid";
+      spotlightCloseNiriOverview = true;
+      niriOverviewOverlayEnabled = true;
+
+      # Network
+      networkPreference = "ethernet";
+
+      # Bar widgets
+      runningAppsCompactMode = true;
+      showGpuTemp = true;
+
       # Dock
       showDock = false;
 
@@ -57,6 +79,9 @@
       acMonitorTimeout = 300;
       acLockTimeout = 900;
       acSuspendTimeout = 900;
+      lockBeforeSuspend = true;
+      fadeToLockEnabled = true;
+      fadeToDpmsEnabled = true;
 
       # Display
       niriOutputSettings = {
