@@ -1,4 +1,5 @@
 .claude/
 .direnv/
-.ralph/
+.wrapix/
 result
+result-*

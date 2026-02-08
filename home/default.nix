@@ -25,6 +25,7 @@ let
     ripgrep
     tree
     unzip
+    watch
     zip
   ];
 

@@ -13,7 +13,7 @@ in
 
   programs.zsh.initContent = ''
     chpwd() {
-      echo "$PWD" > "$XDG_RUNTIME_DIR/last-dir";
+      echo "$PWD" > "$TMPDIR/last-dir";
     }
 
     github-clone() {
