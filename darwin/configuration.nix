@@ -39,6 +39,11 @@ in
 {
   environment = {
     etc = {
+      "ssh/ssh_config.d/100-nix-builder.conf".text = ''
+        Host nix
+          ConnectTimeout 5
+      '';
+
       "ssh/ssh_config.d/100-wrapix-builder.conf".text = ''
         Host wrapix-builder
           Hostname localhost
@@ -169,19 +174,6 @@ in
           "big-parallel"
           "kvm"
           "nixos-test"
-        ];
-      }
-
-      {
-        hostName = "wrapix-builder";
-        maxJobs = 4;
-        protocol = "ssh-ng";
-        sshKey = "/etc/nix/wrapix_builder_ed25519";
-        sshUser = "builder";
-        systems = [ "aarch64-linux" ];
-        supportedFeatures = [
-          "big-parallel"
-          "benchmark"
         ];
       }
     ];
