@@ -25,7 +25,6 @@ let
     ripgrep
     tree
     unzip
-    yt-dlp
     zip
   ];
 
