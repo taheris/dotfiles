@@ -8,7 +8,7 @@
 let
   inherit (pkgs) fetchurl makeDesktopItem;
 
-  version = "10.40.1b";
+  version = "10.43.1c";
 
   libPath = lib.makeLibraryPath (
     with pkgs;
@@ -67,7 +67,7 @@ pkgs.stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://download2.interactivebrokers.com/installers/tws/latest-standalone/tws-latest-standalone-linux-x64.sh";
-    sha256 = "sha256-06+eyXbl8hLflm0ljKq6DKrHt5NkdMSSUZSwRE/YYTc=";
+    sha256 = "sha256-1eb2U1IfJ9aA6ZPI10sAz2cTFE3OhuRvvd9VN6u2Cus=";
     executable = true;
   };
 

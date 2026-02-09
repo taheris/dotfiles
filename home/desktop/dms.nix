@@ -38,10 +38,6 @@
       # Clock
       use24HourClock = true;
 
-      # Fonts
-      fontFamily = "Inter Variable";
-      monoFontFamily = "Monaco Nerd Font Mono";
-
       # Cursor
       cursorSettings = {
         theme = "System Default";
