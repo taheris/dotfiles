@@ -274,10 +274,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1770586272,
-        "narHash": "sha256-Ucci8mu8QfxwzyfER2DQDbvW9t1BnTUJhBmY7ybralo=",
+        "lastModified": 1770642890,
+        "narHash": "sha256-XWWHZEy5ZYMOx5hVuz+oeKtKDfv7syl7dwKCBx0LqzA=",
         "ref": "master",
-        "rev": "b1f916ba052341edc1f80d4b2399f1092a4873ca",
+        "rev": "13a1beb7c9962e0d2ba35a4d5c87546509b89b7d",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -758,10 +758,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1770631359,
-        "narHash": "sha256-Ko/CprwdtJvJs7l8WRW0rtkYitVrkDqG+CqTL7aKNvs=",
+        "lastModified": 1770646247,
+        "narHash": "sha256-bXq7qJp3JMWorAF68O//kZSq88C5iyDlaRo7MSFtYRk=",
         "ref": "main",
-        "rev": "54ce60364152673d6f506b5dd5cabb9f7bcec642",
+        "rev": "6da7a6e38fdc2de7f97693c35b0d40fe07d7af5c",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"

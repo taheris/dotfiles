@@ -9,7 +9,7 @@
 let
   # Spawn terminal in last directory
   spawnTerminal = pkgs.writeShellScript "spawn-terminal" ''
-    dir="$TMPDIR/last-dir"
+    dir="''${TMPDIR:-''${XDG_RUNTIME_DIR:-/tmp}}/last-dir"
     if [ -f "$dir" ]; then
       exec alacritty --working-directory "$(cat "$dir")" -e tmux
     else
