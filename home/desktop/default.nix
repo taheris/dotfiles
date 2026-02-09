@@ -100,7 +100,6 @@ optionalAttrs (hasSuffix "linux" host.system) {
     packages = with pkgs; [
       playerctl
       ungoogled-chromium
-      wpaperd
       xwayland-satellite
       (writeShellScriptBin "niri-session-save" "exec ${session.save}")
       (writeShellScriptBin "niri-session-restore" "exec ${session.restore}")
@@ -252,7 +251,6 @@ optionalAttrs (hasSuffix "linux" host.system) {
   services = {
     mako.enable = true;
     polkit-gnome.enable = true;
-    wpaperd.enable = true;
   };
 
   xdg = {
