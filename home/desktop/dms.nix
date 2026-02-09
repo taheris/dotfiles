@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -159,6 +159,10 @@
           widgetTransparency = 1;
         }
       ];
+    };
+
+    session = {
+      wallpaperPath = toString config.stylix.image;
     };
 
     plugins = {

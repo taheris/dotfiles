@@ -58,7 +58,6 @@ in
     targets = {
       emacs.enable = false;
       librewolf.profileNames = mkIf isLinux [ "default" ];
-      wpaperd.enable = mkIf isLinux true;
     };
   };
 }
