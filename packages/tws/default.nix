@@ -31,6 +31,17 @@ let
       libdrm
       libgbm
       libxkbcommon
+      libx11
+      libxcomposite
+      libxdamage
+      libxext
+      libxfixes
+      libxi
+      libxrandr
+      libxrender
+      libxtst
+      libxxf86vm
+      libxcb
       libz
       mesa
       nspr
@@ -39,17 +50,6 @@ let
       pango
       systemd
       wayland
-      xorg.libX11
-      xorg.libXcomposite
-      xorg.libXdamage
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXi
-      xorg.libXrandr
-      xorg.libXrender
-      xorg.libXtst
-      xorg.libXxf86vm
-      xorg.libxcb
     ]
   );
 

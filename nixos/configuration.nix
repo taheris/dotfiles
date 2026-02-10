@@ -39,7 +39,7 @@ in
     pathsToLink = [ "/share/zsh" ];
 
     sessionVariables = {
-      SSH_ASKPASS_REQUIRE = "prefer";
+      SSH_ASKPASS_REQUIRE = "never";
       VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     };
 
@@ -130,9 +130,12 @@ in
       package = inputs.niri.packages.${host.system}.niri-unstable;
     };
 
-    ssh.startAgent = false;
+    ssh.askPassword = "";
+    ssh.startAgent = true;
     zsh.enable = true;
   };
+
+  services.gnome.gcr-ssh-agent.enable = false;
 
   security = {
     pam.services = {
