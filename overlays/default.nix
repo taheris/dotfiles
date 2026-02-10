@@ -8,9 +8,9 @@
       pkgs = final;
     }
     // {
-      beads = inputs.wrapix.inputs.beads.packages.${final.system}.default;
-      wrapix-builder = inputs.wrapix.packages.${final.system}.wrapix-builder;
-      wrapix-notifyd = inputs.wrapix.packages.${final.system}.wrapix-notifyd;
+      beads = inputs.wrapix.inputs.beads.packages.${final.stdenv.hostPlatform.system}.default;
+      wrapix-builder = inputs.wrapix.packages.${final.stdenv.hostPlatform.system}.wrapix-builder;
+      wrapix-notifyd = inputs.wrapix.packages.${final.stdenv.hostPlatform.system}.wrapix-notifyd;
     };
 
   modifications = final: prev: {
@@ -30,7 +30,7 @@
 
   stable-packages = final: _prev: {
     stable = import inputs.nixpkgs-stable {
-      system = final.system;
+      system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
     };
   };
