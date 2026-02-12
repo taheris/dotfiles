@@ -85,6 +85,17 @@ let
     niri msg action move-workspace-to-index "$((current + 1))"
   '';
 
+  # Toggle idle/suspend inhibit
+  toggleInhibit = pkgs.writeShellScript "toggle-idle-inhibit" ''
+    if pkill -f 'systemd-inhibit.*idle-inhibit'; then
+      notify-send "Idle Inhibit" "Disabled"
+    else
+      systemd-inhibit --what=idle:sleep --who="niri-idle-inhibit" --why="User requested" sleep infinity &
+      disown
+      notify-send "Idle Inhibit" "Enabled"
+    fi
+  '';
+
   workspaceBinds =
     prefix: action:
     listToAttrs (
@@ -167,6 +178,7 @@ optionalAttrs (hasSuffix "linux" host.system) {
           "Mod+M" = dms "processlist toggle";
           "Mod+N" = dms "notifications toggle";
           "Mod+P" = dms "clipboard toggle";
+          "Mod+Alt+Shift+I".action.spawn = [ "${toggleInhibit}" ];
           "Mod+Alt+Shift+P" = dms "powermenu toggle";
           "Mod+Alt+Shift+N" = dms "night toggle";
 
