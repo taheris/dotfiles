@@ -1306,7 +1306,7 @@ Use =nov= to read eBooks.
 (package! eaf
   :recipe (:host github :repo "emacs-eaf/emacs-application-framework"
            :files ("app" "core" "*.el" "*.py"))
-  :pin "60c7a77f7be256db74fd40e1a07910b0e1a81ea0")
+  :pin "bb00de50f946f4f185aaeecabc0271f68c1ffb6e")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1428,7 +1428,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "96199593c107767ffe0b59ab2a1f996c112e4fdf")
+(package! gptel :pin "8879956648cc40e27c624ec6221971b7ab79d457")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1545,10 +1545,10 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "9ab9b8f25cd7f42955171d471da5c3d016d1ef5a")
+  :pin "a5227b4dc94fcd41b3fdb531fa4c24d8124b12be")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "6e04a69aae1b78fc2f4c901d0538249b1820aa7a")
+  :pin "da60db0c46beefcf3299bc6452589534b542c083")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1761,7 +1761,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "6d23e8ec14908edda3fdb44027eb87b90499f789")
+  :pin "9dc0a665d0265076c6d788e8b29a9b5eaeb22501")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1853,7 +1853,7 @@ Disable ZeroMQ in macOS.
 #+begin_src emacs-lisp :tangle packages.el
 (package! typst-ts-mode
   :recipe (:host codeberg :repo "meow_king/typst-ts-mode")
-  :pin "7c2ef0d5bd2b5a8727fe6d00938c47ba562e0c94")
+  :pin "1e8cc8072a22ac1dc07f1db356ca8f71c524d0c0")
 
 (package! typst-preview
   :recipe (:host github :repo "havarddj/typst-preview.el")

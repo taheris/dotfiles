@@ -57,6 +57,27 @@ in
     editing-mode = "emacs";
   };
 
+  systemd.user.services.solaar-restart-on-resume = mkIf isLinux {
+    Unit = {
+      Description = "Restart Solaar after resume";
+      Before = [ "sleep.target" ];
+      StopWhenUnneeded = "yes";
+    };
+    Service = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+      ExecStart = "${pkgs.coreutils}/bin/true";
+      ExecStop = "${pkgs.writeShellScript "solaar-resume" ''
+        ${pkgs.systemd}/bin/systemctl --user stop solaar.service
+        ${pkgs.coreutils}/bin/sleep 2
+        ${pkgs.systemd}/bin/systemctl --user start solaar.service
+      ''}";
+    };
+    Install = {
+      WantedBy = [ "sleep.target" ];
+    };
+  };
+
   systemd.user.services.yubikey-touch-detector = mkIf isLinux {
     Unit = {
       Description = "YubiKey touch detector";
