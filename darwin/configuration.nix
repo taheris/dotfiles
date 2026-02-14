@@ -224,7 +224,7 @@ in
       enable = true;
 
       shellInit = ''
-        eval "$(${config.homebrew.brewPrefix}/brew shellenv)"
+        eval "$(${config.homebrew.prefix}/bin/brew shellenv)"
       '';
     };
   };
