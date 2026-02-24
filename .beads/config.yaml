@@ -37,30 +37,20 @@ issue-prefix: "df"
 # Debounce interval for auto-flush (can also use BEADS_FLUSH_DEBOUNCE)
 # flush-debounce: "5s"
 
-# Git branch for beads commits (bd sync will commit to this branch)
+# Git branch for beads data (used by bd dolt pull/push)
 # IMPORTANT: Set this for team projects so all clones use the same sync branch.
 # This setting persists across clones (unlike database config which is gitignored).
 # Can also use BEADS_SYNC_BRANCH env var for local override.
-# If not set, bd sync will require you to run 'bd config set sync.branch <branch>'.
 sync-branch: "beads"
 
-# Sync configuration
-# git-portable: JSONL exported on push, imported on pull (works across machines)
-# dolt-native: Dolt remotes for sync (requires local dolt-remote setup)
+# Sync configuration (dolt-native requires dolt sql-server on port 3307)
 sync:
-  mode: "git-portable"
+  mode: dolt-native
 
-# Beads worktree setup (required for sync to work)
-# The beads branch holds the JSONL files that sync between machines.
-# Set up the worktree on first clone:
-#   git worktree add .git/beads-worktrees/beads beads
-#
-# NOTE: bd sync --full has a bug where it doesn't stage changes before committing.
-# Workaround: manually sync with git after running bd sync:
-#   bd sync
-#   git -C .git/beads-worktrees/beads add .beads/issues.jsonl
-#   git -C .git/beads-worktrees/beads commit -m "bd sync: $(date '+%Y-%m-%d %H:%M:%S')"
-#   git -C .git/beads-worktrees/beads push origin beads
+# Dolt-native sync (v0.56+): use bd dolt pull / bd dolt push
+# Requires dolt sql-server running on port 3307 (auto-started by devShell)
+# The dolt-remote lives in the beads branch worktree:
+#   .git/beads-worktrees/beads/.beads/dolt-remote/
 
 # Multi-repo configuration (experimental - bd-307)
 # Allows hydrating from multiple repositories and routing writes to the correct JSONL

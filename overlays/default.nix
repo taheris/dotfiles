@@ -8,7 +8,7 @@
       pkgs = final;
     }
     // {
-      beads = inputs.wrapix.inputs.beads.packages.${final.stdenv.hostPlatform.system}.default;
+      beads = inputs.wrapix.packages.${final.stdenv.hostPlatform.system}.beads;
       wrapix-builder = inputs.wrapix.packages.${final.stdenv.hostPlatform.system}.wrapix-builder;
       wrapix-notifyd = inputs.wrapix.packages.${final.stdenv.hostPlatform.system}.wrapix-notifyd;
     };
