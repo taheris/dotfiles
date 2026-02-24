@@ -623,6 +623,16 @@ Reduce zoom size.
 (setq +zen-text-scale 0.8)
 #+end_src
 
+*** PDF
+
+Point ~pdf-tools~ to the Nix-provided =epdfinfo= binary, since Doom's
+straight.el build doesn't compile the C server.
+
+#+begin_src emacs-lisp
+(after! pdf-tools
+  (setq pdf-info-epdfinfo-program (executable-find "epdfinfo")))
+#+end_src
+
 * Packages
 
 ** Setup
