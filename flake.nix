@@ -124,7 +124,7 @@
 
         in
         {
-          devShells.default = pkgs.mkShell {
+          devShells.default = wrapix.mkDevShell {
             shellHook = ralph.shellHook;
           };
 

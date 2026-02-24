@@ -758,10 +758,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1771945572,
-        "narHash": "sha256-qm4Wt59d9DB/G92qd2fuDKyjey8DelXdiyH3Z07zrj4=",
+        "lastModified": 1771946469,
+        "narHash": "sha256-0QE7c6k7iJQzfgX61dB5E6KC/doCnXo8ivBaI50bUHQ=",
         "ref": "main",
-        "rev": "eed97bc40a3b09d28317275cb0d31b2ec0e8c21c",
+        "rev": "eaa4d32441f3f00855eb9cbaa876b037d2d78947",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"
