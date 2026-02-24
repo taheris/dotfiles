@@ -60,6 +60,18 @@
       spotlightCloseNiriOverview = true;
       niriOverviewOverlayEnabled = true;
 
+      # Notifications
+      notificationRules = [
+        {
+          enabled = true;
+          field = "desktopEntry";
+          pattern = "com.mastermindzh.tidal-hifi";
+          matchType = "exact";
+          action = "mute";
+          urgency = "default";
+        }
+      ];
+
       # Network
       networkPreference = "ethernet";
 
@@ -163,6 +175,8 @@
 
     session = {
       wallpaperPath = toString config.stylix.image;
+      weatherCoordinates = "38.72509,-9.1498";
+      weatherLocation = "Lisbon";
     };
 
     plugins = {
