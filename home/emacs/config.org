@@ -1438,7 +1438,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "8879956648cc40e27c624ec6221971b7ab79d457")
+(package! gptel :pin "2a201016ff954304679ac1f1c81ea7bd78f507ae")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1555,10 +1555,10 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "a5227b4dc94fcd41b3fdb531fa4c24d8124b12be")
+  :pin "f7e20ce831ce342c457bb6860ca3d41eb183152c")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "da60db0c46beefcf3299bc6452589534b542c083")
+  :pin "62737278bbc3b7ff756f9a3d493afa07690f6b9e")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1771,7 +1771,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "9dc0a665d0265076c6d788e8b29a9b5eaeb22501")
+  :pin "f88d2e5d47da6fd525dfad61c651aaaaa76aa740")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1867,7 +1867,7 @@ Disable ZeroMQ in macOS.
 
 (package! typst-preview
   :recipe (:host github :repo "havarddj/typst-preview.el")
-  :pin "c685857f2d61133fc268509b39796b2718728f29")
+  :pin "7e89cf105e4fef5e79977a4a790d5b3b18d305f6")
 
 (package! ox-typst
   :recipe (:host github :repo "jmpunkt/ox-typst" :files ("*.el"))

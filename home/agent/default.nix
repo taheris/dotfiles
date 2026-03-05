@@ -61,6 +61,11 @@ in
       enableAllProjectMcpServers = false;
       includeCoAuthoredBy = false;
 
+      attribution = {
+        commit = "";
+        pr = "";
+      };
+
       env = {
         ANTHROPIC_MODEL = "claude-opus-4-6";
         CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
