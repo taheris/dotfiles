@@ -67,7 +67,7 @@ pkgs.stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://download2.interactivebrokers.com/installers/tws/latest-standalone/tws-latest-standalone-linux-x64.sh";
-    sha256 = "sha256-1eb2U1IfJ9aA6ZPI10sAz2cTFE3OhuRvvd9VN6u2Cus=";
+    sha256 = "sha256-6iv4d9HPIj93DhNpdcYxFBiTWOUkfD2x9cUN8g+3zPI=";
     executable = true;
   };
 

@@ -296,9 +296,7 @@ in
 
   systemd = {
     # Short delay for testing suspend-then-hibernate (default is 2h)
-    sleep.extraConfig = ''
-      HibernateDelaySec=60
-    '';
+    sleep.settings.Sleep.HibernateDelaySec = 60;
 
     services = {
       nvidia-suspend.wantedBy = [ "systemd-suspend-then-hibernate.service" ];

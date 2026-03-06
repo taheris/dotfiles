@@ -70,17 +70,16 @@
     },
     "beads": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "wrapix",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1771886437,
-        "narHash": "sha256-UbjdO8py6bkSRQlgRS74c62cls/l8AQB/uHFE9M3quE=",
+        "lastModified": 1772774707,
+        "narHash": "sha256-wtMzh1BqGt7lLNVV3xEGo5PgEk2rksgOEkYOHMN3+as=",
         "ref": "main",
-        "rev": "fd6f9bdf940dc79f8f85b6a4a0664c11b1e4bb7f",
+        "rev": "2df714ffcf02d378d56ad06314bc13c7c3f4a16a",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/steveyegge/beads.git"
@@ -122,10 +121,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1772586807,
-        "narHash": "sha256-cZdSLq02zoTC2rFISJ76hOY0J5ADD+NMC7JK1J3Jlto=",
+        "lastModified": 1772737500,
+        "narHash": "sha256-i4zlWSQdOMkpd9br1H4jO8sSv5phKNU1GsHUEb5CHAI=",
         "ref": "master",
-        "rev": "961c1e55201d2fe041b857be4640db8eb1ec6ec4",
+        "rev": "0cbfa0a235bfe60c0e9a58c00f9f352faf5c2f44",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -214,24 +213,6 @@
         "type": "github"
       }
     },
-    "flake-utils_2": {
-      "inputs": {
-        "systems": "systems_3"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -274,10 +255,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1772633327,
-        "narHash": "sha256-jl+DJB2DUx7EbWLRng+6HNWW/1/VQOnf0NsQB4PlA7I=",
+        "lastModified": 1772807318,
+        "narHash": "sha256-Qjw6ILt8cb2HQQpCmWNLMZZ63wEo1KjTQt+1BcQBr7k=",
         "ref": "master",
-        "rev": "5a75730e6f21ee624cbf86f4915c6e7489c74acc",
+        "rev": "daa2c221320809f5514edde74d0ad0193ad54ed8",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -390,10 +371,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1772643971,
-        "narHash": "sha256-+bllfMsclzbAAPMZTm3K9G/a5lG+s6l18/AyyYLPSIE=",
+        "lastModified": 1772736753,
+        "narHash": "sha256-au/m3+EuBLoSzWUCb64a/MZq6QUtOV8oC0D9tY2scPQ=",
         "ref": "nixpkgs-unstable",
-        "rev": "400de68cd101e8cfebffea121397683caf7f5a34",
+        "rev": "917fec990948658ef1ccd07cef2a1ef060786846",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -632,21 +613,6 @@
         "type": "github"
       }
     },
-    "systems_3": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "tinted-foot": {
       "flake": false,
       "locked": {
@@ -758,10 +724,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1771947748,
-        "narHash": "sha256-Su1a/bRUVd4eOVwqzrUOXUf5BHgVmC4JZFL4++k3O+w=",
+        "lastModified": 1772814810,
+        "narHash": "sha256-xDf+9vgvoOfw186Z/0lU62jvkgL/GuhNEqzs0pdydLs=",
         "ref": "main",
-        "rev": "92590f85a865cdf80b7a4d3fe30208e0cd16b4d7",
+        "rev": "394fe3cf1cd051e0fa125021e7d03315fd366bb1",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"
