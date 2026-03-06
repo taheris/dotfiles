@@ -58,6 +58,7 @@ in
 
     settings = {
       model = "claude-opus-4-6";
+      effortCalloutDismissed = true;
       enableAllProjectMcpServers = false;
       includeCoAuthoredBy = false;
 
