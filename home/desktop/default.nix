@@ -244,7 +244,7 @@ optionalAttrs (hasSuffix "linux" host.system) {
           {
             matches = [
               { app-id = "^Alacritty$"; }
-              { app-id = "^emacs$"; }
+              { app-id = "^[Ee]macs"; }
             ];
             default-column-width.proportion = 0.4;
           }
