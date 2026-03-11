@@ -599,7 +599,6 @@ Define some global popup rules.
    ("\\*Flycheck errors\\*" :size 0.4 :select t)
    ("\\*lsp-help\\*" :size 0.4 :select t)
    ("\\*cargo-*" :size 0.4 :select t)
-   ("\\*rustic-*" :size 0.4 :select t)
    ("\\*compilation\\*" :size 0.4 :select t)
    ("\\*documentation\\*" :size 0.4 :select t)
    ("\\*calibredb-entry\\*" :size 0.5 :select t)))
@@ -690,7 +689,8 @@ Ignore some ~projectile~ paths.
       '("~/"
         "~/Documents"
         "~/.emacs.d/.local/straight/repos/"
-        "/tmp"))
+        "/tmp")
+      projectile-indexing-method 'alien)
 
 (defun projectile-ignored-project-function (filepath)
   "Return t if FILEPATH is within any of `projectile-ignored-projects'"
@@ -1316,7 +1316,7 @@ Use =nov= to read eBooks.
 (package! eaf
   :recipe (:host github :repo "emacs-eaf/emacs-application-framework"
            :files ("app" "core" "*.el" "*.py"))
-  :pin "bb00de50f946f4f185aaeecabc0271f68c1ffb6e")
+  :pin "95514c61236cb9086e9e28872ad91a54ecb2f124")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1438,7 +1438,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "2a201016ff954304679ac1f1c81ea7bd78f507ae")
+(package! gptel :pin "f45e7bc41e7e325370eeeafe569cb2a1c174713d")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1558,7 +1558,7 @@ Don't save or restore gptel state to org buffer.
   :pin "f7e20ce831ce342c457bb6860ca3d41eb183152c")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "62737278bbc3b7ff756f9a3d493afa07690f6b9e")
+  :pin "4561f5b63dcd99ff7517157ffe786b0c25021f38")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1696,9 +1696,11 @@ Mimic the style of markdown renderers.
 ** LSP
 
 #+begin_src emacs-lisp
+(after! lsp-mode
+  (setq lsp-enable-file-watchers nil))
+
 (after! lsp
-  (setq lsp-enable-file-watchers nil
-        +lsp-defer-shutdown 60)
+  (setq +lsp-defer-shutdown 60)
 
   (pushnew! lsp-file-watch-ignored-directories
             "[/\\\\]\\.cargo\\'"
@@ -1715,34 +1717,58 @@ Mimic the style of markdown renderers.
 ** Rust
 
 #+begin_src emacs-lisp
-(after! rustic
-  (setq rustic-lsp-server 'rust-analyzer
-        rustic-default-clippy-arguments "--benches --tests --all-features -- -D warnings -D rust-2018-idioms"
-        rustic-format-trigger 'on-save
-        rustic-test-arguments "--all-features"
-        rust-mode-treesitter-derive t
+(after! rust-ts-mode
+  (setq rust-mode-treesitter-derive t
         lsp-rust-all-features t
         lsp-rust-analyzer-cargo-watch-command "check"
         lsp-rust-analyzer-cargo-watch-args ["--all-features", " --", "-D", "warnings", "-D", "rust-2018-idioms"]
         lsp-rust-analyzer-import-granularity "module"
         lsp-rust-clippy-preference "on")
 
+  (add-hook 'rust-ts-mode-hook
+            (lambda () (add-hook 'before-save-hook #'lsp-format-buffer nil t)))
+
+  (defun +rust/cargo-clippy ()
+    "Run cargo clippy."
+    (interactive)
+    (compile "cargo clippy --benches --tests --all-features -- -D warnings -D rust-2018-idioms"))
+
+  (defun +rust/cargo-fmt ()
+    "Run cargo fmt."
+    (interactive)
+    (compile "cargo fmt"))
+
+  (defun +rust/cargo-check ()
+    "Run cargo check."
+    (interactive)
+    (compile "cargo check --all-features"))
+
+  (defun +rust/cargo-test ()
+    "Run cargo test."
+    (interactive)
+    (compile "cargo test --all-features"))
+
+  (defun +rust/cargo-current-test ()
+    "Run the test at point."
+    (interactive)
+    (compile (format "cargo test --all-features %s" (thing-at-point 'symbol))))
+
   (map! :localleader
-        :map rustic-mode-map
+        :map rust-ts-mode-map
 
         :desc "Execute code action" "a" #'lsp-execute-code-action
         :desc "Toggle inlay hints"  "h" #'lsp-rust-analyzer-inlay-hints-mode
         :desc "Join lines"          "j" #'lsp-rust-analyzer-join-lines
         :desc "Expand macro"        "x" #'lsp-rust-analyzer-expand-macro
 
-        :desc "Cargo Clippy"        "c" #'rustic-cargo-clippy
-        :desc "Cargo Format"        "f" #'rustic-cargo-fmt
-        :desc "Cargo Check"         "k" #'rustic-cargo-check
+        :desc "Cargo Clippy"        "c" #'+rust/cargo-clippy
+        :desc "Cargo Format"        "f" #'+rust/cargo-fmt
+        :desc "Cargo Check"         "k" #'+rust/cargo-check
 
         (:prefix ("t" . "cargo test")
-          :desc "run tests"     "t" #'rustic-cargo-test
-          :desc "run last test" "l" #'rustic-cargo-test-rerun
-          :desc "test current"  "c" #'rustic-cargo-current-test)
+          :desc "run tests"     "t" #'+rust/cargo-test
+          :desc "run last test" "l" #'recompile
+          :desc "test current"  "c" #'+rust/cargo-current-test)
 
         (:prefix ("g" . "goto")
           :desc "Definition"      "d" #'lsp-find-definition
@@ -1771,7 +1797,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "f88d2e5d47da6fd525dfad61c651aaaaa76aa740")
+  :pin "7252fb678696c406a4620197c9a399d6c764a677")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1863,7 +1889,7 @@ Disable ZeroMQ in macOS.
 #+begin_src emacs-lisp :tangle packages.el
 (package! typst-ts-mode
   :recipe (:host codeberg :repo "meow_king/typst-ts-mode")
-  :pin "1e8cc8072a22ac1dc07f1db356ca8f71c524d0c0")
+  :pin "af85670aa64cdf21a1b22def9b2de6e9f6eb9df7")
 
 (package! typst-preview
   :recipe (:host github :repo "havarddj/typst-preview.el")
