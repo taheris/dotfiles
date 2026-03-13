@@ -11,7 +11,10 @@ let
 in
 {
   home.file = {
-    ".pam-gnupg".text = "9B571D8B78DDF8D06045387D176120709E41CC9D";
+    ".pam-gnupg".text = ''
+      04869B61117CD7602E290767EDF9247026B079CE
+      9B571D8B78DDF8D06045387D176120709E41CC9D
+    '';
   };
 
   home.packages = with pkgs; [
