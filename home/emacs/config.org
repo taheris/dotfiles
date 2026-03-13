@@ -35,20 +35,22 @@
 ** Global settings
 
 #+begin_src emacs-lisp
-(setq-default history-length 1000
-              window-combination-resize t
-              x-stretch-cursor t)
+(global-auto-revert-mode 1)  ; refresh buffers when files change on disk
 
-(setq auto-save-default t
-      confirm-kill-emacs nil
-      doom-localleader-key ","
-      evil-want-fine-undo t
-      make-pointer-invisible t
-      mouse-drag-copy-region t
-      mouse-highlight nil
-      scroll-margin 2
-      truncate-string-ellipsis "…"
-      undo-limit 10485760)
+(setq-default history-length 1000            ; remember more minibuffer history
+              window-combination-resize t    ; resize windows proportionally on split
+              x-stretch-cursor t)            ; stretch cursor to cover wide characters (e.g. tab)
+
+(setq auto-save-default t                    ; auto-save files to recover from crashes
+      confirm-kill-emacs nil                 ; quit without prompting
+      doom-localleader-key ","               ; use comma as localleader
+      evil-want-fine-undo t                  ; more granular undo steps in insert mode
+      global-auto-revert-non-file-buffers t  ; also revert dired and other non-file buffers
+      make-pointer-invisible t               ; hide mouse pointer while typing
+      mouse-highlight nil                    ; disable mouse-over highlighting
+      scroll-margin 2                        ; keep 2 lines of context above/below cursor
+      truncate-string-ellipsis "…"           ; use unicode ellipsis instead of "..."
+      undo-limit 10485760)                   ; 10MB undo history
 #+end_src
 
 ** Encoding
