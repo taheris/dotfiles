@@ -364,6 +364,7 @@ in
     cclat = "cargo clippy --all-targets";
     cclaft = "cargo clippy --all-features --all-targets --workspace";
     cclw = "cargo clippy --workspace";
+    cclww = "cargo clippy --workspace -- -D warnings";
     cup = "cargo update";
     cupp = "cargo update --package";
     cs = "cargo search";
