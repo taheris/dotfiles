@@ -180,6 +180,7 @@
     };
 
     plugins = {
+      calculator.enable = true;
       dockerManager.enable = true;
 
       mediaPlayer = {
