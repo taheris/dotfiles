@@ -11,7 +11,6 @@ let
   inherit (host) hasLinuxBuilder;
 
   packages = with pkgs; [
-    claude-code-acp
     spec-kit
   ];
 
