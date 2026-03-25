@@ -195,24 +195,6 @@
         "type": "github"
       }
     },
-    "flake-utils": {
-      "inputs": {
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1694529238,
-        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -478,7 +460,6 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "secrets": "secrets",
-        "solaar": "solaar",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "wrapix": "wrapix"
@@ -525,29 +506,6 @@
         "url": "ssh://git@github.com/taheris/secrets.git"
       }
     },
-    "solaar": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": "utils"
-      },
-      "locked": {
-        "lastModified": 1767894877,
-        "narHash": "sha256-DB9vEEnEYilGUaHCljMRzT1embzD7uEjJugzRJgiLos=",
-        "ref": "main",
-        "rev": "f5cac914bdeeecac7fca07e99c8fee18336f5bd5",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/Svenum/Solaar-Flake.git"
-      },
-      "original": {
-        "ref": "main",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/Svenum/Solaar-Flake.git"
-      }
-    },
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
@@ -583,7 +541,7 @@
           "nixpkgs"
         ],
         "nur": "nur",
-        "systems": "systems_2",
+        "systems": "systems",
         "tinted-foot": "tinted-foot",
         "tinted-kitty": "tinted-kitty",
         "tinted-schemes": "tinted-schemes",
@@ -607,21 +565,6 @@
       }
     },
     "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -717,23 +660,27 @@
         "type": "github"
       }
     },
-    "utils": {
+    "treefmt-nix": {
       "inputs": {
-        "flake-utils": "flake-utils"
+        "nixpkgs": [
+          "wrapix",
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1738591040,
-        "narHash": "sha256-4WNeriUToshQ/L5J+dTSWC5OJIwT39SEP7V7oylndi8=",
-        "owner": "gytis-ivaskevicius",
-        "repo": "flake-utils-plus",
-        "rev": "afcb15b845e74ac5e998358709b2b5fe42a948d1",
-        "type": "github"
+        "lastModified": 1773297127,
+        "narHash": "sha256-6E/yhXP7Oy/NbXtf1ktzmU8SdVqJQ09HC/48ebEGBpk=",
+        "ref": "main",
+        "rev": "71b125cd05fbfd78cab3e070b73544abe24c5016",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/numtide/treefmt-nix.git"
       },
       "original": {
-        "owner": "gytis-ivaskevicius",
-        "repo": "flake-utils-plus",
-        "rev": "afcb15b845e74ac5e998358709b2b5fe42a948d1",
-        "type": "github"
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/numtide/treefmt-nix.git"
       }
     },
     "wrapix": {
@@ -745,13 +692,14 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-overlay": "rust-overlay"
+        "rust-overlay": "rust-overlay",
+        "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1774367221,
-        "narHash": "sha256-D7EmwZnnBZxfTxyYK+Ar9UbTINwFlWpPMS/mbYvuTu4=",
+        "lastModified": 1774458074,
+        "narHash": "sha256-fAYQwuASXIc6/00Acme7YBSJ7dKN2haFSvZh5ZxAOHY=",
         "ref": "main",
-        "rev": "6179d1c4ee4a407c19cf4ea32fc57f5a0f891add",
+        "rev": "03547ebe0b931ec9ef53dd105de32c4e28e1e0ab",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"

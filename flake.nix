@@ -54,11 +54,6 @@
       flake = false;
     };
 
-    solaar = {
-      url = "git+ssh://git@github.com/Svenum/Solaar-Flake.git?ref=main&shallow=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     sops-nix = {
       url = "git+ssh://git@github.com/Mic92/sops-nix.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -86,7 +81,6 @@
       home-manager,
       niri,
       nix-darwin,
-      solaar,
       sops-nix,
       stylix,
       ...
@@ -151,7 +145,6 @@
               modules = [
                 ./nixos/configuration.nix
                 niri.nixosModules.niri
-                solaar.nixosModules.default
                 sops-nix.nixosModules.sops
                 stylix.nixosModules.stylix
               ];

@@ -1,0 +1,39 @@
+{
+  "version": 6,
+  "active_profile": "default",
+  "profiles": {
+    "default": {
+      "label": "Default (All Apps)",
+      "apps": [],
+      "mappings": {
+        "middle": "none",
+        "gesture": "custom:super+o",
+        "gesture_left": "custom:super+h",
+        "gesture_right": "custom:super+l",
+        "gesture_up": "custom:super+k",
+        "gesture_down": "custom:super+j",
+        "xbutton1": "none",
+        "xbutton2": "none",
+        "hscroll_left": "none",
+        "hscroll_right": "none",
+        "mode_shift": "none"
+      }
+    }
+  },
+  "settings": {
+    "start_minimized": true,
+    "start_at_login": false,
+    "hscroll_threshold": 1,
+    "invert_hscroll": false,
+    "invert_vscroll": false,
+    "dpi": 2800,
+    "smart_shift_mode": "ratchet",
+    "gesture_threshold": 50,
+    "gesture_deadzone": 40,
+    "gesture_timeout_ms": 3000,
+    "gesture_cooldown_ms": 500,
+    "appearance_mode": "system",
+    "debug_mode": false,
+    "device_layout_overrides": {}
+  }
+}

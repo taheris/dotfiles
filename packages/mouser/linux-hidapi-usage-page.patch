@@ -1,0 +1,11 @@
+--- a/core/hid_gesture.py
++++ b/core/hid_gesture.py
+@@ -658,7 +658,7 @@ class GestureThread(threading.Thread):
+         if HIDAPI_OK and _BACKEND_PREFERENCE in ("auto", "hidapi"):
+             try:
+                 for info in _hid.enumerate(LOGI_VID, 0):
+-                    if info.get("usage_page", 0) >= 0xFF00:
++                    if info.get("usage_page", 0) >= 0xFF00 or (sys.platform == "linux" and info.get("usage_page", 0) == 0):
+                         add_info(dict(info, source="hidapi-enumerate"))
+             except Exception as exc:
+                 print(f"[HidGesture] hidapi enumerate error: {exc}")

@@ -191,10 +191,6 @@ in
       pulse.enable = true;
     };
 
-    solaar = {
-      enable = true;
-    };
-
     openssh = {
       enable = true;
       openFirewall = false;
@@ -213,9 +209,9 @@ in
       (pkgs.runCommand "custom-udev-rules" { } ''
         mkdir -p $out/lib/udev/rules.d
 
-        cat > $out/lib/udev/rules.d/99-logitech-solaar.rules << EOF
-        SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", TAG+="uaccess"
-        SUBSYSTEM=="hidraw", KERNELS=="0005:046D:*", TAG+="uaccess"
+        cat > $out/lib/udev/rules.d/99-logitech-hidpp.rules << EOF
+        SUBSYSTEM=="hidraw", ATTRS{idVendor}=="046d", TAG+="uaccess", MODE="0660", GROUP="input"
+        SUBSYSTEM=="hidraw", KERNELS=="0005:046D:*", TAG+="uaccess", MODE="0660", GROUP="input"
         EOF
 
         cat > $out/lib/udev/rules.d/99-dygma-bazecor.rules << EOF

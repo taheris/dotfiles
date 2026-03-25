@@ -12,6 +12,7 @@ in
   intercept-fn-keys = callPackage ./intercept-fn-keys { };
   monaco = callPackage ./monaco { };
   monacob = callPackage ./monacob { };
+  mouser = callPackage ./mouser { };
   sqlite-vss = callPackage ./sqlite-vss { };
   tws = callPackage ./tws { };
 }

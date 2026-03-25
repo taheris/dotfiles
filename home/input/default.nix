@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  outputs,
   pkgs,
   ...
 }:
@@ -8,6 +9,7 @@
 let
   inherit (lib) mkIf;
   inherit (pkgs.stdenv) isDarwin isLinux;
+  mouser = outputs.packages.${pkgs.stdenv.hostPlatform.system}.mouser;
 
 in
 {
@@ -21,18 +23,14 @@ in
       target = "${config.xdg.configHome}/karabiner/karabiner.json";
     };
 
-    solaarConfig = mkIf isLinux {
-      source = ./solaar-config.yaml;
-      target = "${config.xdg.configHome}/solaar/config.yaml";
-    };
-
-    solaarRules = mkIf isLinux {
-      source = ./solaar-rules.yaml;
-      target = "${config.xdg.configHome}/solaar/rules.yaml";
+    mouserConfig = mkIf isLinux {
+      source = ./mouser.json;
+      target = "${config.xdg.configHome}/Mouser/config.json";
     };
   };
 
   home.packages = mkIf isLinux [
+    mouser
     pkgs.bazecor
     pkgs.yubikey-touch-detector
   ];
@@ -57,24 +55,21 @@ in
     editing-mode = "emacs";
   };
 
-  systemd.user.services.solaar-restart-on-resume = mkIf isLinux {
+  systemd.user.services.mouser = mkIf isLinux {
     Unit = {
-      Description = "Restart Solaar after resume";
-      Before = [ "sleep.target" ];
-      StopWhenUnneeded = "yes";
+      Description = "Mouser - Logitech mouse remapper";
+      After = [ "graphical-session.target" ];
     };
     Service = {
-      Type = "oneshot";
-      RemainAfterExit = "yes";
-      ExecStart = "${pkgs.coreutils}/bin/true";
-      ExecStop = "${pkgs.writeShellScript "solaar-resume" ''
-        ${pkgs.systemd}/bin/systemctl --user stop solaar.service
-        ${pkgs.coreutils}/bin/sleep 2
-        ${pkgs.systemd}/bin/systemctl --user start solaar.service
-      ''}";
+      ExecStart = "${mouser}/bin/mouser --start-hidden";
+      Environment = [ "PYTHONUNBUFFERED=1" ];
+      Restart = "always";
+      RestartSec = 3;
+      KillSignal = "SIGKILL";
+      TimeoutStopSec = 5;
     };
     Install = {
-      WantedBy = [ "sleep.target" ];
+      WantedBy = [ "graphical-session.target" ];
     };
   };
 

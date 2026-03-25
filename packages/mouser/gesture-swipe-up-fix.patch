@@ -1,0 +1,11 @@
+--- a/core/engine.py
++++ b/core/engine.py
+@@ -91,7 +91,7 @@ class Engine:
+             events = list(BUTTON_TO_EVENTS.get(btn_key, ()))
+
+             for evt_type in events:
+-                if evt_type.endswith("_up"):
++                if evt_type.endswith("_up") and "swipe" not in evt_type:
+                     if action_id != "none":
+                         self.hook.block(evt_type)
+                     continue

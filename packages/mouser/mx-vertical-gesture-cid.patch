@@ -1,0 +1,12 @@
+--- a/core/logi_devices.py
++++ b/core/logi_devices.py
+@@ -118,7 +118,8 @@ KNOWN_LOGI_DEVICES = (
+     LogiDeviceSpec(
+         key="mx_vertical",
+         display_name="MX Vertical",
+-        product_ids=(0xB020,),
++        product_ids=(0xB020, 0x407B),
++        gesture_cids=(0x00FD,),
+         aliases=("MX Vertical Wireless Mouse", "MX Vertical Advanced Ergonomic Mouse"),
+         ui_layout="mx_vertical",
+         dpi_max=4000,
