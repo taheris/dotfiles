@@ -93,14 +93,8 @@ in
       "karabiner-elements"
       "keepassxc"
       "ledger-wallet"
-      {
-        name = "librewolf";
-        args = {
-          no_quarantine = true;
-        };
-      }
+      "librewolf"
       "little-snitch"
-      "logitech-options"
       "mactex"
       "mate-translate"
       "micro-snitch"
