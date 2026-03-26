@@ -86,6 +86,11 @@ in
   };
 
   programs.home-manager.enable = true;
-
   systemd.user.startServices = "sd-switch";
+
+  # Use symlinks to avoid macOS revoking App Management permission.
+  targets.darwin = mkIf isDarwin {
+    copyApps.enable = false;
+    linkApps.enable = true;
+  };
 }

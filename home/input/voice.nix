@@ -18,7 +18,6 @@ let
     installPhase = ''
       mkdir -p $out/Applications/Sox.app/Contents/MacOS
 
-      # Create the executable
       cat > $out/Applications/Sox.app/Contents/MacOS/Sox << 'EOF'
       #!/bin/bash
       export PATH="${pkg}/bin:$PATH"
@@ -27,7 +26,6 @@ let
 
       chmod +x $out/Applications/Sox.app/Contents/MacOS/Sox
 
-      # Create Info.plist
       cat > $out/Applications/Sox.app/Contents/Info.plist << 'EOF'
       <?xml version="1.0" encoding="UTF-8"?>
       <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -50,8 +48,11 @@ let
   };
 in
 {
-  home.packages = [
-    pkg
-    (mkIf isDarwin soxApp)
-  ];
+  home.packages = [ pkg ];
+
+  home.activation.soxApp = mkIf isDarwin (
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      ${pkgs.rsync}/bin/rsync -a --delete "${soxApp}/Applications/Sox.app" "/Applications/"
+    ''
+  );
 }
