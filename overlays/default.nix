@@ -14,9 +14,15 @@
     };
 
   modifications = final: prev: {
-    # example = prev.example.overrideAttrs (oldAttrs: rec {
-    # ...
-    # });
+    # https://github.com/NixOS/nixpkgs/pull/502769
+    direnv = prev.direnv.overrideAttrs (old: {
+      postPatch =
+        (old.postPatch or "")
+        + ''
+          substituteInPlace GNUmakefile --replace-fail " -linkmode=external" ""
+        '';
+    });
+
     typstPackages = prev.typstPackages // {
       moderner-cv = prev.typstPackages.moderner-cv.overrideAttrs (old: {
         version = "0.2.1";
