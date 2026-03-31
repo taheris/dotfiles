@@ -73,6 +73,33 @@ in
     };
   };
 
+  systemd.user.services.mouser-resume = mkIf isLinux {
+    Unit = {
+      Description = "Restart Mouser on system resume";
+      After = [ "mouser.service" ];
+    };
+    Service = {
+      Type = "exec";
+      ExecStart = pkgs.writeShellScript "mouser-resume-watch" ''
+        ${pkgs.dbus}/bin/dbus-monitor --system \
+          "type='signal',interface='org.freedesktop.login1.Manager',member='PrepareForSleep'" |
+          while read -r line; do
+            case "$line" in
+              *"boolean false"*)
+                sleep 2
+                ${pkgs.systemd}/bin/systemctl --user restart mouser.service
+                ;;
+            esac
+          done
+      '';
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   systemd.user.services.yubikey-touch-detector = mkIf isLinux {
     Unit = {
       Description = "YubiKey touch detector";

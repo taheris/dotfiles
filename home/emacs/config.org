@@ -958,7 +958,7 @@ Set =calc= defaults.
 #+begin_src emacs-lisp :tangle packages.el
 (package! ob-mermaid
   :recipe (:host github :repo "arnm/ob-mermaid")
-  :pin "4f814ad5e1b96764af52d53799288ff3acc94b47")
+  :pin "30c2da02e3d24dbec0d004d3c6dfe7b381500b05")
 #+end_src
 
 #+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
@@ -1440,7 +1440,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "f45e7bc41e7e325370eeeafe569cb2a1c174713d")
+(package! gptel :pin "23a0ec9730e08b6dd03821016fe33979e96c059b")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1557,10 +1557,10 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "f7e20ce831ce342c457bb6860ca3d41eb183152c")
+  :pin "c32fbf8df34ed0095853a8cf55dc783e68b67d90")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "4561f5b63dcd99ff7517157ffe786b0c25021f38")
+  :pin "429d191801c5e2e7f4a2ab78017f84d1c983eb78")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1799,7 +1799,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "7252fb678696c406a4620197c9a399d6c764a677")
+  :pin "a19901d3c64acc175ed84451a2d24f480b74c526")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1891,7 +1891,7 @@ Disable ZeroMQ in macOS.
 #+begin_src emacs-lisp :tangle packages.el
 (package! typst-ts-mode
   :recipe (:host codeberg :repo "meow_king/typst-ts-mode")
-  :pin "af85670aa64cdf21a1b22def9b2de6e9f6eb9df7")
+  :pin "4a850c1083e0e17098d77e51a0292d23716df004")
 
 (package! typst-preview
   :recipe (:host github :repo "havarddj/typst-preview.el")

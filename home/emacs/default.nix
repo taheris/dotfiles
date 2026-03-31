@@ -104,6 +104,7 @@ in
           hunspellDicts.en-gb-large
           hunspellDicts.en-us-large
           ltex-ls
+          prettier
           sqlite
           tinymist
           tree-sitter-grammars.tree-sitter-typst
@@ -112,6 +113,7 @@ in
             ps.moderner-cv
           ]))
           typstyle
+          vscode-langservers-extracted
         ];
 
         langPackages = with pkgs; [
@@ -120,15 +122,10 @@ in
           yaml-language-server
         ];
 
-        nodePackages = with pkgs.nodePackages; [
-          prettier
-          vscode-langservers-extracted
-        ];
       in
       mkMerge [
         basePackages
         langPackages
-        nodePackages
       ];
 
     sessionPath = [ "${emacs}/bin" ];
