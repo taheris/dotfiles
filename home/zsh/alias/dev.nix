@@ -35,19 +35,19 @@ in
     ghcl = "github-clone";
 
     # git commit
-    gc = "git commit --verbose";
-    gca = "git commit --verbose --all";
-    gcam = "git commit --all --message";
-    gcamw = "git commit --all --message wip";
-    gcaf = "git commit --all --amend --reuse-message HEAD";
-    gcafpf = "git commit --all --amend --reuse-message HEAD && git push --force-with-lease";
-    gcad = "git commit --amend --date='now'";
-    gcas = "git commit --amend --signoff";
-    gcm = "git commit --message";
-    gcah = "git commit --amend --reuse-message HEAD";
-    gcahs = "git commit --amend --reuse-message HEAD --gpg-sign";
-    gcams = "git commit --verbose --amend --gpg-sign";
-    gcara = "git commit --amend --reset-author";
+    gcm = "git commit --verbose";
+    gcma = "git commit --verbose --all";
+    gcmam = "git commit --all --message";
+    gcmamw = "git commit --all --message wip";
+    gcmaf = "git commit --all --amend --reuse-message HEAD";
+    gcmafpf = "git commit --all --amend --reuse-message HEAD && git push --force-with-lease";
+    gcmad = "git commit --amend --date='now'";
+    gcmas = "git commit --amend --signoff";
+    gcmm = "git commit --message";
+    gcmah = "git commit --amend --reuse-message HEAD";
+    gcmahs = "git commit --amend --reuse-message HEAD --gpg-sign";
+    gcmams = "git commit --verbose --amend --gpg-sign";
+    gcmara = "git commit --amend --reset-author";
 
     # git conflict
     gcfl = "git --no-pager diff --name-only --diff-filter=U";
