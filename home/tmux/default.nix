@@ -34,11 +34,17 @@
       bind -n M-k select-pane -U
       bind -n M-l select-pane -R
 
-      # Pane resize (repeatable)
-      bind -n -r M-H resize-pane -L 5
-      bind -n -r M-J resize-pane -D 5
-      bind -n -r M-K resize-pane -U 5
-      bind -n -r M-L resize-pane -R 5
+      # Swap (panes up/down, windows left/right)
+      bind -n M-H swap-window -t -1 \; previous-window
+      bind -n M-J swap-pane -D
+      bind -n M-K swap-pane -U
+      bind -n M-L swap-window -t +1 \; next-window
+
+      # Pane resize (prefix, repeatable)
+      bind -r H resize-pane -L 5
+      bind -r J resize-pane -D 5
+      bind -r K resize-pane -U 5
+      bind -r L resize-pane -R 5
 
       # Pane actions
       bind -n M-q kill-pane
@@ -48,6 +54,9 @@
       bind -n M-b break-pane
 
       # Windows
+      bind -n M-r command-prompt "rename-window '%%'"
+      bind -n M-R command-prompt "rename-session '%%'"
+      bind -n M-w choose-tree -Zs
       bind -n M-c new-window -c "#{pane_current_path}"
       bind -n M-n next-window
       bind -n M-p previous-window
