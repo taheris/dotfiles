@@ -34,11 +34,11 @@
       bind -n M-k select-pane -U
       bind -n M-l select-pane -R
 
-      # Swap (panes up/down, windows left/right)
-      bind -n M-H swap-window -t -1 \; previous-window
-      bind -n M-J swap-pane -D
-      bind -n M-K swap-pane -U
-      bind -n M-L swap-window -t +1 \; next-window
+      # Swap panes (HJKL)
+      bind -n M-H swap-pane -d -t '{left-of}'
+      bind -n M-J swap-pane -d -t '{down-of}'
+      bind -n M-K swap-pane -d -t '{up-of}'
+      bind -n M-L swap-pane -d -t '{right-of}'
 
       # Pane resize (prefix, repeatable)
       bind -r H resize-pane -L 5
