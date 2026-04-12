@@ -76,7 +76,6 @@ in
   systemd.user.services.mouser-resume = mkIf isLinux {
     Unit = {
       Description = "Restart Mouser on system resume";
-      After = [ "mouser.service" ];
     };
     Service = {
       Type = "exec";
