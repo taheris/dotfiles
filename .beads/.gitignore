@@ -1,13 +1,27 @@
 # Dolt database (managed by Dolt, not git)
 dolt/
-dolt-access.lock
+embeddeddolt/
 
 # Runtime files
 bd.sock
 bd.sock.startlock
-push-state.json
 sync-state.json
 last-touched
+.exclusive-lock
+
+# Daemon runtime (lock, log, pid)
+daemon.*
+
+# Interactions log (runtime, not versioned)
+interactions.jsonl
+
+# Push state (runtime, per-machine)
+push-state.json
+
+# Lock files (various runtime locks)
+*.lock
+
+# Credential key (encryption key for federation peer auth — never commit)
 .beads-credential-key
 
 # Local version tracking (prevents upgrade notification spam after git ops)
@@ -21,6 +35,7 @@ redirect
 # These files are machine-specific and should not be shared across clones
 .sync.lock
 export-state/
+export-state.json
 
 # Ephemeral store (SQLite - wisps/molecules, intentionally not versioned)
 ephemeral.sqlite3
@@ -34,12 +49,17 @@ dolt-server.log
 dolt-server.lock
 dolt-server.port
 dolt-server.activity
-dolt-monitor.pid
+
+# Corrupt backup directories (created by bd doctor --fix recovery)
+*.corrupt.backup/
 
 # Backup data (auto-exported JSONL, local-only)
 backup/
 
-# Legacy artifacts (safety net — prevents accidental commits of old files)
+# Per-project environment file (Dolt connection config, GH#2520)
+.env
+
+# Legacy files (from pre-Dolt versions)
 *.db
 *.db?*
 *.db-journal
@@ -47,10 +67,11 @@ backup/
 *.db-shm
 db.sqlite
 bd.db
-daemon.lock
-daemon.log
-daemon-*.log.gz
-daemon.pid
+
+# JSONL export/import files — dead post-Dolt migration (3171e1f).
+# Dolt is the source of truth; sync uses .beads/dolt-remote/ on the beads branch.
+issues.jsonl
+interactions.jsonl
 # NOTE: Do NOT add negation patterns here.
 # They would override fork protection in .git/info/exclude.
 # Config files (metadata.json, config.yaml) are tracked by git by default
