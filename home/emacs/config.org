@@ -1502,7 +1502,8 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
          :desc "Open gptel menu"            "m" #'gptel-menu
          :desc "Rewrite"                    "r" #'gptel-rewrite
          :desc "Org: set topic"             "o" #'gptel-org-set-topic
-         :desc "Org: set properties"        "O" #'gptel-org-set-properties)))
+         :desc "Org: set properties"        "O" #'gptel-org-set-properties
+         :desc "Abort"                      "z" #'gptel-abort)))
 #+end_src
 
 Open all org-mode buffers with gptel.

@@ -44,6 +44,10 @@ in
         };
       };
 
+      # Disable GPU accel: tidal-hifi's Chromium GPU process has triggered
+      # amdgpu VM page faults that hung the iGPU and took niri down with it.
+      "com.mastermindzh.tidal-hifi".Environment.ELECTRON_DISABLE_GPU = "1";
+
       "com.slack.Slack".Context.sockets = [
         "wayland"
         "!x11"
