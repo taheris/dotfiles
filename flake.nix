@@ -124,9 +124,15 @@
 
           formatter = pkgs.nixfmt-tree;
 
-          packages = import ./packages { inherit pkgs; } // {
-            default = sandbox.package;
-          };
+          packages =
+            import ./packages {
+              inherit pkgs;
+              inherit (pkgs) lib;
+              inherit (pkgs.stdenv) isLinux;
+            }
+            // {
+              default = sandbox.package;
+            };
         };
 
       flake = {

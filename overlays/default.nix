@@ -6,6 +6,8 @@
     import ../packages {
       inherit inputs;
       pkgs = final;
+      inherit (inputs.nixpkgs) lib;
+      inherit (_prev.stdenv) isLinux;
     }
     // {
       beads = inputs.wrapix.packages.${final.stdenv.hostPlatform.system}.beads;
@@ -22,12 +24,32 @@
         python.override (old: {
           packageOverrides = final.lib.composeExtensions (old.packageOverrides or (_: _: { })) (
             _: pyprev: {
-              cli-helpers = pyprev.cli-helpers.overridePythonAttrs (_: { doCheck = false; });
+              cli-helpers = pyprev.cli-helpers.overridePythonAttrs (_: {
+                doCheck = false;
+              });
             }
           );
         });
     in
     {
+      # Strip libgbm/playwright from d2 on Darwin — libdrm is Linux-only.
+      # https://github.com/NixOS/nixpkgs/pull/488723
+      d2 =
+        if prev.stdenv.isDarwin then
+          prev.d2.overrideAttrs (old: {
+            buildInputs = builtins.filter (
+              dep: !(builtins.elem (dep.pname or "") [ "mesa-libgbm" "playwright-browsers" ])
+            ) (old.buildInputs or [ ]);
+            nativeBuildInputs = builtins.filter (
+              dep: !(builtins.elem (dep.pname or "") [ "makeWrapper" ])
+            ) (old.nativeBuildInputs or [ ]);
+            postInstall = ''
+              installManPage ci/release/template/man/d2.1
+            '';
+          })
+        else
+          prev.d2;
+
       python3 = pyOverride prev.python3;
       python313 = pyOverride prev.python313;
 
