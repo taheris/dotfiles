@@ -19,6 +19,7 @@ let
     iftop
     jq
     lsof
+    mdcat
     mtr
     pciutils
     pv

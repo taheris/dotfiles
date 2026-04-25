@@ -76,19 +76,19 @@
         ]
       },
       "locked": {
-        "lastModified": 1776769805,
-        "narHash": "sha256-KhD5ZaVdJPdLTUE0VoKEUmqLhBLOYMqyJM8sOMotv2c=",
-        "ref": "feat/unix-socket-support",
-        "rev": "4ba085775edb2cce76ed20acc81cb3d233eea703",
+        "lastModified": 1776834735,
+        "narHash": "sha256-AH9e3+6fxnPPqLJPcjSNFsUt01IcR+FUm0dH6lEHv7k=",
+        "ref": "main",
+        "rev": "a78e58388f5ec82a568de94eedb8a449a7f486e7",
         "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/taheris/beads.git"
+        "url": "ssh://git@github.com/gastownhall/beads.git"
       },
       "original": {
-        "ref": "feat/unix-socket-support",
+        "ref": "main",
         "shallow": true,
         "type": "git",
-        "url": "ssh://git@github.com/taheris/beads.git"
+        "url": "ssh://git@github.com/gastownhall/beads.git"
       }
     },
     "dms": {
@@ -121,10 +121,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1776765883,
-        "narHash": "sha256-vK7G1VBbnWx6vjmk5qz7CkgkSDsCtbzPo5aum3PRjCg=",
+        "lastModified": 1777041352,
+        "narHash": "sha256-aQ5QsWtbuiPMMGH+oWf+NaW+Go7hahqOWoLp/0V1Z3Q=",
         "ref": "master",
-        "rev": "8765da0c14dd289f788ba8982db6e023a175fd1a",
+        "rev": "622f25235ec0969479c1d03247ef15c8bc07cee9",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -134,6 +134,30 @@
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
+      }
+    },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "wrapix",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1776845169,
+        "narHash": "sha256-Ya6Ba5oC0+PK1TSU4Rkjpoca73mUp6FoHQV5QGnqbx0=",
+        "ref": "main",
+        "rev": "f0b5be1fa2891221ba8b48784f8fded5ef15301f",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/nix-community/fenix.git"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/nix-community/fenix.git"
       }
     },
     "firefox-gnome-theme": {
@@ -214,10 +238,10 @@
     "gascity": {
       "flake": false,
       "locked": {
-        "lastModified": 1776798504,
-        "narHash": "sha256-SLUyUV9a7LF1zL8I+bPqzNdMSdkrlD1rqTltSLeEC8A=",
+        "lastModified": 1776818539,
+        "narHash": "sha256-o88ZgiD7XVefaTlqCQQRNOBjP0NDE/YD+JJ5CoFDuc4=",
         "ref": "main",
-        "rev": "b86a4b0934e6cf4b2eebae11a81849361fd9843d",
+        "rev": "bc6058d352fc2a46e6d43ff32e90d4a42f2b4bac",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/gastownhall/gascity.git"
@@ -253,10 +277,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1776777932,
-        "narHash": "sha256-0R3Yow/NzSeVGUke5tL7CCkqmss4Vmi6BbV6idHzq/8=",
+        "lastModified": 1777086106,
+        "narHash": "sha256-hlNpIN18pw3xo34Lsrp6vAMUPn0aB/zFBqL0QXI1Pmk=",
         "ref": "master",
-        "rev": "5d5640599a0050b994330328b9fd45709c909720",
+        "rev": "5826802354a74af18540aef0b01bc1320f82cc17",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -280,10 +304,10 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1776805172,
-        "narHash": "sha256-5xA2D+iOEMoKBcTSbQe8Ztao5APX7C3eVeiFAdCg3WM=",
+        "lastModified": 1777118280,
+        "narHash": "sha256-xCSQxApbEq2cQuS1uvUCTUHL4masVOjexi8zv36peo0=",
         "ref": "main",
-        "rev": "035f8ef8a0a5ec8f226231b15e84ebd88a81b1f3",
+        "rev": "4a4a4da68a0e420e013fc125f522ee1f0c0dd252",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/sodiboo/niri-flake.git"
@@ -315,11 +339,11 @@
     "niri-unstable": {
       "flake": false,
       "locked": {
-        "lastModified": 1776800113,
-        "narHash": "sha256-8UFcj0LV4zZ0gTX96LlbzpmBfYkoXsfb3ETg7GeRup8=",
+        "lastModified": 1777115661,
+        "narHash": "sha256-RTVipdr4vxnOyt/4xPBHz/BAWZYIeZ1VxnsJsjJp/Uc=",
         "owner": "YaLTeR",
         "repo": "niri",
-        "rev": "e472b5b0f13d91fdf0e5d07551f68177d25043d0",
+        "rev": "91be662ac6cff43a010395352afbe8a50e3a18af",
         "type": "github"
       },
       "original": {
@@ -369,10 +393,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1776329215,
-        "narHash": "sha256-a8BYi3mzoJ/AcJP8UldOx8emoPRLeWqALZWu4ZvjPXw=",
+        "lastModified": 1776949667,
+        "narHash": "sha256-GMSVw35Q+294GlrTUKlx087E31z7KurReQ1YHSKp5iw=",
         "ref": "nixpkgs-unstable",
-        "rev": "b86751bc4085f48661017fa226dee99fab6c651b",
+        "rev": "01fbdeef22b76df85ea168fbfe1bfd9e63681b30",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -386,11 +410,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1776560675,
-        "narHash": "sha256-p68udKWWh7+V4ZPpcMDq0gTHWNZJnr4JPI+kHPPE40o=",
+        "lastModified": 1776734388,
+        "narHash": "sha256-vl3dkhlE5gzsItuHoEMVe+DlonsK+0836LIRDnm6MXQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e07580dae39738e46609eaab8b154de2488133ce",
+        "rev": "10e7ad5bbcb421fe07e3a4ad53a634b0cd57ffac",
         "type": "github"
       },
       "original": {
@@ -481,27 +505,21 @@
         "wrapix": "wrapix"
       }
     },
-    "rust-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "wrapix",
-          "nixpkgs"
-        ]
-      },
+    "rust-analyzer-src": {
+      "flake": false,
       "locked": {
-        "lastModified": 1776741231,
-        "narHash": "sha256-k9G98qzn+7npROUaks8VqCFm7cFtEG8ulQLBBo5lItg=",
-        "ref": "master",
-        "rev": "02061303f7c4c964f7b4584dabd9e985b4cd442b",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/oxalica/rust-overlay.git"
+        "lastModified": 1776800521,
+        "narHash": "sha256-f8YJfwAOsLFpIoqZuX3yF69UvMLrkx7iVzMH1pJU7cM=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "8954b66d43225e62c92e8bbcc8500191b5cceb1e",
+        "type": "github"
       },
       "original": {
-        "ref": "master",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/oxalica/rust-overlay.git"
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "secrets": {
@@ -564,10 +582,10 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1776170745,
-        "narHash": "sha256-Tl1aZVP5EIlT+k0+iAKH018GLHJpLz3hhJ0LNQOWxCc=",
+        "lastModified": 1776893932,
+        "narHash": "sha256-AFD5cf9eNqXq1brHS63xeZy2xKZMgG9J86XJ9I2eLn8=",
         "ref": "master",
-        "rev": "e3861617645a43c9bbefde1aa6ac54dd0a44bfa9",
+        "rev": "84971726c7ef0bb3669a5443e151cc226e65c518",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/stylix.git"
@@ -684,6 +702,7 @@
     "wrapix": {
       "inputs": {
         "beads": "beads",
+        "fenix": "fenix",
         "flake-parts": [
           "flake-parts"
         ],
@@ -691,14 +710,13 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-overlay": "rust-overlay",
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1776807869,
-        "narHash": "sha256-bnEZRsRKhW11pfkSbIOQ8CC5SHGDPVfMuBuFeaSH/WA=",
+        "lastModified": 1777128226,
+        "narHash": "sha256-qGuK8s0EIJDc7wk0FcSYUaKjHAMVOcK2YK0B0O9Z8e8=",
         "ref": "main",
-        "rev": "2dfe29a52d6585bd8a0f7f50f7ab1001c714133a",
+        "rev": "3890d042353bc7c3233a4d66d264a5f96c86d878",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"
