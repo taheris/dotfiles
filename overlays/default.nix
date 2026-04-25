@@ -24,6 +24,15 @@
         python.override (old: {
           packageOverrides = final.lib.composeExtensions (old.packageOverrides or (_: _: { })) (
             _: pyprev: {
+              # OOM (Killed: 9, exit code 137) during check phases on aarch64-darwin.
+              # Same class of issue as https://github.com/NixOS/nixpkgs/issues/330839
+              av = pyprev.av.overridePythonAttrs (_: {
+                doCheck = false;
+                pythonImportsCheck = [ ];
+              });
+              imageio = pyprev.imageio.overridePythonAttrs (_: {
+                doCheck = false;
+              });
               cli-helpers = pyprev.cli-helpers.overridePythonAttrs (_: {
                 doCheck = false;
               });
@@ -49,6 +58,16 @@
           })
         else
           prev.d2;
+
+      # checkPhase hangs on aarch64-darwin (code signing issue with fish/zsh).
+      # https://github.com/NixOS/nixpkgs/issues/513019
+      direnv =
+        if prev.stdenv.isDarwin then
+          prev.direnv.overrideAttrs (_: {
+            doCheck = false;
+          })
+        else
+          prev.direnv;
 
       python3 = pyOverride prev.python3;
       python313 = pyOverride prev.python313;
