@@ -1,4 +1,8 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib) optionalAttrs;
@@ -12,9 +16,6 @@ in
     dccp = "docker container cp";
     dccr = "docker container create";
     dcd = "docker container diff";
-    dcex = "docker container exec --interactive --tty";
-    dcexr = "docker container exec --interactive --tty --user 0:0";
-    dcexu = "docker container exec --interactive --tty --user \"$(id -u):$(id -g)\"";
     dcep = "docker container export";
     dci = "docker container inspect";
     dck = "docker container kill";
@@ -28,14 +29,10 @@ in
     dcrn = "docker container rename";
     dcrm = "docker container rm";
     dcrmv = "docker container rm --volumes";
-    dcr = "docker container run --interactive --tty --rm";
     dcre = "dcr --entrypoint";
     dcreb = "dcr --entrypoint bash";
     dcres = "dcr --entrypoint sh";
     dcrnh = "dcr --net=host";
-    dcrns = "dcr --privileged --pid=host justincormack/nsenter1";
-    dcrr = "docker container run --interactive --tty --user 0:0";
-    dcru = "$(printf 'docker container run --interactive --tty --user %s:%s' $(id -u) $(id -g))";
     dcst = "docker container start";
     dcsp = "docker container stop";
     dcsa = "docker container stats";
@@ -43,6 +40,16 @@ in
     dcupe = "docker container unpause";
     dcup = "docker container update";
     dcw = "docker container wait";
+
+    # docker container exec
+    dcex = "docker container exec --interactive --tty";
+    dcexr = "docker container exec --interactive --tty --user 0:0";
+    dcexu = "docker container exec --interactive --tty --user \"$(id -u):$(id -g)\"";
+
+    # docker container run
+    dcr = "docker container run --interactive --tty --rm";
+    dcrr = "docker container run --interactive --tty --user 0:0";
+    dcru = "docker container run --interactive --tty --user \"$(id -u):$(id -g)\"";
 
     # docker compose
     dcm = "docker compose";
@@ -222,7 +229,6 @@ in
     acl = "container list";
     acla = "container list --all";
     aclg = "container logs";
-    acr = "container run";
     acrm = "container delete";
     acsa = "container stats";
     acsp = "container stop";
@@ -238,6 +244,16 @@ in
     acirm = "container image delete";
     acis = "container image save";
     acitg = "container image tag";
+
+    # apple container exec
+    acex = "container exec --interactive --tty";
+    acexr = "container exec --interactive --tty --user root|0:0";
+    acexu = "container exec --interactive --tty --user \"$(id -u):$(id -g)\"";
+
+    # apple container run
+    acr = "container run --interactive --tty --rm";
+    acrr = "container run --interactive --tty --user 0:0";
+    acru = "container run --interactive --tty --user \"$(id -u):$(id -g)\"";
 
     # apple container network
     acn = "container network";

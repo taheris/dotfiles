@@ -76,10 +76,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1776834735,
-        "narHash": "sha256-AH9e3+6fxnPPqLJPcjSNFsUt01IcR+FUm0dH6lEHv7k=",
+        "lastModified": 1777172224,
+        "narHash": "sha256-27wKQptw4oUTltkkSH8S45qK7z8px1bWcsLIuhxbt+c=",
         "ref": "main",
-        "rev": "a78e58388f5ec82a568de94eedb8a449a7f486e7",
+        "rev": "0fffa44a2302a496dfa4ffa838843b3bbf0ee122",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/gastownhall/beads.git"
@@ -121,10 +121,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1777143104,
-        "narHash": "sha256-rvfM6C5fquPJb75QxxJrTBBLqwUIwn0x32BQ77o0xco=",
+        "lastModified": 1777168306,
+        "narHash": "sha256-ADeKQ14Nw5UO18tP5y07WxN7o9SfhcJ4/jq3jvZryyI=",
         "ref": "master",
-        "rev": "c6def9e23deb95680b993d73e0055ad2160b4956",
+        "rev": "c7acc54f58f3c81a5e19f5f9ceb3958702a3f597",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -145,10 +145,10 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1776845169,
-        "narHash": "sha256-Ya6Ba5oC0+PK1TSU4Rkjpoca73mUp6FoHQV5QGnqbx0=",
+        "lastModified": 1777190237,
+        "narHash": "sha256-XbNSZv/fi6U8r8r8J/rljY91wf2jxyM6AwNLBeeM5SA=",
         "ref": "main",
-        "rev": "f0b5be1fa2891221ba8b48784f8fded5ef15301f",
+        "rev": "82fcabb6d9819f34170877fb1848b92e9350ec57",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/fenix.git"
@@ -238,10 +238,10 @@
     "gascity": {
       "flake": false,
       "locked": {
-        "lastModified": 1776818539,
-        "narHash": "sha256-o88ZgiD7XVefaTlqCQQRNOBjP0NDE/YD+JJ5CoFDuc4=",
+        "lastModified": 1777233116,
+        "narHash": "sha256-o8+OgpKjwDGCdPQ44ztxQ/iy5tcybH+qmtUK4k17EOM=",
         "ref": "main",
-        "rev": "bc6058d352fc2a46e6d43ff32e90d4a42f2b4bac",
+        "rev": "65404c4a7bcd5f5701ac5b556ce9ab4c9043dfac",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/gastownhall/gascity.git"
@@ -277,10 +277,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1777151655,
-        "narHash": "sha256-Th3a5OZyEy4kCoyLfefnt+2dwRIrFQqYgMsayF9qzFw=",
+        "lastModified": 1777236726,
+        "narHash": "sha256-ZTYDofOM3/PJhRF1EuBh6uibm+DmkhU7Wor6mMN7YTc=",
         "ref": "master",
-        "rev": "6f59831b23d03bbf4fbd13ad167ae25da294cc14",
+        "rev": "e82d4a4ecd18363aa2054cbaa3e32e4134c3dbf4",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -304,10 +304,10 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1777130270,
-        "narHash": "sha256-AgOIR3O+hLkTe/spgYjp0knc37iy/A5DqGRY+8DP3LE=",
+        "lastModified": 1777240421,
+        "narHash": "sha256-ooPmu+8tqOGh4kozPW4rJC7Y7WM/FHtEY3OK1PoNW7g=",
         "ref": "main",
-        "rev": "e43ef13f23c2c7ae5b10e842745cb345faff4f40",
+        "rev": "2bb22af2985e5f3cfd051b3d977ebfbf81126280",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/sodiboo/niri-flake.git"
@@ -339,11 +339,11 @@
     "niri-unstable": {
       "flake": false,
       "locked": {
-        "lastModified": 1777115961,
-        "narHash": "sha256-ehSMsSpE+0k8r+2Vseu8kangsYxToZv3vinynsDp9zs=",
+        "lastModified": 1777237919,
+        "narHash": "sha256-bZHBzo4EuW/xLzXnnMKsIMdZYqgY2O0mIMdplwDHB8Y=",
         "owner": "YaLTeR",
         "repo": "niri",
-        "rev": "8ed0da44d974c32c6877d2f4630c314da0717ecb",
+        "rev": "a85b922919815c32a3ae34e0838830fe522d6a1c",
         "type": "github"
       },
       "original": {
@@ -376,10 +376,10 @@
     },
     "nix-flatpak": {
       "locked": {
-        "lastModified": 1776625032,
-        "narHash": "sha256-edvwHiFhgOiwywt6/Iwe+sSn6ybhU3WZGnIoiGcKjfQ=",
+        "lastModified": 1777229239,
+        "narHash": "sha256-OwSaWqlBdKn8QIa7BrPtJmlrr46U7AuwMc/toDKuMZw=",
         "ref": "main",
-        "rev": "479e19f1decb390aa5b75cae13ddf87d763c74cc",
+        "rev": "3f1d78b63b6af353c0685b8a7411c04d980426e4",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/gmodena/nix-flatpak.git"
@@ -410,11 +410,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1776734388,
-        "narHash": "sha256-vl3dkhlE5gzsItuHoEMVe+DlonsK+0836LIRDnm6MXQ=",
+        "lastModified": 1777077449,
+        "narHash": "sha256-AIiMJiqvGrN4HyLEbKAoCSRRYn0rnlW5VbKNIMIYqm4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "10e7ad5bbcb421fe07e3a4ad53a634b0cd57ffac",
+        "rev": "a4bf06618f0b5ee50f14ed8f0da77d34ecc19160",
         "type": "github"
       },
       "original": {
@@ -713,10 +713,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1777164473,
-        "narHash": "sha256-62+cD76QEbpXXfVuUj8mmxEpI0VJSOjflt93r//A2YM=",
+        "lastModified": 1777241293,
+        "narHash": "sha256-Cvh9sP0fOqhiS1ONgkF5zvfKg6cYx+8JZ/LmC6kBQeM=",
         "ref": "main",
-        "rev": "a1e3728f57bcdc2f79f3298b250aa2019be5ea48",
+        "rev": "53e717b95988d21e3cbad3b01bdb43b3db88166b",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrapix.git"
