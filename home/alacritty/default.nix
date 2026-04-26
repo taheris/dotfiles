@@ -1,5 +1,8 @@
 { lib, host, ... }:
 
+let
+  inherit (builtins) fromJSON;
+in
 {
   programs.alacritty = {
     enable = true;
@@ -15,7 +18,7 @@
         {
           key = "Return";
           mods = "Shift";
-          chars = "\\u001b\\u000a";
+          chars = fromJSON ''"\u001b\u000a"'';
         }
       ];
     };
