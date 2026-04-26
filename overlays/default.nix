@@ -47,11 +47,15 @@
         if prev.stdenv.isDarwin then
           prev.d2.overrideAttrs (old: {
             buildInputs = builtins.filter (
-              dep: !(builtins.elem (dep.pname or "") [ "mesa-libgbm" "playwright-browsers" ])
+              dep:
+              !(builtins.elem (dep.pname or "") [
+                "mesa-libgbm"
+                "playwright-browsers"
+              ])
             ) (old.buildInputs or [ ]);
-            nativeBuildInputs = builtins.filter (
-              dep: !(builtins.elem (dep.pname or "") [ "makeWrapper" ])
-            ) (old.nativeBuildInputs or [ ]);
+            nativeBuildInputs = builtins.filter (dep: !(builtins.elem (dep.pname or "") [ "makeWrapper" ])) (
+              old.nativeBuildInputs or [ ]
+            );
             postInstall = ''
               installManPage ci/release/template/man/d2.1
             '';

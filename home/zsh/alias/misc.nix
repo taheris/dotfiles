@@ -68,9 +68,13 @@
 
     # beads sync
     bp = "beads-push";
-    bdpf = "bd preflight";
     bddp = "bd dolt push";
     bddpl = "bd dolt pull";
+    bdds = "beads-dolt status";
+    bddst = "beads-dolt start";
+    bddsp = "beads-dolt stop";
+    bddrs = "beads-dolt restart";
+    bdpf = "bd preflight";
 
     # gascity
     gcyi = "gc init";
