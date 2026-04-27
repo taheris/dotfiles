@@ -5,7 +5,8 @@
     user = "shaun";
     fontSize = 13;
     hasLinuxBuilder = true;
-    users.shaun = { };
+    # Account only; HM runs standalone via `den.homes` below.
+    users.shaun.classes = [ ];
   };
 
   den.homes.x86_64-linux."shaun@nix" = { };
