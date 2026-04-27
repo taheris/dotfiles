@@ -4,10 +4,10 @@ Run `make` to see a list of setup commands.
 
 ## Layout
 
-Built on [den](https://github.com/denful/den) with `flake-file` and
-`import-tree` (dendritic pattern). Everything under `modules/` is
-auto-imported; hosts compose features by including aspects from the
-`my` namespace.
+Built on [den](https://github.com/denful/den) (dendritic pattern).
+
+Everything under `modules/` is auto-imported. Hosts compose features by
+including aspects from the `my` namespace.
 
 ```
 modules/
@@ -26,10 +26,11 @@ modules/
 packages/     custom derivation sources
 ```
 
-`flake.nix` is generated from `modules/flake/inputs.nix` by
-`flake-file`; do not hand-edit it.
+`flake.nix` is generated from `modules/flake/inputs.nix` by `flake-file`.
 
-## Bootstrapping a new NixOS host
+## Bootstrapping
+
+### A new NixOS host
 
 1. Add a new host file under `modules/hosts/<name>.nix` (use
    `nix.nix` as a template — hardware config is inlined).
@@ -37,7 +38,7 @@ packages/     custom derivation sources
 3. Reboot into the new system.
 4. Run `make nixos-home` to install home-manager.
 
-## Bootstrapping a new macOS host
+### A new macOS host
 
 1. Add a new host file under `modules/hosts/<name>.nix` (use
    `m1.nix`/`m16.nix` as templates).
