@@ -1,4 +1,4 @@
-{ my, ... }:
+{ ... }:
 {
   my.agent =
     { host, ... }:
@@ -12,7 +12,7 @@
         let
           inherit (lib) mkIf mkMerge optionals;
           inherit (pkgs.stdenv) isDarwin isLinux;
-          hasLinuxBuilder = host.hasAspect my.linux-builder;
+          inherit (host) hasLinuxBuilder;
 
           packages = with pkgs; [
             spec-kit
@@ -25,10 +25,14 @@
             wrapix-notifyd
           ];
 
-          darwinPackages = with pkgs; [
-            container
-            terminal-notifier
-          ];
+          darwinPackages =
+            with pkgs;
+            [
+              terminal-notifier
+            ]
+            ++ lib.optionals pkgs.stdenv.hostPlatform.isAarch64 [
+              container
+            ];
 
           linuxPackages = with pkgs; [
             libnotify

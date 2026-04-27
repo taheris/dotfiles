@@ -1,0 +1,43 @@
+{ my, ... }:
+{
+  den.hosts.aarch64-darwin.m2 = {
+    user = "shaun";
+    fontSize = 16;
+    hasLinuxBuilder = true;
+    users.shaun = { };
+  };
+
+  den.aspects.m2 =
+    { host, ... }:
+    {
+      includes = [
+        my.linux-builder
+        my.darwin
+        my.gpg
+      ];
+
+      darwin = {
+        nix.buildMachines = [
+          {
+            hostName = "nix";
+            sshUser = "shaun";
+            sshKey = "/etc/nix/nix_builder_key";
+            systems = [
+              "aarch64-linux"
+              "x86_64-linux"
+            ];
+            supportedFeatures = [
+              "benchmark"
+              "big-parallel"
+              "kvm"
+              "nixos-test"
+            ];
+          }
+        ];
+
+        system.primaryUser = "shaun";
+
+        nixpkgs.hostPlatform = "aarch64-darwin";
+      };
+    };
+}
