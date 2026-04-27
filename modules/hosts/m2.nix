@@ -1,4 +1,5 @@
 { my, ... }:
+
 {
   den.hosts.aarch64-darwin.m2 = {
     user = "shaun";
@@ -8,7 +9,7 @@
   };
 
   den.aspects.m2 =
-    { host, ... }:
+    { ... }:
     {
       includes = [
         my.linux-builder
@@ -35,9 +36,9 @@
           }
         ];
 
-        system.primaryUser = "shaun";
-
         nixpkgs.hostPlatform = "aarch64-darwin";
+
+        system.primaryUser = "shaun";
       };
     };
 }

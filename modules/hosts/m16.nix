@@ -7,7 +7,7 @@
   };
 
   den.aspects.m16 =
-    { host, ... }:
+    { ... }:
     {
       includes = [
         my.darwin
@@ -15,9 +15,8 @@
       ];
 
       darwin = {
-        system.primaryUser = "shaun";
-
         nixpkgs.hostPlatform = "x86_64-darwin";
+        system.primaryUser = "shaun";
       };
     };
 }

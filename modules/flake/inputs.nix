@@ -1,4 +1,5 @@
 { ... }:
+
 {
   flake-file = {
     description = "NixOS flake configuration";
@@ -18,7 +19,7 @@
 
   flake-file.inputs = {
     nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
-    nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.05&shallow=1";
+    nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.11&shallow=1";
     nixpkgs-lib.follows = "nixpkgs";
 
     den.url = "git+ssh://git@github.com/denful/den.git?shallow=1";

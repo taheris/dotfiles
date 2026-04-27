@@ -1,4 +1,5 @@
 { ... }:
+
 {
   flake.overlays.fixes =
     final: prev:
@@ -24,6 +25,7 @@
             }
           );
         });
+
     in
     {
       # Strip libgbm/playwright from d2 on Darwin — libdrm is Linux-only.

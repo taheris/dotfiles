@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.git.homeManager =
     { pkgs, ... }:
@@ -31,18 +32,6 @@
           key = "1C2BE6B85F923891";
           signByDefault = true;
         };
-
-        includes = [
-          {
-            condition = "hasconfig:remote.*.url:git@github.com:blockjoy/**";
-            contents = {
-              user = {
-                email = "shaun@blockjoy.com";
-                signingKey = "ED2521879B846B13";
-              };
-            };
-          }
-        ];
       };
 
       programs.delta = {

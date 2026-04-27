@@ -1,18 +1,19 @@
 { my, den, ... }:
+
 {
   den.aspects.shaun = {
     includes = [
       (den.provides.user-shell "zsh")
       den.provides.primary-user
 
-      # Shells & terminals
+      # shell
       my.zsh
       my.tmux
       my.alacritty
       my.starship
       my.vim
 
-      # Dev
+      # dev
       my.git
       my.python
       my.rust
@@ -20,7 +21,7 @@
       my.emacs
       my.agent
 
-      # Desktop (Linux-gated where appropriate inside aspects)
+      # desktop
       my.niri
       my.dms
       my.stylix
@@ -29,11 +30,11 @@
       my.flatpak
       my.input
 
-      # Secrets
+      # secrets
       my.secrets
       my.gpg
 
-      # Misc
+      # misc
       my.dotfile
       my.home-base
     ];

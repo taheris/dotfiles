@@ -1,4 +1,8 @@
 { inputs, lib, ... }:
+
+let
+  inherit (lib) hasSuffix optionalAttrs;
+in
 {
   flake.overlays.packages =
     final: prev:
@@ -6,6 +10,7 @@
       callPackage = final.callPackage;
       system = final.stdenv.hostPlatform.system;
       isLinux = prev.stdenv.isLinux;
+
     in
     {
       bookerly = callPackage ../../packages/bookerly { };
@@ -22,7 +27,7 @@
         config.allowUnfree = true;
       };
     }
-    // lib.optionalAttrs isLinux {
+    // optionalAttrs isLinux {
       apple-display-backlight = callPackage ../../packages/apple-display-backlight {
         kernel = final.linuxPackages_latest.kernel;
       };
@@ -30,4 +35,26 @@
       mouser = callPackage ../../packages/mouser { };
       tws = callPackage ../../packages/tws { };
     };
+
+  perSystem =
+    { pkgs, system, ... }:
+    {
+      packages = {
+        inherit (pkgs)
+          bookerly
+          monaco
+          monacob
+          sqlite-vss
+          ;
+      }
+      // optionalAttrs (hasSuffix "linux" system) {
+        inherit (pkgs)
+          apple-display-backlight
+          intercept-fn-keys
+          mouser
+          tws
+          ;
+      };
+    };
+
 }

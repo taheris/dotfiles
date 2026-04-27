@@ -4,6 +4,7 @@
   den,
   ...
 }:
+
 let
   nixpkgs = {
     overlays = [
@@ -15,6 +16,7 @@ let
       problems.handlers.arrow-cpp.broken = "warn";
     };
   };
+
 in
 {
   den.default = {
@@ -22,10 +24,12 @@ in
       system.stateVersion = "24.11";
       inherit nixpkgs;
     };
+
     darwin = {
       system.stateVersion = 6;
       inherit nixpkgs;
     };
+
     homeManager = {
       home.stateVersion = "26.05";
       inherit nixpkgs;
@@ -40,20 +44,22 @@ in
 
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
   den.schema.host.options = {
-    fontSize = lib.mkOption {
-      type = lib.types.int;
-      default = 13;
-      description = "Default font size for terminal/UI on this host.";
-    };
     user = lib.mkOption {
       type = lib.types.str;
-      default = "shaun";
+      default = "user";
       description = "Primary user name for this host.";
     };
+
+    fontSize = lib.mkOption {
+      type = lib.types.int;
+      default = 14;
+      description = "Default font size for terminal/UI on this host.";
+    };
+
     hasLinuxBuilder = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "Whether this host has access to a Linux remote builder.";
+      description = "Whether this host has access to a remote Nix Linux builder.";
     };
   };
 }

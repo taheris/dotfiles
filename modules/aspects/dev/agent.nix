@@ -1,17 +1,17 @@
-{ ... }:
+{ lib, pkgs, ... }:
+
+let
+  inherit (lib) mkIf mkMerge optionals;
+  inherit (pkgs.stdenv) isDarwin isLinux;
+  inherit (pkgs.stdenv.hostPlatform) isAarch64;
+
+in
 {
   my.agent =
     { host, ... }:
     {
       homeManager =
-        {
-          lib,
-          pkgs,
-          ...
-        }:
         let
-          inherit (lib) mkIf mkMerge optionals;
-          inherit (pkgs.stdenv) isDarwin isLinux;
           inherit (host) hasLinuxBuilder;
 
           packages = with pkgs; [
@@ -30,13 +30,14 @@
             [
               terminal-notifier
             ]
-            ++ lib.optionals pkgs.stdenv.hostPlatform.isAarch64 [
+            ++ optionals isAarch64 [
               container
             ];
 
           linuxPackages = with pkgs; [
             libnotify
           ];
+
         in
         {
           home.packages = mkMerge [

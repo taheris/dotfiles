@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.starship.homeManager = {
     programs.starship = {

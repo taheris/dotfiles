@@ -1,4 +1,10 @@
-{ ... }:
+{ lib, pkgs, ... }:
+
+let
+  inherit (lib) mkIf mkMerge;
+  inherit (pkgs.stdenv) isLinux;
+
+in
 {
   my.rust.homeManager =
     {
@@ -8,9 +14,6 @@
       ...
     }:
     let
-      inherit (lib) mkIf mkMerge;
-      inherit (pkgs.stdenv) isLinux;
-
       packages = with pkgs; [
         cargo-audit
         cargo-bloat
@@ -37,6 +40,7 @@
         mold
         rr
       ];
+
     in
     {
       home = {

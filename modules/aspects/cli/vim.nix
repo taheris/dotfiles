@@ -1,9 +1,10 @@
 { ... }:
+
 {
   my.vim.homeManager =
     { pkgs, ... }:
     {
-      home.packages = [ pkgs.nodejs ];
+      home.packages = with pkgs; [ nodejs ];
 
       programs.neovim = {
         enable = true;
