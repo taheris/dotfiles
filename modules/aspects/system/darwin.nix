@@ -1,5 +1,13 @@
 { inputs, ... }:
+
 {
+  my.darwin.homeManager = {
+    targets.darwin = {
+      copyApps.enable = false;
+      linkApps.enable = true;
+    };
+  };
+
   my.darwin.darwin =
     {
       config,

@@ -15,22 +15,11 @@
         lfs.enable = true;
 
         settings = {
-          user = {
-            name = "Shaun Taheri";
-            email = "gpg@taheris.net";
-          };
-
           init.defaultBranch = "main";
           merge.conflictstyle = "diff3";
           merge.tool = "merged";
           mergetool.merged.cmd = "vim $MERGED";
           pull.rebase = "true";
-        };
-
-        signing = {
-          format = "openpgp";
-          key = "1C2BE6B85F923891";
-          signByDefault = true;
         };
       };
 

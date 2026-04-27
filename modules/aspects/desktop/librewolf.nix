@@ -1,11 +1,8 @@
 { ... }:
 {
   my.librewolf.homeManager =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     let
-      inherit (lib) mkIf;
-      inherit (pkgs.stdenv) isLinux;
-
       package = pkgs.librewolf.overrideAttrs (old: {
         buildCommand = old.buildCommand + ''
           wrapProgram $out/bin/librewolf \
@@ -19,7 +16,7 @@
 
       bin = "${package}/bin/librewolf";
     in
-    mkIf isLinux {
+    {
       programs.librewolf = {
         enable = true;
         inherit package;

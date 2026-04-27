@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.emacs.homeManager =
     {
@@ -54,6 +55,26 @@
         enable = true;
         inherit package;
         client.enable = true;
+      };
+
+      programs.readline.variables = {
+        editing-mode = "emacs";
+      };
+
+      dconf.settings = mkIf isLinux {
+        "org/gnome/desktop/interface" = {
+          gtk-key-theme = "Emacs";
+        };
+      };
+
+      gtk = mkIf isLinux {
+        gtk2.extraConfig = ''
+          gtk-key-theme-name = "Emacs"
+        '';
+
+        gtk3.extraConfig = {
+          gtk-key-theme-name = "Emacs";
+        };
       };
 
       home = {

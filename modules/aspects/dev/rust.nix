@@ -1,10 +1,5 @@
-{ lib, pkgs, ... }:
+{ ... }:
 
-let
-  inherit (lib) mkIf mkMerge;
-  inherit (pkgs.stdenv) isLinux;
-
-in
 {
   my.rust.homeManager =
     {
@@ -13,7 +8,11 @@ in
       pkgs,
       ...
     }:
+
     let
+      inherit (lib) mkIf mkMerge optionalAttrs;
+      inherit (pkgs.stdenv) isLinux;
+
       packages = with pkgs; [
         cargo-audit
         cargo-bloat
@@ -60,17 +59,13 @@ in
               split-debuginfo = "unpacked";
             };
 
-            target.x86_64-unknown-linux-gnu =
-              if isLinux then
-                {
-                  linker = "clang";
-                  rustflags = [
-                    "-C"
-                    "link-arg=-fuse-ld=${pkgs.mold}/bin/mold"
-                  ];
-                }
-              else
-                { };
+            target.x86_64-unknown-linux-gnu = optionalAttrs isLinux {
+              linker = "clang";
+              rustflags = [
+                "-C"
+                "link-arg=-fuse-ld=${pkgs.mold}/bin/mold"
+              ];
+            };
           };
         };
 

@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.pipewire.nixos = {
     security.rtkit.enable = true;

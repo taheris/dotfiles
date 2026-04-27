@@ -1,4 +1,5 @@
 { my, ... }:
+
 {
   den.hosts.x86_64-darwin.m16 = {
     user = "shaun";
@@ -11,7 +12,10 @@
     {
       includes = [
         my.darwin
+        my.font
         my.gpg
+        my.karabiner
+        my.sox
       ];
 
       darwin = {

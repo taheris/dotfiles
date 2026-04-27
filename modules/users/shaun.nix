@@ -5,38 +5,43 @@
     includes = [
       (den.provides.user-shell "zsh")
       den.provides.primary-user
+      den.provides.host-aspects
 
-      # shell
-      my.zsh
-      my.tmux
+      # system
+      my.base
+
+      # cli
       my.alacritty
+      my.dotfile
       my.starship
+      my.tmux
       my.vim
+      my.zsh
 
       # dev
+      my.agent
+      my.emacs
       my.git
       my.python
       my.rust
       my.sql
-      my.emacs
-      my.agent
-
-      # desktop
-      my.niri
-      my.dms
-      my.stylix
-      my.font
-      my.librewolf
-      my.flatpak
-      my.input
 
       # secrets
       my.secrets
-      my.gpg
-
-      # misc
-      my.dotfile
-      my.home-base
     ];
+
+    homeManager = {
+      programs.git = {
+        settings.user = {
+          name = "Shaun Taheri";
+          email = "gpg@taheris.net";
+        };
+        signing = {
+          format = "openpgp";
+          key = "1C2BE6B85F923891";
+          signByDefault = true;
+        };
+      };
+    };
   };
 }

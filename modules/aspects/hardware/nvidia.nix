@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.nvidia.nixos = {
     environment.sessionVariables = {

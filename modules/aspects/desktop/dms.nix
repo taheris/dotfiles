@@ -1,4 +1,5 @@
 { inputs, ... }:
+
 {
   my.dms =
     { host, ... }:
@@ -6,11 +7,10 @@
       homeManager =
         {
           config,
-          lib,
           pkgs,
           ...
         }:
-        lib.optionalAttrs (lib.hasSuffix "linux" host.system) {
+        {
           imports = [
             inputs.dms.homeModules.dank-material-shell
             inputs.dms.homeModules.niri

@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.ollama.nixos =
     { pkgs, ... }:

@@ -12,9 +12,11 @@
     { ... }:
     {
       includes = [
-        my.linux-builder
         my.darwin
+        my.font
         my.gpg
+        my.karabiner
+        my.sox
       ];
 
       darwin = {

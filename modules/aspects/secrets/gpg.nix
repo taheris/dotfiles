@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.gpg = {
     homeManager =
@@ -6,6 +7,7 @@
       let
         inherit (lib) mkIf;
         inherit (pkgs.stdenv) isDarwin isLinux;
+
       in
       {
         home.file.".pam-gnupg".text = ''
