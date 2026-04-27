@@ -52,9 +52,9 @@ stdenv.mkDerivation {
   ];
 
   patches = [
+    ./gesture-swipe-up-fix.patch
     ./linux-hidapi-usage-page.patch
     ./mx-vertical-gesture-cid.patch
-    ./gesture-swipe-up-fix.patch
   ];
 
   dontBuild = true;
