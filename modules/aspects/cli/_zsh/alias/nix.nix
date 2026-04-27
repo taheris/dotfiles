@@ -1,10 +1,5 @@
-{ host, ... }:
+{ flakeUser, ... }:
 
-let
-  dotfiles = "~/src/github.com/taheris/dotfiles";
-  flakeUser = "${dotfiles}#${host.user}@${host.name}";
-
-in
 {
   programs.zsh.shellAliases = {
     # nix build

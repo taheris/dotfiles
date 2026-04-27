@@ -19,12 +19,22 @@
 
   flake-file.inputs = {
     nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
-    nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.11&shallow=1";
     nixpkgs-lib.follows = "nixpkgs";
+    nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.11&shallow=1";
 
     den.url = "git+ssh://git@github.com/denful/den.git?shallow=1";
+
+    dms = {
+      url = "git+ssh://git@github.com/AvengeMedia/DankMaterialShell.git?ref=stable&shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dms-plugin-registry = {
+      url = "git+ssh://git@github.com/AvengeMedia/dms-plugin-registry.git?ref=master&shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-file.url = "git+ssh://git@github.com/vic/flake-file.git?shallow=1";
-    import-tree.url = "git+ssh://git@github.com/vic/import-tree.git?shallow=1";
 
     flake-parts = {
       url = "git+ssh://git@github.com/hercules-ci/flake-parts.git?ref=main&shallow=1";
@@ -35,6 +45,8 @@
       url = "git+ssh://git@github.com/nix-community/home-manager.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    import-tree.url = "git+ssh://git@github.com/vic/import-tree.git?shallow=1";
 
     darwin = {
       url = "git+ssh://git@github.com/LnL7/nix-darwin.git?ref=master&shallow=1";
@@ -67,16 +79,6 @@
       url = "git+ssh://git@github.com/taheris/wrapix.git?ref=main&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
-    };
-
-    dms = {
-      url = "git+ssh://git@github.com/AvengeMedia/DankMaterialShell.git?ref=stable&shallow=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    dms-plugin-registry = {
-      url = "git+ssh://git@github.com/AvengeMedia/dms-plugin-registry.git?ref=master&shallow=1";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }

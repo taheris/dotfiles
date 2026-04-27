@@ -3,100 +3,107 @@
 # Depends on `my.secrets` being included alongside this aspect — the
 # initContent below reads sops-managed secrets via `config.sops.secrets.*`.
 {
-  my.zsh =
-    { host, ... }:
+  my.zsh.homeManager =
     {
-      homeManager =
-        { config, pkgs, ... }:
-        {
-          _module.args = { inherit host; };
+      config,
+      osConfig,
+      pkgs,
+      ...
+    }:
 
-          imports = [
-            ./_zsh/alias
-            ./_zsh/functions.nix
-          ];
+    let
+      dotfiles = "~/src/github.com/taheris/dotfiles";
+      flakeUser = "${dotfiles}#${config.home.username}@${osConfig.networking.hostName}";
 
-          home = {
-            packages = with pkgs; [
-              bat
-              carapace
-              expect
-              kubectl
-              shellcheck
-              vivid
-              zsh-completions
-            ];
+    in
+    {
+      _module.args = { inherit flakeUser; };
 
-            sessionPath = [
-              "${config.home.homeDirectory}/go/bin"
-            ];
+      imports = [
+        ./_zsh/alias
+        ./_zsh/functions.nix
+      ];
 
-            sessionVariables = {
-              DIRENV_WARN_TIMEOUT = "30s";
-            };
-          };
+      home = {
+        packages = with pkgs; [
+          bat
+          carapace
+          expect
+          kubectl
+          shellcheck
+          vivid
+          zsh-completions
+        ];
 
-          programs.direnv = {
-            enable = true;
-            enableZshIntegration = true;
-            nix-direnv.enable = true;
-          };
+        sessionPath = [
+          "${config.home.homeDirectory}/go/bin"
+        ];
 
-          programs.fzf = {
-            enable = true;
-            enableZshIntegration = true;
-            tmux.enableShellIntegration = true;
-
-            defaultOptions = [
-              "--preview='bat --color=always {}'"
-              "--multi"
-              "--layout=reverse-list"
-            ];
-          };
-
-          programs.zsh = {
-            enable = true;
-            enableCompletion = true;
-
-            autocd = true;
-            defaultKeymap = "emacs";
-            dotDir = "${config.xdg.configHome}/zsh";
-            syntaxHighlighting.enable = true;
-
-            initContent = ''
-              # settings
-              unset zle_bracketed_paste
-
-              # env secrets
-              export CEREBRAS_API_KEY="$(cat ${config.sops.secrets."llm/cerebras".path})"
-              export CLAUDE_CODE_OAUTH_TOKEN="$(cat ${config.sops.secrets."llm/anthropic/oauth".path})"
-              export GEMINI_API_KEY="$(cat ${config.sops.secrets."llm/gemini".path})"
-              export MISTRAL_API_KEY="$(cat ${config.sops.secrets."llm/mistral".path})"
-              export OPENAI_API_KEY="$(cat ${config.sops.secrets."llm/openai".path})"
-              export ZAI_API_KEY="$(cat ${config.sops.secrets."llm/zai".path})"
-
-              # env misc
-              export FZF_CTRL_R_OPTS="--preview= --layout=default"
-              export LS_COLORS=$(vivid generate tokyonight-night)
-              export RUSTC_WRAPPER="${pkgs.sccache}/bin/sccache"
-
-              # case-insensitive completion
-              zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-              # carapace
-              zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-              source <(carapace _carapace)
-
-              # fzf
-              eval "$(fzf --zsh)"
-
-              # kubernetes
-              source <(kubectl completion zsh)
-
-              # starship
-              eval "$(starship init zsh)"
-            '';
-          };
+        sessionVariables = {
+          DIRENV_WARN_TIMEOUT = "30s";
         };
+      };
+
+      programs.direnv = {
+        enable = true;
+        enableZshIntegration = true;
+        nix-direnv.enable = true;
+      };
+
+      programs.fzf = {
+        enable = true;
+        enableZshIntegration = true;
+        tmux.enableShellIntegration = true;
+
+        defaultOptions = [
+          "--preview='bat --color=always {}'"
+          "--multi"
+          "--layout=reverse-list"
+        ];
+      };
+
+      programs.zsh = {
+        enable = true;
+        enableCompletion = true;
+
+        autocd = true;
+        defaultKeymap = "emacs";
+        dotDir = "${config.xdg.configHome}/zsh";
+        syntaxHighlighting.enable = true;
+
+        initContent = ''
+          # settings
+          unset zle_bracketed_paste
+
+          # env secrets
+          export CEREBRAS_API_KEY="$(cat ${config.sops.secrets."llm/cerebras".path})"
+          export CLAUDE_CODE_OAUTH_TOKEN="$(cat ${config.sops.secrets."llm/anthropic/oauth".path})"
+          export GEMINI_API_KEY="$(cat ${config.sops.secrets."llm/gemini".path})"
+          export MISTRAL_API_KEY="$(cat ${config.sops.secrets."llm/mistral".path})"
+          export OPENAI_API_KEY="$(cat ${config.sops.secrets."llm/openai".path})"
+          export ZAI_API_KEY="$(cat ${config.sops.secrets."llm/zai".path})"
+
+          # env misc
+          export FZF_CTRL_R_OPTS="--preview= --layout=default"
+          export LS_COLORS=$(vivid generate tokyonight-night)
+          export RUSTC_WRAPPER="${pkgs.sccache}/bin/sccache"
+
+          # case-insensitive completion
+          zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+          # carapace
+          zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+          source <(carapace _carapace)
+
+          # fzf
+          eval "$(fzf --zsh)"
+
+          # kubernetes
+          source <(kubectl completion zsh)
+
+          # starship
+          eval "$(starship init zsh)"
+        '';
+      };
     };
 }

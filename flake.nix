@@ -47,7 +47,7 @@
     nix-flatpak.url = "git+ssh://git@github.com/gmodena/nix-flatpak.git?ref=main&shallow=1";
     nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
     nixpkgs-lib.follows = "nixpkgs";
-    nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.05&shallow=1";
+    nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.11&shallow=1";
     secrets = {
       url = "git+ssh://git@github.com/taheris/secrets.git?ref=main&shallow=1";
       flake = false;
