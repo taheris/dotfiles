@@ -1,11 +1,26 @@
-# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
-# Use `nix run .#write-flake` to regenerate it.
+{ ... }:
 {
-  description = "NixOS flake configuration";
+  flake-file = {
+    description = "NixOS flake configuration";
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+    nixConfig = {
+      extra-substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+      ];
 
-  inputs = {
+      extra-trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+  };
+
+  flake-file.inputs = {
+    nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
+    nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.05&shallow=1";
+    nixpkgs-lib.follows = "nixpkgs";
+
     den.url = "git+ssh://git@github.com/denful/den.git?shallow=1";
     flake-file.url = "git+ssh://git@github.com/vic/flake-file.git?shallow=1";
     import-tree.url = "git+ssh://git@github.com/vic/import-tree.git?shallow=1";
@@ -14,10 +29,6 @@
       url = "git+ssh://git@github.com/hercules-ci/flake-parts.git?ref=main&shallow=1";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
-
-    nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
-    nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.05&shallow=1";
-    nixpkgs-lib.follows = "nixpkgs";
 
     home-manager = {
       url = "git+ssh://git@github.com/nix-community/home-manager.git?ref=master&shallow=1";
@@ -66,17 +77,5 @@
       url = "git+ssh://git@github.com/AvengeMedia/dms-plugin-registry.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
-
-  nixConfig = {
-    extra-substituters = [
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-    ];
-
-    extra-trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
   };
 }
