@@ -11,9 +11,9 @@ including aspects from the `my` namespace.
 
 ```
 modules/
-  flake/      framework wiring (inputs, defaults, formatter)
+  flake/      framework wiring (inputs, den, formatter)
   hosts/      one file per host; hardware config inline
-  users/      per-user aspects (e.g. shaun.nix)
+  users/      per-user aspects
   aspects/    reusable building blocks under `my.<name>`
     cli/      zsh starship tmux alacritty vim dotfile
     dev/      emacs python rust sql git agent
