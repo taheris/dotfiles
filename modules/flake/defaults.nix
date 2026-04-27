@@ -1,8 +1,23 @@
-{ lib, ... }:
+{ config, lib, ... }:
+let
+  nixpkgs = {
+    overlays = [
+      config.flake.overlays.packages
+      config.flake.overlays.fixes
+    ];
+    config.allowUnfree = true;
+  };
+in
 {
   den.default = {
-    nixos.system.stateVersion = "24.11";
-    darwin.system.stateVersion = 6;
+    nixos = {
+      system.stateVersion = "24.11";
+      inherit nixpkgs;
+    };
+    darwin = {
+      system.stateVersion = 6;
+      inherit nixpkgs;
+    };
     homeManager.home.stateVersion = "26.05";
   };
 
