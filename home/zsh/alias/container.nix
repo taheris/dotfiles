@@ -92,7 +92,7 @@ in
     dit = "docker image tag";
 
     # docker network
-    dnc = "docker network create";
+    dncr = "docker network create";
     dncn = "docker network connect";
     dndc = "docker network disconnect";
     dni = "docker network inspect";
@@ -112,7 +112,7 @@ in
 
     # docker volume
     dv = "docker volume";
-    dvc = "docker volume create";
+    dvcr = "docker volume create";
     dvi = "docker volume inspect";
     dvl = "docker volume ls";
     dvpr = "docker volume prune";

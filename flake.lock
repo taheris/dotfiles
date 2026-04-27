@@ -121,10 +121,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1777168306,
-        "narHash": "sha256-ADeKQ14Nw5UO18tP5y07WxN7o9SfhcJ4/jq3jvZryyI=",
+        "lastModified": 1777254891,
+        "narHash": "sha256-Mkpyd4Jhr7zhQLpaolA4Bx6QeKMudpdls6z8NxJziuQ=",
         "ref": "master",
-        "rev": "c7acc54f58f3c81a5e19f5f9ceb3958702a3f597",
+        "rev": "9bc138ff4d250300337ea5563edc3a0a79d3c4c9",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -277,10 +277,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1777236726,
-        "narHash": "sha256-ZTYDofOM3/PJhRF1EuBh6uibm+DmkhU7Wor6mMN7YTc=",
+        "lastModified": 1777258755,
+        "narHash": "sha256-EC07KwADRE2LdIk7vEDyAaD3I0ZUq24T9jQF9L0iEPk=",
         "ref": "master",
-        "rev": "e82d4a4ecd18363aa2054cbaa3e32e4134c3dbf4",
+        "rev": "7f8bbc93d63401e41368d6ddc46a4f631610fa90",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"

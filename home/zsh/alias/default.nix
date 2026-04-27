@@ -14,6 +14,7 @@
 #
 # CRUD / inspection:
 # - a   add
+# - cr  create
 # - rm  remove
 # - i   inspect
 # - l   list

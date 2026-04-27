@@ -43,7 +43,7 @@
     # beads
     bdr = "bd ready";
     bds = "bd show";
-    bdc = "bd create";
+    bdcr = "bd create";
     bdup = "bd update";
     bdcl = "bd close";
     bdbl = "bd blocked";
@@ -53,6 +53,7 @@
 
     # beads list
     bdl = "bd list";
+    bdla = "bd list --all";
     bdlo = "bd list --status=open";
     bdli = "bd list --status=in_progress";
     bdlc = "bd list --status=closed";
