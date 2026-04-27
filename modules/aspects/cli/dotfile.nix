@@ -2,9 +2,6 @@
 
 {
   my.dotfile.homeManager = {
-    home.file.editRc = {
-      source = ./_dotfile/editrc;
-      target = ".editrc";
-    };
+    home.file.".editrc".source = ./_dotfile/editrc;
   };
 }

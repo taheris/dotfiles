@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.mouser.homeManager =
     { config, pkgs, ... }:
@@ -17,6 +18,7 @@
           Description = "Mouser - Logitech mouse remapper";
           After = [ "graphical-session.target" ];
         };
+
         Service = {
           ExecStart = "${pkgs.mouser}/bin/mouser --start-hidden";
           Environment = [ "PYTHONUNBUFFERED=1" ];
@@ -25,6 +27,7 @@
           KillSignal = "SIGKILL";
           TimeoutStopSec = 5;
         };
+
         Install = {
           WantedBy = [ "graphical-session.target" ];
         };
@@ -34,6 +37,7 @@
         Unit = {
           Description = "Restart Mouser on system resume";
         };
+
         Service = {
           Type = "exec";
           ExecStart = pkgs.writeShellScript "mouser-resume-watch" ''
@@ -51,6 +55,7 @@
           Restart = "on-failure";
           RestartSec = 5;
         };
+
         Install = {
           WantedBy = [ "graphical-session.target" ];
         };

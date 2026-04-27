@@ -7,20 +7,11 @@
     users.shaun = { };
   };
 
-  den.aspects.m16 =
-    { ... }:
-    {
-      includes = [
-        my.darwin
-        my.font
-        my.gpg
-        my.karabiner
-        my.sox
-      ];
-
-      darwin = {
-        nixpkgs.hostPlatform = "x86_64-darwin";
-        system.primaryUser = "shaun";
-      };
-    };
+  den.aspects.m16.includes = [
+    my.darwin
+    my.font
+    my.gpg
+    my.karabiner
+    my.sox
+  ];
 }

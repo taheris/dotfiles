@@ -1,5 +1,7 @@
 { ... }:
 
+# Depends on `my.secrets` being included alongside this aspect — the
+# initContent below reads sops-managed secrets via `config.sops.secrets.*`.
 {
   my.zsh =
     { host, ... }:

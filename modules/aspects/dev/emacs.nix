@@ -1,5 +1,7 @@
 { ... }:
 
+# Depends on `my.secrets` being included alongside this aspect — the
+# `sops.templates.authinfo` block reads `config.sops.placeholder.*`.
 {
   my.emacs.homeManager =
     {

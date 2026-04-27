@@ -1,4 +1,5 @@
 { ... }:
+
 {
   my.bazecor.homeManager =
     { pkgs, ... }:

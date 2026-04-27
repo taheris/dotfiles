@@ -36,9 +36,10 @@ in
     };
 
     includes = [
-      den.provides.mutual-provider
-      den.provides.hostname
       den.provides.define-user
+      den.provides.host-aspects
+      den.provides.hostname
+      den.provides.mutual-provider
     ];
   };
 

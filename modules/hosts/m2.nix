@@ -8,39 +8,11 @@
     users.shaun = { };
   };
 
-  den.aspects.m2 =
-    { ... }:
-    {
-      includes = [
-        my.darwin
-        my.font
-        my.gpg
-        my.karabiner
-        my.sox
-      ];
-
-      darwin = {
-        nix.buildMachines = [
-          {
-            hostName = "nix";
-            sshUser = "shaun";
-            sshKey = "/etc/nix/nix_builder_key";
-            systems = [
-              "aarch64-linux"
-              "x86_64-linux"
-            ];
-            supportedFeatures = [
-              "benchmark"
-              "big-parallel"
-              "kvm"
-              "nixos-test"
-            ];
-          }
-        ];
-
-        nixpkgs.hostPlatform = "aarch64-darwin";
-
-        system.primaryUser = "shaun";
-      };
-    };
+  den.aspects.m2.includes = [
+    my.darwin
+    my.font
+    my.gpg
+    my.karabiner
+    my.sox
+  ];
 }

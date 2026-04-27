@@ -1,4 +1,5 @@
 { inputs, ... }:
+
 {
   my.stylix = {
     homeManager =
@@ -9,13 +10,13 @@
         ...
       }:
       let
-        inherit (lib) mkIf;
+        inherit (lib) mkIf optional;
         inherit (pkgs.stdenv) isLinux;
       in
       {
         # Under NixOS/darwin the system module auto-wires stylix to HM via
         # sharedModules; importing again would duplicate read-only options.
-        imports = lib.optional (osConfig == null) inputs.stylix.homeModules.stylix;
+        imports = optional (osConfig == null) inputs.stylix.homeModules.stylix;
 
         # Enable cursor for GTK and X11 apps (stylix.cursor sets name/package/size)
         home.pointerCursor = mkIf isLinux {
@@ -103,9 +104,5 @@
           };
         };
       };
-
-    darwin = {
-      imports = [ inputs.stylix.darwinModules.stylix ];
-    };
   };
 }

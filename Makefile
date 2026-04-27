@@ -1,6 +1,6 @@
 SHELL := /usr/bin/env bash
 
-.PHONY: help mac-hostname mac-brew mac-nix mac-flake nixos-boot nixos-home
+.PHONY: help check mac-hostname mac-brew mac-nix mac-flake nixos-boot nixos-home
 .DEFAULT_GOAL := help
 
 define get_arg
@@ -12,6 +12,9 @@ endef
 
 help: ## Print this message
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%20s\033[0m : %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+check: ## Evaluate the flake (nix flake check)
+	@nix flake check --no-build
 
 mac-hostname: res := $(call get_arg)
 mac-hostname: ## Set the macOS hostname (usage: `make set-hostname <name>`)

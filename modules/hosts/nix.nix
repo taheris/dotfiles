@@ -43,7 +43,7 @@
         my.sox
         my.yubikey
 
-        # secret
+        # secrets
         my.gpg
       ];
 
