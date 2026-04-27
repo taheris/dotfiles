@@ -6,6 +6,7 @@ let
 
   gitPersonal = "~/src/github.com/taheris";
   dotfiles = "${gitPersonal}/dotfiles";
+
 in
 {
   programs.zsh.shellAliases =

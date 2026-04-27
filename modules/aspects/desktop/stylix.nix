@@ -8,6 +8,8 @@
         inherit (pkgs.stdenv) isLinux;
       in
       {
+        imports = [ inputs.stylix.homeModules.stylix ];
+
         # Enable cursor for GTK and X11 apps (stylix.cursor sets name/package/size)
         home.pointerCursor = mkIf isLinux {
           gtk.enable = true;
@@ -97,7 +99,6 @@
 
     darwin = {
       imports = [ inputs.stylix.darwinModules.stylix ];
-      home-manager.sharedModules = [ inputs.stylix.homeModules.stylix ];
     };
   };
 }

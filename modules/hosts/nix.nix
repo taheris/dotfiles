@@ -7,35 +7,36 @@
     users.shaun = { };
   };
 
+  den.homes.x86_64-linux."shaun@nix" = { };
+
   den.aspects.nix =
     { host, ... }:
     {
       includes = [
+        # system
+        my.linux
         my.linux-builder
 
-        # System
-        my.linux
+        # hardware
+        my.nvidia
+        my.pipewire
+        my.interception
 
-        # Services
+        # services
         my.tailscale
         my.ssh
         my.podman
         my.ollama
 
-        # Hardware
-        my.nvidia
-        my.pipewire
-        my.interception
-
-        # Secrets (nixos side)
-        my.gpg
-
-        # Desktop (nixos side)
+        # desktop
         my.niri
         my.sddm
         my.stylix
         my.font
         my.flatpak
+
+        # secret
+        my.gpg
       ];
 
       nixos =

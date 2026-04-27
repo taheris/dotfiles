@@ -1,7 +1,9 @@
-{ ... }:
+{ host, ... }:
 
 let
   dotfiles = "~/src/github.com/taheris/dotfiles";
+  flakeUser = "${dotfiles}#${host.user}@${host.name}";
+
 in
 {
   programs.zsh.shellAliases = {
@@ -98,18 +100,18 @@ in
     # home-manager
     hm = "home-manager";
     hmb = "home-manager build";
-    hmbf = "home-manager build --flake ${dotfiles}";
+    hmbf = "home-manager build --flake ${flakeUser}";
     hme = "home-manager edit";
     hmeg = "home-manager expire-generations";
     hmego = "home-manager expire-generations '-30 days'";
     hmg = "home-manager generations";
     hmh = "home-manager help";
     hmn = "home-manager news";
-    hmnf = "home-manager news --flake ${dotfiles}";
+    hmnf = "home-manager news --flake ${flakeUser}";
     hmo = "home-manager option";
     hmp = "home-manager packages";
     hmrmg = "home-manager remove-generations";
     hms = "home-manager switch";
-    hmsf = "home-manager switch --flake ${dotfiles}";
+    hmsf = "home-manager switch --flake ${flakeUser}";
   };
 }
