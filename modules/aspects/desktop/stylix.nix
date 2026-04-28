@@ -2,7 +2,11 @@
 
 {
   my.stylix =
-    { home ? null, host, ... }:
+    {
+      home ? null,
+      host,
+      ...
+    }:
     let
       isDarwin = lib.hasSuffix "darwin" host.system;
     in

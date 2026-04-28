@@ -4,7 +4,13 @@
   perSystem =
     { inputs', pkgs, ... }:
     let
-      sandbox = inputs'.wrapix.legacyPackages.lib.mkSandbox { };
+      wrapix = inputs'.wrapix.legacyPackages.lib;
+
+      sandbox = wrapix.mkSandbox { };
+      debugSandbox = wrapix.mkSandbox {
+        packages = [ pkgs.podman ];
+      };
+
     in
     {
       devShells.default = pkgs.mkShell {
@@ -16,6 +22,7 @@
       packages = {
         default = sandbox.package;
         sandbox = sandbox.package;
+        debug = debugSandbox.package;
       };
     };
 }
