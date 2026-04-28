@@ -32,7 +32,9 @@ let
     };
   };
 
-  optionsModule = { options.my = options; };
+  optionsModule = {
+    options.my = options;
+  };
 
   bridge = host: { my = { inherit (host) user fontSize hasLinuxBuilder; }; };
 
