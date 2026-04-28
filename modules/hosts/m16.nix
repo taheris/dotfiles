@@ -13,5 +13,6 @@
     my.gpg
     my.karabiner
     my.sox
+    my.stylix
   ];
 }

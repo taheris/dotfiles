@@ -1,8 +1,11 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 {
   my.stylix =
-    { home ? null, ... }:
+    { home ? null, host, ... }:
+    let
+      isDarwin = lib.hasSuffix "darwin" host.system;
+    in
     {
       homeManager =
         {
@@ -15,11 +18,7 @@
           inherit (pkgs.stdenv) isLinux;
         in
         {
-          # Bundled HM has stylix wired in by the host's nixos module via
-          # sharedModules; importing again would duplicate read-only options.
-          # Standalone home (`home != null`, set by the home ctx forwarder in
-          # modules/flake/schema.nix) has no such wiring, so we import.
-          imports = optional (home != null) inputs.stylix.homeModules.stylix;
+          imports = optional (home != null || isDarwin) inputs.stylix.homeModules.stylix;
 
           # Enable cursor for GTK and X11 apps (stylix.cursor sets name/package/size)
           home.pointerCursor = mkIf isLinux {
