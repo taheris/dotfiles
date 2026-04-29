@@ -555,6 +555,34 @@ Easier movement between workspaces.
         :desc "Swap right"   "L"   #'+workspace/swap-right))
 #+end_src
 
+Open new frames in the last workspace.
+
+#+begin_src emacs-lisp :tangle (if IS-LINUX "yes" "no")
+(defvar my/ws-state-file
+  (expand-file-name "emacs-active-workspace"
+                    (or (getenv "XDG_RUNTIME_DIR") temporary-file-directory)))
+
+(defun my/save-active-workspace (&rest _)
+  (run-at-time 0 nil
+    (lambda ()
+      (when (and (display-graphic-p) (frame-focus-state))
+        (with-temp-file my/ws-state-file
+          (insert (or (+workspace-current-name) "")))))))
+
+(defun my/restore-workspace-on-frame ()
+  (when (display-graphic-p)
+    (when-let ((ws (ignore-errors
+                     (with-temp-buffer
+                       (insert-file-contents my/ws-state-file)
+                       (string-trim (buffer-string))))))
+      (unless (string-empty-p ws)
+        (+workspace-switch ws)))))
+
+(add-function :after after-focus-change-function #'my/save-active-workspace)
+(add-hook 'persp-activated-functions #'my/save-active-workspace)
+(add-hook 'server-after-make-frame-hook #'my/restore-workspace-on-frame)
+#+end_src
+
 *** Errors
 
 Define some keybindings for error handling.
