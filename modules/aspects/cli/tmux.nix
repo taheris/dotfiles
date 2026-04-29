@@ -3,6 +3,12 @@
 {
   my.tmux.homeManager =
     { pkgs, ... }:
+    let
+      saveLastDir = pkgs.writeShellScript "tmux-save-last-dir" ''
+        printf '%s' "$1" > "''${XDG_RUNTIME_DIR:-''${TMPDIR:-/tmp}}/last-dir"
+      '';
+
+    in
     {
       programs.tmux = {
         enable = true;
@@ -23,6 +29,12 @@
           set -g status-interval 2
           set -g default-command "which reattach-to-user-namespace > /dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
           set -g renumber-windows on
+          set -g focus-events on
+          set -as terminal-features '*:focus'
+
+          # Track the focused pane's cwd
+          set-hook -g client-focus-in "run-shell -b '${saveLastDir} \"#{pane_current_path}\"'"
+          set-hook -g pane-focus-in   "run-shell -b '${saveLastDir} \"#{pane_current_path}\"'"
 
           # Auto-equalize panes when one closes
           set-hook -g pane-exited "select-layout -E"

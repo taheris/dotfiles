@@ -6,7 +6,7 @@
 set -euo pipefail
 
 EMACS_DIR="${HOME}/.config/emacs/.local/straight/repos"
-CONFIG_FILE="${HOME}/src/github.com/taheris/dotfiles/home/emacs/config.org"
+CONFIG_FILE="${HOME}/src/github.com/taheris/dotfiles/modules/aspects/dev/_emacs/config.org"
 DRY_RUN=false
 
 update_all_packages() {
