@@ -44,13 +44,36 @@
           tailscaleEnv = pkgs.writeText "tailscaled-env.txt" ''
             TS_NO_LOGS_NO_SUPPORT=true
           '';
+
+          nixBuilderProbe = pkgs.writeShellScript "nix-builder-probe" ''
+            host="$1"
+            port="$2"
+            cache="''${TMPDIR:-/tmp}/nix-ssh-probe-$host"
+
+            if [ -f "$cache" ]; then
+              age=$(( $(date +%s) - $(stat -f %m "$cache" 2>/dev/null || echo 0) ))
+              if [ "$age" -lt 300 ]; then
+                echo "nix-builder-probe: $host is unreachable (cached)" >&2
+                exit 1
+              fi
+              rm -f "$cache"
+            fi
+
+            if ! ${pkgs.coreutils}/bin/timeout 5 /usr/bin/nc -z "$host" "$port" 2>/dev/null; then
+              touch "$cache"
+              echo "nix-builder-probe: $host is unreachable" >&2
+              exec cat /dev/null
+            fi
+
+            exec /usr/bin/nc "$host" "$port"
+          '';
         in
         {
           environment = {
             etc = {
               "ssh/ssh_config.d/100-nix-builder.conf".text = ''
                 Host nix
-                  ConnectTimeout 5
+                  ProxyCommand ${nixBuilderProbe} %h %p
               '';
 
               "ssh/ssh_config.d/100-wrapix-builder.conf".text = ''
@@ -165,6 +188,7 @@
             buildMachines = optionals host.hasLinuxBuilder [
               {
                 hostName = "nix";
+                maxJobs = 8;
                 sshUser = host.user;
                 sshKey = "/etc/nix/nix_builder_key";
                 systems = [
