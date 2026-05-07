@@ -213,6 +213,7 @@ in
     gunc = "git uncommit";
     grs = "git reset";
     grsh = "git reset --hard";
+    grss = "git reset --soft";
     gcln = "git clean";
     gclndf = "git clean -df";
     gclndfx = "git clean -dfx";

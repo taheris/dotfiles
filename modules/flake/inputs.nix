@@ -1,21 +1,7 @@
 { ... }:
 
 {
-  flake-file = {
-    description = "NixOS flake configuration";
-
-    nixConfig = {
-      extra-substituters = [
-        "https://cache.nixos.org"
-        "https://nix-community.cachix.org"
-      ];
-
-      extra-trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-    };
-  };
+  flake-file.description = "taheris dotfiles";
 
   flake-file.inputs = {
     nixpkgs.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixpkgs-unstable&shallow=1";
