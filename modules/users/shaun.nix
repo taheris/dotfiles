@@ -5,8 +5,8 @@
 {
   den.aspects.shaun = {
     includes = [
-      (den.provides.user-shell "zsh")
-      den.provides.primary-user
+      (den.batteries.user-shell "zsh")
+      den.batteries.primary-user
 
       # system
       my.base

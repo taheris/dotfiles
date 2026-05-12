@@ -47,10 +47,9 @@ in
     };
 
     includes = [
-      den.provides.define-user
-      den.provides.host-aspects
-      den.provides.hostname
-      den.provides.mutual-provider
+      den.batteries.define-user
+      den.batteries.host-aspects
+      den.batteries.hostname
       my.host
     ];
   };
