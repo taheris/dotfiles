@@ -13,9 +13,7 @@
 
     in
     {
-      devShells.default = pkgs.mkShell {
-        packages = with pkgs; [ beads ];
-      };
+      devShells.default = wrapix.mkDevShell { };
 
       formatter = pkgs.nixfmt-tree;
 
