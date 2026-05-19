@@ -13,17 +13,17 @@
           enable = true;
           enableDefaultConfig = false;
 
-          matchBlocks."*" = {
-            addKeysToAgent = "yes";
-            compression = true;
-            controlMaster = "no";
-            controlPath = "~/.ssh/master-%r@%n:%p";
-            controlPersist = "no";
-            forwardAgent = false;
-            hashKnownHosts = false;
-            serverAliveCountMax = 3;
-            serverAliveInterval = 0;
-            userKnownHostsFile = "~/.ssh/known_hosts";
+          settings."*" = {
+            AddKeysToAgent = "yes";
+            Compression = true;
+            ControlMaster = "no";
+            ControlPath = "~/.ssh/master-%r@%n:%p";
+            ControlPersist = "no";
+            ForwardAgent = false;
+            HashKnownHosts = false;
+            ServerAliveCountMax = 3;
+            ServerAliveInterval = 0;
+            UserKnownHostsFile = "~/.ssh/known_hosts";
           };
 
           extraConfig = mkIf isDarwin ''

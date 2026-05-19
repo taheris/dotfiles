@@ -57,29 +57,27 @@
             fi
 
             current=$(niri msg -j workspaces | ${pkgs.jq}/bin/jq '.[] | select(.is_focused) | .idx')
-            count=$(niri msg -j workspaces | ${pkgs.jq}/bin/jq 'length')
-            if [ "$current" = "$((count - 1))" ]; then
+            last=$(niri msg -j workspaces | ${pkgs.jq}/bin/jq '[.[] | select(.active_window_id != null) | .idx] | max // 0')
+            if [ "$current" -ge "$last" ]; then
               niri msg action focus-workspace 1
             else
               niri msg action focus-workspace-down
             fi
           '';
 
-          # Create a new workspace above the current one
-          newWorkspaceAbove = pkgs.writeShellScript "new-workspace-above" ''
+          # Move the focused window to a new workspace above the current one
+          moveToNewWorkspaceAbove = pkgs.writeShellScript "move-to-new-workspace-above" ''
             current=$(niri msg -j workspaces | ${pkgs.jq}/bin/jq '.[] | select(.is_focused) | .idx')
             count=$(niri msg -j workspaces | ${pkgs.jq}/bin/jq 'length')
-            niri msg action focus-workspace "$count"
-            niri msg action focus-workspace-down
+            niri msg action move-window-to-workspace "$count" || exit 0
             niri msg action move-workspace-to-index "$current"
           '';
 
-          # Create a new workspace below the current one
-          newWorkspaceBelow = pkgs.writeShellScript "new-workspace-below" ''
+          # Move the focused window to a new workspace below the current one
+          moveToNewWorkspaceBelow = pkgs.writeShellScript "move-to-new-workspace-below" ''
             current=$(niri msg -j workspaces | ${pkgs.jq}/bin/jq '.[] | select(.is_focused) | .idx')
             count=$(niri msg -j workspaces | ${pkgs.jq}/bin/jq 'length')
-            niri msg action focus-workspace "$count"
-            niri msg action focus-workspace-down
+            niri msg action move-window-to-workspace "$count" || exit 0
             niri msg action move-workspace-to-index "$((current + 1))"
           '';
 
@@ -128,9 +126,9 @@
                 "Mod+H".action.focus-column-left = [ ];
                 "Mod+Shift+H".action.focus-column-first = [ ];
                 "Mod+J".action.spawn = [ "${focusDownWrap}" ];
-                "Mod+Shift+J".action.spawn = [ "${newWorkspaceBelow}" ];
+                "Mod+Shift+J".action.spawn = [ "${moveToNewWorkspaceBelow}" ];
                 "Mod+K".action.spawn = [ "${focusUpWrap}" ];
-                "Mod+Shift+K".action.spawn = [ "${newWorkspaceAbove}" ];
+                "Mod+Shift+K".action.spawn = [ "${moveToNewWorkspaceAbove}" ];
                 "Mod+L".action.focus-column-right = [ ];
                 "Mod+Shift+L".action.focus-column-last = [ ];
 
