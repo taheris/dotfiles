@@ -385,7 +385,7 @@ markdown                     ; writing docs for people to ignore
 ;;nim                        ; python + lisp at the speed of c
 (nix                         ; I hereby declare "nix geht mehr!"
  +lsp
- +treesitter)
+ +tree-sitter)
 ;;ocaml                      ; an objective camel
 (org                         ; organize your plain life in plain text
  ;;+brain
@@ -548,11 +548,11 @@ Easier movement between workspaces.
 #+begin_src emacs-lisp
 (map! :leader
       (:prefix ("TAB" . "workspace")
-        :desc "Switch to"    "SPC" #'+workspace/switch-to
-        :desc "Switch left"  "h"   #'+workspace/switch-left
-        :desc "Switch right" "l"   #'+workspace/switch-right
-        :desc "Swap left"    "H"   #'+workspace/swap-left
-        :desc "Swap right"   "L"   #'+workspace/swap-right))
+       :desc "Switch to"    "SPC" #'+workspace/switch-to
+       :desc "Switch left"  "h"   #'+workspace/switch-left
+       :desc "Switch right" "l"   #'+workspace/switch-right
+       :desc "Swap left"    "H"   #'+workspace/swap-left
+       :desc "Swap right"   "L"   #'+workspace/swap-right))
 #+end_src
 
 Open new frames in the last workspace.
@@ -590,18 +590,18 @@ Define some keybindings for error handling.
 #+begin_src emacs-lisp
 (map! :leader
       (:prefix ("e" . "error")
-        :desc "clear"            "c" #'flycheck-clear
-        :desc "display at point" "d" #'flycheck-display-error-at-point
-        :desc "explain at point" "e" #'flycheck-explain-error-at-point
-        :desc "list errors"      "l" #'flycheck-list-errors
-        :desc "next error"       "n" #'flycheck-next-error
-        :desc "previous error"   "p" #'flycheck-previous-error
-        :desc "select checker"   "s" #'flycheck-select-checker
+       :desc "clear"            "c" #'flycheck-clear
+       :desc "display at point" "d" #'flycheck-display-error-at-point
+       :desc "explain at point" "e" #'flycheck-explain-error-at-point
+       :desc "list errors"      "l" #'flycheck-list-errors
+       :desc "next error"       "n" #'flycheck-next-error
+       :desc "previous error"   "p" #'flycheck-previous-error
+       :desc "select checker"   "s" #'flycheck-select-checker
 
-        (:prefix ("D" . "debug")
-         :desc "toggle debug on error" "t" #'toggle-debug-on-error
-         :desc "set breakpoint"        "b" #'edebug-defun
-         :desc "undo breakpoint"       "u" #'eval-defun)))
+       (:prefix ("D" . "debug")
+        :desc "toggle debug on error" "t" #'toggle-debug-on-error
+        :desc "set breakpoint"        "b" #'edebug-defun
+        :desc "undo breakpoint"       "u" #'eval-defun)))
 #+end_src
 
 *** Formatting
@@ -728,7 +728,7 @@ Ignore some ~projectile~ paths.
 
 (map! :leader
       (:prefix ("p" . "+project")
-        :desc "Multi-occur" "/" #'projectile-multi-occur))
+       :desc "Multi-occur" "/" #'projectile-multi-occur))
 #+end_src
 
 ** Ispell
@@ -1750,11 +1750,10 @@ Mimic the style of markdown renderers.
 #+begin_src emacs-lisp
 (after! rust-ts-mode
   (setq rust-mode-treesitter-derive t
-        lsp-rust-all-features t
+        lsp-rust-analyzer-cargo-all-features t
         lsp-rust-analyzer-cargo-watch-command "check"
-        lsp-rust-analyzer-cargo-watch-args ["--all-features", " --", "-D", "warnings", "-D", "rust-2018-idioms"]
-        lsp-rust-analyzer-import-granularity "module"
-        lsp-rust-clippy-preference "on")
+        lsp-rust-analyzer-cargo-watch-args ["--all-features" "--" "-D" "warnings" "-D" "rust-2018-idioms"]
+        lsp-rust-analyzer-import-granularity "module")
 
   (add-hook 'rust-ts-mode-hook
             (lambda () (add-hook 'before-save-hook #'lsp-format-buffer nil t)))
@@ -1797,15 +1796,15 @@ Mimic the style of markdown renderers.
         :desc "Cargo Check"         "k" #'+rust/cargo-check
 
         (:prefix ("t" . "cargo test")
-          :desc "run tests"     "t" #'+rust/cargo-test
-          :desc "run last test" "l" #'recompile
-          :desc "test current"  "c" #'+rust/cargo-current-test)
+         :desc "run tests"     "t" #'+rust/cargo-test
+         :desc "run last test" "l" #'recompile
+         :desc "test current"  "c" #'+rust/cargo-current-test)
 
         (:prefix ("g" . "goto")
-          :desc "Definition"      "d" #'lsp-find-definition
-          :desc "Implementation"  "i" #'lsp-find-implementation
-          :desc "Reference"       "r" #'lsp-find-references
-          :desc "Type definition" "t" #'lsp-find-type-definition)))
+         :desc "Definition"      "d" #'lsp-find-definition
+         :desc "Implementation"  "i" #'lsp-find-implementation
+         :desc "Reference"       "r" #'lsp-find-references
+         :desc "Type definition" "t" #'lsp-find-type-definition)))
 #+end_src
 
 ** Python
