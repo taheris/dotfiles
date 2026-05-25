@@ -1751,8 +1751,6 @@ Mimic the style of markdown renderers.
 (after! rust-ts-mode
   (setq rust-mode-treesitter-derive t
         lsp-rust-analyzer-cargo-all-features t
-        lsp-rust-analyzer-cargo-watch-command "check"
-        lsp-rust-analyzer-cargo-watch-args ["--all-features" "--" "-D" "warnings" "-D" "rust-2018-idioms"]
         lsp-rust-analyzer-import-granularity "module")
 
   (add-hook 'rust-ts-mode-hook
