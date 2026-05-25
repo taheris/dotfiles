@@ -76,41 +76,5 @@
     bddsp = "beads-dolt stop";
     bddrs = "beads-dolt restart";
     bdpf = "bd preflight";
-
-    # gascity
-    gcyi = "gc init";
-    gcys = "gc status";
-    gcyst = "gc start";
-    gcysp = "gc stop";
-    gcyrs = "gc restart";
-    gcyrl = "gc reload";
-    gcysu = "gc suspend";
-    gcyre = "gc resume";
-    gcyd = "gc doctor";
-    gcyv = "gc version";
-    gcysl = "gc sling";
-    gcyev = "gc events";
-    gcybd = "gc bd";
-    gcyho = "gc handoff";
-
-    # gascity session
-    gcyse = "gc session";
-    gcysea = "gc session attach";
-    gcysel = "gc session list";
-    gcysen = "gc session new";
-    gcyses = "gc session submit";
-    gcysep = "gc session peek";
-
-    # gascity mail
-    gcym = "gc mail";
-    gcymi = "gc mail inbox";
-    gcyms = "gc mail send";
-    gcymc = "gc mail check";
-    gcymr = "gc mail read";
-
-    # gascity rig
-    gcyrg = "gc rig";
-    gcyrga = "gc rig add";
-    gcyrgl = "gc rig list";
   };
 }

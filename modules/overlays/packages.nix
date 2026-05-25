@@ -18,7 +18,8 @@ in
       monacob = callPackage ../../packages/monacob { };
       sqlite-vss = callPackage ../../packages/sqlite-vss { };
 
-      beads = inputs.wrapix.packages.${system}.beads;
+      loom = inputs.loom.packages.${system}.loom;
+
       wrapix-builder = inputs.wrapix.packages.${system}.wrapix-builder;
       wrapix-notifyd = inputs.wrapix.packages.${system}.wrapix-notifyd;
 

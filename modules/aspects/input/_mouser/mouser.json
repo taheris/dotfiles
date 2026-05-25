@@ -26,7 +26,7 @@
     "hscroll_threshold": 1,
     "invert_hscroll": false,
     "invert_vscroll": false,
-    "dpi": 2800,
+    "dpi": 3000,
     "smart_shift_mode": "ratchet",
     "gesture_threshold": 50,
     "gesture_deadzone": 40,

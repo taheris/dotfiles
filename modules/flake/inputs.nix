@@ -8,6 +8,11 @@
     nixpkgs-lib.follows = "nixpkgs";
     nixpkgs-stable.url = "git+ssh://git@github.com/nixos/nixpkgs.git?ref=nixos-25.11&shallow=1";
 
+    darwin = {
+      url = "git+ssh://git@github.com/LnL7/nix-darwin.git?ref=master&shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     den.url = "git+ssh://git@github.com/denful/den.git?shallow=1";
 
     dms = {
@@ -34,8 +39,9 @@
 
     import-tree.url = "git+ssh://git@github.com/vic/import-tree.git?shallow=1";
 
-    darwin = {
-      url = "git+ssh://git@github.com/LnL7/nix-darwin.git?ref=master&shallow=1";
+    loom = {
+      url = "git+ssh://git@github.com/taheris/loom.git?ref=main&shallow=1";
+      inputs.flake-parts.follows = "flake-parts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

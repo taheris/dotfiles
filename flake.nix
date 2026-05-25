@@ -1,20 +1,9 @@
 # DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
 # Use `nix run .#write-flake` to regenerate it.
 {
-  description = "NixOS flake configuration";
+  description = "taheris dotfiles";
 
   outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
-
-  nixConfig = {
-    extra-substituters = [
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-  };
 
   inputs = {
     darwin = {
@@ -40,6 +29,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "git+ssh://git@github.com/vic/import-tree.git?shallow=1";
+    loom = {
+      url = "git+ssh://git@github.com/taheris/loom.git?ref=main&shallow=1";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     niri = {
       url = "git+ssh://git@github.com/sodiboo/niri-flake.git?ref=main&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";

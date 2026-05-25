@@ -16,7 +16,7 @@
 
       packages = with pkgs; [
         beads
-        spec-kit
+        loom
       ];
 
       darwinPackages =
