@@ -42,14 +42,15 @@
 
     # beads
     bdr = "bd ready";
-    bds = "bd show";
+    bds = "bd status";
+    bdsh = "bd show";
     bdcr = "bd create";
     bdup = "bd update";
     bdcl = "bd close";
     bdbl = "bd blocked";
-    bdd = "bd doctor";
     bdsr = "bd search";
     bdsa = "bd stats";
+    bdd = "bd doctor";
 
     # beads list
     bdl = "bd list";

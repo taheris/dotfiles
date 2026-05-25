@@ -16,7 +16,6 @@
 
       packages = with pkgs; [
         beads
-        loom
       ];
 
       darwinPackages =

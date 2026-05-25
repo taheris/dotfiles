@@ -29,13 +29,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "git+ssh://git@github.com/vic/import-tree.git?shallow=1";
-    loom = {
-      url = "git+ssh://git@github.com/taheris/loom.git?ref=main&shallow=1";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     niri = {
       url = "git+ssh://git@github.com/sodiboo/niri-flake.git?ref=main&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
