@@ -575,7 +575,11 @@ Open new frames in the last workspace.
                      (with-temp-buffer
                        (insert-file-contents my/ws-state-file)
                        (string-trim (buffer-string))))))
-      (unless (string-empty-p ws)
+      ;; Gate on workspace existence — calling +workspace-switch before persp
+      ;; has restored state can land on a prompt path whose (throw 'exit ...)
+      ;; escapes frame setup and aborts the new client.
+      (when (and (not (string-empty-p ws))
+                 (member ws (+workspace-list-names)))
         (+workspace-switch ws)))))
 
 (add-function :after after-focus-change-function #'my/save-active-workspace)
