@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 
 {
   my.rust.homeManager =
@@ -12,6 +12,11 @@
     let
       inherit (lib) mkIf mkMerge optionalAttrs;
       inherit (pkgs.stdenv) isLinux;
+
+      # Reuse the sandbox's exact toolchain derivation — sccache hashes the
+      # compiler binary, so a re-instantiated fenix would miss cross-boundary.
+      wrapixLib = inputs.wrapix.legacyPackages.${pkgs.system}.lib;
+      wrapixToolchain = wrapixLib.profiles.rust.toolchain;
 
       packages = with pkgs; [
         cargo-audit
@@ -69,7 +74,22 @@
           };
         };
 
-        sessionPath = [ "${config.home.homeDirectory}/.cargo/bin" ];
+        # Fenix ahead of rustup so the emacs daemon picks the same rustc
+        # as the sandbox, not rustup's shim.
+        sessionPath = [
+          "${wrapixToolchain}/bin"
+          "${config.home.homeDirectory}/.cargo/bin"
+        ];
+
+        # CARGO_INCREMENTAL=0 is load-bearing — sccache refuses to cache any
+        # rustc invocation built with -C incremental=...
+        sessionVariables = mkIf isLinux {
+          RUSTC_WRAPPER = "${pkgs.sccache}/bin/sccache";
+          SCCACHE_DIR = "${config.home.homeDirectory}/.cache/sccache";
+          SCCACHE_CACHE_SIZE = "50G";
+          CARGO_INCREMENTAL = "0";
+          RUST_SRC_PATH = "${wrapixToolchain}/lib/rustlib/src/rust/library";
+        };
       };
     };
 }
