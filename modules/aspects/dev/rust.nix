@@ -12,10 +12,11 @@
     let
       inherit (lib) mkIf mkMerge optionalAttrs;
       inherit (pkgs.stdenv) isLinux;
+      inherit (pkgs.stdenv.hostPlatform) system;
 
       # Reuse the sandbox's exact toolchain derivation — sccache hashes the
       # compiler binary, so a re-instantiated fenix would miss cross-boundary.
-      wrapixLib = inputs.wrapix.legacyPackages.${pkgs.system}.lib;
+      wrapixLib = inputs.wrapix.legacyPackages.${system}.lib;
       wrapixToolchain = wrapixLib.profiles.rust.toolchain;
 
       packages = with pkgs; [
