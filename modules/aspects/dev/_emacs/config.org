@@ -555,6 +555,14 @@ Easier movement between workspaces.
        :desc "Swap right"   "L"   #'+workspace/swap-right))
 #+end_src
 
+Stop Doom from spawning a fresh =#N= workspace for every new client frame.
+
+#+begin_src emacs-lisp
+(advice-add '+workspaces-associate-frame-fn :override #'ignore)
+
+(setq server-client-instructions nil)
+#+end_src
+
 Open new frames in the last workspace.
 
 #+begin_src emacs-lisp :tangle (if IS-LINUX "yes" "no")
@@ -580,7 +588,8 @@ Open new frames in the last workspace.
       ;; escapes frame setup and aborts the new client.
       (when (and (not (string-empty-p ws))
                  (member ws (+workspace-list-names)))
-        (+workspace-switch ws)))))
+        (+workspace-switch ws)))
+    (+workspace/display)))
 
 (add-function :after after-focus-change-function #'my/save-active-workspace)
 (add-hook 'persp-activated-functions #'my/save-active-workspace)
