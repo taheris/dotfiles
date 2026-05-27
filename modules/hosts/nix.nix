@@ -37,6 +37,7 @@
         my.niri
         my.sddm
         my.stylix
+        my.thunderbird
 
         # input
         my.bazecor
