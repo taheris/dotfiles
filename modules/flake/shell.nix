@@ -13,7 +13,9 @@
 
     in
     {
-      devShells.default = wrapix.mkDevShell { };
+      devShells.default = wrapix.mkDevShell {
+        profile = wrapix.profiles.base;
+      };
 
       formatter = pkgs.nixfmt-tree;
 

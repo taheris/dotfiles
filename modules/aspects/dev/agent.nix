@@ -63,7 +63,7 @@
         enable = true;
 
         settings = {
-          model = "claude-opus-4-6";
+          model = "claude-opus-4-8";
           effortCalloutDismissed = true;
           enableAllProjectMcpServers = false;
           includeCoAuthoredBy = false;
@@ -74,7 +74,7 @@
           };
 
           env = {
-            ANTHROPIC_MODEL = "claude-opus-4-6";
+            ANTHROPIC_MODEL = "claude-opus-4-8";
             CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC = "1";
             DISABLE_AUTOUPDATER = "1";
             DISABLE_ERROR_REPORTING = "1";
