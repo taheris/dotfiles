@@ -1,7 +1,5 @@
 # Agent Instructions
 
-This project uses **bd** (beads) for issue tracking. Run `bd onboard` to get started.
-
 ## Issue Tracking (Beads)
 
 **Use `bd` for ALL issue tracking.** Do NOT use markdown TODOs or external trackers.
@@ -11,7 +9,7 @@ bd ready                          # Show unblocked work
 bd show <id>                      # Issue details
 bd create --title="..." --description="..." --type=task --priority=2
 bd update <id> --status=in_progress   # Claim before starting
-bd close <id>                     # Complete work
+bd close <id>                     # Mark complete
 bd dep add <issue> <depends-on>   # Add dependency
 ```
 
@@ -31,10 +29,21 @@ bd dolt pull
 
 ```bash
 git add <files>
-git commit -m "..."
+git commit -m "..."   # Hooks run: nixfmt, shellcheck, flake check, tests
 git push
-bd dolt push
+beads-push            # Sync beads branch: bd dolt commit + push + git push origin beads
 ```
 
-Work is NOT complete until both pushes succeed.
+Work is NOT complete until both pushes succeed. `beads-push` is required — `bd dolt
+push` alone does not sync the `beads` git branch to GitHub.
 
+## Code Style
+
+**IMPORTANT:** Use `nix fmt` to format Nix files, NOT `nixfmt` directly.
+
+```bash
+nix fmt             # Format all Nix files (works outside devShell)
+nix fmt flake.nix   # Format specific file
+```
+
+The `nixfmt` command is only available inside `nix develop`.

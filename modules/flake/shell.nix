@@ -8,7 +8,10 @@
 
       agent = "pi";
       packages = [ pkgs.gnumake ];
-      sandbox = wrix.mkSandbox { inherit agent packages; };
+
+      sandbox = wrix.mkSandbox {
+        inherit agent packages;
+      };
 
       debugSandbox = wrix.mkSandbox {
         inherit agent;
