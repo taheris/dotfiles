@@ -75,16 +75,16 @@ in
       lbvr = "sudo ${sshBuilder} 'nix-store --verify --repair'";
       lbvcr = "sudo ${sshBuilder} 'nix-store --verify --check-contents --repair'";
 
-      # wrapix-builder
-      wb = "wrapix-builder";
-      wbc = "wrapix-builder config";
-      wbs = "wrapix-builder status";
-      wbsu = "wrapix-builder setup";
-      wbsur = "wrapix-builder setup-routes";
-      wbsush = "wrapix-builder setup-ssh";
-      wbst = "wrapix-builder start";
-      wbsp = "wrapix-builder stop";
-      wbsh = "wrapix-builder ssh";
+      # wrix-builder
+      wb = "wrix-builder";
+      wbc = "wrix-builder config";
+      wbs = "wrix-builder status";
+      wbsu = "wrix-builder setup";
+      wbsur = "wrix-builder setup-routes";
+      wbsush = "wrix-builder setup-ssh";
+      wbst = "wrix-builder start";
+      wbsp = "wrix-builder stop";
+      wbsh = "wrix-builder ssh";
     }
 
     # linux-specific

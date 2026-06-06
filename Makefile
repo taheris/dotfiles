@@ -16,6 +16,9 @@ help: ## Print this message
 check: ## Evaluate the flake (nix flake check)
 	@nix flake check --no-build
 
+flake: ## Rebuild the flake inputs
+	@nix run .#write-flake
+
 mac-hostname: res := $(call get_arg)
 mac-hostname: ## Set the macOS hostname (usage: `make set-hostname <name>`)
 	@sudo scutil --set HostName $($@_arg)

@@ -76,13 +76,13 @@
                   ProxyCommand ${nixBuilderProbe} %h %p
               '';
 
-              "ssh/ssh_config.d/100-wrapix-builder.conf".text = ''
-                Host wrapix-builder
+              "ssh/ssh_config.d/100-wrix-builder.conf".text = ''
+                Host wrix-builder
                   Hostname localhost
                   Port 2222
                   User builder
-                  HostKeyAlias wrapix-builder
-                  IdentityFile /etc/nix/wrapix_builder_ed25519
+                  HostKeyAlias wrix-builder
+                  IdentityFile /etc/nix/wrix_builder_ed25519
               '';
 
               "tailscale/tailscaled-env.txt".source = tailscaleEnv;

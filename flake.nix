@@ -29,6 +29,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     import-tree.url = "git+ssh://git@github.com/vic/import-tree.git?shallow=1";
+    loom = {
+      url = "git+ssh://git@github.com/taheris/loom.git?ref=main&shallow=1";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        wrix.follows = "wrix";
+      };
+    };
     niri = {
       url = "git+ssh://git@github.com/sodiboo/niri-flake.git?ref=main&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,8 +57,8 @@
       url = "git+ssh://git@github.com/nix-community/stylix.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    wrapix = {
-      url = "git+ssh://git@github.com/taheris/wrapix.git?ref=main&shallow=1";
+    wrix = {
+      url = "git+ssh://git@github.com/taheris/wrix.git?ref=main&shallow=1";
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";

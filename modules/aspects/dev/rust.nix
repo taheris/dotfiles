@@ -16,8 +16,8 @@
 
       # Reuse the sandbox's exact toolchain derivation — sccache hashes the
       # compiler binary, so a re-instantiated fenix would miss cross-boundary.
-      wrapixLib = inputs.wrapix.legacyPackages.${system}.lib;
-      wrapixToolchain = wrapixLib.profiles.rust.toolchain;
+      wrixLib = inputs.wrix.legacyPackages.${system}.lib;
+      wrixToolchain = wrixLib.profiles.rust.toolchain;
 
       packages = with pkgs; [
         cargo-audit
@@ -78,7 +78,7 @@
         # Fenix ahead of rustup so the emacs daemon picks the same rustc
         # as the sandbox, not rustup's shim.
         sessionPath = [
-          "${wrapixToolchain}/bin"
+          "${wrixToolchain}/bin"
           "${config.home.homeDirectory}/.cargo/bin"
         ];
 
@@ -89,7 +89,7 @@
           SCCACHE_DIR = "${config.home.homeDirectory}/.cache/sccache";
           SCCACHE_CACHE_SIZE = "50G";
           CARGO_INCREMENTAL = "0";
-          RUST_SRC_PATH = "${wrapixToolchain}/lib/rustlib/src/rust/library";
+          RUST_SRC_PATH = "${wrixToolchain}/lib/rustlib/src/rust/library";
         };
       };
     };

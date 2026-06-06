@@ -26,8 +26,7 @@
       };
 
       # profiles.<name>.extensions option expects a layout the XPI doesn't have.
-      home.file.".thunderbird/default/extensions/tbkeys@addons.thunderbird.net.xpi".source =
-        tbkeysXpi;
+      home.file.".thunderbird/default/extensions/tbkeys@addons.thunderbird.net.xpi".source = tbkeysXpi;
 
       # tbkeys stores its config in WebExtension storage, which can't be set
       # via user.js. Keep the source of truth here and paste it into the
@@ -53,7 +52,6 @@
         "/" = "cmd:cmd_search";
       };
 
-      home.shellAliases.tbkeys =
-        "cat ${config.xdg.configHome}/tbkeys/mainkeys.json | ${pkgs.wl-clipboard}/bin/wl-copy";
+      home.shellAliases.tbkeys = "cat ${config.xdg.configHome}/tbkeys/mainkeys.json | ${pkgs.wl-clipboard}/bin/wl-copy";
     };
 }

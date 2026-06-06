@@ -18,8 +18,9 @@ in
       monacob = callPackage ../../packages/monacob { };
       sqlite-vss = callPackage ../../packages/sqlite-vss { };
 
-      wrapix-builder = inputs.wrapix.packages.${system}.wrapix-builder;
-      wrapix-notifyd = inputs.wrapix.packages.${system}.wrapix-notifyd;
+      loom = inputs.loom.packages.${system}.loom;
+      wrix-builder = inputs.wrix.packages.${system}.wrix-builder;
+      wrix-notifyd = inputs.wrix.packages.${system}.wrix-notifyd;
 
       stable = import inputs.nixpkgs-stable {
         inherit system;

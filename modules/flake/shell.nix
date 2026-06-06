@@ -4,17 +4,22 @@
   perSystem =
     { inputs', pkgs, ... }:
     let
-      wrapix = inputs'.wrapix.legacyPackages.lib;
+      wrix = inputs'.wrix.legacyPackages.lib;
 
-      sandbox = wrapix.mkSandbox { };
-      debugSandbox = wrapix.mkSandbox {
-        packages = [ pkgs.podman ];
+      agent = "pi";
+      packages = [ pkgs.gnumake ];
+      sandbox = wrix.mkSandbox { inherit agent packages; };
+
+      debugSandbox = wrix.mkSandbox {
+        inherit agent;
+        packages = packages ++ [ pkgs.podman ];
       };
 
     in
     {
-      devShells.default = wrapix.mkDevShell {
-        profile = wrapix.profiles.base;
+      devShells.default = wrix.mkDevShell {
+        inherit packages;
+        profile = wrix.profiles.base;
       };
 
       formatter = pkgs.nixfmt-tree;

@@ -4,7 +4,7 @@ Run `make` to see a list of setup commands.
 
 ## Layout
 
-Built on [den](https://github.com/denful/den) (dendritic pattern).
+Built on [den](https://github.com/denful/den) (dendritic nix).
 
 Everything under `modules/` is auto-imported. Hosts compose features by
 including aspects from the `my` namespace.
@@ -27,8 +27,10 @@ modules/
 packages/     custom derivation sources
 ```
 
-`flake.nix` is generated from `modules/flake/inputs.nix` by `flake-file`.
-After editing inputs, run `nix run .#write-flake` to regenerate.
+## Adding inputs
+
+After editing `modules/flake/inputs.nix`, run `make flake` to regenerate
+`flake.nix`.
 
 ## Adding an aspect
 

@@ -16,6 +16,7 @@
 
       packages = with pkgs; [
         beads
+        loom
       ];
 
       darwinPackages =
@@ -29,8 +30,8 @@
 
       # Packages that require an aarch64-linux builder when on aarch64-darwin
       linuxBuilderPackages = with pkgs; [
-        wrapix-builder
-        wrapix-notifyd
+        wrix-builder
+        wrix-notifyd
       ];
 
       linuxPackages = with pkgs; [
@@ -47,14 +48,14 @@
       ];
 
       launchd.agents = {
-        wrapix-notifyd = mkIf (isDarwin && hasLinuxBuilder) {
+        wrix-notifyd = mkIf (isDarwin && hasLinuxBuilder) {
           enable = true;
           config = {
-            ProgramArguments = [ "${pkgs.wrapix-notifyd}/bin/wrapix-notifyd" ];
+            ProgramArguments = [ "${pkgs.wrix-notifyd}/bin/wrix-notifyd" ];
             KeepAlive = true;
             RunAtLoad = true;
-            StandardOutPath = "/tmp/wrapix-notifyd.log";
-            StandardErrorPath = "/tmp/wrapix-notifyd.log";
+            StandardOutPath = "/tmp/wrix-notifyd.log";
+            StandardErrorPath = "/tmp/wrix-notifyd.log";
           };
         };
       };
@@ -139,14 +140,18 @@
         };
       };
 
-      systemd.user.services.wrapix-notifyd = mkIf isLinux {
+      programs.codex = {
+        enable = true;
+      };
+
+      systemd.user.services.wrix-notifyd = mkIf isLinux {
         Unit = {
-          Description = "Wrapix notification daemon";
+          Description = "Wrix notification daemon";
           After = [ "graphical-session.target" ];
         };
         Service = {
           Type = "simple";
-          ExecStart = "${pkgs.wrapix-notifyd}/bin/wrapix-notifyd";
+          ExecStart = "${pkgs.wrix-notifyd}/bin/wrix-notifyd";
           Restart = "always";
           RestartSec = 5;
         };
