@@ -463,9 +463,11 @@ irc                          ; how neckbeards socialize
 
 *** Config
 
+Home Manager tangles this file before running =doom sync=, so don't enable Doom's
+=:config literate= module as well.
+
 #+name: doom-config
 #+begin_src emacs-lisp
-literate
 (default +bindings +smartparens)
 #+end_src
 
@@ -696,9 +698,9 @@ Reduce the delay time before popup, and trim =evil-= from popup names.
 (which-key-mode +1)
 
 (after! which-key
-  (pushnew! which-key-replacement-alist
-            '(("" . "\\`+?evil[-:/]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
-            '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))))
+  (dolist (replacement '((("" . "\\`+?evil[-:/]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+                         (("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))))
+    (add-to-list 'which-key-replacement-alist replacement)))
 #+end_src
 
 ** Evil
@@ -1186,7 +1188,7 @@ Add LSP support inside ~src~ blocks.
 #+begin_src emacs-lisp
 (cl-defmacro lsp-org-babel-enable (lang)
   "Support LANG in org source code block."
-  (cl-check-type lang stringp)
+  (cl-check-type lang string)
   (let* ((edit-pre (intern (format "org-babel-edit-prep:%s" lang)))
          (intern-pre (intern (format "lsp--%s" (symbol-name edit-pre)))))
     `(progn
@@ -1746,9 +1748,9 @@ Mimic the style of markdown renderers.
 (after! lsp
   (setq +lsp-defer-shutdown 60)
 
-  (pushnew! lsp-file-watch-ignored-directories
-            "[/\\\\]\\.cargo\\'"
-            "[/\\\\]\\.claude\\'")
+  (dolist (directory '("[/\\\\]\\.cargo\\'"
+                       "[/\\\\]\\.claude\\'"))
+    (add-to-list 'lsp-file-watch-ignored-directories directory))
 
   (set-formatter! 'lsp-formatter #'lsp-format-buffer
                   :modes '(lsp-mode)))

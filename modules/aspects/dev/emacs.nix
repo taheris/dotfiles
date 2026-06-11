@@ -83,12 +83,18 @@
         activation.doomEmacs = dag.entryAfter [ "writeBoundary" ] ''
           if [[ ! -d ${emacs} ]]; then
             export PATH=${path}
-            git clone --depth 1 https://github.com/doomemacs/doomemacs ${emacs}
+            git clone --depth 1 --recurse-submodules --shallow-submodules \
+              https://github.com/doomemacs/core ${emacs}
             doom install
           fi
         '';
 
         file = {
+          doomSnippets = {
+            text = "";
+            target = "${doom}/snippets/.keep";
+          };
+
           doomConfig = {
             source = ./_emacs/config.org;
             target = "${doom}/config.org";
@@ -104,6 +110,10 @@
               export PATH=${path}
               export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
               export SSL_CERT_DIR=${pkgs.cacert}/etc/ssl/certs
+
+              git -C ${emacs} remote set-url origin https://github.com/doomemacs/core
+              git -C ${emacs} submodule sync --recursive
+              git -C ${emacs} submodule update -f --init --recursive
 
               doom sync -e
             '';
