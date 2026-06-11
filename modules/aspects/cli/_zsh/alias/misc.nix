@@ -69,7 +69,7 @@
     bddea = "bd dep add";
 
     # beads sync
-    bp = "beads-push";
+    bdp = "beads-push";
     bddp = "bd dolt push";
     bddpl = "bd dolt pull";
     bdds = "beads-dolt status";
