@@ -72,3 +72,5 @@ sync:
 export:
   auto: false
   git-add: false
+
+export.auto: false
