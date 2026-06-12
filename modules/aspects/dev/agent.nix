@@ -28,9 +28,11 @@
           container
         ];
 
-      # Packages that require an aarch64-linux builder when on aarch64-darwin
-      linuxBuilderPackages = with pkgs; [
+      builderPackages = with pkgs; [
         wrix-builder
+      ];
+
+      linuxBuilderHostPackages = with pkgs; [
         wrix-notifyd
       ];
 
@@ -42,7 +44,8 @@
     {
       home.packages = mkMerge [
         packages
-        (optionals (isLinux || hasLinuxBuilder) linuxBuilderPackages)
+        (mkIf isLinux builderPackages)
+        (optionals (isLinux || (isDarwin && hasLinuxBuilder)) linuxBuilderHostPackages)
         (mkIf isDarwin darwinPackages)
         (mkIf isLinux linuxPackages)
       ];

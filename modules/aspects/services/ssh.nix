@@ -3,11 +3,7 @@
 {
   my.ssh = {
     homeManager =
-      { lib, pkgs, ... }:
-      let
-        inherit (lib) mkIf;
-        inherit (pkgs.stdenv) isDarwin;
-      in
+      { ... }:
       {
         programs.ssh = {
           enable = true;
@@ -25,10 +21,6 @@
             ServerAliveInterval = 0;
             UserKnownHostsFile = "~/.ssh/known_hosts";
           };
-
-          extraConfig = mkIf isDarwin ''
-            UseKeychain yes
-          '';
         };
       };
 

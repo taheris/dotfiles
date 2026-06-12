@@ -7,7 +7,11 @@
       wrix = inputs'.wrix.legacyPackages.lib;
 
       agent = "pi";
-      packages = [ pkgs.gnumake ];
+      packages = with pkgs; [
+        gnumake
+        openssh
+      ];
+      profile = wrix.profiles.base;
 
       sandbox = wrix.mkSandbox {
         inherit agent packages;
@@ -20,10 +24,20 @@
 
     in
     {
-      devShells.default = wrix.mkDevShell {
-        inherit packages;
-        profile = wrix.profiles.base;
-      };
+      devShells.default =
+        if pkgs.stdenv.isDarwin then
+          pkgs.mkShell {
+            packages = (profile.hostPackages or profile.packages) ++ packages;
+            env = profile.env or { };
+            shellHook = ''
+              echo "Wrix development shell"
+              ${profile.shellHook or ""}
+            '';
+          }
+        else
+          wrix.mkDevShell {
+            inherit packages profile;
+          };
 
       formatter = pkgs.nixfmt-tree;
 
