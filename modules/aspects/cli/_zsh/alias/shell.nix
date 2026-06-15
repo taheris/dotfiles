@@ -4,25 +4,26 @@ let
   inherit (pkgs.stdenv) isDarwin;
 
   taheris = "~/src/github.com/taheris";
-  dotfiles = "${taheris}/dotfiles";
 
 in
 {
   programs.zsh.shellAliases = {
-    # terminal
-    e = "\${(z)EDITOR}";
-    o = (if isDarwin then "open" else "xdg-open");
-    ts = "cd ${taheris}";
-    dfs = "cd ${dotfiles}";
-    org = "cd ${taheris}/org";
-    sec = "cd ${taheris}/secrets";
+    # cd src
+    cdd = "cd ${taheris}/dotfiles";
+    cdl = "cd ${taheris}/loom";
+    cdo = "cd ${taheris}/org";
+    cds = "cd ${taheris}/secrets";
+    cdw = "cd ${taheris}/wrix";
 
-    # cd
+    # cd back
     cdb = "cd -";
-    cdl = "cd $(ls -tr1 | tail -n-1)";
     "..." = "cd ../..";
     "...." = "cd ../../../";
     "....." = "cd ../../../..";
+
+    # edit
+    e = "\${(z)EDITOR}";
+    o = (if isDarwin then "open" else "xdg-open");
 
     # ls
     ls = "ls --color=auto";
