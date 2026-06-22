@@ -18,6 +18,10 @@ let
 
     config = {
       allowUnfree = true;
+      permittedInsecurePackages = [
+        "librewolf-151.0.2-1"
+        "librewolf-unwrapped-151.0.2-1"
+      ];
       problems.handlers.arrow-cpp.broken = "warn";
     };
   };

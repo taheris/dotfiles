@@ -1,49 +1,38 @@
 # Agent Instructions
 
-## Issue Tracking (Beads)
+## Start
 
-**Use `bd` for ALL issue tracking.** Do NOT use markdown TODOs or external trackers.
+- Run `bd dolt pull`.
+
+## Beads
+
+Use `bd` only; no markdown TODOs.
 
 ```bash
-bd ready                          # Show unblocked work
-bd show <id>                      # Issue details
+bd ready
+bd show <id>
 bd create --title="..." --description="..." --type=task --priority=2
-bd update <id> --status=in_progress   # Claim before starting
-bd close <id>                     # Mark complete
-bd dep add <issue> <depends-on>   # Add dependency
+bd update <id> --status=in_progress
+bd close <id>
+bd dep add <issue> <depends-on>
 ```
 
-**Priority:** 0-4 (critical to backlog, default 2). **Types:** task, bug, feature, epic.
+Flow: ready → claim → implement → close. Priorities: 0-4. Types: `task`,
+`bug`, `feature`, `epic`.
 
-**Workflow:** `bd ready` → `bd update --status=in_progress` → implement → `bd close`
-
-## Session Protocol
-
-### Start
-
-```bash
-bd dolt pull
-```
-
-### End ("land the plane")
+## Land
 
 ```bash
 git add <files>
-git commit -m "..."   # Hooks run: nixfmt, shellcheck, flake check, tests
-git push
-beads-push            # Sync beads branch: bd dolt commit + push + git push origin beads
+git commit -m "..."
+git push origin main
+wrix beads push
 ```
 
-Work is NOT complete until both pushes succeed. `beads-push` is required — `bd dolt
-push` alone does not sync the `beads` git branch to GitHub.
-
-## Code Style
-
-**IMPORTANT:** Use `nix fmt` to format Nix files, NOT `nixfmt` directly.
+## Verify
 
 ```bash
-nix fmt             # Format all Nix files (works outside devShell)
-nix fmt flake.nix   # Format specific file
+nix fmt
+nix build
+nix flake check
 ```
-
-The `nixfmt` command is only available inside `nix develop`.

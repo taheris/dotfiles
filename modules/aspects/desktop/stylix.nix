@@ -70,6 +70,7 @@
 
             targets = {
               emacs.enable = false;
+              gtk.flatpakSupport.enable = false;
               librewolf.profileNames = mkIf isLinux [ "default" ];
             };
           };
