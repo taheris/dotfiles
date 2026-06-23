@@ -153,10 +153,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1782096712,
-        "narHash": "sha256-bBnQrtoQNJLlk0eIjcMxcPSfGYeJDEOKDxzEkaEKLhU=",
+        "lastModified": 1782242018,
+        "narHash": "sha256-bH5n7BhcMrMtPH0+8uLJrXDIUTPvovqecvUgv0SI7ts=",
         "ref": "master",
-        "rev": "b3a1375b0a16512ee27c8f17aef4064761e412e2",
+        "rev": "24695427d4549cccb13a208fc94c7b6326159adf",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -307,10 +307,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1782134359,
-        "narHash": "sha256-dh0RDcJ17Rubgk3hGTugYmTu6rnUPfRu5vA7MA1Pdo0=",
+        "lastModified": 1782233665,
+        "narHash": "sha256-h/xOtrByoA/Ak1lWHn0O1lVZz4qWYbwOSLQ8YSwQO0I=",
         "ref": "master",
-        "rev": "979bfee6e1a7996fc395270d54c9b59e88762494",
+        "rev": "062581938b4a378a82dfbb294b494808157153a1",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -362,10 +362,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1782131673,
-        "narHash": "sha256-5uWx2Ux3z3pnltUC7XLhKu4bMz1J6E84LFn+4kxuDQQ=",
+        "lastModified": 1782249869,
+        "narHash": "sha256-keHMw8eAg+i5OTEQ75GjJHqx4wlzkQ5cPtchFL/PL2w=",
         "ref": "main",
-        "rev": "aae764519220774863277bb88de0881c097165d5",
+        "rev": "55841e7f150d5efcaf57738548ba8b5e30c7442c",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
@@ -456,10 +456,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1781607440,
-        "narHash": "sha256-rxO+uc/KFbSJp+pgyXRuAX6QlG9hJdnt0BXpEQRXY+U=",
+        "lastModified": 1782118813,
+        "narHash": "sha256-BnbXO5s5EhV89lLXMAGCzPdEN5a6vNqvMk71obeTEUw=",
         "ref": "nixpkgs-unstable",
-        "rev": "3e41b24abd260e8f71dbe2f5737d24122f972158",
+        "rev": "b3c092d3c36d91e2f61f3dfb39a159f180a56659",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -617,10 +617,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1781943681,
-        "narHash": "sha256-NFHmA7H47adqiyp+0iEOyZOQhmigDqA/NBAlf4imB6U=",
+        "lastModified": 1782165805,
+        "narHash": "sha256-478kKQBvK6SYTOdN2h9jhKJv94nbXRbFMfuL1WshErg=",
         "ref": "master",
-        "rev": "420f8d2e9882911f65cfac15cc706f639ba96cca",
+        "rev": "56b24064fdcaedca53553b1a6d607fd23b613a24",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"
@@ -805,10 +805,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1782138703,
-        "narHash": "sha256-ryD5QXxKZ4edGNrmq5ZKGPn5DdoD53l+VJiOxOkxdxc=",
+        "lastModified": 1782248649,
+        "narHash": "sha256-MeiLxbZ0Z260JnMESn7i9yf9csAdfi5CNU4pUO2nOkU=",
         "ref": "main",
-        "rev": "5a851be336045e196a68696781d1e0125970a291",
+        "rev": "0ada6ab9578412dbee69a38d280bf589850553fc",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"

@@ -34,9 +34,13 @@
             };
           };
 
-          # Disable GPU accel: tidal-hifi's Chromium GPU process has triggered
-          # amdgpu VM page faults that hung the iGPU and took niri down with it.
-          "com.mastermindzh.tidal-hifi".Environment.ELECTRON_DISABLE_GPU = "1";
+          "com.mastermindzh.tidal-hifi" = {
+            # chromium triggered amdgpu page faults that took down niri
+            Environment.ELECTRON_DISABLE_GPU = "1";
+
+            # allow mpris export to host session bus for dms media widget
+            "Session Bus Policy"."org.mpris.MediaPlayer2.*" = "own";
+          };
 
           "com.slack.Slack".Context.sockets = [
             "wayland"

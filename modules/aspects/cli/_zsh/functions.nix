@@ -17,6 +17,11 @@ in
       echo "$PWD" > "''${TMPDIR:-''${XDG_RUNTIME_DIR:-/tmp}}/last-dir";
     }
 
+    loom-worktree() {
+      local id="$1"
+      git --git-dir=".git/worktrees/$id" --work-tree=".loom/beads/$id" "''${@:2}"
+    }
+
     github-clone() {
       local repo=$*
       local outdir="${home}/src/github.com/$repo"
