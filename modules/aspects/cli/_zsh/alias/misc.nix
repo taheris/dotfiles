@@ -47,7 +47,7 @@
     bdcr = "bd create";
     bdup = "bd update";
     bdcl = "bd close";
-    bdbl = "bd blocked";
+    bdro = "bd reopen";
     bdsr = "bd search";
     bdsa = "bd stats";
     bdd = "bd doctor";
@@ -59,6 +59,7 @@
     bdli = "bd list --status=in_progress";
     bdlc = "bd list --status=closed";
     bdlbl = "bd list --status=blocked";
+    bdbl = "bd blocked";
 
     # beads memories
     bdm = "bd memories";

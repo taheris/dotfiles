@@ -6,38 +6,19 @@
     let
       wrix = inputs'.wrix.legacyPackages.lib;
 
-      agent = "pi";
-      packages = with pkgs; [
-        gnumake
-        openssh
-      ];
-      profile = wrix.profiles.base;
-
       sandbox = wrix.mkSandbox {
-        inherit agent packages;
+        profile = wrix.profiles.base;
+        agent = "pi";
       };
 
       debugSandbox = wrix.mkSandbox {
-        inherit agent;
-        packages = packages ++ [ pkgs.podman ];
+        profile = wrix.profiles.base;
+        agent = "pi";
+        packages = [ pkgs.podman ];
       };
-
     in
     {
-      devShells.default =
-        if pkgs.stdenv.isDarwin then
-          pkgs.mkShell {
-            packages = (profile.hostPackages or profile.packages) ++ packages;
-            env = profile.env or { };
-            shellHook = ''
-              echo "Wrix development shell"
-              ${profile.shellHook or ""}
-            '';
-          }
-        else
-          wrix.mkDevShell {
-            inherit packages profile;
-          };
+      devShells.default = sandbox.devShell { };
 
       formatter = pkgs.nixfmt-tree;
 
