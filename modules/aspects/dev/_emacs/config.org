@@ -1560,12 +1560,14 @@ Call ~gptel-send~ with =C-c RET= only.
 
 #+begin_src emacs-lisp
 (after! gptel
-  (dolist (key '("RET"
-                 "<normal-state> RET"
-                 "<visual-state> RET"
-                 "<normal-state> S-<return>"
-                 "<visual-state> S-<return>"))
-    (define-key gptel-mode-map (kbd key) nil)))
+  (map! :map gptel-mode-map
+        :niv "RET" nil
+        :niv "<return>" nil
+        :niv "S-<return>" nil
+
+        "RET" nil
+        "<return>" nil
+        "S-<return>" nil))
 
 (after! org
   (define-key org-mode-map (kbd "C-c <return>") #'gptel-send))
