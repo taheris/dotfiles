@@ -31,7 +31,6 @@
         cargo-release
         cargo-udeps
         cargo-update
-        cargo-watch
         rustup
         sccache
         tokei

@@ -144,6 +144,9 @@
 
             masApps = {
               Bitwarden = 1352778147;
+              Keynote = 361285480;
+              Numbers = 361304891;
+              Pages = 361309726;
             };
 
             onActivation = {
@@ -154,7 +157,10 @@
             };
 
             taps = [
-              "BarutSRB/tap"
+              {
+                name = "barutsrb/tap";
+                trusted = true;
+              }
             ];
           };
 
