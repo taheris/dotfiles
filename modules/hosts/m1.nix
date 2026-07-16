@@ -1,7 +1,8 @@
 { my, ... }:
 
 {
-  den.hosts.aarch64-darwin.m1 = {
+  den.hosts.m1 = {
+    system = "aarch64-darwin";
     user = "shaun";
     fontSize = 16;
     hasLinuxBuilder = true;

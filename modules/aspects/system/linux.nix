@@ -13,7 +13,7 @@
         keyd
         ltrace
         pulseaudio
-        texlive.combined.scheme-full
+        texliveMedium
         usbutils
         wl-clipboard
       ];

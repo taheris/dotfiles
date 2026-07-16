@@ -201,6 +201,7 @@
               cursor = {
                 theme = "Nordzy-cursors";
                 size = 24;
+                hide-when-typing = true;
               };
 
               gestures.hot-corners.enable = false;
@@ -226,6 +227,11 @@
                   color = "rgba(235 73 55 1.0)";
                   inactive-color = "rgba(0 0 0 0.0)";
                 };
+              };
+
+              outputs = {
+                "DP-1".scale = 2.0;
+                "DP-2".enable = false;
               };
 
               prefer-no-csd = true;

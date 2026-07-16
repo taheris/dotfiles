@@ -1,7 +1,8 @@
 { my, ... }:
 
 {
-  den.hosts.x86_64-darwin.m16 = {
+  den.hosts.m16 = {
+    system = "x86_64-darwin";
     user = "shaun";
     fontSize = 16;
     users.shaun = { };

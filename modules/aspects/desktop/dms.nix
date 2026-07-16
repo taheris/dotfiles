@@ -54,13 +54,6 @@
               # Clock
               use24HourClock = true;
 
-              # Cursor
-              cursorSettings = {
-                theme = "System Default";
-                size = 24;
-                niri.hideWhenTyping = true;
-              };
-
               # Sounds
               soundNewNotification = false;
 
@@ -106,11 +99,6 @@
               lockBeforeSuspend = true;
               fadeToLockEnabled = true;
               fadeToDpmsEnabled = true;
-
-              # Display
-              niriOutputSettings = {
-                "DP-5".disabled = true;
-              };
 
               # Bar
               barConfigs = [

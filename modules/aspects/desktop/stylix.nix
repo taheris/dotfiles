@@ -26,6 +26,7 @@
 
           # Enable cursor for GTK and X11 apps (stylix.cursor sets name/package/size)
           home.pointerCursor = mkIf isLinux {
+            enable = true;
             gtk.enable = true;
             x11.enable = true;
           };
