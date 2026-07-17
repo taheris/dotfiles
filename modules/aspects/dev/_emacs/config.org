@@ -553,7 +553,7 @@ Easier movement between workspaces.
 
 #+begin_src emacs-lisp
 (map! :leader
-      (:prefix ("TAB" . "workspace")
+      (:prefix "TAB"
        :desc "Switch to"    "SPC" #'+workspace/switch-to
        :desc "Switch left"  "h"   #'+workspace/switch-left
        :desc "Switch right" "l"   #'+workspace/switch-right
@@ -674,11 +674,12 @@ Reduce zoom size.
 *** PDF
 
 Point ~pdf-tools~ to the Nix-provided =epdfinfo= binary, since Doom's
-straight.el build doesn't compile the C server.
+straight.el build doesn't compile the C server. This must run from =init.el=,
+before Doom's PDF module restores any PDF buffers.
 
-#+begin_src emacs-lisp
-(after! pdf-tools
-  (setq pdf-info-epdfinfo-program (executable-find "epdfinfo")))
+#+begin_src emacs-lisp :tangle "init.el" :comments no
+(setq pdf-info-epdfinfo-program
+      (expand-file-name "~/.nix-profile/bin/epdfinfo"))
 #+end_src
 
 * Packages
@@ -746,7 +747,7 @@ Ignore some ~projectile~ paths.
   (or (mapcar (lambda (p) (s-starts-with-p p filepath)) projectile-ignored-projects)))
 
 (map! :leader
-      (:prefix ("p" . "+project")
+      (:prefix "p"
        :desc "Multi-occur" "/" #'projectile-multi-occur))
 #+end_src
 
@@ -1019,7 +1020,7 @@ Set =calc= defaults.
 
 (package! org-srs
   :recipe (:host github :repo "bohonghuang/org-srs")
-  :pin "c0aff45392b1f836fd943467cc266cef50899a44")
+  :pin "e6e5fbfcb8beb520141edac647ccb76af9b71df6")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1414,7 +1415,7 @@ Use =nov= to read eBooks.
 Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! lsp-ltex :pin "a7014677b10ddc1127f9e6ed4ffaf9c5ab18922c")
+(package! lsp-ltex :pin "f02a9a92202a03635c6cec95ebfff7e21dcc5b38")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1487,7 +1488,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "f342b3010f135ca4a38b02564b50b2d3e66554cf")
+(package! gptel :pin "8701e2bd80c5d2091ce2decef5d34d6fce4a3ada")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1607,10 +1608,10 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "3ddfa907eb7f17949a4a8e731ea5c5241e6cbcb4")
+  :pin "5140f4121156707245567b8fc3072d4c3b5c867f")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "2bd245a9aa31bc0e3b2197ce254582bde4e9b676")
+  :pin "ec1e6a09d04e3f51530ba9c9cf9f7331dfa9f3f4")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1845,7 +1846,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "3ddb41be1f87312cd6a9b955dbbfd9730d341dd7")
+  :pin "6d5557a46fdc7d1463fd924f4ed2d028bf189809")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1937,11 +1938,11 @@ Disable ZeroMQ in macOS.
 #+begin_src emacs-lisp :tangle packages.el
 (package! typst-ts-mode
   :recipe (:host codeberg :repo "meow_king/typst-ts-mode")
-  :pin "278562d702de429f5c4369c007913ca0ef1584f3")
+  :pin "155bb36cff3afe701a0f6b57bd3fe5c9effaa314")
 
 (package! typst-preview
   :recipe (:host github :repo "havarddj/typst-preview.el")
-  :pin "7e89cf105e4fef5e79977a4a790d5b3b18d305f6")
+  :pin "f2903a1b98e13be7c927de835ae0d9159dd9fb9a")
 
 (package! ox-typst
   :recipe (:host github :repo "jmpunkt/ox-typst" :files ("*.el"))

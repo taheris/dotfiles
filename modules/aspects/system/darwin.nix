@@ -140,6 +140,7 @@
               "ungoogled-chromium"
               "vlc"
               "wireshark-app"
+              "zoom"
             ];
 
             masApps = {
