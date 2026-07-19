@@ -41,6 +41,7 @@
         && linuxSession.CARGO_INCREMENTAL == "0";
 
       cargoWrapperLine = ''rustc-wrapper = "${darwinSession.RUSTC_WRAPPER}"'';
+      cargoCompilerLine = ''rustc = "${lib.removeSuffix "/lib/rustlib/src/rust/library" darwinSession.RUST_SRC_PATH}/bin/rustc"'';
     in
     {
       checks.sccache-configuration =
@@ -48,6 +49,7 @@
         assert lib.assertMsg linuxValid "sccache changed Linux behavior";
         pkgs.runCommand "sccache-configuration-test" { } ''
           ${lib.optionalString pkgs.stdenv.isDarwin ''
+            grep -F -- ${lib.escapeShellArg cargoCompilerLine} ${lib.escapeShellArg (toString darwinHome.home.file.cargo.source)}
             grep -F -- ${lib.escapeShellArg cargoWrapperLine} ${lib.escapeShellArg (toString darwinHome.home.file.cargo.source)}
           ''}
           touch "$out"

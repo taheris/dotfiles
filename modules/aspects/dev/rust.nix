@@ -67,6 +67,7 @@
           target = ".cargo/config.toml";
           source = (pkgs.formats.toml { }).generate "cargo-config" {
             build = {
+              rustc = "${wrixToolchain}/bin/rustc";
               rustc-wrapper = sccacheBin;
             };
 
