@@ -11,13 +11,23 @@
 
     let
       inherit (lib) mkIf mkMerge optionalAttrs;
-      inherit (pkgs.stdenv) isLinux;
+      inherit (pkgs.stdenv) isDarwin isLinux;
       inherit (pkgs.stdenv.hostPlatform) system;
 
       # Reuse the sandbox's exact toolchain derivation — sccache hashes the
       # compiler binary, so a re-instantiated fenix would miss cross-boundary.
       wrixLib = inputs.wrix.legacyPackages.${system}.lib;
       wrixToolchain = wrixLib.profiles.rust.toolchain;
+
+      sccacheBin = "${pkgs.sccache}/bin/sccache";
+      sccacheCacheDir = "${config.home.homeDirectory}/.cache/sccache";
+      sccacheCacheSize = "50G";
+      sccacheServerPort = "4226";
+
+      sccacheEnvironment = {
+        SCCACHE_DIR = sccacheCacheDir;
+        SCCACHE_CACHE_SIZE = sccacheCacheSize;
+      };
 
       packages = with pkgs; [
         cargo-audit
@@ -57,7 +67,7 @@
           target = ".cargo/config.toml";
           source = (pkgs.formats.toml { }).generate "cargo-config" {
             build = {
-              rustc-wrapper = "${pkgs.sccache}/bin/sccache";
+              rustc-wrapper = sccacheBin;
             };
 
             profile.dev = {
@@ -74,21 +84,50 @@
           };
         };
 
-        # Fenix ahead of rustup so the emacs daemon picks the same rustc
-        # as the sandbox, not rustup's shim.
         sessionPath = [
           "${wrixToolchain}/bin"
           "${config.home.homeDirectory}/.cargo/bin"
         ];
 
-        # CARGO_INCREMENTAL=0 is load-bearing — sccache refuses to cache any
-        # rustc invocation built with -C incremental=...
-        sessionVariables = mkIf isLinux {
-          RUSTC_WRAPPER = "${pkgs.sccache}/bin/sccache";
-          SCCACHE_DIR = "${config.home.homeDirectory}/.cache/sccache";
-          SCCACHE_CACHE_SIZE = "50G";
-          CARGO_INCREMENTAL = "0";
-          RUST_SRC_PATH = "${wrixToolchain}/lib/rustlib/src/rust/library";
+        sessionVariables =
+          sccacheEnvironment
+          // {
+            CARGO_INCREMENTAL = "0";
+            RUST_SRC_PATH = "${wrixToolchain}/lib/rustlib/src/rust/library";
+            RUSTC_WRAPPER = sccacheBin;
+          }
+          // optionalAttrs isDarwin {
+            SCCACHE_SERVER_PORT = sccacheServerPort;
+          };
+
+        # On the first activation that introduces the launchd agent, stop an
+        # existing client-spawned daemon before Home Manager claims the port.
+        # Subsequent agent replacements are handled by setupLaunchAgents.
+        activation.stopAdHocSccache = mkIf isDarwin (
+          lib.hm.dag.entryBetween [ "setupLaunchAgents" ] [ "writeBoundary" ] ''
+            if [[ -z "''${oldGenPath:-}" || ! -e "$oldGenPath/LaunchAgents/org.nix-community.home.sccache.plist" ]]; then
+              verboseEcho "Stopping any ad-hoc sccache daemon on port ${sccacheServerPort}"
+              SCCACHE_SERVER_PORT=${sccacheServerPort} ${sccacheBin} --stop-server >/dev/null 2>&1 || true
+            fi
+          ''
+        );
+      };
+
+      launchd.agents.sccache = mkIf isDarwin {
+        enable = true;
+        domain = "user";
+        config = {
+          ProgramArguments = [ sccacheBin ];
+          EnvironmentVariables = sccacheEnvironment // {
+            SCCACHE_START_SERVER = "1";
+            SCCACHE_NO_DAEMON = "1";
+            SCCACHE_IDLE_TIMEOUT = "0";
+            SCCACHE_SERVER_PORT = sccacheServerPort;
+          };
+          KeepAlive = true;
+          RunAtLoad = true;
+          StandardOutPath = "${config.home.homeDirectory}/Library/Logs/sccache.log";
+          StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/sccache.log";
         };
       };
     };

@@ -86,7 +86,6 @@
           # env misc
           export FZF_CTRL_R_OPTS="--preview= --layout=default"
           export LS_COLORS=$(vivid generate tokyonight-night)
-          export RUSTC_WRAPPER="${pkgs.sccache}/bin/sccache"
 
           # case-insensitive completion
           zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
