@@ -22,6 +22,7 @@
         my.interception
         my.nvidia
         my.pipewire
+        my.r8152
 
         # services
         my.ollama

@@ -92,10 +92,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1784362797,
-        "narHash": "sha256-EP9b9b+OXDxHBPefFwMYCIaLq0fn3UkmrbfzbLUT7kQ=",
+        "lastModified": 1784500460,
+        "narHash": "sha256-UvORnAxTRHax7RG74W8Z2t4GvIkX6AjJ5kk0QlwZomo=",
         "ref": "master",
-        "rev": "b4cccbd4bc299c1f71ae185b79c3cf99aa82805c",
+        "rev": "57a3171f94705599a2499248ca5758d5eb47c0e0",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/LnL7/nix-darwin.git"
@@ -153,10 +153,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1784457376,
-        "narHash": "sha256-QoEZEk3+LjLQXMrNUtE1yWummEeGR12LOGU5H6zbkvY=",
+        "lastModified": 1784598536,
+        "narHash": "sha256-Mru+mW1jm9G8syAMqLoyKnK/S8eYL7M8koxSWFD1StM=",
         "ref": "master",
-        "rev": "105655299c6ea33476e8425f15fa16ada43ab12d",
+        "rev": "6875f9a701d590eb9e48d7fd049183d453ff4387",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -323,10 +323,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1784407317,
-        "narHash": "sha256-iZrxHToDJWnvt+5LGAtvuQMTy1NZYlNEKbKaVtBJNcc=",
+        "lastModified": 1784588016,
+        "narHash": "sha256-ouZe80aWEhMLVMkqICFDN+JUw+0FJtCr/bh+hHtRtMg=",
         "ref": "master",
-        "rev": "39411a8e12a5526d992e65bc7e3dc9a4414d6713",
+        "rev": "deeb6b7eb7e0c44ae1819c051ce175bd92a85100",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -378,10 +378,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1784452929,
-        "narHash": "sha256-WOioFKD8QVpPkUKgfrs6fVEe9KwrvwxUhC8JPApDjyg=",
+        "lastModified": 1784628095,
+        "narHash": "sha256-YXjmn1tmVqN6oL8Pbabm1Gu67cYL2kkiScUZRGUw/5I=",
         "ref": "main",
-        "rev": "be5bfa44310e48bce78c5d583598654f00ad8f29",
+        "rev": "6a537157e478a959f117199be53c6071a9f3c60c",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
@@ -405,10 +405,10 @@
         "xwayland-satellite-unstable": "xwayland-satellite-unstable"
       },
       "locked": {
-        "lastModified": 1784458980,
-        "narHash": "sha256-BWFTNPJWS9G1ME7bfjQIb7aWKWKpnjMMU1rlbw8PH/s=",
+        "lastModified": 1784578694,
+        "narHash": "sha256-UQtzks2t8ycyki7NCaSsp3Dy7Hcw5iCzPX5txnU5744=",
         "ref": "main",
-        "rev": "e40af292a5890c48d51bfa33d3db3d967d41784e",
+        "rev": "4d9088bdc07d20963be29821d5cf491edd9c8d25",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/sodiboo/niri-flake.git"
@@ -440,11 +440,11 @@
     "niri-unstable": {
       "flake": false,
       "locked": {
-        "lastModified": 1784456420,
-        "narHash": "sha256-38yvDuO09V/GG19oJO+B5nn38NhvvZEWKRGFE4WPUi4=",
+        "lastModified": 1784570726,
+        "narHash": "sha256-9EMn69JBcFWFgUM7f0VBAX+jBby5b9H3M59U75+5yI4=",
         "owner": "YaLTeR",
         "repo": "niri",
-        "rev": "f036de655d309edc13fef545a3809330796cbe83",
+        "rev": "7f26c3ee804fb6ed458ef7fb0e3c794f14e0b3bc",
         "type": "github"
       },
       "original": {
@@ -472,10 +472,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1784453100,
-        "narHash": "sha256-zpGZb8FYui+i8KLtC0nlcmb0voR2zB80Qn8pe7lzIbk=",
+        "lastModified": 1784555310,
+        "narHash": "sha256-/FCliTPgiuV1owejZFNx3Ch9irdvkOfOFl+HHZ+DrtM=",
         "ref": "nixpkgs-unstable",
-        "rev": "b471514bed69eff5255c8e63c1f80e5fe56c616f",
+        "rev": "421eebfd0ec7bccd4abe826ce62d7e6e83129493",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -748,10 +748,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1780220602,
-        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
+        "lastModified": 1784369104,
+        "narHash": "sha256-47cxbcZODibHv3rELFQ9vZly0vUNkND/atn/U7HLeb0=",
         "ref": "main",
-        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
+        "rev": "df3c0640565d04a0261253cdd89fce78ec50168a",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/numtide/treefmt-nix.git"
@@ -799,10 +799,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1784493801,
-        "narHash": "sha256-t+XrRvFacKzAc4v2Zd3LQIiC5J07z0uGawEBpAjDcn8=",
+        "lastModified": 1784503787,
+        "narHash": "sha256-V/ZE9QTGPtlrYMAbJJGXkYd/HD2Sf62Qsfh1dtw2WnE=",
         "ref": "main",
-        "rev": "8349021c17f3ce69860444bcc062b0222aa27511",
+        "rev": "d80cb1aa50ccbc949b165df0deff6e5fa63c5256",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"

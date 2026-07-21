@@ -31,6 +31,9 @@ in
       apple-display-backlight = callPackage ../../packages/apple-display-backlight {
         kernel = final.linuxPackages_latest.kernel;
       };
+      r8152 = callPackage ../../packages/r8152 {
+        kernel = final.linuxPackages_latest.kernel;
+      };
       intercept-fn-keys = callPackage ../../packages/intercept-fn-keys { };
       mouser = callPackage ../../packages/mouser { };
       tws = callPackage ../../packages/tws { };
@@ -51,6 +54,7 @@ in
         inherit (pkgs)
           apple-display-backlight
           intercept-fn-keys
+          r8152
           mouser
           tws
           ;
