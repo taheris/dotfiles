@@ -13,13 +13,17 @@ in
   };
 
   programs.zsh.initContent = ''
+    calc() {
+      bc -l <<< "$@"
+    }
+
     chpwd() {
       echo "$PWD" > "''${TMPDIR:-''${XDG_RUNTIME_DIR:-/tmp}}/last-dir";
     }
 
-    loom-worktree() {
-      local id="$1"
-      git --git-dir=".git/worktrees/$id" --work-tree=".loom/beads/$id" "''${@:2}"
+    fzf-json() {
+      local file=$1
+      echo "" | fzf --preview 'jq {q} < '"$file"' ' --query "."
     }
 
     github-clone() {
@@ -31,6 +35,22 @@ in
       cd $outdir
     }
 
+    loom-worktree() {
+      local id="$1"
+      git --git-dir=".git/worktrees/$id" --work-tree=".loom/beads/$id" "''${@:2}"
+    }
+
+    nix-shell-packages() {
+      local -a installables
+      local package
+
+      for package in "$@"; do
+        installables+=("nixpkgs#$package")
+      done
+
+      nix shell "''${installables[@]}"
+    }
+
     rg-boundary() {
       command rg --sort-files --follow --max-columns 180 "\\b$*\\b"
     }
@@ -39,20 +59,11 @@ in
       command rg --sort-files --follow --max-columns 180 -oe ".{0,50}$*.{0,50}"
     }
 
-    calc() {
-      bc -l <<< "$@"
-    }
-
     tarball() {
       local file=$1
       tar cf - $file \
         | pv -s $(du -sb $file | awk '{print $1}') \
         | gzip > $file.tar.gz
-    }
-
-    fzf-json() {
-      local file=$1
-      echo "" | fzf --preview 'jq {q} < '"$file"' ' --query "."
     }
   '';
 }

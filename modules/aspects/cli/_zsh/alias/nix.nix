@@ -74,12 +74,9 @@
     nsr = "nix search";
     nsrp = "nix search nixpkgs";
 
-    # nix-shell
-    nsh = "nix-shell";
-    nshc = "nix-shell --command";
-    nshcs = "nix-shell --command \${SHELL}";
-    nshcsp = "nix-shell --command \${SHELL} --packages";
-    nshp = "nix-shell --packages";
+    # nix shell
+    nsh = "nix shell";
+    nshp = "nix-shell-packages";
 
     # nix store
     nst = "nix store";
