@@ -34,6 +34,7 @@
         my.dms
         my.flatpak
         my.font
+        my.librepods
         my.librewolf
         my.niri
         my.sddm

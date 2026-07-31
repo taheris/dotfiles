@@ -35,6 +35,7 @@ in
         kernel = final.linuxPackages_latest.kernel;
       };
       intercept-fn-keys = callPackage ../../packages/intercept-fn-keys { };
+      librepods = callPackage ../../packages/librepods { };
       mouser = callPackage ../../packages/mouser { };
       tws = callPackage ../../packages/tws { };
     };
@@ -54,6 +55,7 @@ in
         inherit (pkgs)
           apple-display-backlight
           intercept-fn-keys
+          librepods
           r8152
           mouser
           tws

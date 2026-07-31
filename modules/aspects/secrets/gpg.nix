@@ -25,8 +25,8 @@
             enable = true;
 
             pinentry = mkIf isLinux {
-              package = pkgs.wayprompt;
-              program = "pinentry-wayprompt";
+              package = pkgs.pinentry-qt;
+              program = "pinentry-qt";
             };
 
             defaultCacheTtl = timeout;
