@@ -20,7 +20,7 @@ modules/
     desktop/  niri dms sddm stylix font librewolf flatpak
     hardware/ nvidia pipewire interception
     input/    karabiner mouser bazecor sox yubikey
-    services/ tailscale ssh podman ollama
+    services/ tailscale ssh podman llama-cpp
     secrets/  secrets gpg
     system/   linux/darwin base + shared home packages
   overlays/   local package overlay + nixpkgs fixes

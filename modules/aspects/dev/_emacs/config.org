@@ -1492,15 +1492,12 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 #+end_src
 
 #+begin_src emacs-lisp
-(defun get-ollama-models ()
-  "Fetch the list of installed Ollama models."
-  (let* ((output (shell-command-to-string "ollama list"))
-         (lines (split-string output "\n" t))
-         models)
-    (dolist (line (cdr lines))
-      (when (string-match "^\\([^[:space:]]+\\)" line)
-        (push (match-string 1 line) models)))
-    (nreverse models)))
+(defun get-llama-cpp-models ()
+  "Fetch the models available from the local llama.cpp server."
+  (split-string
+   (shell-command-to-string
+    "curl --fail --silent http://localhost:8080/v1/models | jq --raw-output '.data[].id'")
+   "\n" t))
 
 (after! gptel
   (let* ((gptel-anthropic (gptel-make-anthropic "Anthropic"
@@ -1524,11 +1521,11 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                           :models '("mistral-large-latest" "open-codestral-mamba")
                           :stream t))
 
-         (gptel-ollama (gptel-make-ollama "Ollama"
-                         :host "localhost:11434"
-                         :models (get-ollama-models)
-                         :stream t
-                         :request-params '(:keep_alive "30m"))))
+         (gptel-llama-cpp (gptel-make-openai "llama.cpp"
+                            :host "localhost:8080"
+                            :protocol "http"
+                            :models (get-llama-cpp-models)
+                            :stream t)))
 
     (setq gptel-backend gptel-cerebras
           gptel-model 'zai-glm-4.7

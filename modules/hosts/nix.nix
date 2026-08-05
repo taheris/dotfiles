@@ -25,7 +25,7 @@
         my.r8152
 
         # services
-        my.ollama
+        my.llama-cpp
         my.podman
         my.ssh
         my.tailscale
