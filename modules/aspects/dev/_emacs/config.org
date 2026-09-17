@@ -1933,6 +1933,9 @@ Disable ZeroMQ in macOS.
 ** Typst
 
 #+begin_src emacs-lisp :tangle packages.el
+;; typst-ts-mode's autoloads define a compilation mode using this macro.
+(require 'compile)
+
 (package! typst-ts-mode
   :recipe (:host codeberg :repo "meow_king/typst-ts-mode")
   :pin "155bb36cff3afe701a0f6b57bd3fe5c9effaa314")
