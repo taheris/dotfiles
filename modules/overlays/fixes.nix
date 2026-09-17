@@ -2,6 +2,9 @@
 
 {
   flake.overlays.fixes = final: prev: {
+    # niri-flake still requires the 0.2 ABI, which was removed from unstable.
+    libdisplay-info_0_2 = final.stable.libdisplay-info_0_2;
+
     typstPackages = prev.typstPackages // {
       moderner-cv = prev.typstPackages.moderner-cv.overrideAttrs (_: {
         version = "0.2.1";

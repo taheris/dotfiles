@@ -9,7 +9,7 @@ in
     let
       callPackage = final.callPackage;
       system = final.stdenv.hostPlatform.system;
-      isLinux = prev.stdenv.isLinux;
+      isLinux = prev.stdenv.hostPlatform.isLinux;
 
     in
     {

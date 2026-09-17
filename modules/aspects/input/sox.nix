@@ -5,7 +5,7 @@
     { lib, pkgs, ... }:
     let
       inherit (lib) mkIf;
-      inherit (pkgs.stdenv) isDarwin;
+      inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
       sox = pkgs.sox.override { enableLame = true; };
 

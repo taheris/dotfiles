@@ -11,7 +11,7 @@
 
     let
       inherit (lib) mkIf mkMerge optionalAttrs;
-      inherit (pkgs.stdenv) isDarwin isLinux;
+      inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
       inherit (pkgs.stdenv.hostPlatform) system;
 
       # Reuse the sandbox's exact toolchain derivation — sccache hashes the

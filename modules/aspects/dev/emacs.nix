@@ -14,10 +14,10 @@
       inherit (lib) concatStringsSep mkIf mkMerge;
       inherit (lib.hm) dag;
       inherit (lib.meta) getExe;
-      inherit (pkgs.stdenv) isCygwin isDarwin isLinux;
+      inherit (pkgs.stdenv.hostPlatform) isCygwin isDarwin isLinux;
 
       package = emacsPackage.emacsWithPackages emacsPackages;
-      emacsPackage = with pkgs; emacsPackagesFor emacs30-pgtk;
+      emacsPackage = with pkgs; emacsPackagesFor emacs-pgtk;
       emacsPackages =
         epkgs: with epkgs; [
           jupyter
@@ -29,7 +29,7 @@
       # newer; it contains the macOS mutex fix from:
       # https://gitlab.freedesktop.org/poppler/poppler/-/merge_requests/2262
       epdfinfoPkgs = pkgs.extend (_: _: { poppler = pkgs.stable.poppler; });
-      epdfinfoEmacsPackage = with epdfinfoPkgs; emacsPackagesFor emacs30-pgtk;
+      epdfinfoEmacsPackage = with epdfinfoPkgs; emacsPackagesFor emacs-pgtk;
       epdfinfoPackage = epdfinfoEmacsPackage.pdf-tools;
       epdfinfo = pkgs.runCommand "epdfinfo" { } ''
         mkdir -p $out/bin

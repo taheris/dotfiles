@@ -118,7 +118,7 @@
 
           programs.niri = {
             enable = true;
-            package = inputs.niri.packages.${host.system}.niri-unstable;
+            package = (inputs.niri.lib.internal.make-package-set pkgs).niri-unstable;
 
             settings = {
               binds = {

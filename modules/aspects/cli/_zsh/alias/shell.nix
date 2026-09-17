@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  inherit (pkgs.stdenv) isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
   taheris = "~/src/github.com/taheris";
 

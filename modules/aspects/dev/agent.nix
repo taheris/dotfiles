@@ -9,7 +9,7 @@
     }:
     let
       inherit (lib) mkIf mkMerge optionals;
-      inherit (pkgs.stdenv) isDarwin isLinux;
+      inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
       inherit (pkgs.stdenv.hostPlatform) isAarch64;
 
       inherit (config.my) hasLinuxBuilder;

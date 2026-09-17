@@ -2,7 +2,7 @@
 
 let
   inherit (lib) optionalAttrs;
-  inherit (pkgs.stdenv) isDarwin isLinux;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
 
   gitPersonal = "~/src/github.com/taheris";
   dotfiles = "${gitPersonal}/dotfiles";

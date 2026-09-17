@@ -19,7 +19,7 @@
         }:
         let
           inherit (lib) mkIf optional;
-          inherit (pkgs.stdenv) isLinux;
+          inherit (pkgs.stdenv.hostPlatform) isLinux;
         in
         {
           imports = optional (home != null || isDarwin) inputs.stylix.homeModules.stylix;
@@ -73,6 +73,7 @@
               emacs.enable = false;
               gtk.flatpakSupport.enable = false;
               librewolf.profileNames = mkIf isLinux [ "default" ];
+              rofi.enable = false;
             };
           };
         };

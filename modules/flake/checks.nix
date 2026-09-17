@@ -48,7 +48,7 @@
         assert lib.assertMsg darwinValid "invalid Darwin sccache service configuration";
         assert lib.assertMsg linuxValid "sccache changed Linux behavior";
         pkgs.runCommand "sccache-configuration-test" { } ''
-          ${lib.optionalString pkgs.stdenv.isDarwin ''
+          ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
             grep -F -- ${lib.escapeShellArg cargoCompilerLine} ${lib.escapeShellArg (toString darwinHome.home.file.cargo.source)}
             grep -F -- ${lib.escapeShellArg cargoWrapperLine} ${lib.escapeShellArg (toString darwinHome.home.file.cargo.source)}
           ''}
