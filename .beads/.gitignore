@@ -7,7 +7,11 @@ bd.sock
 bd.sock.startlock
 sync-state.json
 last-touched
+last_pull
 .exclusive-lock
+proxieddb/
+proxied_server_client_info.json
+*.gate.lock*
 
 # Daemon runtime (lock, log, pid)
 daemon.*
@@ -49,6 +53,7 @@ dolt-server.log
 dolt-server.lock
 dolt-server.port
 dolt-server.activity
+dolt-server-config.yaml
 
 # Corrupt backup directories (created by bd doctor --fix recovery)
 *.corrupt.backup/
