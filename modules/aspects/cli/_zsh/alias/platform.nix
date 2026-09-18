@@ -6,7 +6,6 @@ let
 
   gitPersonal = "~/src/github.com/taheris";
   dotfiles = "${gitPersonal}/dotfiles";
-  sshBuilder = "ssh -i /etc/nix/builder_ed25519 builder@linux-builder";
 
 in
 {
@@ -67,13 +66,6 @@ in
       drs = "darwin-rebuild switch";
       drsf = "darwin-rebuild switch --flake ${dotfiles}";
       drsg = "darwin-rebuild --switch-generation";
-
-      # linux-builder
-      lbp = "launchctl print system/org.nixos.linux-builder";
-      lbst = "sudo launchctl start org.nixos.linux-builder";
-      lbsp = "sudo launchctl stop org.nixos.linux-builder";
-      lbvr = "sudo ${sshBuilder} 'nix-store --verify --repair'";
-      lbvcr = "sudo ${sshBuilder} 'nix-store --verify --check-contents --repair'";
 
       # wrix-builder
       wb = "wrix-builder";

@@ -44,7 +44,7 @@
     {
       home.packages = mkMerge [
         packages
-        (mkIf isLinux builderPackages)
+        (mkIf (isDarwin && hasLinuxBuilder) builderPackages)
         (optionals (isLinux || (isDarwin && hasLinuxBuilder)) linuxBuilderHostPackages)
         (mkIf isDarwin darwinPackages)
         (mkIf isLinux linuxPackages)

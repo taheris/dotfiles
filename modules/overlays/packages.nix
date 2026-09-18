@@ -18,6 +18,7 @@ in
       monacob = callPackage ../../packages/monacob { };
       sqlite-vss = callPackage ../../packages/sqlite-vss { };
 
+      beads = inputs.wrix.packages.${system}.beads;
       loom = inputs.loom.packages.${system}.loom;
       wrix-builder = inputs.wrix.packages.${system}.wrix-builder;
       wrix-notifyd = inputs.wrix.packages.${system}.wrix-notifyd;

@@ -19,7 +19,7 @@
           ...
         }:
         let
-          inherit (lib) mkBefore mkForce optionals;
+          inherit (lib) mkBefore optionals;
 
           dockerCompat =
             pkgs.runCommand "${pkgs.podman.pname}-docker-compat-${pkgs.podman.version}"
@@ -166,13 +166,6 @@
           };
 
           launchd = {
-            daemons = {
-              linux-builder.serviceConfig = {
-                RunAtLoad = mkForce false;
-                KeepAlive = mkForce false;
-              };
-            };
-
             user.agents.omniwm = {
               serviceConfig = {
                 Label = "com.barutsrb.omniwm";
@@ -189,10 +182,24 @@
 
           nix = {
             enable = true;
+            distributedBuilds = host.hasLinuxBuilder;
             gc.automatic = true;
             optimise.automatic = true;
 
             buildMachines = optionals host.hasLinuxBuilder [
+              {
+                hostName = "localhost:2222";
+                maxJobs = 4;
+                protocol = "ssh-ng";
+                speedFactor = 1;
+                sshKey = "/etc/nix/wrix_builder_ed25519";
+                sshUser = "builder";
+                systems = [ "aarch64-linux" ];
+                supportedFeatures = [
+                  "benchmark"
+                  "big-parallel"
+                ];
+              }
               {
                 hostName = "nix";
                 maxJobs = 8;
@@ -210,22 +217,6 @@
                 ];
               }
             ];
-
-            linux-builder = {
-              enable = true;
-              maxJobs = 4;
-              supportedFeatures = [ ];
-
-              config = {
-                virtualisation = {
-                  cores = 6;
-                  darwin-builder = {
-                    diskSize = 40 * 1024;
-                    memorySize = 8 * 1024;
-                  };
-                };
-              };
-            };
 
             settings = {
               download-buffer-size = 500 * 1024 * 1024;
