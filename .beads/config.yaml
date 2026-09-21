@@ -19,8 +19,8 @@ issue-prefix: "df"
 # Disable auto-flush of database to JSONL after mutations
 # no-auto-flush: false
 
-# Disable auto-import from JSONL when it's newer than database
-# no-auto-import: false
+# Dolt is authoritative; checkout hooks must not import legacy JSONL.
+import.auto: false
 
 # Enable JSON output by default
 # json: false
@@ -31,8 +31,9 @@ issue-prefix: "df"
 # Path to database (overridden by BEADS_DB or --db)
 # db: ""
 
-# Auto-start daemon if not running (can also use BEADS_AUTO_START_DAEMON)
-# auto-start-daemon: true
+# Wrix owns the shared Dolt server. Never start a competing host-side server.
+dolt.mode: server
+dolt.auto-start: false
 
 # Debounce interval for auto-flush (can also use BEADS_FLUSH_DEBOUNCE)
 # flush-debounce: "5s"
@@ -43,12 +44,11 @@ issue-prefix: "df"
 # Can also use BEADS_SYNC_BRANCH env var for local override.
 sync-branch: "beads"
 
-# Sync configuration (dolt-native requires dolt sql-server on port 3307)
+# Use bd inside Wrix, which supplies the server connection settings.
+# Pull with bd dolt pull; publish session-close state with wrix beads push.
 sync:
   mode: dolt-native
 
-# Dolt-native sync (v0.56+): use bd dolt pull / bd dolt push
-# Requires dolt sql-server running on port 3307 (auto-started by devShell)
 # The dolt-remote lives in the beads branch worktree:
 #   .git/beads-worktrees/beads/.beads/dolt-remote/
 
@@ -69,8 +69,6 @@ sync:
 # - github.org
 # - github.repo
 
-export:
-  auto: false
-  git-add: false
-
+# Do not regenerate or stage legacy JSONL during normal Dolt workflows.
 export.auto: false
+export.git-add: false
