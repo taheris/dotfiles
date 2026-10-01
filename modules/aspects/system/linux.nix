@@ -4,6 +4,12 @@
   my.linux.homeManager =
     { pkgs, ... }:
     {
+      nix.gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+      };
+
       home.packages = with pkgs; [
         dmidecode
         easyeffects
@@ -76,7 +82,8 @@
       nix = {
         gc = {
           automatic = true;
-          dates = "monthly";
+          dates = "weekly";
+          options = "--delete-older-than 30d";
         };
 
         registry = (mapAttrs (_: flake: { inherit flake; })) ((filterAttrs (_: isType "flake")) inputs);
