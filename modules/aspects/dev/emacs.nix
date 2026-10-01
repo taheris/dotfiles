@@ -25,12 +25,7 @@
           vterm
         ];
 
-      # Remove this override once the pinned nixpkgs provides Poppler 26.07.0 or
-      # newer; it contains the macOS mutex fix from:
-      # https://gitlab.freedesktop.org/poppler/poppler/-/merge_requests/2262
-      epdfinfoPkgs = pkgs.extend (_: _: { poppler = pkgs.stable.poppler; });
-      epdfinfoEmacsPackage = with epdfinfoPkgs; emacsPackagesFor emacs-pgtk;
-      epdfinfoPackage = epdfinfoEmacsPackage.pdf-tools;
+      epdfinfoPackage = emacsPackage.pdf-tools;
       epdfinfo = pkgs.runCommand "epdfinfo" { } ''
         mkdir -p $out/bin
         cp ${epdfinfoPackage}/share/emacs/site-lisp/elpa/pdf-tools-${epdfinfoPackage.version}/epdfinfo \
@@ -132,13 +127,7 @@
         packages =
           let
             basePackages = with pkgs; [
-              (aspellWithDicts (
-                dicts: with dicts; [
-                  en
-                  en-computers
-                  en-science
-                ]
-              ))
+              (aspellWithDicts (dicts: [ dicts.en ]))
               epdfinfo
               hunspell
               hunspellDicts.en-gb-large

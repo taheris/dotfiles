@@ -1,12 +1,11 @@
 # Agent Instructions
 
-## Start
-
-- Run `bd dolt pull`.
+Use the host OS branch: `linux` on Linux, `darwin` on macOS.
 
 ## Beads
 
-Use `bd` only; no markdown TODOs.
+Use Beads only for substantial work. Skip issues for small, self-contained fixes.
+When using Beads, start with `bd dolt pull`. Use `bd` only; no markdown TODOs.
 
 ```bash
 bd ready
@@ -25,7 +24,7 @@ Flow: ready → claim → implement → close. Priorities: 0-4. Types: `task`,
 ```bash
 git add <files>
 git commit -m "..."
-git push origin main
+git push origin HEAD
 wrix beads push
 ```
 

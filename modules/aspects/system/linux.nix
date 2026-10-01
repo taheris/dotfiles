@@ -68,21 +68,18 @@
         ];
       };
 
-      time.timeZone = "Europe/Lisbon";
-
       networking = {
         networkmanager.enable = true;
         firewall.enable = true;
       };
 
       nix = {
-        nixPath = [ "/etc/nix/path" ];
-        registry = (mapAttrs (_: flake: { inherit flake; })) ((filterAttrs (_: isType "flake")) inputs);
-
         gc = {
           automatic = true;
           dates = "monthly";
         };
+
+        registry = (mapAttrs (_: flake: { inherit flake; })) ((filterAttrs (_: isType "flake")) inputs);
 
         settings = {
           auto-optimise-store = true;
@@ -90,6 +87,7 @@
             "flakes"
             "nix-command"
           ];
+          nix-path = [ "/etc/nix/path" ];
           substituters = [
             "https://cache.nixos.org"
             "https://cache.nixos-cuda.org"
@@ -114,5 +112,7 @@
         sleep.settings.Sleep.HibernateDelaySec = 60;
         services.systemd-machine-id-commit.enable = true;
       };
+
+      time.timeZone = "Europe/Lisbon";
     };
 }

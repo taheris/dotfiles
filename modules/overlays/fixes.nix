@@ -2,31 +2,41 @@
 
 {
   flake.overlays.fixes = final: prev: {
-    # niri-flake still requires the 0.2 ABI, which was removed from unstable.
-    libdisplay-info_0_2 = final.stable.libdisplay-info_0_2;
-
-    # Remove once nixpkgs-unstable includes the corrected tree-sitter-cuda hash: https://github.com/NixOS/nixpkgs/pull/564140
-    tree-sitter-grammars = prev.tree-sitter-grammars.overrideScope (
-      _: grammarPrev: {
-        tree-sitter-cuda = grammarPrev.tree-sitter-cuda.overrideAttrs (_: {
-          src = final.fetchFromGitHub {
-            owner = "tree-sitter-grammars";
-            repo = "tree-sitter-cuda";
-            rev = "d58080a327756e4d1d16ec329ba7cb2048f6c6cd";
-            hash = "sha256-s2qrZx5fEu/I6xE2paX/Nlmgvo6T27qqvy1cI8iznAA=";
-          };
-        });
+    # Remove once the CUDA fix reaches nixpkgs-unstable:
+    # https://nixpk.gs/pr-tracker.html?pr=568318
+    cudaPackages = prev.cudaPackages.overrideScope (
+      cudaFinal: _: {
+        buildRedist = cudaFinal.callPackage (final.applyPatches {
+          name = "cuda-buildRedist";
+          src = "${prev.path}/pkgs/development/cuda-modules/buildRedist";
+          patches = [
+            (final.fetchpatch {
+              url = "https://github.com/NixOS/nixpkgs/commit/65fe9eae2b57c9cb7bfbe5f352944d01b5c5be0b.patch";
+              relative = "pkgs/development/cuda-modules/buildRedist";
+              hash = "sha256-A3dxg8B+BKMZ2NxexQK9/bTVtmuGxxkFiH53OfI7IXg=";
+            })
+          ];
+        }) { };
       }
     );
 
-    typstPackages = prev.typstPackages // {
-      moderner-cv = prev.typstPackages.moderner-cv.overrideAttrs (_: {
-        version = "0.2.1";
-        src = final.fetchurl {
-          url = "https://github.com/pavelzw/moderner-cv/archive/refs/tags/v0.2.1.tar.gz";
-          hash = "sha256-w2IqUYwTfseL3g2A/8qjreMWP9nvJdppfx0QfnyvcQY=";
-        };
-      });
-    };
+    # niri-flake still requires the 0.2 ABI, which was removed from unstable.
+    libdisplay-info_0_2 = final.stable.libdisplay-info_0_2;
+
+    # Remove once the mosh GCC 16 fix reaches nixpkgs-unstable:
+    # https://nixpk.gs/pr-tracker.html?pr=568002
+    mosh = final.callPackage "${
+      final.applyPatches {
+        name = "mosh-package";
+        src = "${prev.path}/pkgs/by-name/mo/mosh";
+        patches = [
+          (final.fetchpatch {
+            url = "https://github.com/NixOS/nixpkgs/commit/3f6a1a107f818579c63976147c37050c2b722997.patch";
+            relative = "pkgs/by-name/mo/mosh";
+            hash = "sha256-GzEfUtwz6j329vReYcDMjMFQ0UGEMS0VIFZ807a2KKY=";
+          })
+        ];
+      }
+    }/package.nix" { };
   };
 }
