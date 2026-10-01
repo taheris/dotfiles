@@ -35,3 +35,8 @@ nix fmt
 nix build
 nix flake check
 ```
+
+## Temporary fixes
+
+State when each workaround can be removed. Link an upstream issue, PR, or
+fix tracker when available.
