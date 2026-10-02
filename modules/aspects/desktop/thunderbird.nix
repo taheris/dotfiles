@@ -18,6 +18,10 @@
       programs.thunderbird = {
         enable = true;
 
+        # Nix owns this addon's version; don't let Thunderbird replace its symlink.
+        # https://thunderbird.github.io/policy-templates/#extensionsettings
+        policies.ExtensionSettings."tbkeys@addons.thunderbird.net".updates_disabled = true;
+
         profiles.default = {
           isDefault = true;
           # auto-enable extensions instead of manual UI approval
@@ -26,7 +30,11 @@
       };
 
       # profiles.<name>.extensions option expects a layout the XPI doesn't have.
-      home.file.".thunderbird/default/extensions/tbkeys@addons.thunderbird.net.xpi".source = tbkeysXpi;
+      home.file.".thunderbird/default/extensions/tbkeys@addons.thunderbird.net.xpi" = {
+        source = tbkeysXpi;
+        # Reclaim only this Nix-managed XPI if Thunderbird has replaced it.
+        force = true;
+      };
 
       # tbkeys stores its config in WebExtension storage, which can't be set
       # via user.js. Keep the source of truth here and paste it into the

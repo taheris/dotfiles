@@ -70,10 +70,10 @@
     },
     "crane": {
       "locked": {
-        "lastModified": 1788465171,
-        "narHash": "sha256-Y1/TTVXjYXGF068IThQH9fPSZ0SIE74PABlUxnWTUH0=",
+        "lastModified": 1789760033,
+        "narHash": "sha256-jtT4yxZpR8seYnlCMMWSSPlFN92zO6ICuZ8pJrmi86k=",
         "ref": "master",
-        "rev": "eb35abda9f232cc6610b1d1e3200d15c49b7ac54",
+        "rev": "73b980519cefc727a5f6cc8e5c0947a2f9be6edd",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/ipetkov/crane.git"
@@ -170,10 +170,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1790839574,
-        "narHash": "sha256-jGEqUPvYRWtTb08nFMmFJ0y5IqxVtbWO7K5RQbIC6Dg=",
+        "lastModified": 1790931963,
+        "narHash": "sha256-q8zzPaWmQsEYnM2rXdCMizTVVajLm8XVvus8OGVxLP8=",
         "ref": "master",
-        "rev": "c7074a1de9164021f438baefeb71ee9c963f25e3",
+        "rev": "fed074cc09d280cf36a8f2dc28aa6a4efb38794e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -194,10 +194,10 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1789557184,
-        "narHash": "sha256-tT2QvXeGhjViqqYNKyUZdRex9a1Qcq9jPSTKJbANPEQ=",
+        "lastModified": 1790858958,
+        "narHash": "sha256-am3DS8g9vyeQLKk9QQvmJoZLHGBUB1rtd6zVaGeq2Mc=",
         "ref": "main",
-        "rev": "3887816a415b766267233824830c5e05b25f5dcf",
+        "rev": "025bf5b6b0293c5ee3a3506a7e43ba64bc8bb1b7",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/fenix.git"
@@ -264,10 +264,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1788450739,
-        "narHash": "sha256-glZLQlzIn1fXH6PazR2iUmTo7kzzyYSshrWhLS9TqCU=",
+        "lastModified": 1790898470,
+        "narHash": "sha256-zTwuwezD0w3hpga6a6P8emidzAZFyWqlNeRBlpWOOl8=",
         "ref": "main",
-        "rev": "31729ca8cbdb4fa927b34e5f4353e6a83f39e993",
+        "rev": "024633cd702b10285db5cb19b40ad48d2399ba60",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/hercules-ci/flake-parts.git"
@@ -342,10 +342,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1790819692,
-        "narHash": "sha256-rvubAPbh3QCliic3sAK+CXTrPCGgJstY52OTs/5H1J4=",
+        "lastModified": 1790928438,
+        "narHash": "sha256-ZuJbu8VQe/Qzy7GJdZ3Xv7adRllH1o4O7nqONtkhFbA=",
         "ref": "master",
-        "rev": "c8ecc29e5175452bee4a2aa1ba2383856d795338",
+        "rev": "833540099ef43cbeb28b1e3f3c21901961edb48e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -397,10 +397,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1790091825,
-        "narHash": "sha256-bMOv12nQjDMXy0Q8t7vyOY1QU/qgL5UyL3tTROBdNn0=",
+        "lastModified": 1790936511,
+        "narHash": "sha256-+4KTh5GBK08/JGy/H+clt/MYQhziw30T47ZKQtkJca4=",
         "ref": "main",
-        "rev": "6624d6f135fa3b15a95bfc1caf75b65890d8119e",
+        "rev": "005fdff2b243b1eff461c00e94254b98af7e6fe5",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
@@ -591,11 +591,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1789506595,
-        "narHash": "sha256-YCeFChL7C5GWwnped2TXDjxfwa5MhlqRzq8De2lMat0=",
+        "lastModified": 1790532271,
+        "narHash": "sha256-j8y/AO3AMDF9p+11aIDhnA21JnNj5PjvcejTI43vI8Q=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "fa88768e772857f332bc8383e3a1c5a4212f9a6e",
+        "rev": "03fcb77246f2568adb0e9b2fa60d19c6cc1686f4",
         "type": "github"
       },
       "original": {
@@ -665,10 +665,10 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1790451534,
-        "narHash": "sha256-5J4zQ0mmCsd2SS+sOKdzXrngofQdtube3VoHSENz4zE=",
+        "lastModified": 1790880877,
+        "narHash": "sha256-j42XqSKOAtuqtfHiElyHre2YS/h3Y3q1DjFnKODN1/k=",
         "ref": "master",
-        "rev": "fb28acd59e2ac1984ec84fa496599d6b4bf3e690",
+        "rev": "7c065d1ed05381fceb2403b963c5ad150f32fe39",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/stylix.git"
@@ -819,10 +819,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1790012208,
-        "narHash": "sha256-4ZOJVXy+RgSq8H4xe1CWFBcCYcfOvdFj1QVlSVaYoQM=",
+        "lastModified": 1790895790,
+        "narHash": "sha256-IDqgIQvvq9UijL4hqZY4e6ng1JDEwxhSs0zXR7On1Xc=",
         "ref": "main",
-        "rev": "06de226cc8c2a51d88ab7f26ad9f120c467b3439",
+        "rev": "cffb6436142cbb22e23d9caae1e9d41a043e8056",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"
