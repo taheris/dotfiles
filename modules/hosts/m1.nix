@@ -10,6 +10,7 @@
   };
 
   den.aspects.m1.includes = [
+    my.bettertouchtool
     my.darwin
     my.font
     my.gpg

@@ -1,0 +1,339 @@
+{
+  "BTTPresetName": "Default",
+  "BTTPresetUUID": "51591907-4DCD-4BEE-942D-71DF6BB86C99",
+  "BTTPresetContent": [
+    {
+      "BTTAppBundleIdentifier": "BT.G",
+      "BTTAppName": "Global",
+      "BTTTriggers": [
+        {
+          "BTTTriggerType": 104,
+          "BTTTriggerTypeDescription": "3 Finger Tap",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "492739AB-12D7-4543-A284-A2BF198A205C",
+          "BTTPredefinedActionType": 1,
+          "BTTPredefinedActionName": "Middle Click (At Current Mouse Position)",
+          "BTTOrder": 1
+        },
+        {
+          "BTTTriggerType": 108,
+          "BTTTriggerTypeDescription": "4 Finger Swipe Up",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "1B33DEFE-7305-4E18-A8FB-B9CB759F1F48",
+          "BTTLayoutIndependentActionChar": "j",
+          "BTTShortcutToSend": "58,38",
+          "BTTOrder": 3
+        },
+        {
+          "BTTTriggerType": 107,
+          "BTTTriggerTypeDescription": "4 Finger Swipe Down",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "E2064F4D-8517-4230-B9C1-EA75CB43469C",
+          "BTTLayoutIndependentActionChar": "k",
+          "BTTShortcutToSend": "58,40",
+          "BTTOrder": 4
+        },
+        {
+          "BTTTriggerType": 105,
+          "BTTTriggerTypeDescription": "4 Finger Swipe Left",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "B4EB3833-A5CA-4C32-80C5-8787B5F8EE90",
+          "BTTLayoutIndependentActionChar": "l",
+          "BTTShortcutToSend": "58,37",
+          "BTTOrder": 5
+        },
+        {
+          "BTTTriggerType": 106,
+          "BTTTriggerTypeDescription": "4 Finger Swipe Right",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "6531E189-5563-45CA-9AA6-F7C9F33E31E7",
+          "BTTLayoutIndependentActionChar": "h",
+          "BTTShortcutToSend": "58,4",
+          "BTTOrder": 6
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier": "org.alacritty",
+      "BTTAppName": "Alacritty",
+      "BTTTriggers": [
+        {
+          "BTTTriggerType": 100,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Left",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "059816A0-3884-4E3F-B555-3431E6E73334",
+          "BTTLayoutIndependentActionChar": "n",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "55,45"
+        },
+        {
+          "BTTTriggerType": 101,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Right",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "E54D21BE-F21C-4C69-9C91-D225D6A93962",
+          "BTTLayoutIndependentActionChar": "p",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "55,35",
+          "BTTOrder": 1
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier": "com.apple.Safari",
+      "BTTAppName": "Safari",
+      "BTTAppProcessMatchMode": 2,
+      "BTTAppProcessName": "Safari",
+      "BTTTriggers": [
+        {
+          "BTTTriggerType": 103,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Down",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "A01A64A5-F735-4605-B393-714332EBB042",
+          "BTTPredefinedActionType": 124,
+          "BTTPredefinedActionName": "Trigger Menu Bar Menu-Item",
+          "BTTMenubarPath": "File;Close Tab"
+        },
+        {
+          "BTTTriggerType": 0,
+          "BTTTriggerClass": "BTTTriggerTypeKeyboardShortcut",
+          "BTTUUID": "A79F541E-7F32-48EB-912E-315931DD5DA0",
+          "BTTAdditionalConfiguration": "0",
+          "BTTShortcutScope": 0,
+          "BTTShortcutKeyboardType": 0,
+          "BTTTriggerOnDown": 1,
+          "BTTLayoutIndependentChar": "ESCAPE",
+          "BTTShortcutKeyCode": 53,
+          "BTTShortcutAdvancedModifierKeys": "0",
+          "BTTShortcutModifierKeys": 0,
+          "BTTAutoAdaptToKeyboardLayout": 0,
+          "BTTActionsToExecute": [
+            {
+              "BTTTriggerParentUUID": "A79F541E-7F32-48EB-912E-315931DD5DA0",
+              "BTTIsPureAction": true,
+              "BTTUUID": "ED063176-E04B-4729-A86E-21DB2A252EAB"
+            }
+          ],
+          "BTTTriggerConfig": {
+            "BTTKeyboardPreventRecursiveTriggers": 1
+          }
+        },
+        {
+          "BTTTriggerType": 0,
+          "BTTTriggerClass": "BTTTriggerTypeKeyboardShortcut",
+          "BTTUUID": "51AEE71F-52AC-496E-B09F-9DA5B1B72078",
+          "BTTAdditionalConfiguration": "131074",
+          "BTTShortcutKeyboardType": 0,
+          "BTTTriggerOnDown": 1,
+          "BTTLayoutIndependentChar": "ESCAPE",
+          "BTTShortcutKeyCode": 53,
+          "BTTShortcutAdvancedModifierKeys": "131074",
+          "BTTShortcutModifierKeys": 131072,
+          "BTTOrder": 1,
+          "BTTAutoAdaptToKeyboardLayout": 0,
+          "BTTActionsToExecute": [
+            {
+              "BTTTriggerParentUUID": "51AEE71F-52AC-496E-B09F-9DA5B1B72078",
+              "BTTIsPureAction": true,
+              "BTTUUID": "593293A9-D5DD-4C0A-ADB5-32B7469FD9FF",
+              "BTTPredefinedActionType": 112,
+              "BTTPredefinedActionName": "Enter Fullscreen (If Supported)"
+            }
+          ]
+        },
+        {
+          "BTTTriggerType": 102,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Up",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "DDBFA4EB-B752-4096-B6D0-3DA22EDC4441",
+          "BTTPredefinedActionType": 124,
+          "BTTPredefinedActionName": "Trigger Menu Bar Menu-Item",
+          "BTTMenubarPath": "Edit;Undo Close Tab",
+          "BTTOrder": 1
+        },
+        {
+          "BTTTriggerType": 100,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Left",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "57629EB6-E607-4DC0-A308-878BEE9E12C4",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "59,48",
+          "BTTOrder": 2
+        },
+        {
+          "BTTTriggerType": 101,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Right",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "446A4F37-9050-4D94-B80D-EBEAE802FFF5",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "59,56,48",
+          "BTTOrder": 3
+        },
+        {
+          "BTTTriggerType": 112,
+          "BTTTriggerTypeDescription": "3 Finger Click",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "60EB3DAE-DB73-4F44-B0E7-A90E65B09DBB",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "56,55,42",
+          "BTTOrder": 4
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier": "com.apple.finder",
+      "BTTAppName": "Finder",
+      "BTTTriggers": [
+        {
+          "BTTTriggerType": 103,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Down",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "B1ED0712-78A9-435E-A681-E8E8A05A5014",
+          "BTTPredefinedActionType": 124,
+          "BTTPredefinedActionName": "Trigger Menu Bar Menu-Item",
+          "BTTMenubarPath": "File;Close Tab"
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier": "com.tidal.desktop",
+      "BTTAppName": "TIDAL",
+      "BTTAppProcessMatchMode": 2,
+      "BTTAppProcessName": "TIDAL",
+      "BTTTriggers": [
+        {
+          "BTTTriggerType": 100,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Left",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "6CA1FCED-E944-4DBA-BA60-7E3CE81AE3A3",
+          "BTTLayoutIndependentActionChar": "]",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "55,30"
+        },
+        {
+          "BTTTriggerType": 101,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Right",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "07FAB764-2663-4FF7-9A42-2BE85C2AC54D",
+          "BTTLayoutIndependentActionChar": "[",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "55,33",
+          "BTTOrder": 1
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier": "net.librewolf.librewolf",
+      "BTTAppName": "LibreWolf",
+      "BTTAppProcessMatchMode": 2,
+      "BTTAppProcessName": "LibreWolf",
+      "BTTTriggers": [
+        {
+          "BTTTriggerType": 100,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Left",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "2B73FBCF-2612-44CD-A008-E5A3DFBD2837",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "59,48"
+        },
+        {
+          "BTTTriggerType": 103,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Down",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "68C4336B-DC38-49BE-95E6-71BFB7B03915",
+          "BTTPredefinedActionType": 124,
+          "BTTPredefinedActionName": "Trigger Menu Bar Menu-Item",
+          "BTTMenubarPath": "File;Close Tab"
+        },
+        {
+          "BTTTriggerType": 112,
+          "BTTTriggerTypeDescription": "3 Finger Click",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "84B64E7D-64E8-4E2F-A0EE-E82425EF8259",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "56,55,42"
+        },
+        {
+          "BTTTriggerType": 102,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Up",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "C1C6E06E-595E-4275-9E5A-4A7F46E3FB56",
+          "BTTLayoutIndependentActionChar": "t",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "56,55,17"
+        },
+        {
+          "BTTTriggerType": 101,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Right",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "C4CB0ACD-F6B4-45AC-866B-439B4B471D21",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "59,56,48"
+        }
+      ]
+    },
+    {
+      "BTTAppBundleIdentifier": "org.chromium.Chromium",
+      "BTTAppName": "Chromium",
+      "BTTAppProcessMatchMode": 2,
+      "BTTAppProcessName": "Chromium",
+      "BTTTriggers": [
+        {
+          "BTTTriggerType": 101,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Right",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "12F9DFE4-1755-4903-8AA2-102AF9A82672",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "59,56,48"
+        },
+        {
+          "BTTTriggerType": 100,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Left",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "55F18424-5BB9-40DB-9C1B-97F75110800B",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "59,48"
+        },
+        {
+          "BTTTriggerType": 103,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Down",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "9BBF70CC-16C2-4F6D-892B-75F51CA4614C",
+          "BTTPredefinedActionType": 124,
+          "BTTPredefinedActionName": "Trigger Menu Bar Menu-Item",
+          "BTTMenubarPath": "File;Close Tab"
+        },
+        {
+          "BTTTriggerType": 102,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Up",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "9F43F32D-FCFE-4CF5-9000-086AA2E6AEA9",
+          "BTTPredefinedActionType": 124,
+          "BTTPredefinedActionName": "Trigger Menu Bar Menu-Item",
+          "BTTMenubarPath": "File;Re-open Closed Tab"
+        },
+        {
+          "BTTTriggerType": 112,
+          "BTTTriggerTypeDescription": "3 Finger Click",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "DDDFE660-FD5D-424B-919E-D43CE6BCE505",
+          "BTTAutoAdaptActionToKeyboardLayout": true,
+          "BTTGenericActionConfig": "autoAdapt",
+          "BTTShortcutToSend": "56,55,42"
+        }
+      ]
+    }
+  ]
+}
