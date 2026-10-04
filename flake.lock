@@ -70,10 +70,10 @@
     },
     "crane": {
       "locked": {
-        "lastModified": 1789760033,
-        "narHash": "sha256-jtT4yxZpR8seYnlCMMWSSPlFN92zO6ICuZ8pJrmi86k=",
+        "lastModified": 1790899423,
+        "narHash": "sha256-THGtz65UGJU+sonZidRboyCMk+9DclpMF7pwL4uDV4M=",
         "ref": "master",
-        "rev": "73b980519cefc727a5f6cc8e5c0947a2f9be6edd",
+        "rev": "47b6b27ed9a3a9181415e4367d0c30ab2a0e0250",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/ipetkov/crane.git"
@@ -170,10 +170,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1790931963,
-        "narHash": "sha256-q8zzPaWmQsEYnM2rXdCMizTVVajLm8XVvus8OGVxLP8=",
+        "lastModified": 1791122456,
+        "narHash": "sha256-En//Hn+M/weve7PLnho4AmKNQJ3tkoP0QTjWxZx6Kd0=",
         "ref": "master",
-        "rev": "fed074cc09d280cf36a8f2dc28aa6a4efb38794e",
+        "rev": "64d6d07b1778cb392a4831fa6a4bd45d877b6ce9",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -194,10 +194,10 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1790858958,
-        "narHash": "sha256-am3DS8g9vyeQLKk9QQvmJoZLHGBUB1rtd6zVaGeq2Mc=",
+        "lastModified": 1790943170,
+        "narHash": "sha256-90jjxCm7QgknpZ77ZMqwnKmQndqtRST/ekDtx11IpHs=",
         "ref": "main",
-        "rev": "025bf5b6b0293c5ee3a3506a7e43ba64bc8bb1b7",
+        "rev": "c8ed30fa2e75f7191a0fb8398a4a84dd009d12fc",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/nix-community/fenix.git"
@@ -342,10 +342,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1790928438,
-        "narHash": "sha256-ZuJbu8VQe/Qzy7GJdZ3Xv7adRllH1o4O7nqONtkhFbA=",
+        "lastModified": 1791123389,
+        "narHash": "sha256-4ln1QbTLlSC6Wo0Jus/YZuueOBBNhTSa9KMSnco+j8M=",
         "ref": "master",
-        "rev": "833540099ef43cbeb28b1e3f3c21901961edb48e",
+        "rev": "8cfa9c9514e86f3b88856958b4692e7312b96598",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -397,10 +397,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1790936511,
-        "narHash": "sha256-+4KTh5GBK08/JGy/H+clt/MYQhziw30T47ZKQtkJca4=",
+        "lastModified": 1791051217,
+        "narHash": "sha256-syZvMm6Va2ZiEM3iKVsEGbkBAiukP2rzf0Fn5p5okow=",
         "ref": "main",
-        "rev": "005fdff2b243b1eff461c00e94254b98af7e6fe5",
+        "rev": "d7cbf2fea6659e187a9315cd58d19d49212d7089",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
@@ -410,6 +410,24 @@
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
+      }
+    },
+    "loom-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790978528,
+        "narHash": "sha256-gu31NwCDJm6otb3PCqJT3PX4zBlW5uReyvJPNAqjiaA=",
+        "ref": "main",
+        "rev": "745ddaffe758d2c60cf8293119409f7e43a78500",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/taheris/loom.git"
+      },
+      "original": {
+        "ref": "main",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/taheris/loom.git"
       }
     },
     "niri": {
@@ -491,10 +509,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1790652569,
-        "narHash": "sha256-641r7xrlSOHYoktL9/aArPIYNgZJ9eM5URzSEOtPJDY=",
+        "lastModified": 1790981744,
+        "narHash": "sha256-sm6DclXJudZfP/pcDBQQsRqyMxBcQsuw+7yQr4rBBLE=",
         "ref": "nixpkgs-unstable",
-        "rev": "b6c8664de9b6cc07fe5666a29f91884ba81197c4",
+        "rev": "55ba7f49ef2962b42cbd126522b7df5f95037679",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -591,11 +609,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1790532271,
-        "narHash": "sha256-j8y/AO3AMDF9p+11aIDhnA21JnNj5PjvcejTI43vI8Q=",
+        "lastModified": 1790847093,
+        "narHash": "sha256-rdozQQrPNIUIRX8Wy8A58IUCPARJ3UNQI1JeXaFACgk=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "03fcb77246f2568adb0e9b2fa60d19c6cc1686f4",
+        "rev": "bcf0514497034e1156f3cc2bb72b99cc9634a949",
         "type": "github"
       },
       "original": {
@@ -630,10 +648,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1790498116,
-        "narHash": "sha256-rs9meAYxW3zzrh43yaW7htrqCD+X9+pupDPHN86fumI=",
+        "lastModified": 1791103873,
+        "narHash": "sha256-nFxM+pKoZ8LJAEnUXARyCaOAloWgaW9kZQOSjWzKcTE=",
         "ref": "master",
-        "rev": "5efb5a6f4f5ab192817d28557dd4d650fa14d866",
+        "rev": "dcd241ba97088c22569d1573286e1b9daad340c0",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"
@@ -813,16 +831,17 @@
         "flake-parts": [
           "flake-parts"
         ],
+        "loom-src": "loom-src",
         "nixpkgs": [
           "nixpkgs"
         ],
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1790895790,
-        "narHash": "sha256-IDqgIQvvq9UijL4hqZY4e6ng1JDEwxhSs0zXR7On1Xc=",
+        "lastModified": 1791061121,
+        "narHash": "sha256-Gdbb9pRo6ih9+6gDCW52eRDuxKV9fAeFtw6IIkRUjfU=",
         "ref": "main",
-        "rev": "cffb6436142cbb22e23d9caae1e9d41a043e8056",
+        "rev": "de3401b6f9c9ca0fab35dc50bed37931b458308f",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"
