@@ -1,0 +1,2 @@
+# Dolt manifests are database pointers, not text to merge.
+.beads/dolt-remote/manifest -merge -text
