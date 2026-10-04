@@ -16,6 +16,15 @@
           "BTTOrder": 1
         },
         {
+          "BTTTriggerType": 121,
+          "BTTTriggerTypeDescription": "4 Finger Click",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "F0DDF3FA-44E1-4F4F-8BD9-66E54EA3D44B",
+          "BTTLayoutIndependentActionChar": "o",
+          "BTTShortcutToSend": "58,31",
+          "BTTOrder": 2
+        },
+        {
           "BTTTriggerType": 108,
           "BTTTriggerTypeDescription": "4 Finger Swipe Up",
           "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
