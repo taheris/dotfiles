@@ -51,6 +51,7 @@
     bdsr = "bd search";
     bdsa = "bd stats";
     bdd = "bd doctor";
+    bdpf = "bd preflight";
 
     # beads list
     bdl = "bd list";
@@ -68,15 +69,5 @@
     # beads dependencies
     bdde = "bd dep";
     bddea = "bd dep add";
-
-    # beads sync
-    bdp = "beads-push";
-    bddp = "bd dolt push";
-    bddpl = "bd dolt pull";
-    bdds = "beads-dolt status";
-    bddst = "beads-dolt start";
-    bddsp = "beads-dolt stop";
-    bddrs = "beads-dolt restart";
-    bdpf = "bd preflight";
   };
 }
