@@ -1,0 +1,563 @@
+appRules = []
+monitorBarOverrides = []
+monitorDwindleOverrides = []
+monitorGapOverrides = []
+monitorNiriOverrides = []
+monitorOrientationOverrides = []
+schemaVersion = 4
+
+[appearance]
+mode = "dark"
+tabRailAppIcons = false
+
+[borders]
+enabled = false
+width = 2.0
+
+[borders.color]
+alpha = 1.0
+blue = 1.0
+green = 0.5898008943
+red = 0.0
+
+[borders.glow]
+enabled = false
+opacity = 0.6
+radius = 4.0
+
+[borders.gradient]
+direction = "topLeftToBottomRight"
+enabled = true
+
+[borders.gradient.end]
+alpha = 1.0
+blue = 1.0
+green = 0.5898008943
+red = 0.0
+
+[borders.gradient.start]
+alpha = 1.0
+blue = 1.0
+green = 0.5898008943
+red = 0.0
+
+[clipboard]
+historyEnabled = false
+ignoredTypes = []
+maxItemBytes = 8388608
+maxItems = 200
+maxTotalBytes = 67108864
+
+[dwindle]
+defaultSplitRatio = 1.0
+moveToRootStable = true
+singleWindowFit = "fill"
+smartSplit = false
+splitWidthMultiplier = 1.0
+useGlobalGaps = true
+
+[focus]
+crossesMonitorAtEdge = false
+followsMouse = false
+followsWindowToMonitor = false
+lockModifier = "off"
+moveCrossesMonitorAtEdge = false
+moveMouseToFocusedWindow = false
+raiseOnMouseFocus = false
+
+[gaps]
+fullscreenUsesOuterGaps = false
+size = 0.0
+
+[gaps.outer]
+bottom = 0.0
+left = 0.0
+right = 0.0
+top = 0.0
+
+[general]
+animationsEnabled = true
+defaultLayoutType = "niri"
+hotkeysEnabled = true
+hyperKeyModifiers = "Control+Option+Shift+Command"
+ipcEnabled = false
+preventSleepEnabled = false
+systemHyperTrigger = "None"
+updateChecksEnabled = true
+
+[gestures]
+fingerCount = 4
+invertDirection = false
+mouseMoveModifierKey = "option"
+mouseResizeModifierKey = "option"
+overviewGestureEnabled = false
+overviewGestureFingerCount = 4
+scrollEnabled = false
+scrollModifierKey = "optionShift"
+scrollSensitivity = 5.0
+trackpadScrollStyle = "snap"
+windowGestureSensitivity = 1.0
+windowMoveEnabled = false
+windowMoveFingerCount = 4
+windowResizeEnabled = false
+windowResizeFingerCount = 3
+workspaceSwipeAxis = "vertical"
+workspaceSwipeEnabled = false
+workspaceSwipeFingerCount = 4
+
+[hiddenBar]
+enabled = true
+hiddenBundleIDs = []
+rehideIntervalSeconds = 5.0
+
+[mouseWarp]
+constrainToArrangement = false
+enabled = true
+margin = 1
+
+[niri]
+alwaysCenterSingleColumn = false
+centerFocusedColumn = "onOverflow"
+containerPrimarySpanPresets = [0.4, 0.5, 0.7]
+defaultContainerPrimarySpan = 0.75
+edgeGaps = false
+infiniteLoop = false
+resizeStepPercent = 5
+singleWindowFit = "fill"
+visibleContainerCount = 2
+
+[overview]
+enabled = true
+invertScrollDirection = false
+matchFocusBorder = true
+mouseScrollSpeed = 1.0
+zoom = 1.0
+
+[overview.backdrop]
+alpha = 0.0
+blue = 0.08
+green = 0.05
+red = 0.05
+
+[overview.windowBorders]
+
+[overview.windowBorders.hovered]
+alpha = 1.0
+blue = 1.0
+green = 0.6
+red = 0.4
+
+[overview.windowBorders.normal]
+alpha = 0.5
+blue = 0.35
+green = 0.3
+red = 0.3
+
+[overview.windowBorders.selected]
+alpha = 1.0
+blue = 0.4
+green = 0.8
+red = 0.3
+
+[quakeTerminal]
+animationDuration = 0.2
+autoHide = false
+backgroundBlurRadius = 0
+backgroundEffect = "standardBlur"
+enabled = false
+heightPercent = 50.0
+monitorMode = "focusedWindow"
+opacity = 1.0
+position = "center"
+widthPercent = 50.0
+
+[routing]
+arrangements = []
+mode = "macOS"
+
+[scratchpads]
+
+[scratchpads.labels]
+
+[statusBar]
+showAppNames = false
+showWorkspaceName = false
+useWorkspaceId = false
+
+[workspaceBar]
+backgroundOpacity = 0.1
+deduplicateAppIcons = false
+enabled = true
+excludedBundleIDs = []
+height = 24.0
+hideEmptyWorkspaces = true
+hideInNativeFullscreen = false
+hoverPreviewsEnabled = true
+notchActiveZoneWidth = 180.0
+notchMode = "moveBelowMenuBar"
+position = "overlappingMenuBar"
+reserveLayoutSpace = false
+revealHoldMilliseconds = 200.0
+revealModifier = "option"
+showAccentHighlights = true
+showFloatingWindows = false
+showItemBackgrounds = true
+showLabels = true
+solidBlackBackground = false
+systemStatsButton = false
+transparentBackground = false
+windowLevel = "popup"
+xOffset = 0.0
+yOffset = 0.0
+
+[workspaceBar.iconOverrides]
+
+[[hotkeys]]
+binding = "Option+1"
+id = "switchWorkspace.0"
+
+[[hotkeys]]
+binding = "Option+Shift+1"
+id = "moveToWorkspace.0"
+
+[[hotkeys]]
+binding = "Option+2"
+id = "switchWorkspace.1"
+
+[[hotkeys]]
+binding = "Option+Shift+2"
+id = "moveToWorkspace.1"
+
+[[hotkeys]]
+binding = "Option+3"
+id = "switchWorkspace.2"
+
+[[hotkeys]]
+binding = "Option+Shift+3"
+id = "moveToWorkspace.2"
+
+[[hotkeys]]
+binding = "Option+4"
+id = "switchWorkspace.3"
+
+[[hotkeys]]
+binding = "Option+Shift+4"
+id = "moveToWorkspace.3"
+
+[[hotkeys]]
+binding = "Option+5"
+id = "switchWorkspace.4"
+
+[[hotkeys]]
+binding = "Option+Shift+5"
+id = "moveToWorkspace.4"
+
+[[hotkeys]]
+binding = "Option+6"
+id = "switchWorkspace.5"
+
+[[hotkeys]]
+binding = "Option+Shift+6"
+id = "moveToWorkspace.5"
+
+[[hotkeys]]
+binding = "Option+7"
+id = "switchWorkspace.6"
+
+[[hotkeys]]
+binding = "Option+Shift+7"
+id = "moveToWorkspace.6"
+
+[[hotkeys]]
+binding = "Option+8"
+id = "switchWorkspace.7"
+
+[[hotkeys]]
+binding = "Option+Shift+8"
+id = "moveToWorkspace.7"
+
+[[hotkeys]]
+binding = "Option+9"
+id = "switchWorkspace.8"
+
+[[hotkeys]]
+binding = "Option+Shift+9"
+id = "moveToWorkspace.8"
+
+[[hotkeys]]
+binding = "Option+H"
+id = "focus.left"
+
+[[hotkeys]]
+binding = "Option+L"
+id = "focus.right"
+
+[[hotkeys]]
+binding = "Option+Tab"
+id = "focusPrevious"
+
+[[hotkeys]]
+binding = "Option+J"
+id = "focusWindowOrWorkspaceDown"
+
+[[hotkeys]]
+binding = "Option+K"
+id = "focusWindowOrWorkspaceUp"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+K"
+id = "moveColumnToWorkspaceUp"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+J"
+id = "moveColumnToWorkspaceDown"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+1"
+id = "moveColumnToWorkspace.0"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+2"
+id = "moveColumnToWorkspace.1"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+3"
+id = "moveColumnToWorkspace.2"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+4"
+id = "moveColumnToWorkspace.3"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+5"
+id = "moveColumnToWorkspace.4"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+6"
+id = "moveColumnToWorkspace.5"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+7"
+id = "moveColumnToWorkspace.6"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+8"
+id = "moveColumnToWorkspace.7"
+
+[[hotkeys]]
+binding = "Control+Option+Shift+9"
+id = "moveColumnToWorkspace.8"
+
+[[hotkeys]]
+binding = "Option+Shift+H"
+id = "move.left"
+
+[[hotkeys]]
+binding = "Option+Shift+L"
+id = "move.right"
+
+[[hotkeys]]
+binding = "Option+Shift+J"
+id = "moveWindowDownOrToWorkspaceDown"
+
+[[hotkeys]]
+binding = "Option+Shift+K"
+id = "moveWindowUpOrToWorkspaceUp"
+
+[[hotkeys]]
+binding = "Option+C"
+id = "consumeWindowIntoColumn"
+
+[[hotkeys]]
+binding = "Option+X"
+id = "expelWindowFromColumn"
+
+[[hotkeys]]
+binding = "Option+Shift+F"
+id = "toggleNativeFullscreen"
+
+[[hotkeys]]
+binding = "Option+←"
+id = "focusColumnFirst"
+
+[[hotkeys]]
+binding = "Option+→"
+id = "focusColumnLast"
+
+[[hotkeys]]
+binding = "Control+Option+1"
+id = "focusColumn.0"
+
+[[hotkeys]]
+binding = "Control+Option+2"
+id = "focusColumn.1"
+
+[[hotkeys]]
+binding = "Control+Option+3"
+id = "focusColumn.2"
+
+[[hotkeys]]
+binding = "Control+Option+4"
+id = "focusColumn.3"
+
+[[hotkeys]]
+binding = "Control+Option+5"
+id = "focusColumn.4"
+
+[[hotkeys]]
+binding = "Control+Option+6"
+id = "focusColumn.5"
+
+[[hotkeys]]
+binding = "Control+Option+7"
+id = "focusColumn.6"
+
+[[hotkeys]]
+binding = "Control+Option+8"
+id = "focusColumn.7"
+
+[[hotkeys]]
+binding = "Control+Option+9"
+id = "focusColumn.8"
+
+[[hotkeys]]
+binding = "Option+R"
+id = "cycleSizeForward"
+
+[[hotkeys]]
+binding = "Option+Shift+R"
+id = "cycleSizeBackward"
+
+[[hotkeys]]
+binding = "Option+F"
+id = "toggleContainerFullPrimarySpan"
+
+[[hotkeys]]
+binding = "Control+Option+R"
+id = "resetWindowSecondarySpan"
+
+[[hotkeys]]
+binding = "Option+Minus"
+id = "setContainerPrimarySpan.decrease10Percent"
+
+[[hotkeys]]
+binding = "Option+Equal"
+id = "setContainerPrimarySpan.increase10Percent"
+
+[[hotkeys]]
+binding = "Option+Shift+Minus"
+id = "setWindowSecondarySpan.decrease10Percent"
+
+[[hotkeys]]
+binding = "Option+Shift+Equal"
+id = "setWindowSecondarySpan.increase10Percent"
+
+[[hotkeys]]
+binding = "Option+B"
+id = "balanceSizes"
+
+[[hotkeys]]
+binding = "Option+Space"
+id = "openCommandPalette"
+
+[[hotkeys]]
+binding = "Option+A"
+id = "raiseAllFloatingWindows"
+
+[[hotkeys]]
+binding = "Option+W"
+id = "rescueOffscreenWindows"
+
+[[hotkeys]]
+binding = "Option+S"
+id = "toggleFocusedWindowFloating"
+
+[[hotkeys]]
+binding = "Option+Q"
+id = "closeFocusedWindow"
+
+[[hotkeys]]
+binding = "Option+M"
+id = "openMenuAnywhere"
+
+[[hotkeys]]
+binding = "Option+Grave"
+id = "toggleQuakeTerminal"
+
+[[hotkeys]]
+binding = "Option+O"
+id = "toggleOverview"
+
+[[workspaces]]
+id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
+layoutType = "niri"
+name = "1"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "454CECD4-5E9D-4ED1-95D7-979D48817F5F"
+layoutType = "niri"
+name = "2"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "BEB842B5-E894-4791-9FD1-397C3CDD3538"
+layoutType = "niri"
+name = "3"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "248AA883-2261-4D45-943C-79C0E46A232B"
+layoutType = "niri"
+name = "4"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "8B8C45D6-CE9E-41D9-BD50-BE4989D5E3DE"
+layoutType = "niri"
+name = "5"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+displayName = "❤️"
+id = "5953F2BF-A378-4266-91B2-287174C4FA4D"
+layoutType = "niri"
+name = "6"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+displayName = "🚀"
+id = "A7D5E104-6985-4516-8ED5-07F144F2A33D"
+layoutType = "niri"
+name = "7"
+
+[workspaces.monitorAssignment]
+type = "secondary"
+
+[[workspaces]]
+id = "0E18F6B0-345A-4078-8B21-33641F07A861"
+layoutType = "niri"
+name = "8"
+
+[workspaces.monitorAssignment]
+type = "main"
+
+[[workspaces]]
+id = "8D4D711C-2B2F-4FEC-86BF-FA952037738A"
+layoutType = "niri"
+name = "9"
+
+[workspaces.monitorAssignment]
+type = "main"

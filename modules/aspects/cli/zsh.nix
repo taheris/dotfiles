@@ -75,6 +75,9 @@
           # settings
           unset zle_bracketed_paste
 
+          # Insert a newline for the CSI-u Shift-Enter sequence.
+          bindkey -s '^[[13;2u' '^[^J'
+
           # env secrets
           export CEREBRAS_API_KEY="$(cat ${config.sops.secrets."llm/cerebras".path})"
           export CLAUDE_CODE_OAUTH_TOKEN="$(cat ${config.sops.secrets."llm/anthropic/oauth".path})"

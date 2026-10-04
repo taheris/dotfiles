@@ -14,6 +14,7 @@
     my.font
     my.gpg
     my.karabiner
+    my.omniwm
     my.sox
     my.stylix
   ];

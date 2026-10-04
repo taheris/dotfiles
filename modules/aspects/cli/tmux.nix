@@ -31,6 +31,9 @@
           set -g renumber-windows on
           set -g focus-events on
           set -as terminal-features '*:focus'
+          # Preserve modified keys such as Shift-Enter for applications and zsh.
+          set -s extended-keys always
+          set -s extended-keys-format csi-u
 
           # Track the focused pane's cwd
           set-hook -g client-focus-in "run-shell -b '${saveLastDir} \"#{pane_current_path}\"'"
@@ -39,6 +42,7 @@
           # Auto-equalize panes when one closes
           set-hook -g pane-exited "select-layout -E"
 
+          # Meta is Alt on Linux; Alacritty maps Command to Meta on Darwin.
           # Splits (vim mnemonics, inherit cwd)
           bind -n M-v split-window -h -c "#{pane_current_path}"
           bind -n M-s split-window -c "#{pane_current_path}"

@@ -1,6 +1,7 @@
 # Agent Instructions
 
-Use the host OS branch: `linux` on Linux, `darwin` on macOS.
+Use the host OS branch, not the container OS: `linux` on Linux, `darwin` on
+macOS.
 
 ## Beads
 

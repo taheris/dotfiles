@@ -4,6 +4,62 @@
       "complex_modifications": {
         "rules": [
           {
+            "description": "Option-E/T: new Emacs frame or Alacritty window",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "e",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/bin/zsh -lc 'emacsclient -n -c -a emacs </dev/null >>\"${TMPDIR:-/tmp}/karabiner-emacs.log\" 2>&1 &!'",
+                    "repeat": false
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "t",
+                  "modifiers": {
+                    "mandatory": ["option"]
+                  }
+                },
+                "to": [
+                  {
+                    "shell_command": "/bin/zsh -lc 'dir=\"${TMPDIR:-/tmp}/last-dir\"; cwd=\"$HOME\"; if [[ -f \"$dir\" ]]; then cwd=\"$(<\"$dir\")\"; fi; [[ -d \"$cwd\" ]] || cwd=\"$HOME\"; alacritty --working-directory \"$cwd\" -e tmux </dev/null >>\"${TMPDIR:-/tmp}/karabiner-alacritty.log\" 2>&1 &!'",
+                    "repeat": false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Command-H for tmux in Alacritty",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "h",
+                  "modifiers": {
+                    "mandatory": ["command"]
+                  }
+                },
+                "to": [{ "key_code": "f17" }],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": ["^org\\.alacritty$"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "description": "CapsLock to control or escape",
             "manipulators": [
               {

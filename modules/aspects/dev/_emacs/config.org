@@ -571,10 +571,11 @@ Stop Doom from spawning a fresh =#N= workspace for every new client frame.
 
 Open new frames in the last workspace.
 
-#+begin_src emacs-lisp :tangle (if IS-LINUX "yes" "no")
+#+begin_src emacs-lisp
 (defvar my/ws-state-file
   (expand-file-name "emacs-active-workspace"
-                    (or (getenv "XDG_RUNTIME_DIR") temporary-file-directory)))
+                    (or (getenv (if (eq system-type 'darwin) "TMPDIR" "XDG_RUNTIME_DIR"))
+                        temporary-file-directory)))
 
 (defun my/save-active-workspace (&rest _)
   (run-at-time 0 nil
