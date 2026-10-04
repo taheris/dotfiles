@@ -7,9 +7,10 @@ in
   flake.overlays.packages =
     final: prev:
     let
+      inherit (prev.stdenv.hostPlatform) isDarwin isLinux;
+
       callPackage = final.callPackage;
       system = final.stdenv.hostPlatform.system;
-      isLinux = prev.stdenv.hostPlatform.isLinux;
 
     in
     {
@@ -27,6 +28,9 @@ in
         inherit system;
         config.allowUnfree = true;
       };
+    }
+    // optionalAttrs isDarwin {
+      cookie7 = callPackage ../../packages/cookie7 { };
     }
     // optionalAttrs isLinux {
       apple-display-backlight = callPackage ../../packages/apple-display-backlight {
@@ -51,6 +55,9 @@ in
           monacob
           sqlite-vss
           ;
+      }
+      // optionalAttrs (hasSuffix "darwin" system) {
+        inherit (pkgs) cookie7;
       }
       // optionalAttrs (hasSuffix "linux" system) {
         inherit (pkgs)

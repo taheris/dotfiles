@@ -6,7 +6,14 @@
 
 let
   inherit (builtins) readDir;
-  inherit (lib) escapeShellArg escapeURL filterAttrs hasSuffix mapAttrs' nameValuePair;
+  inherit (lib)
+    escapeShellArg
+    escapeURL
+    filterAttrs
+    hasSuffix
+    mapAttrs'
+    nameValuePair
+    ;
 
   isPreset = name: type: type == "regular" && hasSuffix ".bttpreset" name;
   presets = filterAttrs isPreset (readDir presetsDir);

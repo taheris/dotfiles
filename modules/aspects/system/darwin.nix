@@ -4,12 +4,16 @@
   my.darwin =
     { host, ... }:
     {
-      homeManager = {
-        targets.darwin = {
-          copyApps.enable = false;
-          linkApps.enable = true;
+      homeManager =
+        { pkgs, ... }:
+        {
+          home.packages = with pkgs; [ cookie7 ];
+
+          targets.darwin = {
+            copyApps.enable = false;
+            linkApps.enable = true;
+          };
         };
-      };
 
       darwin =
         {
@@ -118,7 +122,6 @@
               "bazecor"
               "bettertouchtool"
               "calibre"
-              "cookie"
               "discord"
               "gpg-suite"
               "ibkr"
@@ -254,6 +257,11 @@
             '';
 
             defaults = {
+              CustomUserPreferences."com.sweetpproductions.cookie.app" = {
+                SUEnableAutomaticChecks = false;
+                SUAutomaticallyUpdate = false;
+              };
+
               NSGlobalDomain = {
                 AppleICUForce24HourTime = true;
                 AppleMeasurementUnits = "Centimeters";

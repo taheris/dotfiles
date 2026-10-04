@@ -18,8 +18,8 @@ let
   };
 
   # Send the Meta sequences used by tmux.nix's root and passthrough tables.
-  # Keep Command-Space for Spotlight and Command-Grave for macOS window cycling.
-  # Option-Space and Option-Grave retain their tmux actions.
+  # Karabiner routes Command-Space to tmux only while Alacritty is focused.
+  # Keep Command-Grave for macOS window cycling; Option-Grave retains its tmux action.
   commandBindings =
     # Keep Command-V for paste; Option-V still splits panes.
     map (key: metaBinding "Command" (toUpper key) key) (
@@ -32,6 +32,7 @@ let
       # Remove this and the Karabiner Command-H rule when native Hide is overridable.
       # https://github.com/alacritty/alacritty/issues/7689
       (metaBinding "None" "F17" "h") # Command+H
+      (metaBinding "None" "F20" " ") # Command+Space
     ];
 
 in

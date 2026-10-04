@@ -3,6 +3,8 @@
 Use the host OS branch, not the container OS: `linux` on Linux, `darwin` on
 macOS.
 
+Update `README.md` only when necessary.
+
 ## Beads
 
 Use Beads only for substantial work. Skip issues for small, self-contained fixes.
