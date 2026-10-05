@@ -10,7 +10,7 @@ in
       inherit (prev.stdenv.hostPlatform) isDarwin isLinux;
 
       callPackage = final.callPackage;
-      system = final.stdenv.hostPlatform.system;
+      system = prev.stdenv.hostPlatform.system;
 
     in
     {
@@ -43,6 +43,9 @@ in
       librepods = callPackage ../../packages/librepods { };
       mouser = callPackage ../../packages/mouser { };
       tws = callPackage ../../packages/tws { };
+    }
+    // optionalAttrs (system == "x86_64-linux") {
+      strata = callPackage ../../packages/strata { };
     };
 
   perSystem =
@@ -68,6 +71,13 @@ in
           mouser
           tws
           ;
+      }
+      // optionalAttrs (system == "x86_64-linux") {
+        inherit (pkgs) strata;
+      };
+
+      checks = optionalAttrs (system == "x86_64-linux") {
+        strata-smoke = pkgs.strata.tests.smoke;
       };
     };
 
