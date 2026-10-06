@@ -6,11 +6,21 @@ fail() {
   exit 1
 }
 
+# Model management is explicit: normal starts never download or repack.
+if [[ ${1:-} == models ]]; then
+  shift
+  exec "$STRATA_MODELS" "$@"
+fi
+
 show_help() {
   cat <<'HELP'
-Start an already-prepared Orca model. No downloads or repacking.
+Start an already-prepared model. No downloads or repacking on start.
 
 Usage: strata-run [options] [strata-server options]
+       strata-run models {list,info,download,prepare,run} [options]
+
+Use `strata-run models list` for supported variants and local status.
+Without a model/config selection, start the existing Orca model.
 
   --config PATH                 Use a different saved run config
   --context N                   Set the full context limit

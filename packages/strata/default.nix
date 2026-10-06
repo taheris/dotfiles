@@ -32,7 +32,7 @@ let
     rev = "3cf03257f219afbe7334045ff7c6a06ac68c627d";
     hash = "sha256-SRGoXa+4ACBCB3eaG9XFYhMN1i0FyPEy9Rrer+dFGYI=";
   };
-  # Runtime for upstream's API server and model tools, not a custom installer.
+  # Runtime for upstream's API server/packers and our thin model workflow.
   python = python3.withPackages (
     ps: with ps; [
       numpy
@@ -41,6 +41,7 @@ let
       pyyaml
       tqdm
       requests
+      huggingface-hub
       pillow
       psutil
       # Optional upstream, but needed for actual JSON Schema validation.
@@ -129,6 +130,16 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     cp -r serve tools ref data $out/lib/strata/
     cp LICENSE $out/lib/strata/
     cp ${./config.jq} $out/lib/strata/config.jq
+    cp ${./models.py} $out/lib/strata/models.py
+    # Reuse upstream's model choices, revisions, shard names and Unsloth checksums.
+    # Importing setup.py's definitions does not run its installer.
+    ${python}/bin/python3 - <<'PY' > $out/lib/strata/models.json
+    import json
+    import runpy
+    import sys
+    workflow = runpy.run_path("${./models.py}")
+    json.dump(workflow["catalog"](runpy.run_path("setup.py")), sys.stdout, indent=2)
+    PY
     ln -s ${engine}/bin/strata $out/lib/strata/engine/strata
     ln -s ${engine}/bin/strata-device $out/lib/strata/engine/strata-device
     cp ${engine}/share/strata/BUILD.json $out/lib/strata/engine/
@@ -137,6 +148,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       --add-flags ${./run.sh} \
       --set STRATA_SOURCE "$out/lib/strata" \
       --set STRATA_SERVER "$out/bin/strata-server" \
+      --set STRATA_MODELS "$out/bin/strata-models" \
       --prefix PATH : ${
         lib.makeBinPath [
           coreutils
@@ -144,6 +156,13 @@ stdenvNoCC.mkDerivation (finalAttrs: {
         ]
       }
     ln -s strata-run $out/bin/strata-orca
+    makeWrapper ${python}/bin/python3 $out/bin/strata-models \
+      --add-flags "$out/lib/strata/models.py" \
+      --set STRATA_SOURCE "$out/lib/strata" \
+      --set PYTHONDONTWRITEBYTECODE 1 \
+      --set-default SSL_CERT_FILE ${cacert}/etc/ssl/certs/ca-bundle.crt \
+      --set-default SSL_CERT_DIR ${cacert}/etc/ssl/certs \
+      --prefix PATH : "$out/bin"
     # Python entry points below run unmodified upstream code.
     makeWrapper ${python}/bin/python3 $out/bin/strata-server \
       --add-flags "$out/lib/strata/serve/server.py" \
@@ -207,11 +226,18 @@ stdenvNoCC.mkDerivation (finalAttrs: {
           mkdir -p "$HOME"
           strata-run --help > /dev/null
           strata-orca --help > /dev/null
+          strata-run models --help > /dev/null
+          strata-run models list > /dev/null
+          strata-models info unsloth-ud-iq4_xs > /dev/null
+          strata-run models download unsloth-ud-iq4_xs --dry-run > /dev/null
           if strata-run --dry-run > /dev/null 2>&1; then exit 1; fi
           test ! -e "$HOME/.local/share/strata"
           shellcheck ${./run.sh} ${./test-run.sh}
           EXPECTED_SOURCE=${finalAttrs.finalPackage}/lib/strata RUN_SCRIPT=${./run.sh} \
             bash ${./test-run.sh}
+          STRATA_SOURCE=${finalAttrs.finalPackage}/lib/strata \
+            PYTHONPATH=${finalAttrs.finalPackage}/lib/strata \
+            ${python}/bin/python3 ${./test-models.py}
           strata-server --help > /dev/null
           strata-pack --help > /dev/null
           strata-iq-pack --help > /dev/null
