@@ -147,9 +147,12 @@
 
                 # Window action
                 "Mod+O".action.toggle-overview = [ ];
-                "Mod+S".action.toggle-window-floating = [ ];
-                "Mod+C".action.consume-window-into-column = [ ];
+                "Mod+T".action.toggle-window-floating = [ ];
+                "Mod+S".action.consume-window-into-column = [ ];
                 "Mod+X".action.expel-window-from-column = [ ];
+                "Mod+W".action.center-window = [ ];
+                "Mod+B".action.center-column = [ ];
+                "Mod+Alt+B".action.center-visible-columns = [ ];
                 "Mod+Q" = {
                   action.close-window = [ ];
                   repeat = false;
@@ -160,8 +163,6 @@
                 "Mod+Alt+F".action.fullscreen-window = [ ];
                 "Mod+R".action.switch-preset-column-width = [ ];
                 "Mod+Shift+R".action.switch-preset-column-width-back = [ ];
-                "Mod+V".action.center-column = [ ];
-                "Mod+Alt+V".action.center-visible-columns = [ ];
                 "Mod+Minus".action.set-column-width = "-5%";
                 "Mod+Equal".action.set-column-width = "+5%";
 

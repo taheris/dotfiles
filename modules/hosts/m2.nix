@@ -15,6 +15,7 @@
     my.font
     my.gpg
     my.karabiner
+    my.leader-key
     my.omniwm
     my.sox
     my.stylix

@@ -126,10 +126,10 @@
     },
     "den": {
       "locked": {
-        "lastModified": 1791228708,
-        "narHash": "sha256-Go2EElCGFAhy4KMPDpV+T2CAKQujlMpVieJ1cSSaW0c=",
+        "lastModified": 1791846277,
+        "narHash": "sha256-a7E9QoEt5WcYoUGQyRWHm8QVUrKxTcSyNND3LLCs/KI=",
         "ref": "refs/heads/main",
-        "rev": "65c9fd40e958109f5a352c1a93ae8254bf1ed29f",
+        "rev": "dd59a4c7aa7e2d6d2743814da6bf68ead985e793",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/denful/den.git"
@@ -244,10 +244,10 @@
     },
     "flake-file": {
       "locked": {
-        "lastModified": 1791696462,
-        "narHash": "sha256-Iu862mflVRLHE3ivJD1ah5j/pprVyxnXMMUPMR9C1Wg=",
+        "lastModified": 1791840448,
+        "narHash": "sha256-u10FOsDRA1GMRcn1+hYf2eD1K+LP/F9/+AeErkKraPg=",
         "ref": "refs/heads/main",
-        "rev": "4ccd0b92aee0943b94324ec4c39949df1769f123",
+        "rev": "d3600508b0b031221459f7358ab88c438a81ac83",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/vic/flake-file.git"
@@ -839,10 +839,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1791718077,
-        "narHash": "sha256-kBXUOZu2NXGOsIIf4Z7qVI+U0MKern06fOHqg+TZaGk=",
+        "lastModified": 1791847465,
+        "narHash": "sha256-SGOwmoJMEVXBaC0PwUOv/Ons8d8cfZt4rG+GuMSdbDQ=",
         "ref": "main",
-        "rev": "d6c7699e84f61889bc643f729ba8106085506514",
+        "rev": "3bd8ea266e75bfe93836f5f4b573a98f66c2ef71",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"

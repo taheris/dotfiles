@@ -59,7 +59,7 @@ useGlobalGaps = true
 [focus]
 crossesMonitorAtEdge = false
 followsMouse = false
-followsWindowToMonitor = false
+followsWindowToMonitor = true
 lockModifier = "off"
 moveCrossesMonitorAtEdge = false
 moveMouseToFocusedWindow = false
@@ -212,6 +212,7 @@ yOffset = 0.0
 
 [workspaceBar.iconOverrides]
 
+# Reserve Option(+Shift)+C/E/I/N/U/Grave for Portuguese characters.
 [[hotkeys]]
 binding = "Option+1"
 id = "switchWorkspace.0"
@@ -350,11 +351,11 @@ id = "moveColumnToWorkspace.8"
 
 [[hotkeys]]
 binding = "Option+Shift+H"
-id = "move.left"
+id = "moveColumn.left"
 
 [[hotkeys]]
 binding = "Option+Shift+L"
-id = "move.right"
+id = "moveColumn.right"
 
 [[hotkeys]]
 binding = "Option+Shift+J"
@@ -365,7 +366,7 @@ binding = "Option+Shift+K"
 id = "moveWindowUpOrToWorkspaceUp"
 
 [[hotkeys]]
-binding = "Option+C"
+binding = "Option+S"
 id = "consumeWindowIntoColumn"
 
 [[hotkeys]]
@@ -421,6 +422,10 @@ binding = "Control+Option+9"
 id = "focusColumn.8"
 
 [[hotkeys]]
+binding = "Option+F"
+id = "toggleContainerFullPrimarySpan"
+
+[[hotkeys]]
 binding = "Option+R"
 id = "cycleSizeForward"
 
@@ -429,12 +434,20 @@ binding = "Option+Shift+R"
 id = "cycleSizeBackward"
 
 [[hotkeys]]
-binding = "Option+F"
-id = "toggleContainerFullPrimarySpan"
-
-[[hotkeys]]
 binding = "Control+Option+R"
 id = "resetWindowSecondarySpan"
+
+[[hotkeys]]
+binding = "Option+B"
+id = "centerColumn"
+
+[[hotkeys]]
+binding = "Control+Option+B"
+id = "centerVisibleColumns"
+
+[[hotkeys]]
+binding = "Option+Shift+B"
+id = "balanceSizes"
 
 [[hotkeys]]
 binding = "Option+Minus"
@@ -453,15 +466,12 @@ binding = "Option+Shift+Equal"
 id = "setWindowSecondarySpan.increase10Percent"
 
 [[hotkeys]]
-binding = "Option+B"
-id = "balanceSizes"
-
-[[hotkeys]]
 binding = "Option+Space"
 id = "openCommandPalette"
 
 [[hotkeys]]
-binding = "Option+A"
+# Z-order: raise floating windows above tiled windows.
+binding = "Option+Z"
 id = "raiseAllFloatingWindows"
 
 [[hotkeys]]
@@ -469,7 +479,7 @@ binding = "Option+W"
 id = "rescueOffscreenWindows"
 
 [[hotkeys]]
-binding = "Option+S"
+binding = "Option+T"
 id = "toggleFocusedWindowFloating"
 
 [[hotkeys]]
@@ -479,10 +489,6 @@ id = "closeFocusedWindow"
 [[hotkeys]]
 binding = "Option+M"
 id = "openMenuAnywhere"
-
-[[hotkeys]]
-binding = "Option+Grave"
-id = "toggleQuakeTerminal"
 
 [[hotkeys]]
 binding = "Option+O"

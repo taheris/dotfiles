@@ -19,9 +19,9 @@ let
 
   # Send the Meta sequences used by tmux.nix's root and passthrough tables.
   # Karabiner routes Command-Space to tmux only while Alacritty is focused.
-  # Keep Command-Grave for macOS window cycling; Option-Grave retains its tmux action.
+  # Keep Command-Grave for macOS window cycling.
   commandBindings =
-    # Keep Command-V for paste; Option-V still splits panes.
+    # Keep Command-V for paste instead of sending Meta-V.
     map (key: metaBinding "Command" (toUpper key) key) (
       stringToCharacters "bcdfhjklnopqrswxz123456789=,./"
     )
