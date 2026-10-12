@@ -5,7 +5,12 @@
     { host, ... }:
     {
       homeManager =
-        { lib, pkgs, ... }:
+        {
+          config,
+          lib,
+          pkgs,
+          ...
+        }:
         let
           # Spawn terminal in last directory
           spawnTerminal = pkgs.writeShellScript "spawn-terminal" ''
@@ -160,10 +165,12 @@
                 "Mod+Minus".action.set-column-width = "-5%";
                 "Mod+Equal".action.set-column-width = "+5%";
 
-                # Spawn apps
-                "Mod+E" = spawn "emacsclient -c -a emacs";
-                "Mod+T".action.spawn = [ "${spawnTerminal}" ];
-                "Mod+W" = spawn "librewolf";
+                # Application menu
+                "Mod+A" = {
+                  action.spawn = [ (lib.getExe config.programs.wlr-which-key.package) ];
+                  hotkey-overlay.title = "Applications";
+                  repeat = false;
+                };
 
                 # DMS
                 "Mod+Space" = dms "spotlight toggle";
@@ -254,6 +261,30 @@
                     { app-id = "^steam"; }
                   ];
                   open-floating = true;
+                }
+              ];
+            };
+          };
+
+          programs.wlr-which-key = {
+            enable = true;
+            settings = {
+              anchor = "center";
+              menu = [
+                {
+                  key = "e";
+                  desc = "Emacs";
+                  cmd = "niri msg action spawn -- emacsclient -c -a emacs";
+                }
+                {
+                  key = "t";
+                  desc = "Terminal";
+                  cmd = "niri msg action spawn -- ${spawnTerminal}";
+                }
+                {
+                  key = "w";
+                  desc = "Web";
+                  cmd = "niri msg action spawn -- librewolf";
                 }
               ];
             };

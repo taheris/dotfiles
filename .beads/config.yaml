@@ -1,74 +1,12 @@
-# Beads Configuration File
-# This file configures default behavior for all bd commands in this repository
-# All settings can also be set via environment variables (BD_* prefix)
-# or overridden with command-line flags
-
-# Issue prefix for this repository (used by bd init)
-# If not set, bd init will auto-detect from directory name
-# Example: issue-prefix: "myproject" creates issues like "myproject-1", "myproject-2", etc.
 issue-prefix: "df"
-
-# Use no-db mode: load from JSONL, no SQLite, write back after each command
-# When true, bd will use .beads/issues.jsonl as the source of truth
-# instead of SQLite database
-# no-db: false
-
-# Disable daemon for RPC communication (forces direct database access)
-# no-daemon: false
-
-# Disable auto-flush of database to JSONL after mutations
-# no-auto-flush: false
-
-# Dolt is authoritative; checkout hooks must not import legacy JSONL.
 import.auto: false
-
-# Enable JSON output by default
-# json: false
-
-# Default actor for audit trails (overridden by BD_ACTOR or --actor)
-# actor: ""
-
-# Path to database (overridden by BEADS_DB or --db)
-# db: ""
-
-# Wrix owns the shared Dolt server. Never start a competing host-side server.
-dolt.mode: server
-dolt.auto-start: false
-
-# Debounce interval for auto-flush (can also use BEADS_FLUSH_DEBOUNCE)
-# flush-debounce: "5s"
-
-# Git branch for beads data (used by bd dolt pull/push)
-# IMPORTANT: Set this for team projects so all clones use the same sync branch.
-# This setting persists across clones (unlike database config which is gitignored).
-# Can also use BEADS_SYNC_BRANCH env var for local override.
+dolt:
+    mode: server
+    auto-start: false
 sync-branch: "beads"
-
-# Use bd inside Wrix, which supplies the server connection settings.
-# Pull with bd dolt pull; publish session-close state with wrix beads push.
 sync:
-  mode: dolt-native
-
-# The dolt-remote lives in the beads branch worktree:
-#   .git/beads-worktrees/beads/.beads/dolt-remote/
-
-# Multi-repo configuration (experimental - bd-307)
-# Allows hydrating from multiple repositories and routing writes to the correct JSONL
-# repos:
-#   primary: "."  # Primary repo (where this database lives)
-#   additional:   # Additional repos to hydrate from (read-only)
-#     - ~/beads-planning  # Personal planning repo
-#     - ~/work-planning   # Work planning repo
-
-# Integration settings (access with 'bd config get/set')
-# These are stored in the database, not in this file:
-# - jira.url
-# - jira.project
-# - linear.url
-# - linear.api-key
-# - github.org
-# - github.repo
-
-# Do not regenerate or stage legacy JSONL during normal Dolt workflows.
-export.auto: false
-export.git-add: false
+    mode: dolt-native
+    remote: ".git/beads-worktrees/beads/.beads/dolt-remote"
+export:
+    auto: false
+    git-add: false
