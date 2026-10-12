@@ -1,6 +1,6 @@
 # Strata
 
-Strata **0.1.40.1** for text-only Qwen3.8-Flash-Next inference on **2× RTX 4090**.
+Strata **0.1.43** for text-only Qwen3.8-Flash-Next inference on **2× RTX 4090**.
 The package uses CUDA 13 and upstream's pinned llama.cpp source. It requires
 x86-64 Linux with AVX2 and an NVIDIA driver compatible with CUDA 13 (580+).
 It does not enable a service or change the existing llama.cpp installation.
@@ -51,7 +51,7 @@ experts absent from both GPU caches in RAM; actual capacity depends on context,
 free VRAM and other applications. Watch the startup log for resident-mode
 fallbacks and SSD reads. This GPU/model combination is not benchmarked here.
 BF16 compatibility packing rounds some small projections; see upstream's
-[Unsloth notes](https://github.com/Niko1221/Strata/blob/v0.1.40.1/docs/UNSLOTH_Q4.md#ud-iq4_xs-setup-from-0139-621).
+[Unsloth notes](https://github.com/Niko1221/Strata/blob/v0.1.43/docs/UNSLOTH_Q4.md#ud-iq4_xs-setup-from-0139-621).
 
 The MTP draft layer is **optional**. New configs use lookup-only drafting to avoid
 an additional download. To reuse an already-prepared MTP runtime, supply
@@ -161,7 +161,7 @@ nix build .#strata .#checks.x86_64-linux.strata-smoke
 The model workflow wraps downloads and native packing, not upstream's OS/Python/
 engine installer. Enter `nix shell .#strata` to make the individual preparation
 commands available. For Orca or fresh MTP preparation, follow the upstream
-[Orca guide](https://github.com/Niko1221/Strata/blob/v0.1.40.1/docs/ORCA.md), using
+[Orca guide](https://github.com/Niko1221/Strata/blob/v0.1.43/docs/ORCA.md), using
 `strata-iq-pack`, `strata-mtp-fetch`, `strata-mtp-pack` and `strata-mtp-rt` in place
 of its Python tool commands. Use Orca's own tokenizer and `--compat-bf16` packing.
 For this dual-4090/64 GB host, keep GPUs `[0,1]`, `layer_split: "auto"` and

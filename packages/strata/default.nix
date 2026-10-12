@@ -18,13 +18,13 @@
 }:
 
 let
-  version = "0.1.40.1";
+  version = "0.1.43";
   cudaPackages = cudaPackages_13_0;
   src = fetchFromGitHub {
     owner = "Niko1221";
     repo = "Strata";
     rev = "v${version}";
-    hash = "sha256-y+0Qn2KhyVFfQrZi1L9BzR7iqQoRHjkXO9W48VJO2QQ=";
+    hash = "sha256-SjhgL3wXV36a4AuDlrQH9E9PDAOAqDS6dXMuVM5/5yw=";
   };
   llamaSrc = fetchFromGitHub {
     owner = "ggml-org";
