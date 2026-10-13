@@ -171,10 +171,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1791775386,
-        "narHash": "sha256-+D5rbRYYZJwfNTGmtUy5aaB6seBqvP1L4+PdT033SA4=",
+        "lastModified": 1791860820,
+        "narHash": "sha256-JLSdp0FD7M7Qx3nU/J8L9hrmrjoiz5Acs4XRW3QQi50=",
         "ref": "master",
-        "rev": "99b5ac5f61ee2fb122ff0efcc18cdeca7b6e8cda",
+        "rev": "f788f41bc5c7a6f5b8af1cc7456607661fc54007",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -398,10 +398,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1791801674,
-        "narHash": "sha256-D6sD9fUsXjvlRrrKjvgy28QkMryXRPqMMiYcdaaWw/M=",
+        "lastModified": 1791880792,
+        "narHash": "sha256-x+ukbEYNAheV8yHOlHa7uNBAPAZuKMg6g/uSTsW8DuM=",
         "ref": "main",
-        "rev": "4055c3c0e4446665237baf0923628449bf3b96de",
+        "rev": "c3c8efddf1fd0183a11c43d6367cd53b3fcb68e5",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
@@ -839,10 +839,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1791847465,
-        "narHash": "sha256-SGOwmoJMEVXBaC0PwUOv/Ons8d8cfZt4rG+GuMSdbDQ=",
+        "lastModified": 1791889316,
+        "narHash": "sha256-vI33GQYABAVwj04Y73Eq1wFa/odVuAmsooWmyxnUu7I=",
         "ref": "main",
-        "rev": "3bd8ea266e75bfe93836f5f4b573a98f66c2ef71",
+        "rev": "33af5d9ccddb379598fea304953e3b3b586dcb11",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"

@@ -208,6 +208,10 @@
 
           nixpkgs.hostPlatform = host.system;
 
+          # Host-only workaround; removal conditions: df-ebl and the package below.
+          # https://github.com/tailscale/tailscale/issues/6130
+          services.tailscale.package = pkgs.tailscale-nextdns;
+
           services.udev.packages = [
             (pkgs.runCommand "custom-udev-rules" { } ''
               mkdir -p $out/lib/udev/rules.d

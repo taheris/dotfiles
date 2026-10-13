@@ -46,6 +46,9 @@ in
     }
     // optionalAttrs (system == "x86_64-linux") {
       strata = callPackage ../../packages/strata { };
+      tailscale-nextdns = callPackage ../../packages/tailscale-nextdns {
+        tailscale = prev.tailscale;
+      };
     };
 
   perSystem =
@@ -73,11 +76,12 @@ in
           ;
       }
       // optionalAttrs (system == "x86_64-linux") {
-        inherit (pkgs) strata;
+        inherit (pkgs) strata tailscale-nextdns;
       };
 
       checks = optionalAttrs (system == "x86_64-linux") {
         strata-smoke = pkgs.strata.tests.smoke;
+        tailscale-nextdns = pkgs.tailscale-nextdns;
       };
     };
 

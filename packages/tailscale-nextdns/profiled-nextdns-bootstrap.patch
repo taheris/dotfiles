@@ -1,0 +1,36 @@
+--- a/net/dns/resolver/forwarder.go
++++ b/net/dns/resolver/forwarder.go
+@@ -540,12 +540,11 @@
+-	dialer := dnscache.Dialer(f.getDialerType(), &dnscache.Resolver{
+-		SingleHost:             dohURL.Hostname(),
+-		SingleHostStaticResult: allIPs,
+-		Logf:                   f.logf,
+-	})
+-	tlsConfig := &tls.Config{
+-		// Enforce TLS 1.3, as all of our supported DNS-over-HTTPS servers are compatible with it
+-		// (see tailscale.com/net/dns/publicdns/publicdns.go).
+-		MinVersion: tls.VersionTLS13,
+-	}
+-	c = &http.Client{
+-		Transport: &http.Transport{
++	buildTransport := func(ips []netip.Addr) http.RoundTripper {
++		dialer := dnscache.Dialer(f.getDialerType(), &dnscache.Resolver{
++			SingleHost:             dohURL.Hostname(),
++			SingleHostStaticResult: ips,
++			Logf:                   f.logf,
++		})
++		tlsConfig := &tls.Config{
++			// Preserve the existing certificate checks and TLS 1.3 minimum.
++			MinVersion: tls.VersionTLS13,
++		}
++		return &http.Transport{
+@@ -565,2 +564,7 @@
+-		},
+-	}
++		}
++	}
++	transport := buildTransport(allIPs)
++	if strings.HasPrefix(urlBase, "https://dns.nextdns.io/") {
++		transport = newNextDNSDoHTransport(f.ctx, transport, buildTransport)
++	}
++	c = &http.Client{Transport: transport}
