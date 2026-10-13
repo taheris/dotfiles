@@ -398,10 +398,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1791880792,
-        "narHash": "sha256-x+ukbEYNAheV8yHOlHa7uNBAPAZuKMg6g/uSTsW8DuM=",
+        "lastModified": 1791913192,
+        "narHash": "sha256-m7cFzCxlohx5pl+XoRRci0wZjeHn6lJMspT1HwL0RmM=",
         "ref": "main",
-        "rev": "c3c8efddf1fd0183a11c43d6367cd53b3fcb68e5",
+        "rev": "138a602a012ef1ad69fe28577677094189b0c3e0",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
@@ -787,10 +787,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1791490544,
-        "narHash": "sha256-qScE7Wz6Zg7eg8ItUpnkmKgst8weWschGe0E8jM4rj4=",
+        "lastModified": 1791885023,
+        "narHash": "sha256-C3alQ2MEt0zVrUSho5NUDo3jmhbff72++bfwoqT9Omo=",
         "ref": "main",
-        "rev": "4cfe8d7065cc8ca91c0a50361b6dd74920eeb1f5",
+        "rev": "0d6d739a833ba9a9c93034862e4a7b061a062a1c",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/numtide/treefmt-nix.git"
@@ -839,10 +839,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1791889316,
-        "narHash": "sha256-vI33GQYABAVwj04Y73Eq1wFa/odVuAmsooWmyxnUu7I=",
+        "lastModified": 1791918106,
+        "narHash": "sha256-WG+GXbf6Xy67EtAfwD3TcvNiHB+A2zprssjnn/r6WjY=",
         "ref": "main",
-        "rev": "33af5d9ccddb379598fea304953e3b3b586dcb11",
+        "rev": "4fcd829ecd9595839ef4495d65bf48ee2ff3bb8e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"

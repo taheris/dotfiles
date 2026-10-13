@@ -23,6 +23,7 @@ in
       loom = inputs.loom.packages.${system}.loom;
       wrix-builder = inputs.wrix.packages.${system}.wrix-builder;
       wrix-notifyd = inputs.wrix.packages.${system}.wrix-notifyd;
+      wrix-focus-notification = inputs.wrix.packages.${system}.wrix-focus-notification;
 
       stable = import inputs.nixpkgs-stable {
         inherit system;

@@ -113,6 +113,7 @@
             packages = with pkgs; [
               playerctl
               ungoogled-chromium
+              wrix-focus-notification
               xwayland-satellite
               (writeShellScriptBin "niri-session-save" "exec ${session.save}")
               (writeShellScriptBin "niri-session-restore" "exec ${session.restore}")
@@ -173,13 +174,28 @@
                   repeat = false;
                 };
 
+                # Agent attention
+                "Mod+N" = {
+                  action.spawn = [ "${pkgs.wrix-focus-notification}/bin/wrix-focus-notification" ];
+                  hotkey-overlay.title = "Focus waiting agent";
+                  repeat = false;
+                };
+                "Mod+P" = {
+                  action.spawn = [
+                    "${pkgs.wrix-focus-notification}/bin/wrix-focus-notification"
+                    "--return"
+                  ];
+                  hotkey-overlay.title = "Return from agent";
+                  repeat = false;
+                };
+
                 # DMS
                 "Mod+Space" = dms "spotlight toggle";
                 "Mod+Comma" = dms "settings toggle";
                 "Mod+Period" = dms "notepad toggle";
                 "Mod+M" = dms "processlist toggle";
-                "Mod+N" = dms "notifications toggle";
-                "Mod+P" = dms "clipboard toggle";
+                "Mod+Shift+N" = dms "notifications toggle";
+                "Mod+Shift+P" = dms "clipboard toggle";
                 "Mod+Alt+Shift+I".action.spawn = [ "${toggleInhibit}" ];
                 "Mod+Alt+Shift+P" = dms "powermenu toggle";
                 "Mod+Alt+Shift+N" = dms "night toggle";
