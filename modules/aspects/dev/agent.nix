@@ -17,6 +17,10 @@
       packages = with pkgs; [
         beads
         loom
+        wrix
+        wrix-notify-host
+        wrix-notifyd
+        wrix-focus-notification
       ];
 
       darwinPackages =
@@ -32,26 +36,45 @@
         wrix-builder
       ];
 
-      linuxBuilderHostPackages = with pkgs; [
-        wrix-notifyd
-      ];
-
       linuxPackages = with pkgs; [
         libnotify
       ];
+
+      codexNotify = pkgs.writeShellScript "codex-notify" ''
+        # Codex appends the event as a JSON argument, not stdin.
+        if ! ${pkgs.jq}/bin/jq -e '.type == "agent-turn-complete"' \
+          <<< "''${1:-}" >/dev/null 2>&1; then
+          exit 0
+        fi
+
+        # Origin is captured by the launcher, never by this callback.
+        ${pkgs.wrix-notify-host}/bin/wrix-notify-host 'Codex' 'Turn complete. Awaiting input...' || :
+      '';
+
+      codexLauncher = pkgs.writeShellScriptBin "codex" ''
+        exec ${pkgs.wrix}/bin/wrix notify run -- ${lib.getExe pkgs.codex} "$@"
+      '';
+
+      codexPackage = pkgs.symlinkJoin {
+        name = "codex-wrix-${pkgs.codex.version}";
+        inherit (pkgs.codex) version meta;
+        paths = [ pkgs.codex ];
+        postBuild = ''
+          ln -sf ${codexLauncher}/bin/codex "$out/bin/codex"
+        '';
+      };
 
     in
     {
       home.packages = mkMerge [
         packages
         (mkIf (isDarwin && hasLinuxBuilder) builderPackages)
-        (optionals (isLinux || (isDarwin && hasLinuxBuilder)) linuxBuilderHostPackages)
         (mkIf isDarwin darwinPackages)
         (mkIf isLinux linuxPackages)
       ];
 
       launchd.agents = {
-        wrix-notifyd = mkIf (isDarwin && hasLinuxBuilder) {
+        wrix-notifyd = mkIf isDarwin {
           enable = true;
           config = {
             ProgramArguments = [ "${pkgs.wrix-notifyd}/bin/wrix-notifyd" ];
@@ -145,6 +168,14 @@
 
       programs.codex = {
         enable = true;
+        package = codexPackage;
+        # Preserve trusted projects and other settings written interactively by Codex.
+        mutableSettings = true;
+        settings = {
+          notify = [ "${codexNotify}" ];
+          # Completion uses the callback; retain terminal approval alerts.
+          tui.notifications = [ "approval-requested" ];
+        };
       };
 
       systemd.user.services.wrix-notifyd = mkIf isLinux {

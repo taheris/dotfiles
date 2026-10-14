@@ -21,6 +21,8 @@ in
 
       beads = inputs.wrix.packages.${system}.beads;
       loom = inputs.loom.packages.${system}.loom;
+      wrix = inputs.wrix.packages.${system}.wrix;
+      wrix-notify-host = inputs.wrix.packages.${system}.wrix-notify-host;
       wrix-builder = inputs.wrix.packages.${system}.wrix-builder;
       wrix-notifyd = inputs.wrix.packages.${system}.wrix-notifyd;
       wrix-focus-notification = inputs.wrix.packages.${system}.wrix-focus-notification;
