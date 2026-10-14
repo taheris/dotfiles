@@ -80,7 +80,7 @@ animationsEnabled = true
 defaultLayoutType = "niri"
 hotkeysEnabled = true
 hyperKeyModifiers = "Control+Option+Shift+Command"
-ipcEnabled = false
+ipcEnabled = true
 preventSleepEnabled = false
 systemHyperTrigger = "None"
 updateChecksEnabled = true
@@ -213,6 +213,7 @@ yOffset = 0.0
 [workspaceBar.iconOverrides]
 
 # Reserve Option(+Shift)+C/E/I/N/U/Grave for Portuguese characters.
+# Option(+Shift)+P is handled by Karabiner for Wrix agent attention.
 [[hotkeys]]
 binding = "Option+1"
 id = "switchWorkspace.0"

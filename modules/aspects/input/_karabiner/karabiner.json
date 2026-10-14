@@ -4,6 +4,27 @@
       "complex_modifications": {
         "rules": [
           {
+            "description": "Option-P to focus waiting agent, Option-Shift-P to return",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "p",
+                  "modifiers": { "mandatory": ["option"] }
+                },
+                "to": [{ "shell_command": "'@homeProfile@/bin/wrix-focus-notification'", "repeat": false }]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "p",
+                  "modifiers": { "mandatory": ["option", "shift"] }
+                },
+                "to": [{ "shell_command": "'@homeProfile@/bin/wrix-focus-notification' --return", "repeat": false }]
+              }
+            ]
+          },
+          {
             "description": "Command-H for tmux in Alacritty",
             "manipulators": [
               {

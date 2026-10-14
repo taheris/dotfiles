@@ -126,10 +126,10 @@
     },
     "den": {
       "locked": {
-        "lastModified": 1791945777,
-        "narHash": "sha256-ScbsWxyVLpB5oYjVsDNmoxnLWMZdVPSFjYZS6A7SiEY=",
+        "lastModified": 1792017093,
+        "narHash": "sha256-pltANX/rMxvPA/qMa7OeH3jGoR4OjlRbt/BIljbqGzA=",
         "ref": "refs/heads/main",
-        "rev": "f1d16b177de42088ede5ad911a39c7f068877a7f",
+        "rev": "f1a3f995c763c059c8b6ca385a474da41fe6e0f8",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/denful/den.git"
@@ -343,10 +343,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1791996224,
-        "narHash": "sha256-lS523xDX6NTesxx/Aug40ofe703pZXJRQ1+NDPdDMdY=",
+        "lastModified": 1792000010,
+        "narHash": "sha256-4jtkwQlReQdXsKJJfB9yT7nIf0TlwgZOk2XtxjUgDS8=",
         "ref": "master",
-        "rev": "f12e97b106c6f23aeec1cafaf4af533ba0893a1f",
+        "rev": "5a9d300bd619c03857521b50c8877a19dbad7078",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -398,10 +398,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1791982800,
-        "narHash": "sha256-MrhFSHJ0yVnVH4Bkqj4AHIEOWDFxjMNUJBviXNeEz5w=",
+        "lastModified": 1792009059,
+        "narHash": "sha256-mnWkAxxC/aQDTFjJayU45B2lW2dHqAchRoBmGE1IaMg=",
         "ref": "main",
-        "rev": "ebaf09eb5a89c5544e693f3e43f1d688f763aecd",
+        "rev": "ddd53f04fdce3c978ff5c5b93b6d9cfdd78dae5d",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
@@ -839,10 +839,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1791997705,
-        "narHash": "sha256-KLmCasrvans7mb0TCtsHGtTs8Kx0jobNSr5EwZzdV0A=",
+        "lastModified": 1792019266,
+        "narHash": "sha256-l7ybGdd5XVKEBPllPktbpTG97SWtpjsCiLcRzJfQe4U=",
         "ref": "main",
-        "rev": "39911c335e4b1a0df01beba66f1bda5b0bcf889f",
+        "rev": "3dd4cf82dd058d8f5d03355d041a3b0b74303733",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"
