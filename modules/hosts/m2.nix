@@ -19,5 +19,6 @@
     my.omniwm
     my.sox
     my.stylix
+    my.vlc
   ];
 }

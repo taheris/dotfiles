@@ -40,6 +40,7 @@
         my.sddm
         my.stylix
         my.thunderbird
+        my.vlc
 
         # input
         my.bazecor
