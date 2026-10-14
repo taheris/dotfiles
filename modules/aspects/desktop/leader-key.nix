@@ -88,14 +88,12 @@
         launchd.agents.leader-key = {
           enable = true;
           config = {
-            ProgramArguments = [
-              "/usr/bin/open"
-              "-gj"
-              "-a"
-              "Leader Key"
-            ];
+            Label = "org.nix-community.home.leader-key";
+            ProgramArguments = [ "/Applications/Leader Key.app/Contents/MacOS/Leader Key" ];
             RunAtLoad = true;
-            KeepAlive = false;
+            KeepAlive = true;
+            StandardOutPath = "${config.home.homeDirectory}/Library/Logs/leader-key.log";
+            StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/leader-key.log";
           };
         };
 
@@ -109,8 +107,9 @@
               "setupLaunchAgents"
             ]
             ''
-              run /usr/bin/pkill -x 'Leader Key' || true
-              run /usr/bin/open -gj -a 'Leader Key'
+              # Let launchd serialize termination/relaunch; pkill followed by open
+              # races LaunchServices while the old process is still exiting.
+              run /bin/launchctl kickstart -k "gui/$(/usr/bin/id -u)/org.nix-community.home.leader-key"
             '';
       };
   };
