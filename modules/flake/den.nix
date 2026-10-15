@@ -34,6 +34,13 @@ in
     (inputs.den.namespace "my" false)
   ];
 
+  # Keep internal module/namespace outputs available to the configuration without
+  # publishing attributes that `nix flake check` does not recognize.
+  processedFlake = builtins.removeAttrs config.flake [
+    "modules"
+    "denful"
+  ];
+
   den.default = {
     nixos = {
       system.stateVersion = "24.11";

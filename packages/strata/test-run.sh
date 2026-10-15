@@ -166,8 +166,8 @@ cmp "$config" "$root/before.json"
 mv "$root/shared-before.json" "$shared"
 
 echo 'Checking server exec and forwarded arguments without models or GPUs...'
-cat > "$root/server" <<'SH'
-#!/usr/bin/env bash
+printf '#!%s\n' "$BASH" > "$root/server"
+cat >> "$root/server" <<'SH'
 printf '%s\n' "$@" > "$LAUNCH_RECORD"
 SH
 chmod +x "$root/server"

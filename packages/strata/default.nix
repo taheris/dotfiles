@@ -244,8 +244,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
           strata-mtp-fetch --help > /dev/null
           strata-mtp-pack --help > /dev/null
           strata-mtp-rt --help > /dev/null
-          strata --help > /dev/null 2>&1
-          cd ${finalAttrs.finalPackage}/lib/strata
+          # Even --help loads libcuda.so.1; exercise the engine on the GPU host.
+          # Sandboxed checks cover the launcher, model workflow and Python tools.
+          # Vision's temporary-directory fallback needs a writable working tree.
+          cp -r ${finalAttrs.finalPackage}/lib/strata "$TMPDIR/strata-tests"
+          chmod -R u+w "$TMPDIR/strata-tests"
+          cd "$TMPDIR/strata-tests"
           ${python}/bin/python3 -m unittest serve.test_server serve.test_security serve.test_runconfig serve.test_responses serve.test_structured
           ${python}/bin/python3 -m unittest discover -s tools -p test_iq_pack.py
           touch "$out"
