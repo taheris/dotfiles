@@ -23,6 +23,10 @@
           '';
 
           session = import ./_niri/session.nix { inherit pkgs spawnTerminal; };
+          accents = import ./_niri/accents.nix {
+            inherit lib pkgs;
+            whichKey = lib.getExe config.programs.wlr-which-key.package;
+          };
 
           inherit (lib)
             listToAttrs
@@ -175,12 +179,12 @@
                 };
 
                 # Agent attention
-                "Mod+N" = {
+                "Mod+P" = {
                   action.spawn = [ "${pkgs.wrix-focus-notification}/bin/wrix-focus-notification" ];
                   hotkey-overlay.title = "Focus waiting agent";
                   repeat = false;
                 };
-                "Mod+P" = {
+                "Mod+Shift+P" = {
                   action.spawn = [
                     "${pkgs.wrix-focus-notification}/bin/wrix-focus-notification"
                     "--return"
@@ -195,7 +199,7 @@
                 "Mod+Period" = dms "notepad toggle";
                 "Mod+M" = dms "processlist toggle";
                 "Mod+Shift+N" = dms "notifications toggle";
-                "Mod+Shift+P" = dms "clipboard toggle";
+                "Mod+Alt+P" = dms "clipboard toggle";
                 "Mod+Alt+Shift+I".action.spawn = [ "${toggleInhibit}" ];
                 "Mod+Alt+Shift+P" = dms "powermenu toggle";
                 "Mod+Alt+Shift+N" = dms "night toggle";
@@ -219,6 +223,7 @@
                 "Mod+F4".action.screenshot-screen = [ ];
                 "Mod+F5".action.screenshot-window = [ ];
               }
+              // accents
               // workspaceBinds "Mod+" "focus-workspace"
               // workspaceBinds "Mod+Alt+" "move-column-to-workspace";
 
