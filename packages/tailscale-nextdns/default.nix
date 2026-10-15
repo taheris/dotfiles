@@ -5,13 +5,8 @@
 # Remove when packaged upstream discovers NextDNS endpoints through profiled DoH
 # (not unprofiled UDP), and ordinary-DNS + signed source-worker checks pass without
 # this override. PR19073 is related, but its UDP bootstrap is not applied here.
-assert lib.assertMsg
-  (builtins.elem tailscale.version [
-    "1.102.4"
-    "1.102.5"
-  ])
-  "Re-review/remove the NextDNS workaround for this Tailscale version: https://github.com/tailscale/tailscale/issues/6130";
-
+# Do not gate nixpkgs updates on a version allowlist. Patch application and the
+# offline tests below still catch incompatibilities; `make check` monitors upstream.
 tailscale.overrideAttrs (old: {
   patches = (old.patches or [ ]) ++ [ ./profiled-nextdns-bootstrap.patch ];
 
