@@ -2,8 +2,11 @@ use super::*;
 use serde_json::json;
 use std::cell::{Cell, RefCell};
 use std::collections::VecDeque;
-use std::os::fd::FromRawFd;
-use std::sync::atomic::{AtomicUsize, Ordering};
+use std::io::Read;
+use std::os::fd::{AsRawFd, FromRawFd};
+use std::rc::Rc;
+use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
 
 fn window(id: &str, pid: u32, column: u64, focused: bool) -> Window {
     Window {
@@ -180,16 +183,87 @@ fn native_fallback_only_for_unsupported_cases() {
 
 static NEXT_SOCKET: AtomicUsize = AtomicUsize::new(0);
 
+// Act like a terminal emulator: consume client output so a full PTY buffer
+// cannot block tmux during attachment, detachment, or server shutdown.
+struct PtyReader {
+    stop: Arc<AtomicBool>,
+    thread: Option<thread::JoinHandle<Vec<u8>>>,
+}
+
+impl PtyReader {
+    fn new(mut master: File) -> Self {
+        // SAFETY: master is an owned, valid descriptor. No other code uses it.
+        assert_ne!(
+            unsafe { libc::fcntl(master.as_raw_fd(), libc::F_SETFL, libc::O_NONBLOCK) },
+            -1
+        );
+        let stop = Arc::new(AtomicBool::new(false));
+        let stopped = Arc::clone(&stop);
+        let thread = thread::spawn(move || {
+            let mut output = Vec::new();
+            let mut buffer = [0; 4096];
+            while !stopped.load(Ordering::Relaxed) {
+                match master.read(&mut buffer) {
+                    Ok(0) => break,
+                    Ok(n) => output.extend_from_slice(&buffer[..n]),
+                    Err(e) if e.kind() == std::io::ErrorKind::Interrupted => continue,
+                    Err(e) if e.kind() == std::io::ErrorKind::WouldBlock => {
+                        thread::sleep(Duration::from_millis(5));
+                    }
+                    // Linux reports EIO when the last slave closes.
+                    Err(_) => break,
+                }
+            }
+            output
+        });
+        Self {
+            stop,
+            thread: Some(thread),
+        }
+    }
+
+    fn finish(&mut self) -> Vec<u8> {
+        self.stop.store(true, Ordering::Relaxed);
+        self.thread
+            .take()
+            .and_then(|t| t.join().ok())
+            .unwrap_or_default()
+    }
+}
+
+impl Drop for PtyReader {
+    fn drop(&mut self) {
+        self.finish();
+    }
+}
+
+#[test]
+fn pty_reader_drains_more_than_a_terminal_buffer() {
+    use std::io::Write;
+    use std::os::fd::OwnedFd;
+    use std::os::unix::net::UnixStream;
+
+    let (input, mut output) = UnixStream::pair().unwrap();
+    output
+        .set_write_timeout(Some(Duration::from_secs(3)))
+        .unwrap();
+    let mut reader = PtyReader::new(File::from(OwnedFd::from(input)));
+    output.write_all(&vec![b'x'; 1024 * 1024]).unwrap();
+    assert!(!reader.finish().is_empty());
+}
+
 struct Harness {
     tmux: Tmux,
     wm: FakeWm,
-    masters: RefCell<Vec<File>>,
-    pids: RefCell<Vec<u32>>,
+    masters: RefCell<Vec<PtyReader>>,
+    pids: Rc<RefCell<Vec<u32>>>,
     children: RefCell<Vec<Child>>,
 }
 
 impl Harness {
     fn new() -> Self {
+        let pids = Rc::new(RefCell::new(Vec::<u32>::new()));
+        let child_pids = Rc::clone(&pids);
         let h = Self {
             tmux: Tmux {
                 socket: format!(
@@ -197,10 +271,19 @@ impl Harness {
                     std::process::id(),
                     NEXT_SOCKET.fetch_add(1, Ordering::Relaxed)
                 ),
+                // Test clients are direct children of this process. Supply
+                // that known tree: Darwin's Nix sandbox restricts global ps.
+                process_tree: Box::new(move || {
+                    Ok(child_pids
+                        .borrow()
+                        .iter()
+                        .map(|pid| (*pid, std::process::id()))
+                        .collect())
+                }),
             },
             wm: FakeWm::default(),
             masters: RefCell::new(vec![]),
-            pids: RefCell::new(vec![]),
+            pids,
             children: RefCell::new(vec![]),
         };
         output(
@@ -229,7 +312,7 @@ impl Harness {
     fn attach(&self, session: &str) -> Child {
         let mut master = -1;
         let mut slave = -1;
-        let size = libc::winsize {
+        let mut size = libc::winsize {
             ws_row: 30,
             ws_col: 100,
             ws_xpixel: 0,
@@ -242,14 +325,24 @@ impl Harness {
                     &mut master,
                     &mut slave,
                     std::ptr::null_mut(),
-                    std::ptr::null(),
-                    &size,
+                    std::ptr::null_mut(),
+                    &mut size,
                 )
             },
             0
         );
         // SAFETY: successful openpty gave us unique ownership of these descriptors.
         let (master, slave) = unsafe { (File::from_raw_fd(master), File::from_raw_fd(slave)) };
+        // openpty does not set close-on-exec. Do not leak PTYs into other
+        // clients or tmux servers, which would keep them alive during cleanup.
+        for fd in [master.as_raw_fd(), slave.as_raw_fd()] {
+            // SAFETY: both descriptors are owned and valid.
+            assert_ne!(
+                unsafe { libc::fcntl(fd, libc::F_SETFD, libc::FD_CLOEXEC) },
+                -1
+            );
+        }
+        let mut reader = PtyReader::new(master);
         let mut command = Command::new("tmux");
         command
             .args(["-L", &self.tmux.socket, "attach-session", "-t", session])
@@ -269,7 +362,6 @@ impl Harness {
             });
         }
         let mut child = command.spawn().unwrap();
-        self.masters.borrow_mut().push(master);
         self.pids.borrow_mut().push(child.id());
         let deadline = Instant::now() + Duration::from_secs(3);
         loop {
@@ -280,10 +372,25 @@ impl Harness {
             if clients.lines().any(|line| line == child.id().to_string()) {
                 break;
             }
-            assert!(child.try_wait().unwrap().is_none(), "tmux client exited");
-            assert!(Instant::now() < deadline, "tmux client failed to attach");
+            if let Some(status) = child.try_wait().unwrap() {
+                let output = reader.finish();
+                panic!(
+                    "tmux client exited ({status}): {}",
+                    String::from_utf8_lossy(&output)
+                );
+            }
+            if Instant::now() >= deadline {
+                let _ = child.kill();
+                let _ = child.wait();
+                let output = reader.finish();
+                panic!(
+                    "tmux client failed to attach: {}",
+                    String::from_utf8_lossy(&output)
+                );
+            }
             thread::sleep(Duration::from_millis(10));
         }
+        self.masters.borrow_mut().push(reader);
         child
     }
 
@@ -351,21 +458,65 @@ fn wait_for_exit(pid: u32) {
 impl Drop for Harness {
     fn drop(&mut self) {
         let _ = self.tmux.call(&["kill-server"]);
+        // Closing the masters also hangs up clients if server shutdown failed.
+        self.masters.get_mut().clear();
         for pid in self.pids.borrow().iter() {
-            wait_for_exit(*pid);
+            // Cleanup must never panic: that would abort the entire test binary
+            // during unwinding and obscure the original assertion failure.
+            // SAFETY: only kill a PID if waitpid confirms it is our unreaped child.
+            unsafe {
+                if libc::waitpid(*pid as i32, std::ptr::null_mut(), libc::WNOHANG) == 0 {
+                    libc::kill(*pid as i32, libc::SIGKILL);
+                    libc::waitpid(*pid as i32, std::ptr::null_mut(), 0);
+                }
+            }
         }
     }
 }
 
 #[test]
+fn cleanup_survives_failed_shutdown_during_unwinding() {
+    let h = Harness::new();
+    let socket = h.tmux.socket.clone();
+    let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(move || {
+        let mut h = h;
+        // Simulate an unavailable server control socket while a client lives.
+        h.tmux.socket.push_str("-unavailable");
+        panic!("original test failure");
+    }));
+    let _ = output("tmux", &["-L", &socket, "kill-server"]);
+    let panic = result.expect_err("the original panic must not be swallowed");
+    assert_eq!(panic.downcast_ref::<&str>(), Some(&"original test failure"));
+}
+
+#[test]
 fn endpoint_matches_client_and_ancestor() {
     let h = Harness::new();
-    assert_eq!(h.endpoint(0).client, h.wm.items.borrow()[0].pid.unwrap());
-    let ancestor = window("ancestor", std::process::id(), 1, true);
+    let client = h.wm.items.borrow()[0].pid.unwrap();
+    assert_eq!(h.endpoint(0).client, client);
+    let direct = window("direct", client, 1, true);
     assert!(
         h.tmux
-            .endpoint(&ancestor, std::slice::from_ref(&ancestor))
+            .endpoint_with_parents(&direct, std::slice::from_ref(&direct), || {
+                panic!("an exact sole-client match must not query ps")
+            })
             .is_some()
+    );
+    let ancestor = window("ancestor", std::process::id(), 1, true);
+    let windows = std::slice::from_ref(&ancestor);
+    // Supply the known child relationship instead of querying system processes
+    // from inside the Darwin build sandbox.
+    assert!(
+        h.tmux
+            .endpoint_with_parents(&ancestor, windows, || {
+                Ok(HashMap::from([(client, std::process::id())]))
+            })
+            .is_some()
+    );
+    assert!(
+        h.tmux
+            .endpoint_with_parents(&ancestor, windows, || Err("ps denied".to_owned()))
+            .is_none()
     );
 }
 

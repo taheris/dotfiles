@@ -220,6 +220,7 @@ struct Endpoint {
 
 struct Tmux {
     socket: String,
+    process_tree: Box<dyn Fn() -> Result<HashMap<u32, u32>>>,
 }
 
 impl Default for Tmux {
@@ -227,6 +228,7 @@ impl Default for Tmux {
         Self {
             // Explicitly select the ordinary server even if invoked inside tmux.
             socket: "default".to_owned(),
+            process_tree: Box::new(parents),
         }
     }
 }
@@ -239,6 +241,15 @@ impl Tmux {
     }
 
     fn endpoint(&self, window: &Window, windows: &[Window]) -> Option<Endpoint> {
+        self.endpoint_with_parents(window, windows, &self.process_tree)
+    }
+
+    fn endpoint_with_parents(
+        &self,
+        window: &Window,
+        windows: &[Window],
+        parents: impl FnOnce() -> Result<HashMap<u32, u32>>,
+    ) -> Option<Endpoint> {
         let pid = window.pid?;
         // Alacritty IPC can put multiple GUI windows in one process. Never guess.
         if pid <= 1 || windows.iter().filter(|w| w.pid == Some(pid)).count() != 1 {
@@ -248,15 +259,26 @@ impl Tmux {
         let clients = self
             .call(&["list-clients", "-F", "#{client_pid}|#{session_id}"])
             .ok()?;
-        let tree = parents().ok()?;
-        let matches: Vec<_> = clients
+        let clients: Vec<_> = clients
             .lines()
-            .filter_map(|line| {
+            .map(|line| {
                 let (client, session) = line.split_once('|')?;
-                let client = client.parse().ok()?;
-                descendant(client, pid, &tree).then_some((client, session))
+                Some((client.parse::<u32>().ok()?, session))
             })
-            .collect();
+            .collect::<Option<_>>()?;
+        // A sole client whose PID is the window PID is already unambiguous.
+        // Do not require a system-wide process query for this case: Darwin's
+        // build sandbox may forbid ps even for these known test children.
+        // With multiple clients, still query ancestry to reject ambiguity.
+        let matches: Vec<_> = if matches!(clients.as_slice(), [(client, _)] if *client == pid) {
+            clients
+        } else {
+            let tree = parents().ok()?;
+            clients
+                .into_iter()
+                .filter(|(client, _)| descendant(*client, pid, &tree))
+                .collect()
+        };
         let [(client, session)] = matches.as_slice() else {
             return None;
         };

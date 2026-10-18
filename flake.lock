@@ -398,10 +398,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1792009059,
-        "narHash": "sha256-mnWkAxxC/aQDTFjJayU45B2lW2dHqAchRoBmGE1IaMg=",
+        "lastModified": 1792341889,
+        "narHash": "sha256-DtID+J/PyRsvFhEgK1nlGj2LvKtXdIml/b7ofB+rvNs=",
         "ref": "main",
-        "rev": "ddd53f04fdce3c978ff5c5b93b6d9cfdd78dae5d",
+        "rev": "1031134aea3a07f1c918308013ee58fcff49016e",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
