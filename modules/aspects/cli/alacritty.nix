@@ -44,6 +44,8 @@ in
 
     in
     {
+      home.packages = [ pkgs.terminal-bridge ];
+
       programs.alacritty = {
         enable = true;
 

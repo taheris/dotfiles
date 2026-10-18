@@ -22,14 +22,7 @@
         '';
 
         spawnTerminal = pkgs.writeShellScript "leader-key-terminal" ''
-          dir="''${TMPDIR:-/tmp}/last-dir"
-          cwd="$HOME"
-          if [ -f "$dir" ]; then
-            cwd="$(<"$dir")"
-          fi
-          [ -d "$cwd" ] || cwd="$HOME"
-          /Applications/Alacritty.app/Contents/MacOS/alacritty --working-directory "$cwd" \
-            -e ${lib.getExe config.programs.tmux.package} \
+          ${pkgs.terminal-bridge}/bin/terminal-bridge launch \
             </dev/null >>"''${TMPDIR:-/tmp}/leader-key-terminal.log" 2>&1 &
         '';
 

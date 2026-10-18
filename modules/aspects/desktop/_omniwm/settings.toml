@@ -367,11 +367,13 @@ binding = "Option+Shift+K"
 id = "moveWindowUpOrToWorkspaceUp"
 
 [[hotkeys]]
-binding = "Option+S"
+# Karabiner dispatches terminal-aware slurp and native fallback.
+binding = "Unassigned"
 id = "consumeWindowIntoColumn"
 
 [[hotkeys]]
-binding = "Option+X"
+# Karabiner dispatches terminal-aware expel and native fallback.
+binding = "Unassigned"
 id = "expelWindowFromColumn"
 
 [[hotkeys]]

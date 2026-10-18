@@ -18,6 +18,7 @@ in
       monaco = callPackage ../../packages/monaco { };
       monacob = callPackage ../../packages/monacob { };
       sqlite-vss = callPackage ../../packages/sqlite-vss { };
+      terminal-bridge = callPackage ../../packages/terminal-bridge { };
 
       beads = inputs.wrix.packages.${system}.beads;
       loom = inputs.loom.packages.${system}.loom;
@@ -63,6 +64,7 @@ in
           monaco
           monacob
           sqlite-vss
+          terminal-bridge
           ;
       }
       // optionalAttrs (hasSuffix "darwin" system) {
@@ -82,7 +84,10 @@ in
         inherit (pkgs) strata tailscale-nextdns;
       };
 
-      checks = optionalAttrs (system == "x86_64-linux") {
+      checks = {
+        terminal-bridge = pkgs.terminal-bridge;
+      }
+      // optionalAttrs (system == "x86_64-linux") {
         strata-smoke = pkgs.strata.tests.smoke;
         tailscale-nextdns = pkgs.tailscale-nextdns;
       };

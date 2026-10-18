@@ -25,6 +25,27 @@
             ]
           },
           {
+            "description": "Option-S/X for terminal-aware OmniWM slurp/expel",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "s",
+                  "modifiers": { "mandatory": ["option"] }
+                },
+                "to": [{ "shell_command": "'@homeProfile@/bin/terminal-bridge' slurp --wm omniwm", "repeat": false }]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "x",
+                  "modifiers": { "mandatory": ["option"] }
+                },
+                "to": [{ "shell_command": "'@homeProfile@/bin/terminal-bridge' expel --wm omniwm", "repeat": false }]
+              }
+            ]
+          },
+          {
             "description": "Command-H for tmux in Alacritty",
             "manipulators": [
               {

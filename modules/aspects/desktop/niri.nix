@@ -12,14 +12,9 @@
           ...
         }:
         let
-          # Spawn terminal in last directory
+          # Launch ordinary tmux; the bridge resolves GUI/client ownership at runtime.
           spawnTerminal = pkgs.writeShellScript "spawn-terminal" ''
-            dir="''${TMPDIR:-''${XDG_RUNTIME_DIR:-/tmp}}/last-dir"
-            if [ -f "$dir" ]; then
-              exec alacritty --working-directory "$(cat "$dir")" -e tmux
-            else
-              exec alacritty -e tmux
-            fi
+            exec ${pkgs.terminal-bridge}/bin/terminal-bridge launch
           '';
 
           session = import ./_niri/session.nix { inherit pkgs spawnTerminal; };
@@ -153,8 +148,24 @@
                 # Window action
                 "Mod+O".action.toggle-overview = [ ];
                 "Mod+T".action.toggle-window-floating = [ ];
-                "Mod+S".action.consume-window-into-column = [ ];
-                "Mod+X".action.expel-window-from-column = [ ];
+                "Mod+S" = {
+                  action.spawn = [
+                    "${pkgs.terminal-bridge}/bin/terminal-bridge"
+                    "slurp"
+                    "--wm"
+                    "niri"
+                  ];
+                  repeat = false;
+                };
+                "Mod+X" = {
+                  action.spawn = [
+                    "${pkgs.terminal-bridge}/bin/terminal-bridge"
+                    "expel"
+                    "--wm"
+                    "niri"
+                  ];
+                  repeat = false;
+                };
                 "Mod+W".action.center-window = [ ];
                 "Mod+B".action.center-column = [ ];
                 "Mod+Alt+B".action.center-visible-columns = [ ];
