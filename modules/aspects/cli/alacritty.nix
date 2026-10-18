@@ -18,7 +18,7 @@ let
   };
 
   # Send the Meta sequences used by tmux.nix's root and passthrough tables.
-  # Karabiner routes Command-Space to tmux only while Alacritty is focused.
+  # Karabiner routes Option-Space to tmux only while Alacritty is focused.
   # Keep Command-Grave for macOS window cycling.
   commandBindings =
     # Keep Command-V for paste instead of sending Meta-V.
@@ -32,7 +32,7 @@ let
       # Remove this and the Karabiner Command-H rule when native Hide is overridable.
       # https://github.com/alacritty/alacritty/issues/7689
       (metaBinding "None" "F17" "h") # Command+H
-      (metaBinding "None" "F20" " ") # Command+Space
+      (metaBinding "None" "F20" " ") # Option+Space
     ];
 
 in

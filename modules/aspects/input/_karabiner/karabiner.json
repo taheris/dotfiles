@@ -67,14 +67,14 @@
             ]
           },
           {
-            "description": "Command-Space for tmux scrollback in Alacritty",
+            "description": "Option-Space for tmux scrollback in Alacritty",
             "manipulators": [
               {
                 "type": "basic",
                 "from": {
                   "key_code": "spacebar",
                   "modifiers": {
-                    "mandatory": ["command"]
+                    "mandatory": ["option"]
                   }
                 },
                 "to": [{ "key_code": "f20" }],
