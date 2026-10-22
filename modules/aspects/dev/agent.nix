@@ -17,6 +17,7 @@
       packages = with pkgs; [
         beads
         loom
+        pi-coding-agent
         wrix
         wrix-notify-host
         wrix-notifyd
