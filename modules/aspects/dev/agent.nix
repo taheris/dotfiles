@@ -89,6 +89,7 @@
 
       programs.claude-code = {
         enable = true;
+        configDir = "${config.home.homeDirectory}/.claude";
 
         settings = {
           model = "claude-opus-4-8";

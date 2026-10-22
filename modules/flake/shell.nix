@@ -16,6 +16,7 @@
         agent = "pi";
         packages = [ pkgs.podman ];
       };
+
     in
     {
       devShells.default = sandbox.devShell { };
@@ -23,9 +24,9 @@
       formatter = pkgs.nixfmt-tree;
 
       packages = {
-        default = sandbox.package;
-        sandbox = sandbox.package;
-        debug = debugSandbox.package;
+        default = inputs'.wrix.packages.wrix;
+        sandbox = sandbox.image;
+        debug = debugSandbox.image;
       };
     };
 }
