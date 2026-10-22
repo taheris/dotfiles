@@ -6,15 +6,13 @@
     libdisplay-info_0_2 = final.stable.libdisplay-info_0_2;
 
     # sphinxHook skips documentation phases with Khal's structured attributes.
-    # Remove when the nixpkgs Sphinx hook supports structured attributes:
-    # https://github.com/NixOS/nixpkgs/commits/nixpkgs-unstable/pkgs/development/interpreters/python/hooks/sphinx-hook.sh
+    # Remove once nixpkgs-unstable includes https://github.com/NixOS/nixpkgs/pull/573479.
     khal = prev.khal.overrideAttrs {
       __structuredAttrs = false;
     };
 
     # Accept Cython's new TypeError wording without disabling the regression test.
-    # Remove when upstream accepts both messages:
-    # https://github.com/tsukumijima/pyopenjtalk-plus/commits/master/tests/test_frontend.py
+    # Remove once nixpkgs-unstable includes https://github.com/NixOS/nixpkgs/pull/576063.
     pythonPackagesExtensions = (prev.pythonPackagesExtensions or [ ]) ++ [
       (pythonFinal: pythonPrev: {
         pyopenjtalk-plus = pythonPrev.pyopenjtalk-plus.overridePythonAttrs (old: {
@@ -25,6 +23,14 @@
         });
       })
     ];
+
+    # Backport the Python bindings build fix; also applies to speechd-minimal.
+    # Remove once nixpkgs-unstable includes https://github.com/NixOS/nixpkgs/pull/576062.
+    speechd = prev.speechd.overrideAttrs (old: {
+      nativeBuildInputs =
+        old.nativeBuildInputs ++ builtins.filter (input: (input.pname or "") == "python3") old.buildInputs;
+      buildInputs = builtins.filter (input: (input.pname or "") != "python3") old.buildInputs;
+    });
 
     # Use C++17 for demangling tests; GCC 16 warnings fail the test harness.
     # Remove when nixpkgs-unstable passes these tests without the override:
