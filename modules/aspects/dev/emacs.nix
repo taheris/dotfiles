@@ -132,7 +132,7 @@
               hunspell
               hunspellDicts.en-gb-large
               hunspellDicts.en-us-large
-              ltex-ls
+              ltex-ls-plus
               prettier
               sqlite
               tinymist

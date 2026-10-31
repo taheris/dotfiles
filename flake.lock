@@ -397,10 +397,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1793445650,
-        "narHash": "sha256-zqdjWPg6uVUOD//4dcghyU2CjeVzq9EzqzraFfei+EU=",
+        "lastModified": 1793482569,
+        "narHash": "sha256-hQvL6n5Np01v3P2yo4DfBFbmS3XbbmsGnFjWA0YHc48=",
         "ref": "main",
-        "rev": "94004c20f879ed8d3328ef4dcc56890b41abf055",
+        "rev": "a4d074314840ec364698645bca5f02f4049e1968",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/loom.git"
@@ -838,10 +838,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1793456385,
-        "narHash": "sha256-40Bil8uiEo0bY3g9v8UuBuC9+lpLNIV/2os5aQjjn+c=",
+        "lastModified": 1793479685,
+        "narHash": "sha256-JYxiiaSMDnIYe3hVpJPww3Y0dLfYfHLeq+rlxSikcHo=",
         "ref": "main",
-        "rev": "de94661d9db675adc0c54941a0678d36f10594db",
+        "rev": "952ef90ca118f4680ed1e66e3966e014d1991957",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"
