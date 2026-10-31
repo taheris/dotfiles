@@ -37,12 +37,10 @@ in
       cookie7 = callPackage ../../packages/cookie7 { };
     }
     // optionalAttrs isLinux {
-      apple-display-backlight = callPackage ../../packages/apple-display-backlight {
-        kernel = final.linuxPackages_latest.kernel;
-      };
-      r8152 = callPackage ../../packages/r8152 {
-        kernel = final.linuxPackages_latest.kernel;
-      };
+      apple-display-backlight =
+        final.linuxPackages_latest.callPackage ../../packages/apple-display-backlight
+          { };
+      r8152 = final.linuxPackages_latest.callPackage ../../packages/r8152 { };
       intercept-fn-keys = callPackage ../../packages/intercept-fn-keys { };
       librepods = callPackage ../../packages/librepods { };
       mouser = callPackage ../../packages/mouser { };

@@ -2,6 +2,7 @@
   lib,
   stdenv,
   kernel,
+  kernelModuleMakeFlags,
 }:
 
 stdenv.mkDerivation {
@@ -17,21 +18,21 @@ stdenv.mkDerivation {
     "pic"
   ];
 
-  buildPhase = ''
-    runHook preBuild
-    make -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build \
-      M=$PWD \
-      modules
-    runHook postBuild
-  '';
+  makeFlags = kernelModuleMakeFlags ++ [
+    "-C"
+    "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "M=$(PWD)"
+    "INSTALL_MOD_PATH=$(out)"
+    "INSTALL_MOD_DIR=updates"
+    "DEPMOD=true"
+  ];
 
-  installPhase = ''
-    runHook preInstall
-    install -D -m 0644 r8152.ko \
-      $out/lib/modules/${kernel.modDirVersion}/updates/r8152.ko
+  buildFlags = [ "modules" ];
+  installTargets = [ "modules_install" ];
+
+  postInstall = ''
     install -D -m 0644 50-usb-realtek-net.rules \
       $out/lib/udev/rules.d/50-usb-realtek-net.rules
-    runHook postInstall
   '';
 
   meta = {

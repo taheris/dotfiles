@@ -2,6 +2,7 @@
   lib,
   stdenv,
   kernel,
+  kernelModuleMakeFlags,
 }:
 
 stdenv.mkDerivation {
@@ -17,19 +18,17 @@ stdenv.mkDerivation {
     "pic"
   ];
 
-  buildPhase = ''
-    runHook preBuild
-    make -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build \
-      M=$PWD \
-      modules
-    runHook postBuild
-  '';
+  makeFlags = kernelModuleMakeFlags ++ [
+    "-C"
+    "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "M=$(PWD)"
+    "INSTALL_MOD_PATH=$(out)"
+    "INSTALL_MOD_DIR=extra"
+    "DEPMOD=true"
+  ];
 
-  installPhase = ''
-    runHook preInstall
-    install -D apple_bl_usb.ko $out/lib/modules/${kernel.modDirVersion}/extra/apple_bl_usb.ko
-    runHook postInstall
-  '';
+  buildFlags = [ "modules" ];
+  installTargets = [ "modules_install" ];
 
   meta = {
     description = "Apple Studio Display / Pro Display XDR backlight driver";
