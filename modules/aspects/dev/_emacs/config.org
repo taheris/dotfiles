@@ -53,6 +53,17 @@
       undo-limit 10485760)                   ; 10MB undo history
 #+end_src
 
+** macOS keyboard modifiers
+
+Keep Command as Meta and leave Option available for native macOS behavior.
+
+#+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
+(setq mac-command-modifier 'meta
+      mac-option-modifier 'none
+      ns-command-modifier 'meta
+      ns-option-modifier 'none)
+#+end_src
+
 ** Encoding
 
 Always use =utf-8= encoding.
