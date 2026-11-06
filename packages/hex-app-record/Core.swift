@@ -108,9 +108,22 @@ final class AudioQueue {
     private let lock = NSLock()
     private var bytes = Data()
     private var failure: String?
+    private var stopped = false
     private let limit: Int
 
     init(limit: Int = 120 * 16000 * 4) { self.limit = limit }
+
+    var isStopped: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return stopped
+    }
+
+    func markStopped() {
+        lock.lock()
+        defer { lock.unlock() }
+        stopped = true
+    }
 
     func fail(_ message: String) {
         lock.lock()

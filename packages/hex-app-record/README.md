@@ -10,7 +10,8 @@ Speech). Grant `hex-app-record` Screen Recording permission when macOS asks;
 ScreenCaptureKit requires this permission even for audio-only capture. A changed
 Nix store executable may require granting permission again after an upgrade.
 
-Press Shift+Fn again to finish. Markdown transcripts are saved under
+Press Shift+Fn again to finish, or use macOS's capture Stop button.
+Markdown transcripts are saved under
 `~/Documents/hex`; this explicit output is independent of Hex's disabled
 dictation history. Notifications show start, completion, and failures. Diagnostic
 output is in `~/Library/Caches/hex-app-record/record.log`. Audio is sent only to

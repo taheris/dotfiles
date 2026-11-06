@@ -34,6 +34,15 @@ struct Tests {
         try check(first + second == samples, "Queued samples must not be lost")
         try check(try queue.take().isEmpty, "Queue should drain")
 
+        let stopped = AudioQueue()
+        stopped.append(samples)
+        stopped.markStopped()
+        try check(stopped.isStopped, "User stop must signal capture completion")
+        let stoppedFirst = try stopped.take()
+        let stoppedSecond = try stopped.take()
+        try check(stoppedFirst + stoppedSecond == samples, "User stop must preserve queued audio for finishing")
+        try check(try stopped.take().isEmpty, "Stopped capture should drain without failing")
+
         let overflow = AudioQueue(limit: 4)
         overflow.append(Data(repeating: 0, count: 8))
         do {

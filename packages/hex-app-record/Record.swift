@@ -9,7 +9,13 @@ final class AudioOutput: NSObject, SCStreamOutput, SCStreamDelegate {
     init(audio: AudioQueue) { self.audio = audio }
 
     func stream(_ stream: SCStream, didStopWithError error: Error) {
-        audio.fail("Capture stopped: \(error.localizedDescription)")
+        let error = error as NSError
+        if error.domain == SCStreamErrorDomain,
+           error.code == SCStreamError.Code.userStopped.rawValue {
+            audio.markStopped()
+        } else {
+            audio.fail("Capture stopped: \(error.localizedDescription)")
+        }
     }
 
     func stream(_ stream: SCStream, didOutputSampleBuffer sample: CMSampleBuffer,
@@ -163,7 +169,7 @@ struct Recorder {
             try await capture.startCapture()
             notify("Transcribing \(name). Press Shift+Fn again to stop.")
             var heartbeat = ProcessInfo.processInfo.systemUptime
-            while !exists(stop) {
+            while !exists(stop) && !audio.isStopped {
                 let bytes = try audio.take()
                 if !bytes.isEmpty {
                     try await client.send(bytes)
@@ -174,7 +180,19 @@ struct Recorder {
                 }
                 try await Task.sleep(nanoseconds: 100_000_000)
             }
-            try await capture.stopCapture()
+            if !audio.isStopped {
+                do {
+                    try await capture.stopCapture()
+                } catch {
+                    let error = error as NSError
+                    // The system Stop button can race the shortcut's stop request.
+                    guard error.domain == SCStreamErrorDomain,
+                          [SCStreamError.Code.userStopped.rawValue,
+                           SCStreamError.Code.attemptToStopStreamState.rawValue].contains(error.code) else {
+                        throw error
+                    }
+                }
+            }
             captureQueue.sync {}
             while true {
                 let bytes = try audio.take()
@@ -190,6 +208,7 @@ struct Recorder {
             formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss-SSS"
             let path = folder.appendingPathComponent("\(formatter.string(from: Date()))-\(UUID().uuidString.prefix(8))-app.md")
             try "# \(name)\n\n\(result.text)\n".write(to: path, atomically: true, encoding: .utf8)
+            print("Transcript saved: \(path.path)")
             notify("Transcript saved: \(path.lastPathComponent)")
         } catch {
             try? await capture.stopCapture()
