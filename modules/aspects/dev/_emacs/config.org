@@ -739,6 +739,26 @@ Remove unused ~evil-escape-mode~ package which watches insert-mode keystrokes.
 (package! evil-escape :disable t)
 #+end_src
 
+*** macOS paste
+
+Hex inserts dictation with Command-V, which is Meta-V in Emacs.
+
+#+begin_src emacs-lisp :tangle (if IS-MAC "yes" "no")
+(map! "M-v" #'yank
+      :map evil-insert-state-map "M-v" #'yank
+      :map evil-normal-state-map "M-v" #'yank
+      :map evil-visual-state-map "M-v" #'yank)
+#+end_src
+
+** Direnv
+
+Continue environment loading in the background after one second.
+
+#+begin_src emacs-lisp
+(after! envrc
+  (setq envrc-async 1))
+#+end_src
+
 ** Projectile
 
 Ignore some ~projectile~ paths.
@@ -1321,7 +1341,7 @@ Read the calibre eBook library.
 Use =nov= to read eBooks.
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! nov :pin "874daf5e4791a6d4f47741422c80e2736e907351")
+(package! nov :pin "b1fdcbd41c037ab50dce29db878f2ab226ed66c3")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1502,7 +1522,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 *** gptel
 
 #+begin_src emacs-lisp :tangle packages.el
-(package! gptel :pin "ecc693d69e0f9737fa637abc88ec4ce0c3187b8e")
+(package! gptel :pin "e161ababf0cb19654ec9097f06c09c95d4561721")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1513,8 +1533,29 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
     "curl --fail --silent http://localhost:8080/v1/models | jq --raw-output '.data[].id'")
    "\n" t))
 
+(defun my/llm-send ()
+  "Send input to the LLM associated with the current buffer."
+  (interactive)
+  (call-interactively
+   (if (derived-mode-p 'agent-shell-mode)
+       #'agent-shell-submit
+     #'gptel-send)))
+
+(defun my/llm-interrupt ()
+  "Interrupt the LLM associated with the current buffer."
+  (interactive)
+  (call-interactively
+   (if (derived-mode-p 'agent-shell-mode)
+       #'agent-shell-interrupt
+     #'gptel-abort)))
+
 (after! gptel
-  (let* ((gptel-anthropic (gptel-make-anthropic "Anthropic"
+  (require 'gptel-openai-oauth)
+  (let* ((gptel-openai (gptel-make-openai-oauth "OpenAI"
+                        :request-params '(:reasoning (:effort "medium"))
+                        :stream t))
+
+         (gptel-anthropic (gptel-make-anthropic "Anthropic"
                             :key #'gptel-api-key-from-auth-source
                             :stream t))
 
@@ -1523,16 +1564,16 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                            :endpoint "/v1/chat/completions"
                            :stream t
                            :key #'gptel-api-key-from-auth-source
-                           :models '(zai-glm-4.7)))
+                           :models '(qwen-3.8-27b gpt-oss-120b)))
 
          (gptel-gemini (gptel-make-gemini "Gemini"
-                         :key (getenv "GEMINI_API_KEY")
+                         :key #'gptel-api-key-from-auth-source
                          :stream t))
 
          (gptel-mistral (gptel-make-openai "mistral"
                           :host "api.mistral.ai"
                           :key #'gptel-api-key-from-auth-source
-                          :models '("mistral-large-latest" "open-codestral-mamba")
+                          :models '("mistral-large-4" "mistral-small-latest")
                           :stream t))
 
          (gptel-llama-cpp (gptel-make-openai "llama.cpp"
@@ -1541,8 +1582,8 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                             :models (get-llama-cpp-models)
                             :stream t)))
 
-    (setq gptel-backend gptel-cerebras
-          gptel-model 'zai-glm-4.7
+    (setq gptel-backend gptel-openai
+          gptel-model 'gpt-6.1-sol
           gptel-default-mode 'org-mode
           gptel-display-buffer-action 'display-buffer-same-window)
 
@@ -1553,16 +1594,14 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
 
   (map! :leader
         (:prefix ("l" . "llm")
-         :desc "Add text to context"        "a" #'gptel-add
-         :desc "Explain"                    "e" #'gptel-quick
-         :desc "Add file to context"        "f" #'gptel-add-file
-         :desc "Open gptel"                 "l" #'gptel
-         :desc "Send to gptel"              "s" #'gptel-send
+         :desc "Open gptel"                 "g" #'gptel
+         :desc "Send to LLM"                "s" #'my/llm-send
+         :desc "Interrupt LLM"              "z" #'my/llm-interrupt
          :desc "Open gptel menu"            "m" #'gptel-menu
-         :desc "Rewrite"                    "r" #'gptel-rewrite
+         :desc "Quick query"                "q" #'gptel-quick
+         :desc "Rewrite"                    "R" #'gptel-rewrite
          :desc "Org: set topic"             "o" #'gptel-org-set-topic
-         :desc "Org: set properties"        "O" #'gptel-org-set-properties
-         :desc "Abort"                      "z" #'gptel-abort)))
+         :desc "Org: set properties"        "p" #'gptel-org-set-properties)))
 #+end_src
 
 Open all org-mode buffers with gptel.
@@ -1572,45 +1611,19 @@ Open all org-mode buffers with gptel.
   (add-hook 'org-mode-hook 'gptel-mode))
 #+end_src
 
-Call ~gptel-send~ with =C-c RET= only.
+Send with =SPC l s= and preserve Org's native Return bindings.
 
 #+begin_src emacs-lisp
 (after! gptel
-  (map! :map gptel-mode-map
-        :niv "RET" nil
-        :niv "<return>" nil
-        :niv "S-<return>" nil
-
-        "RET" nil
-        "<return>" nil
-        "S-<return>" nil))
-
-(after! org
-  (define-key org-mode-map (kbd "C-c <return>") #'gptel-send))
+  (define-key gptel-mode-map (kbd "C-c RET") nil))
 #+end_src
 
 Don't save or restore gptel state to org buffer.
 
 #+begin_src emacs-lisp
-(defcustom inhibit-gptel-org-save nil
-  "Non-nil to inhibit saving gptel state.")
-(defcustom inhibit-gptel-org-restore nil
-  "Non-nil to inhibit restoring gptel state.")
-
-(advice-add 'gptel-org--save-state :around
-            (lambda (orig-fun &rest args)
-              (unless inhibit-gptel-org-save (apply orig-fun args))))
-
-(advice-add 'gptel-org--restore-state :around
-            (lambda (orig-fun &rest args)
-              (when (and (not inhibit-gptel-org-restore)
-                         (org-entry-get (point-min) "GPTEL_BOUNDS"))
-                (apply orig-fun args))))
-
-(add-hook 'gptel-save-state-hook
-          (lambda () (setq-local inhibit-gptel-org-save t)))
-(add-hook 'gptel-mode-hook
-          (lambda () (setq-local inhibit-gptel-org-restore t)))
+(after! gptel-org
+  (advice-add 'gptel-org--save-state :override #'ignore)
+  (advice-add 'gptel-org--restore-state :override #'ignore))
 #+end_src
 
 *** agent-shell
@@ -1619,17 +1632,28 @@ Don't save or restore gptel state to org buffer.
 (package! shell-maker)
 (package! acp
   :recipe (:host github :repo "xenodium/acp.el")
-  :pin "242cef63d76cc1073485847f67a21f6d8406d158")
+  :pin "2959da5fa8657da17a78ac6ceef303a50e3e69de")
 (package! agent-shell
   :recipe (:host github :repo "xenodium/agent-shell")
-  :pin "5f07c37e5538485da0e8ef2831a1afb1a564be6e")
+  :pin "ee1f061a111726955ee4d3056862804c8e458c64")
 #+end_src
 
 #+begin_src emacs-lisp
 (use-package! agent-shell
   :config
-  (setq agent-shell-anthropic-authentication (agent-shell-anthropic-make-authentication :login t)
-        agent-shell-file-completion-enabled t))
+  (require 'agent-shell-openai)
+  (setq agent-shell-preferred-agent-config 'codex
+        agent-shell-openai-authentication (agent-shell-openai-make-authentication :login t)
+        agent-shell-openai-default-model-id "gpt-6.1-sol"
+        agent-shell-openai-default-config-options '(("reasoning_effort" . "medium"))))
+
+(map! :leader
+      (:prefix ("l" . "llm")
+       :desc "Open agent"                  "a" #'agent-shell
+       :desc "New agent session"           "n" #'agent-shell-new-shell
+       :desc "Compose agent prompt"        "c" #'agent-shell-prompt-compose
+       :desc "Add region to agent"         "r" #'agent-shell-send-region
+       :desc "Add file to agent"           "f" #'agent-shell-send-file))
 #+end_src
 
 * Functions
@@ -1782,7 +1806,7 @@ Disable ZeroMQ in macOS.
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("protobuf-mode.el" "editors/*.el"))
-  :pin "6a5c50576f1e8d42cd6adb94764857ff03afcf9f")
+  :pin "3a71c2472b13113e6807ec119bf4367416bb0644")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1854,7 +1878,7 @@ Disable ZeroMQ in macOS.
 
 (package! ob-d2
   :recipe (:host github :repo "xcapaldi/ob-d2" :files ("*.el"))
-  :pin "5d197f8225a9fb4da997235b231abe30049c6825")
+  :pin "f57f5d16a28975f9a170d1a3e778f009d4818f53")
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1877,7 +1901,7 @@ Disable ZeroMQ in macOS.
 
 (package! typst-ts-mode
   :recipe (:host codeberg :repo "meow_king/typst-ts-mode")
-  :pin "155bb36cff3afe701a0f6b57bd3fe5c9effaa314")
+  :pin "ee17b331ebfa8d8b7c2f54a1c39ab3d76e134706")
 
 (package! typst-preview
   :recipe (:host github :repo "havarddj/typst-preview.el")

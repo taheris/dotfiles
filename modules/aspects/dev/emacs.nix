@@ -7,6 +7,7 @@
     {
       config,
       lib,
+      osConfig,
       pkgs,
       ...
     }:
@@ -36,7 +37,7 @@
       emacs = "${config.xdg.configHome}/emacs";
 
       # Activation has a minimal PATH, which Doom would otherwise persist for
-      # GUI Emacs. Include the active HM profile and configured user bin dirs.
+      # GUI Emacs. Include user tools and the host's configured system paths.
       path = concatStringsSep ":" (
         [
           "${config.home.profileDirectory}/bin"
@@ -45,6 +46,7 @@
           "${emacs}/bin"
         ]
         ++ config.home.sessionPath
+        ++ lib.optional isDarwin osConfig.environment.systemPath
         ++ [ "$PATH" ]
       );
     in
@@ -142,6 +144,7 @@
           let
             basePackages = with pkgs; [
               (aspellWithDicts (dicts: [ dicts.en ]))
+              codex-acp
               epdfinfo
               hunspell
               hunspellDicts.en-gb-large
@@ -181,6 +184,7 @@
         content = ''
           machine api.anthropic.com login apikey password ${config.sops.placeholder."llm/anthropic/api"}
           machine api.cerebras.ai login apikey password ${config.sops.placeholder."llm/cerebras"}
+          machine generativelanguage.googleapis.com login apikey password ${config.sops.placeholder."llm/gemini"}
           machine api.mistral.ai login apikey password ${config.sops.placeholder."llm/mistral"}
           machine api.openai.com login apikey password ${config.sops.placeholder."llm/openai"}
           machine irc.libera.chat login proto1 password ${config.sops.placeholder.libera}

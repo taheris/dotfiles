@@ -170,10 +170,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1793938822,
-        "narHash": "sha256-AJsvqq8yP1iZJdrRV99dviMn3iKw/tMFjCQCVQ7N/70=",
+        "lastModified": 1793960587,
+        "narHash": "sha256-uPOQdUuSZw5nsJXo+UD7dEE/+QFtXEsSDDUHJATqpuo=",
         "ref": "master",
-        "rev": "6569282f4417cec04d67aa2db1dbad93ea163d59",
+        "rev": "de6b9620f8fe46fb54816a66596775898c0affff",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"

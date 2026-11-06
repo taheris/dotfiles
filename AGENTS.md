@@ -1,7 +1,6 @@
 # Agent Instructions
 
-Use the host OS branch, not the container OS: `linux` on Linux, `darwin` on
-macOS.
+Use the user's host OS branch: `linux` or `darwin`, NOT the container OS.
 
 Update `README.md` only when necessary.
 
