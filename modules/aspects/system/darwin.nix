@@ -23,7 +23,8 @@
           ...
         }:
         let
-          inherit (lib) mkBefore optionals;
+          inherit (lib) mkBefore mkIf optional;
+          inherit (host) builders;
 
           dockerCompat =
             pkgs.runCommand "${pkgs.podman.pname}-docker-compat-${pkgs.podman.version}"
@@ -75,19 +76,23 @@
         {
           environment = {
             etc = {
-              "ssh/ssh_config.d/100-nix-builder.conf".text = ''
-                Host nix
-                  ProxyCommand ${nixBuilderProbe} %h %p
-              '';
+              "ssh/ssh_config.d/100-nix-builder.conf" = mkIf builders.nix.enable {
+                text = ''
+                  Host nix
+                    ProxyCommand ${nixBuilderProbe} %h %p
+                '';
+              };
 
-              "ssh/ssh_config.d/100-wrix-builder.conf".text = ''
-                Host wrix-builder
-                  Hostname localhost
-                  Port 2222
-                  User builder
-                  HostKeyAlias wrix-builder
-                  IdentityFile /etc/nix/wrix_builder_ed25519
-              '';
+              "ssh/ssh_config.d/100-wrix-builder.conf" = mkIf builders.wrix.enable {
+                text = ''
+                  Host wrix-builder
+                    Hostname localhost
+                    Port 2222
+                    User builder
+                    HostKeyAlias wrix-builder
+                    IdentityFile /etc/nix/wrix_builder_ed25519
+                '';
+              };
 
               "tailscale/tailscaled-env.txt".source = tailscaleEnv;
             };
@@ -185,12 +190,12 @@
 
           nix = {
             enable = true;
-            distributedBuilds = host.hasLinuxBuilder;
+            distributedBuilds = builders.wrix.enable || builders.nix.enable;
             gc.automatic = true;
             optimise.automatic = true;
 
-            buildMachines = optionals host.hasLinuxBuilder [
-              {
+            buildMachines =
+              optional builders.wrix.enable {
                 hostName = "localhost:2222";
                 maxJobs = 4;
                 protocol = "ssh-ng";
@@ -203,7 +208,7 @@
                   "big-parallel"
                 ];
               }
-              {
+              ++ optional builders.nix.enable {
                 hostName = "nix";
                 maxJobs = 8;
                 sshUser = host.user;
@@ -218,8 +223,7 @@
                   "kvm"
                   "nixos-test"
                 ];
-              }
-            ];
+              };
 
             settings = {
               download-buffer-size = 500 * 1024 * 1024;

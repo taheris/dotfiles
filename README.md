@@ -19,7 +19,7 @@ modules/
     dev/      emacs python rust sql git agent
     desktop/  niri dms sddm stylix font librewolf flatpak
     hardware/ nvidia pipewire interception
-    input/    karabiner mouser bazecor sox yubikey
+    input/    karabiner mouser bazecor hex yubikey
     services/ tailscale ssh podman llama-cpp
     secrets/  secrets gpg
     system/   linux/darwin base + shared home packages

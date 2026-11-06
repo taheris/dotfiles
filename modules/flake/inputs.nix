@@ -32,6 +32,12 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
+    hex = {
+      url = "github:anomalyco/hex";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     home-manager = {
       url = "git+ssh://git@github.com/nix-community/home-manager.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";

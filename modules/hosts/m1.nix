@@ -5,7 +5,10 @@
     system = "aarch64-darwin";
     user = "shaun";
     fontSize = 16;
-    hasLinuxBuilder = true;
+    builders = {
+      wrix.enable = true;
+      nix.enable = false;
+    };
     users.shaun = { };
   };
 
@@ -17,7 +20,7 @@
     my.karabiner
     my.leader-key
     my.omniwm
-    my.sox
+    my.hex
     my.stylix
     my.vlc
   ];

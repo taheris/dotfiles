@@ -12,7 +12,7 @@
       inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
       inherit (pkgs.stdenv.hostPlatform) isAarch64;
 
-      inherit (config.my) hasLinuxBuilder;
+      inherit (config.my) builders;
 
       packages = with pkgs; [
         beads
@@ -69,7 +69,7 @@
     {
       home.packages = mkMerge [
         packages
-        (mkIf (isDarwin && hasLinuxBuilder) builderPackages)
+        (mkIf (isDarwin && builders.wrix.enable) builderPackages)
         (mkIf isDarwin darwinPackages)
         (mkIf isLinux linuxPackages)
       ];

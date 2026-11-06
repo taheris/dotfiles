@@ -24,6 +24,13 @@
       url = "git+ssh://git@github.com/hercules-ci/flake-parts.git?ref=main&shallow=1";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    hex = {
+      url = "github:anomalyco/hex";
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     home-manager = {
       url = "git+ssh://git@github.com/nix-community/home-manager.git?ref=master&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";

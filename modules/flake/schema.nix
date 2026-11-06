@@ -25,10 +25,15 @@ let
       description = "Default font size for terminal/UI on this host.";
     };
 
-    hasLinuxBuilder = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Whether this host has access to a remote Nix Linux builder.";
+    builders = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          wrix.enable = lib.mkEnableOption "the local wrix Linux builder";
+          nix.enable = lib.mkEnableOption "the remote nix Linux builder";
+        };
+      };
+      default = { };
+      description = "Linux builders available to this host.";
     };
   };
 
@@ -36,7 +41,7 @@ let
     options.my = options;
   };
 
-  bridge = host: { my = { inherit (host) user fontSize hasLinuxBuilder; }; };
+  bridge = host: { my = { inherit (host) user fontSize builders; }; };
 
   # Resolves the host's full homeManager aspect tree (including the my.host
   # bridge) onto the standalone home. Mirrors `den.batteries.host-aspects`

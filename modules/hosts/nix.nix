@@ -4,7 +4,6 @@
   den.hosts.x86_64-linux.nix = {
     user = "shaun";
     fontSize = 13;
-    hasLinuxBuilder = true;
     # Account only; HM runs standalone via `den.homes` below.
     users.shaun.classes = [ ];
   };
@@ -45,7 +44,7 @@
         # input
         my.bazecor
         my.mouser
-        my.sox
+        my.hex
         my.yubikey
 
         # secrets

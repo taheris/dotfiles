@@ -88,6 +88,19 @@
             ]
           },
           {
+            "description": "Shift-Fn to toggle Hex meeting recording",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "fn",
+                  "modifiers": { "mandatory": ["shift"] }
+                },
+                "to": [{ "shell_command": "'@homeProfile@/bin/hex-meeting-toggle'", "repeat": false }]
+              }
+            ]
+          },
+          {
             "description": "CapsLock to control or escape",
             "manipulators": [
               {
@@ -105,28 +118,6 @@
                   }
                 ],
                 "type": "basic"
-              }
-            ]
-          },
-          {
-            "description": "fn to f18 on down and f19 on up",
-            "manipulators": [
-              {
-                "type": "basic",
-                "from": {
-                  "key_code": "fn"
-                },
-                "to": [
-                  {
-                    "key_code": "f18",
-                    "repeat": false
-                  }
-                ],
-                "to_after_key_up": [
-                  {
-                    "key_code": "f19"
-                  }
-                ]
               }
             ]
           }
