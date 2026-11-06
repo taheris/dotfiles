@@ -88,7 +88,7 @@
             ]
           },
           {
-            "description": "Shift-Fn to toggle Hex meeting recording",
+            "description": "Shift-Fn to transcribe frontmost app audio with Hex",
             "manipulators": [
               {
                 "type": "basic",
@@ -96,7 +96,7 @@
                   "key_code": "fn",
                   "modifiers": { "mandatory": ["shift"] }
                 },
-                "to": [{ "shell_command": "'@homeProfile@/bin/hex-meeting-toggle'", "repeat": false }]
+                "to": [{ "shell_command": "'@homeProfile@/bin/hex-app-record'", "repeat": false }]
               }
             ]
           },
