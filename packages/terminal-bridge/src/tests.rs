@@ -63,6 +63,14 @@ fn default_server_is_ordinary_tmux() {
 fn launcher_uses_plain_tmux_without_session_registration() {
     let command = launch_command();
     let args: Vec<_> = command.get_args().collect();
+    let args = if cfg!(target_os = "macos") {
+        assert_eq!(command.get_program(), "/usr/bin/open");
+        assert_eq!(&args[..4], &["-n", "-a", "/Applications/Alacritty.app", "--args"]);
+        &args[4..]
+    } else {
+        assert_eq!(command.get_program(), "alacritty");
+        &args[..]
+    };
     assert_eq!(args.len(), 4);
     assert_eq!(args[0], "--working-directory");
     assert_eq!(args[2], "-e");

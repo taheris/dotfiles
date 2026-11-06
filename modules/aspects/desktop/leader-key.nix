@@ -16,8 +16,12 @@
         managedConfig = "${configDir}/config.nix.json";
         liveConfig = "${configDir}/config.json";
 
+        openEmacs = pkgs.writeShellScript "leader-key-open-emacs" ''
+          exec /usr/bin/open -n -a ${lib.escapeShellArg "${config.programs.emacs.package}/Applications/Emacs.app"} --args "$@"
+        '';
+
         spawnEmacs = pkgs.writeShellScript "leader-key-emacs" ''
-          ${config.programs.emacs.package}/bin/emacsclient -n -c -a ${config.programs.emacs.package}/bin/emacs \
+          ${config.programs.emacs.package}/bin/emacsclient -n -c -a ${openEmacs} \
             </dev/null >>"''${TMPDIR:-/tmp}/leader-key-emacs.log" 2>&1 &
         '';
 

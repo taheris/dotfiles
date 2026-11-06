@@ -352,7 +352,18 @@ fn terminal_command() -> Command {
 
 fn launch_command() -> Command {
     // Ordinary tmux startup: no special socket, session name, or registration.
-    let mut command = terminal_command();
+    // LaunchServices gives the app its own privacy/network attribution instead
+    // of inheriting the shortcut launcher's responsible-process identity.
+    let mut command = if cfg!(target_os = "macos") {
+        let mut command = Command::new("/usr/bin/open");
+        command
+            .args(["-n", "-a", "/Applications/Alacritty.app", "--args"])
+            .env_remove("TMUX")
+            .env_remove("TMUX_PANE");
+        command
+    } else {
+        terminal_command()
+    };
     command
         .arg("--working-directory")
         .arg(last_directory())
