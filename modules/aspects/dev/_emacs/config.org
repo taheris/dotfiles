@@ -444,9 +444,9 @@ markdown                     ; writing docs for people to ignore
  +tree-sitter)
 ;;sml                        ; no, the /other/ ML
 ;;solidity                   ; do you need a blockchain? No.
-;(swift                      ; who asked for emoji variables?
-; +lsp
-; +tree-sitter)
+(swift)                      ; who asked for emoji variables?
+ ;+lsp
+ ;+tree-sitter)
 ;;terra                      ; Earth and Moon in alignment for performance.
 (web                         ; the tubes
  +lsp
@@ -1590,18 +1590,24 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
     (setf (alist-get 'org-mode gptel-prompt-prefix-alist) "** \n\n"
           (alist-get 'org-mode gptel-response-prefix-alist) "*** \n\n")
 
-    (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll))
+    (add-hook 'gptel-post-stream-hook 'gptel-auto-scroll)))
 
-  (map! :leader
-        (:prefix ("l" . "llm")
-         :desc "Open gptel"                 "g" #'gptel
-         :desc "Send to LLM"                "s" #'my/llm-send
-         :desc "Interrupt LLM"              "z" #'my/llm-interrupt
-         :desc "Open gptel menu"            "m" #'gptel-menu
-         :desc "Quick query"                "q" #'gptel-quick
-         :desc "Rewrite"                    "R" #'gptel-rewrite
-         :desc "Org: set topic"             "o" #'gptel-org-set-topic
-         :desc "Org: set properties"        "p" #'gptel-org-set-properties)))
+;; Define the shared prefix once to avoid replacing its bindings.
+(map! :leader
+      (:prefix ("l" . "llm")
+       :desc "Open gptel"                 "g" #'gptel
+       :desc "Send to LLM"                "s" #'my/llm-send
+       :desc "Interrupt LLM"              "z" #'my/llm-interrupt
+       :desc "Open gptel menu"            "m" #'gptel-menu
+       :desc "Quick query"                "q" #'gptel-quick
+       :desc "Rewrite"                    "R" #'gptel-rewrite
+       :desc "Org: set topic"             "o" #'gptel-org-set-topic
+       :desc "Org: set properties"        "p" #'gptel-org-set-properties
+       :desc "Open agent"                  "a" #'agent-shell
+       :desc "New agent session"           "n" #'agent-shell-new-shell
+       :desc "Compose agent prompt"        "c" #'agent-shell-prompt-compose
+       :desc "Add region to agent"         "r" #'agent-shell-send-region
+       :desc "Add file to agent"           "f" #'agent-shell-send-file))
 #+end_src
 
 Open all org-mode buffers with gptel.
@@ -1640,20 +1646,17 @@ Don't save or restore gptel state to org buffer.
 
 #+begin_src emacs-lisp
 (use-package! agent-shell
+  :commands (agent-shell
+             agent-shell-new-shell
+             agent-shell-prompt-compose
+             agent-shell-send-region
+             agent-shell-send-file)
   :config
   (require 'agent-shell-openai)
   (setq agent-shell-preferred-agent-config 'codex
         agent-shell-openai-authentication (agent-shell-openai-make-authentication :login t)
         agent-shell-openai-default-model-id "gpt-6.1-sol"
         agent-shell-openai-default-config-options '(("reasoning_effort" . "medium"))))
-
-(map! :leader
-      (:prefix ("l" . "llm")
-       :desc "Open agent"                  "a" #'agent-shell
-       :desc "New agent session"           "n" #'agent-shell-new-shell
-       :desc "Compose agent prompt"        "c" #'agent-shell-prompt-compose
-       :desc "Add region to agent"         "r" #'agent-shell-send-region
-       :desc "Add file to agent"           "f" #'agent-shell-send-file))
 #+end_src
 
 * Functions
@@ -1891,6 +1894,22 @@ Disable ZeroMQ in macOS.
 (use-package! ob-d2
   :config
   (setq ob-d2-command "d2 --layout elk --sketch"))
+#+end_src
+
+** Swift
+
+Remove this grammar compatibility patch when Doom includes the fix for
+[[https://github.com/rechsteiner/swift-ts-mode/issues/5][swift-ts-mode#5]].
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! swift-ts-mode
+  :recipe (:pre-build
+           (with-temp-buffer
+             (insert-file-contents "swift-ts-mode.el")
+             (goto-char (point-min))
+             (while (search-forward "\"nil\"" nil t)
+               (replace-match "(nil_literal)" t t))
+             (write-region nil nil "swift-ts-mode.el" nil 'silent))))
 #+end_src
 
 ** Typst
