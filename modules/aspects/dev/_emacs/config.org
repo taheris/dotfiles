@@ -745,14 +745,16 @@ Ignore some ~projectile~ paths.
 
 #+begin_src emacs-lisp
 (setq projectile-enable-caching nil
-      projectile-globally-ignored-directories
-      '(".cargo" ".claude")
       projectile-ignored-projects
       '("~/"
         "~/Documents"
         "~/.emacs.d/.local/straight/repos/"
         "/tmp")
       projectile-indexing-method 'alien)
+
+(after! projectile
+  (dolist (directory '(".cargo" ".claude"))
+    (add-to-list 'projectile-globally-ignored-directories directory)))
 
 (defun projectile-ignored-project-function (filepath)
   "Return t if FILEPATH is within any of `projectile-ignored-projects'"

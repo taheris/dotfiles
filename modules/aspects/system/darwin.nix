@@ -137,7 +137,6 @@
               "little-snitch"
               "mactex"
               "mate-translate"
-              "micro-snitch"
               "omniwm"
               "podman-desktop"
               "slack"

@@ -35,12 +35,18 @@
       doom = "${config.xdg.configHome}/doom";
       emacs = "${config.xdg.configHome}/emacs";
 
-      path = concatStringsSep ":" [
-        "$PATH"
-        "${config.programs.emacs.package}/bin"
-        "${pkgs.git}/bin"
-        "${emacs}/bin"
-      ];
+      # Activation has a minimal PATH, which Doom would otherwise persist for
+      # GUI Emacs. Include the active HM profile and configured user bin dirs.
+      path = concatStringsSep ":" (
+        [
+          "${config.home.profileDirectory}/bin"
+          "${config.programs.emacs.package}/bin"
+          "${pkgs.git}/bin"
+          "${emacs}/bin"
+        ]
+        ++ config.home.sessionPath
+        ++ [ "$PATH" ]
+      );
     in
     {
       programs = {
@@ -83,10 +89,18 @@
       home = {
         activation.doomEmacs = dag.entryAfter [ "writeBoundary" ] ''
           if [[ ! -d ${emacs} ]]; then
-            export PATH=${path}
+            export PATH="${path}"
             git clone --depth 1 --recurse-submodules --shallow-submodules \
               https://github.com/doomemacs/core ${emacs}
             doom install
+          fi
+        '';
+
+        # Refresh even when config.org is unchanged (e.g. new profile tools).
+        activation.doomEnvironment = dag.entryAfter [ "onFilesChange" "installPackages" ] ''
+          if [[ -x ${emacs}/bin/doom ]]; then
+            export PATH="${path}"
+            run ${emacs}/bin/doom sync --env --reload
           fi
         '';
 
@@ -108,7 +122,7 @@
                 --eval "(setq IS-WINDOWS ${if isCygwin then "t" else "nil"})" \
                 --eval "(org-babel-tangle-file \"${doom}/config.org\")"
 
-              export PATH=${path}
+              export PATH="${path}"
               export SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
               export SSL_CERT_DIR=${pkgs.cacert}/etc/ssl/certs
 

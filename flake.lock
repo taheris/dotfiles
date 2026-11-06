@@ -125,10 +125,10 @@
     },
     "den": {
       "locked": {
-        "lastModified": 1792618207,
-        "narHash": "sha256-iBpvVBVBnynNWW9sLX5oKVigXU28oO2oiMPXgcLO1HI=",
+        "lastModified": 1793924417,
+        "narHash": "sha256-ut7iiD2h2mbtWJaku3wJcQkLmZa7rmzOa6LyWPj9U2s=",
         "ref": "refs/heads/main",
-        "rev": "0f7675b0b789eabe1a62f8a31b5323a7ad3ca5c4",
+        "rev": "2f1ae4aa27e756684d1fb5ebc1d25267727bd305",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/denful/den.git"
@@ -170,10 +170,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1793764754,
-        "narHash": "sha256-RMzvVdVQXsoxhgiN5bGmptliXCg+00WgBZqszm1vvnw=",
+        "lastModified": 1793938822,
+        "narHash": "sha256-AJsvqq8yP1iZJdrRV99dviMn3iKw/tMFjCQCVQ7N/70=",
         "ref": "master",
-        "rev": "29008c9cfd4949d51a786f4b7ab5f39149933d6b",
+        "rev": "6569282f4417cec04d67aa2db1dbad93ea163d59",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -532,10 +532,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1793735720,
-        "narHash": "sha256-smoxPKrzAhdGuFd2LLnG4m8P6IrZuW95DVyzjnlab7w=",
+        "lastModified": 1793826729,
+        "narHash": "sha256-D5H7H+qMoTGI/jJtxKP4u7BdjkFnUyhOovTrf3pTOr0=",
         "ref": "nixpkgs-unstable",
-        "rev": "9d3b8db48266c17be0b5f9c6360c3ecfbac3d1f5",
+        "rev": "6dadaf4375be35033e1c84395adbd53ff5fded96",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nixos/nixpkgs.git"
@@ -862,10 +862,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1793740020,
-        "narHash": "sha256-lqcINQ0ccTcAvtAYmEwmKK1wgU6uSQwXVySUBT1obL0=",
+        "lastModified": 1793928482,
+        "narHash": "sha256-iU5Zn1w3GPWei0/PCQmEQdhmKS9tCrwI9MnpLP15kh0=",
         "ref": "main",
-        "rev": "d59945e4bbfb992cfdc7b1236393714bb0fea6f7",
+        "rev": "2b6447f8898ff3830b0f94cb60e6f7cc4d88854c",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"
