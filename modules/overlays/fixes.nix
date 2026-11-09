@@ -5,6 +5,44 @@
     # niri-flake still requires the 0.2 ABI, which was removed from unstable.
     libdisplay-info_0_2 = final.stable.libdisplay-info_0_2;
 
+    # Avoid building the .NET/Swift toolchain for pre-commit's Darwin tests.
+    # Remove once resolved upstream: https://github.com/NixOS/nixpkgs/issues/584390.
+    pre-commit =
+      if prev.stdenv.hostPlatform.isDarwin then
+        prev.pre-commit.override {
+          dotnetCorePackages = {
+            sdk_8_0-source.meta.platforms = [ ];
+          };
+        }
+      else
+        prev.pre-commit;
+
+    # Use the standalone release to avoid Marksman's .NET build toolchain on Darwin.
+    # Remove when nixpkgs provides a cached or standalone Darwin Marksman:
+    # https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/ma/marksman/package.nix
+    marksman =
+      if prev.stdenv.hostPlatform.isDarwin then
+        final.stdenvNoCC.mkDerivation {
+          inherit (prev.marksman) pname version;
+          src = final.fetchurl {
+            url = "https://github.com/artempyanykh/marksman/releases/download/${prev.marksman.version}/marksman-macos";
+            hash = "sha256-aoAcF7WsDbppeHxSgrOzvUFuZsliU/rgmNMRxrvRgzs=";
+          };
+          dontUnpack = true;
+          installPhase = ''
+            runHook preInstall
+            install -Dm755 "$src" "$out/bin/marksman"
+            runHook postInstall
+          '';
+          nativeInstallCheckInputs = [ final.versionCheckHook ];
+          doInstallCheck = true;
+          meta = prev.marksman.meta // {
+            platforms = final.lib.platforms.darwin;
+          };
+        }
+      else
+        prev.marksman;
+
     # sphinxHook skips documentation phases with Khal's structured attributes.
     # Remove once nixpkgs-unstable includes https://github.com/NixOS/nixpkgs/pull/573479.
     khal = prev.khal.overrideAttrs {
