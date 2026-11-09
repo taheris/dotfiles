@@ -43,9 +43,11 @@
           set-hook -g pane-exited "select-layout -E"
 
           # Meta is Alt on Linux; Alacritty maps Command to Meta on Darwin.
-          # Splits (vim mnemonics, inherit cwd)
-          bind -n M-v split-window -h -c "#{pane_current_path}"
+          # Splits: Meta-S stacks panes; adding Shift puts them side by side.
+          # Remove the old binding when reloading an existing server.
+          unbind -n M-v
           bind -n M-s split-window -c "#{pane_current_path}"
+          bind -n M-S split-window -h -c "#{pane_current_path}"
 
           # Pane navigation (hjkl)
           bind -n M-h select-pane -L

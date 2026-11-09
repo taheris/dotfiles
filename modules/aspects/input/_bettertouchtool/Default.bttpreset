@@ -90,6 +90,27 @@
       ]
     },
     {
+      "BTTAppBundleIdentifier": "com.superlogical.rex",
+      "BTTAppName": "Rex Beta",
+      "BTTTriggers": [
+        {
+          "BTTTriggerType": 100,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Left",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "8302DA4C-E111-47AE-9934-E11F0E24EC14",
+          "BTTShortcutToSend": "59,48"
+        },
+        {
+          "BTTTriggerType": 101,
+          "BTTTriggerTypeDescription": "3 Finger Swipe Right",
+          "BTTTriggerClass": "BTTTriggerTypeTouchpadAll",
+          "BTTUUID": "919E78B8-F153-4619-BF7E-3D9E026E1CAC",
+          "BTTShortcutToSend": "59,56,48",
+          "BTTOrder": 1
+        }
+      ]
+    },
+    {
       "BTTAppBundleIdentifier": "com.apple.Safari",
       "BTTAppName": "Safari",
       "BTTAppProcessMatchMode": 2,

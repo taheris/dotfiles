@@ -46,7 +46,7 @@
             ]
           },
           {
-            "description": "Command-H for tmux in Alacritty",
+            "description": "Command-H for pane navigation in Alacritty and Rex",
             "manipulators": [
               {
                 "type": "basic",
@@ -60,7 +60,29 @@
                 "conditions": [
                   {
                     "type": "frontmost_application_if",
-                    "bundle_identifiers": ["^org\\.alacritty$"]
+                    "bundle_identifiers": ["^org\\.alacritty$", "^com\\.superlogical\\.rex$"]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "description": "Command-Q/Shift-Command-Q to close Rex panes/tabs",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "q",
+                  "modifiers": {
+                    "mandatory": ["command"],
+                    "optional": ["shift"]
+                  }
+                },
+                "to": [{ "key_code": "f18" }],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": ["^com\\.superlogical\\.rex$"]
                   }
                 ]
               }

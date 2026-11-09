@@ -25,7 +25,7 @@ let
     map (key: metaBinding "Command" (toUpper key) key) (
       stringToCharacters "bcdfhjklnopqrswxz123456789=,./"
     )
-    ++ map (key: metaBinding "Command|Shift" key key) (stringToCharacters "HJKLQR?")
+    ++ map (key: metaBinding "Command|Shift" key key) (stringToCharacters "HJKLQRS?")
     ++ [
       (metaBinding "Command" "Enter" "\r")
       # Karabiner routes Command-H only while Alacritty is focused.

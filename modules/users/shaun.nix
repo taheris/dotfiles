@@ -14,6 +14,7 @@
       # cli
       my.alacritty
       my.dotfile
+      my.rex
       my.starship
       my.tmux
       my.vim

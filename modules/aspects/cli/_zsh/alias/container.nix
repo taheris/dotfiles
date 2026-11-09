@@ -225,6 +225,7 @@ in
     ac = "container";
     acb = "container build";
     accr = "container create";
+    accln = "container clean";
     ack = "container kill";
     acl = "container list";
     acla = "container list --all";
