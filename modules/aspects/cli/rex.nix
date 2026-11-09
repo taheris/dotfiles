@@ -15,7 +15,7 @@
     {
       targets.darwin.defaults."com.superlogical.rex" = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
         "Workspace.terminalFontName" = "MonacoB Nerd Font Mono";
-        "Workspace.terminalFontPointSize" = 14.0;
+        "Workspace.terminalFontPointSize" = 16.0;
         "Workspace.terminalCursorBlinkIntervalMilliseconds" = 0;
         "Workspace.terminalCursorBlinkUsesCustomInterval" = false;
 
@@ -23,6 +23,7 @@
         "Workspace.lightThemeID" = "merino-light";
         "Workspace.paneDensity" = "compact";
         "Workspace.showsPaneHeaders" = false;
+        "Workspace.playsProgramActivitySounds" = false;
         "Workspace.tabStyle" = "horizontal";
         "Workspace.tabIconTintMode" = "off";
         "Workspace.sidebarPosition" = "left";
@@ -30,6 +31,8 @@
         "Workspace.inactivePaneFadeMode" = "both";
         "Workspace.usesStandardInactiveWindowPaneStyles" = true;
 
+        # Allow launcher scripts to select newly created sessions in the app.
+        "rex.client.remoteControl" = true;
         "rex.developer-mode-enabled" = true;
         # Enable the experimental Go to Anything UI in Rex 1853. Remove this
         # flag once the new quick switcher is available without it.

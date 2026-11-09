@@ -37,7 +37,7 @@ rustPlatform.buildRustPackage {
   '';
 
   meta = {
-    description = "Terminal-aware niri and OmniWM slurp/expel using live tmux panes";
+    description = "Alacritty/Rex launcher and terminal-aware niri/OmniWM tmux pane transfers";
     mainProgram = "terminal-bridge";
     platforms = lib.platforms.unix;
   };

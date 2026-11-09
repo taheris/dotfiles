@@ -7,10 +7,12 @@ use std::fs::{self, File, OpenOptions};
 use std::os::fd::AsRawFd;
 use std::os::unix::fs::{DirBuilderExt, MetadataExt, OpenOptionsExt};
 use std::os::unix::process::CommandExt;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::thread;
 use std::time::{Duration, Instant};
+
+mod rex;
 
 type Result<T> = std::result::Result<T, String>;
 
@@ -333,15 +335,20 @@ fn last_directory() -> PathBuf {
         .or_else(|| env::var_os("TMPDIR"))
         .map(PathBuf::from)
         .unwrap_or_else(|| PathBuf::from("/tmp"));
-    if let Ok(directory) = fs::read_to_string(root.join("last-dir")) {
-        let path = PathBuf::from(directory);
+    let home = env::var_os("HOME")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| PathBuf::from("/"));
+    tracked_directory(&root.join("last-dir"), home)
+}
+
+fn tracked_directory(file: &Path, home: PathBuf) -> PathBuf {
+    if let Ok(directory) = fs::read_to_string(file) {
+        let path = PathBuf::from(directory.trim_end_matches('\n'));
         if path.is_dir() {
             return path;
         }
     }
-    env::var_os("HOME")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| PathBuf::from("/"))
+    home
 }
 
 fn terminal_command() -> Command {
@@ -581,7 +588,8 @@ fn dispatch(action: &str, wm: &impl WindowManager, tmux: &Tmux) -> Result<()> {
     Ok(())
 }
 
-const USAGE: &str = "Usage: terminal-bridge launch | <slurp|expel> --wm <niri|omniwm>";
+const USAGE: &str =
+    "Usage: terminal-bridge launch [--terminal <alacritty|rex>] | <slurp|expel> --wm <niri|omniwm>";
 
 fn main_result() -> Result<()> {
     let args: Vec<_> = env::args().skip(1).collect();
@@ -595,7 +603,8 @@ fn main_result() -> Result<()> {
             println!("terminal-bridge {}", env!("CARGO_PKG_VERSION"));
             Ok(())
         }
-        ["launch"] => launch(),
+        ["launch"] | ["launch", "--terminal", "alacritty"] => launch(),
+        ["launch", "--terminal", "rex"] => rex::launch(&last_directory()),
         [
             action @ ("slurp" | "expel"),
             "--wm",

@@ -1,8 +1,8 @@
-# Terminal-aware slurp / expel
+# Terminal launching and terminal-aware slurp / expel
 
-`terminal-bridge` is a Rust tool that moves live tmux panes between Alacritty
-windows. Processes, working directories and tmux history survive the move;
-programs are not restarted.
+`terminal-bridge` launches Alacritty/tmux or Rex in the last tracked directory.
+It also moves live tmux panes between Alacritty windows. Processes, working
+directories and tmux history survive the move; programs are not restarted.
 
 ## Use
 
@@ -12,10 +12,28 @@ windows on the default server are also eligible; no registration, session-name
 prefix or special launcher is required. The commands can be invoked manually:
 
 ```sh
-terminal-bridge launch
+terminal-bridge launch                         # Alacritty/tmux (default)
+terminal-bridge launch --terminal alacritty
+terminal-bridge launch --terminal rex          # macOS only
 terminal-bridge slurp --wm niri
 terminal-bridge expel --wm omniwm
 ```
+
+Both launchers read `$XDG_RUNTIME_DIR/last-dir` (or `$TMPDIR/last-dir`, then
+`/tmp/last-dir`), stripping trailing newlines and falling back to `$HOME` when
+the tracked directory is missing or invalid. Spaces in paths are preserved.
+
+On macOS, Leader Key → r creates a new Rex session and displays it in a **new
+app window**, leaving existing windows on their current sessions.
+Rex must already be installed, with **Remote Control** enabled. The launcher uses
+the app-managed CLI under `RexServer/Versions/Current`, clears inherited Rex
+routing variables, and waits for the app to connect during cold launches.
+Rex's automatic client selection requires exactly one app client; ambiguity is
+an error. Session selection is retried while the new window becomes ready;
+session and window creation are never retried, to avoid duplicates after a
+lost response. If either action fails after session creation, the error includes
+the session ID so it can be recovered. Rex has no Linux desktop
+launch backend. Rex panes are not eligible for the tmux slurp/expel backend.
 
 - **niri Mod+S / OmniWM Option+S:** merge the terminal in the next column into
   the focused terminal as top/bottom panes. Both terminals must have one pane.
@@ -75,7 +93,8 @@ cargo test
 nix build .#terminal-bridge
 ```
 
-The suite tests IPC payload decoding, fallback selection, process/client matching,
+The suite tests tracked-directory handling, Rex session creation/selection and
+startup failures, IPC payload decoding, fallback selection, process/client matching,
 real tmux clients on PTYs, process/history preservation, and failure cleanup.
 Actual niri/OmniWM focus, window placement and Karabiner dispatch also need a live
 desktop smoke test; the headless suite does not exercise compositor GUIs.

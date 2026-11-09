@@ -65,7 +65,10 @@ fn launcher_uses_plain_tmux_without_session_registration() {
     let args: Vec<_> = command.get_args().collect();
     let args = if cfg!(target_os = "macos") {
         assert_eq!(command.get_program(), "/usr/bin/open");
-        assert_eq!(&args[..4], &["-n", "-a", "/Applications/Alacritty.app", "--args"]);
+        assert_eq!(
+            &args[..4],
+            &["-n", "-a", "/Applications/Alacritty.app", "--args"]
+        );
         &args[4..]
     } else {
         assert_eq!(command.get_program(), "alacritty");
@@ -80,6 +83,33 @@ fn launcher_uses_plain_tmux_without_session_registration() {
             .get_envs()
             .any(|(key, value)| key == "TMUX" && value.is_none())
     );
+}
+
+#[test]
+fn tracked_directory_handles_shell_newlines_and_missing_paths() {
+    let unique = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_nanos();
+    let root = env::temp_dir().join(format!(
+        "terminal-bridge-directory-{}-{unique}",
+        std::process::id()
+    ));
+    let home = root.join("home");
+    let directory = root.join("directory with spaces ");
+    fs::create_dir_all(&home).unwrap();
+    fs::create_dir_all(&directory).unwrap();
+    let file = root.join("last-dir");
+    assert_eq!(tracked_directory(&file, home.clone()), home);
+    for suffix in ["", "\n", "\n\n"] {
+        fs::write(&file, format!("{}{suffix}", directory.display())).unwrap();
+        assert_eq!(tracked_directory(&file, home.clone()), directory);
+    }
+    for value in ["", "/nonexistent-terminal-bridge-directory\n"] {
+        fs::write(&file, value).unwrap();
+        assert_eq!(tracked_directory(&file, home.clone()), home);
+    }
+    fs::remove_dir_all(root).unwrap();
 }
 
 #[test]

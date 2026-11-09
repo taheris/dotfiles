@@ -30,6 +30,11 @@
             </dev/null >>"''${TMPDIR:-/tmp}/leader-key-terminal.log" 2>&1 &
         '';
 
+        spawnRex = pkgs.writeShellScript "leader-key-rex" ''
+          ${pkgs.terminal-bridge}/bin/terminal-bridge launch --terminal rex \
+            </dev/null >>"''${TMPDIR:-/tmp}/leader-key-rex.log" 2>&1 &
+        '';
+
         spawnWeb = pkgs.writeShellScript "leader-key-web" ''
           /usr/bin/osascript \
             -e 'tell application "Safari" to make new document' \
@@ -60,6 +65,12 @@
                 label = "Emacs";
                 type = "command";
                 value = "${spawnEmacs}";
+              }
+              {
+                key = "r";
+                label = "Rex";
+                type = "command";
+                value = "${spawnRex}";
               }
               {
                 key = "t";
