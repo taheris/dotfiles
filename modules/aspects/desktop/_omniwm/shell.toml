@@ -1,0 +1,6 @@
+profile = "default"
+
+[profiles.default]
+leading = ["workspaces", "scratchpads"]
+center = []
+trailing = []

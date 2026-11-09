@@ -7,7 +7,7 @@ let
     prefixes: suffixes:
     concatMap (prefix: map (suffix: "${prefix}.${toString suffix}") suffixes) prefixes;
 in
-# Required OmniWM schema 4 actions; missing bindings are generated as Unassigned.
+# Required OmniWM schema 5 actions; missing bindings are generated as Unassigned.
 [
   "workspaceBackAndForth"
   "switchWorkspace.next"
@@ -57,10 +57,23 @@ in
   "toggleSplit"
   "swapSplit"
   "preselectClear"
+  "volumeUp"
+  "volumeDown"
+  "volumeMute"
+  "mediaPlayPause"
+  "mediaNext"
+  "mediaPrevious"
+  "toggleShortcutPause"
+  "beginPrefix"
+  "toggleWindowMode"
+  "exitKeyboardMode"
+  "openShellApp.example"
+  "newShellAppWindow.example"
   "openCommandPalette"
   "raiseAllFloatingWindows"
   "rescueOffscreenWindows"
   "toggleFocusedWindowFloating"
+  "toggleFloatingFocus"
   "closeFocusedWindow"
   "openMenuAnywhere"
   "setWindowMark"
@@ -86,7 +99,33 @@ in
     [ "left" "right" "up" "down" ]
 ++
   expand
-    [ "setContainerPrimarySpan" "setWindowPrimarySpan" "setWindowSecondarySpan" ]
-    [ "decrease10Percent" "increase10Percent" ]
+    [ "resizeContainerPrimarySpan" "resizeWindowPrimarySpan" "resizeWindowSecondarySpan" ]
+    [ "shrink" "grow" ]
 ++ expand [ "resizeGrow" "resizeShrink" ] [ "horizontal" "vertical" ]
 ++ expand [ "resizeFocusedWindow" ] [ "grow" "shrink" ]
+++
+  expand
+    [ "openCommandPalette" ]
+    [
+      "windows"
+      "menu"
+      "clipboard"
+      "commands"
+      "applications"
+      "files"
+    ]
+++
+  expand
+    [ "toggleShellWidget" ]
+    [
+      "battery-details"
+      "clock"
+      "control-center"
+      "hidden-bar"
+      "media"
+      "notifications"
+      "system-stats"
+      "volume"
+      "wifi"
+      "workspaces"
+    ]

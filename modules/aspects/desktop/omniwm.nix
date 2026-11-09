@@ -16,8 +16,19 @@ in
     let
       managedSettings = "${config.xdg.configHome}/omniwm/settings.nix.toml";
       liveSettings = "${config.xdg.configHome}/omniwm/settings.toml";
+      managedShell = "${config.xdg.configHome}/omniwm/shell/shell.nix.toml";
+      liveShell = "${config.xdg.configHome}/omniwm/shell/shell.toml";
     in
     {
+      xdg.configFile."omniwm/shell/shell.nix.toml" = {
+        source = ./_omniwm/shell.toml;
+
+        # Preserve GUI experiments until the managed baseline changes.
+        onChange = ''
+          run ${pkgs.coreutils}/bin/install -m 0600 -- ${escapeShellArg managedShell} ${escapeShellArg liveShell}
+        '';
+      };
+
       xdg.configFile."omniwm/settings.nix.toml" = {
         text =
           settings
