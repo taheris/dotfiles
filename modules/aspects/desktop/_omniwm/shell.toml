@@ -4,3 +4,10 @@ profile = "default"
 leading = ["workspaces", "scratchpads"]
 center = []
 trailing = []
+
+# Profile defaults override settings.toml, so keep placement explicit here.
+[profiles.default.workspaceBar]
+fullWidth = false
+position = "belowMenuBar"
+height = 24.0
+reserveLayoutSpace = false
