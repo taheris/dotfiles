@@ -110,6 +110,19 @@
             ]
           },
           {
+            "description": "Option-Fn to start/stop OBS recording of the selected browser video",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "fn",
+                  "modifiers": { "mandatory": ["option"] }
+                },
+                "to": [{ "shell_command": "'@homeProfile@/bin/obs-video-crop-shortcut'", "repeat": false }]
+              }
+            ]
+          },
+          {
             "description": "Shift-Fn to transcribe frontmost app audio with Hex",
             "manipulators": [
               {

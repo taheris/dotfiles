@@ -13,7 +13,9 @@ Nix store executable may require granting permission again after an upgrade.
 Press Shift+Fn again to finish, or use macOS's capture Stop button.
 Markdown transcripts are saved under
 `~/Documents/hex`; this explicit output is independent of Hex's disabled
-dictation history. Notifications show start, completion, and failures. Diagnostic
+dictation history. Notifications show start, completion, and failures through
+`terminal-notifier`, with no click action or Script Editor launch. Allow its
+notifications in macOS settings if prompted. Diagnostic
 output is in `~/Library/Caches/hex-app-record/record.log`. Audio is sent only to
 Hex's authenticated loopback API and is not saved by this helper. One recording
 can run at a time; a second shortcut press while finishing does not start another.

@@ -19,6 +19,7 @@ in
       monacob = callPackage ../../packages/monacob { };
       sqlite-vss = callPackage ../../packages/sqlite-vss { };
       terminal-bridge = callPackage ../../packages/terminal-bridge { };
+      obs-video-crop = callPackage ../../packages/obs-video-crop { };
 
       beads = inputs.wrix.packages.${system}.beads;
       loom = inputs.loom.packages.${system}.loom;
@@ -62,6 +63,7 @@ in
           monaco
           monacob
           sqlite-vss
+          obs-video-crop
           terminal-bridge
           ;
       }
@@ -83,6 +85,7 @@ in
       };
 
       checks = {
+        obs-video-crop = pkgs.obs-video-crop;
         terminal-bridge = pkgs.terminal-bridge;
       }
       // optionalAttrs (system == "x86_64-linux") {

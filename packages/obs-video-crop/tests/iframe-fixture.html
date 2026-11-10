@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>OBS focused cross-origin iframe smoke test</title>
+<style>
+  body { background: #444; color: white; font: 16px sans-serif; margin: 16px; }
+  h1 { font-size: 20px; }
+  iframe { display: block; width: min(900px, calc(100vw - 48px));
+    height: min(640px, calc(100vh - 140px)); border: 4px solid lime; }
+</style>
+<h1>Gray parent pixels must NOT appear in the recording</h1>
+<p>Click Play inside the embed, then press Option+Fn. The WHOLE embedded page,
+including its red background and controls, is intentionally captured.</p>
+<!-- Omitting allow-same-origin gives the child an opaque origin even when both
+     fixture files are served from the same local HTTP server. -->
+<iframe sandbox="allow-scripts" src="fixture.html"
+  title="Opaque-origin video player fixture"></iframe>
+</html>

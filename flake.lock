@@ -170,10 +170,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1794201710,
-        "narHash": "sha256-UzGQpWoWK+tp/FYGsufAZzJ+I2MN+adkpwFm7yL4OAc=",
+        "lastModified": 1794320905,
+        "narHash": "sha256-PQK3SrS1joc2ffyrYMG+IxK/XHSHdGe0hZa1ejSE0gg=",
         "ref": "master",
-        "rev": "934a107ee8b212f8fb4c7331bb5dd9755ed11fb4",
+        "rev": "3220cf1c8ca7a35de814fd0807da870d7b124d9b",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/AvengeMedia/dms-plugin-registry.git"
@@ -345,11 +345,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794202665,
-        "narHash": "sha256-0ULbnsUD/qBpVe0lyZs5PJN57ipD92z/49lEBAKgQgo=",
+        "lastModified": 1794326280,
+        "narHash": "sha256-5Y0/KoaNFUkuidFZx36fJ2fiHwa/pGUZRx7P2+5W/uA=",
         "owner": "anomalyco",
         "repo": "hex",
-        "rev": "350c42dbda83904ab8d9d1fc8563b3678ad4ad25",
+        "rev": "1b82cc0127bb4442f48a20edcb386693227a2ba2",
         "type": "github"
       },
       "original": {
@@ -365,10 +365,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1793979366,
-        "narHash": "sha256-7OoWDsYO9teiPxl0QdlS5lYE20Pue8/5mpscSL32FUA=",
+        "lastModified": 1794278858,
+        "narHash": "sha256-rkrJwLgLSHBnXfgoSKIDa+2LLGdTqynsV3GAxOTGhUU=",
         "ref": "master",
-        "rev": "2c0c1f01521469cf0271180c453c79782d53c2f6",
+        "rev": "82ce401aa350502897c3f2e85f384d61cd3b0b6d",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/nix-community/home-manager.git"
@@ -672,10 +672,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1793995029,
-        "narHash": "sha256-ZlE4BtMjWhfC6rFXLO9Qimn36Ene1INqCgKDDvazjhc=",
+        "lastModified": 1794261845,
+        "narHash": "sha256-Ivif/kuD68yEOKcZZG3zSwNMFUuIgzUgeJuzcHrQy+8=",
         "ref": "master",
-        "rev": "89a234ce2daf6e568a7d4b4fe250afdd23d84e20",
+        "rev": "fe7b4228405aeac2ce7192c2049a6e2bc8637082",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/Mic92/sops-nix.git"
@@ -862,10 +862,10 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1794208635,
-        "narHash": "sha256-xRBmdr9Pwuzzu/I9NNar0e8UqI1SVT5nJJnL0MB71/I=",
+        "lastModified": 1794271841,
+        "narHash": "sha256-++1pOglUuqDl8KK96rVDcaEOztgHxkxmATeZ7F464UI=",
         "ref": "main",
-        "rev": "6b3aea0defeefc3f45d592053f1bfb4eeb684e80",
+        "rev": "6c09b60b0d4cbf1c75ba314b81fe7006e09e7ebb",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/taheris/wrix.git"

@@ -1,13 +1,19 @@
 {
+  lib,
+  makeWrapper,
   stdenv,
   swift,
+  terminal-notifier,
 }:
 
 stdenv.mkDerivation {
   pname = "hex-app-record";
   version = "0.2.0";
   src = ./.;
-  nativeBuildInputs = [ swift ];
+  nativeBuildInputs = [
+    swift
+    makeWrapper
+  ];
 
   buildPhase = ''
     runHook preBuild
@@ -30,6 +36,11 @@ stdenv.mkDerivation {
     runHook preInstall
     install -Dm755 hex-app-record "$out/bin/hex-app-record"
     runHook postInstall
+  '';
+
+  postFixup = ''
+    wrapProgram "$out/bin/hex-app-record" \
+      --prefix PATH : ${lib.makeBinPath [ terminal-notifier ]}
   '';
 
   meta = {

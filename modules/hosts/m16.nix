@@ -15,6 +15,7 @@
     my.gpg
     my.karabiner
     my.leader-key
+    my.obs-video-crop
     my.stylix
   ];
 }

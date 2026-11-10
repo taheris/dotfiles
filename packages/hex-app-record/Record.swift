@@ -59,8 +59,10 @@ struct Recorder {
 
     static func notify(_ message: String) {
         let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/osascript")
-        process.arguments = ["-e", "on run argv\ndisplay notification (item 1 of argv) with title \"Hex app audio\"\nend run", message]
+        // Nix supplies terminal-notifier on PATH. No click action is configured:
+        // notifications must not launch Script Editor or interpret message text.
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/env")
+        process.arguments = ["terminal-notifier", "-title", "Hex app audio", "-message", message]
         do { try process.run(); process.waitUntilExit() }
         catch { fputs("Notification failed: \(error)\n", stderr) }
     }
