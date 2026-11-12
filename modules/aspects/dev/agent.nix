@@ -74,6 +74,17 @@
         (mkIf isLinux linuxPackages)
       ];
 
+      home.file = {
+        ".agents/skills/rex" = {
+          source = ./_agent/skills/rex;
+          recursive = true;
+        };
+        ".agents/skills/socratic-tutor" = {
+          source = ./_agent/skills/socratic-tutor;
+          recursive = true;
+        };
+      };
+
       launchd.agents = {
         wrix-notifyd = mkIf isDarwin {
           enable = true;
