@@ -1583,7 +1583,7 @@ Config from https://github.com/doomemacs/doomemacs/pull/6683.
                             :stream t)))
 
     (setq gptel-backend gptel-openai
-          gptel-model 'gpt-6.1-sol
+          gptel-model 'gpt-6.2-sol
           gptel-default-mode 'org-mode
           gptel-display-buffer-action 'display-buffer-same-window)
 
@@ -1655,7 +1655,7 @@ Don't save or restore gptel state to org buffer.
   (require 'agent-shell-openai)
   (setq agent-shell-preferred-agent-config 'codex
         agent-shell-openai-authentication (agent-shell-openai-make-authentication :login t)
-        agent-shell-openai-default-model-id "gpt-6.1-sol"
+        agent-shell-openai-default-model-id "gpt-6.2-sol"
         agent-shell-openai-default-config-options '(("reasoning_effort" . "medium"))))
 #+end_src
 
